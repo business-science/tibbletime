@@ -17,13 +17,12 @@ as_period <- function(x, period = "yearly", side = "start") {
   # Change periodicity of the index alone
   new_dates <- index %>%
     dplyr::group_by(!!! groups, add = TRUE) %>%
-    dplyr::summarise(!! index_name := side_fun(!! index_name )) %>%
-    dplyr::ungroup() %>%
-    dplyr::pull(!! index_name)
+    dplyr::summarise(!! index_name := side_fun(!! index_name ))
 
   # Filter the entire data based on the new index
   # Then remove duplicate times (i.e. if multiple trades at 15:00:01, only the first is returned)
-  dplyr::filter(x, UQ(index_name) %in% new_dates) %>%
+  by_vars <- intersect(colnames(x), colnames(index))
+  dplyr::semi_join(x, new_dates, by = by_vars) %>%
     dplyr::distinct(!! index_name, .keep_all = TRUE)
 
 }
