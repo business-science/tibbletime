@@ -21,64 +21,123 @@
 #'
 time_filter <- function(x, period) {
 
-  # Verify period
-  period <- verify_period(period)
+  # Validate period syntax
+  from_to <- validate_period(period)
 
   # Index name as sym
   index_name <- rlang::sym(retrieve_index(x, as_name = TRUE))
 
-  # Split by ':' into separate lists
-  from_to <- strsplit(period, ",") %>%
-    unlist()
-  from_to <- list(from = from_to[1],
-                  to   = from_to[2])
-
   # Normalize
   from_to_clean <- purrr::map2_chr(from_to, c("from", "to"), .f = normalize_date)
 
+  # Validate period date order
+  validate_date_order(from = from_to_clean[["from"]], to = from_to_clean[["to"]])
+
   # Filter for those rows
   dplyr::filter(x,
-                UQ(index_name) >= as.Date(from_to_clean[["from"]]),
-                UQ(index_name) <= as.Date(from_to_clean[["to"]]))
+                UQ(index_name) >= as.POSIXct(from_to_clean[["from"]], tz = retrieve_time_zone(x)),
+                UQ(index_name) <= as.POSIXct(from_to_clean[["to"]],   tz = retrieve_time_zone(x)))
 
 }
 
 
 # Util ----
 
-verify_period <- function(period) {
+validate_period <- function(period) {
 
+  # Comma separation
   split_count <- stringr::str_count(period, ",")
 
   assertthat::assert_that(split_count %in% c(0, 1) ,
-                          msg = "Only a `from` and `to` period can be supplied")
+                          msg = "Only a `from` and `to` period can be supplied, separated by a comma")
 
   if(split_count == 0) {
     period <- paste(period, period, sep = ",")
   }
 
-  period
+  # Split by ',' into separate lists
+  from_to <- unlist(strsplit(period, ","))
+  from_to <- list(from = from_to[1], to = from_to[2])
+
+  # Leading and trailing spaces
+  from_to <- lapply(from_to, FUN = function(x) gsub("^\\s+|\\s+$", "", x))
+
+  # Check symbols
+  check_syms <- function(x) {
+    assertthat::assert_that(stringr::str_count(x, "-") <= 2,
+                            msg = "A maximum of three '-' are possible per date")
+    assertthat::assert_that(stringr::str_count(x, ":") <= 2,
+                            msg = "A maximum of three ':' are possible per date")
+    assertthat::assert_that(stringr::str_count(x, " ") <= 1,
+                            msg = "A maximum of one space is possible per date")
+    assertthat::assert_that(!stringr::str_detect(x, "^:|:$|\\s:|:\\s"),
+                            msg = "A ':' can only be used between two numbers")
+    assertthat::assert_that(!stringr::str_detect(x, "^-|-$|\\s-|-\\s"),
+                            msg = "A '-' can only be used between two numbers")
+  }
+  lapply(from_to, check_syms)
+
+  from_to
+}
+
+validate_date_order <- function(from, to) {
+  from <- as.POSIXct(from)
+  to   <- as.POSIXct(to)
+
+  assertthat::assert_that(from <= to, msg = "`from` must be a date before `to`")
 }
 
 normalize_date <- function(x, from_to) {
 
-  # Setup list of filters to fill
-  filters <- switch (from_to,
-    "from" = list(year = "1970", month = "01", day = "01"),
-    "to"   = list(year = "1970", month = "12", day = "31")
-  )
+  # Setup ymd or hms lists
+  ymd <- switch(from_to,
+                "from" = list(y = "1970", m = "01", d = "01"),
+                "to"   = list(y = "1970", m = "12", d = "00"))
 
-  # Split filter date by "-"
-  x <- stringr::str_split(x, "-") %>%
-    unlist()
+  hms <- switch(from_to,
+                "from" = list(h = "00", m = "00", s = "00"),
+                "to"   = list(h = "23", m = "59", s = "59"))
 
-  # Fill the list as far as it goes
-  # Defaults are left for unfilled list pieces
-  for(i in 1:length(x)) {
-    filters[[i]] <- x[i]
+  recurse_split <- function(x, filler, splitter) {
+    i <- 1
+
+    # While there is something to split on
+    while(stringr::str_detect(x, splitter)) {
+      # Extract the first part of the split
+      piece <- stringr::str_extract(x, paste0("([^", splitter, "]+)"))
+      # Replace the first part with "" in the string
+      x <- stringr::str_replace(x, pattern = paste0("([^", splitter, "]+", splitter, ")"), replacement = "")
+      # Add the new piece to the filler
+      filler[[i]] <- piece
+      # Next
+      i <- i + 1
+    }
+    # Once there is nothing left to split on, add the last piece to the filler
+    filler[[i]] <- x
+
+    # If "to" day was never changed, move to end of chosen month
+    if(!is.null(filler[["d"]])) {
+      if(filler[["d"]] == "00") {
+        filler[["d"]] <- "01"
+        fake_date <- as.Date(paste0(unlist(filler), collapse = splitter))
+        filler[["d"]] <- as.character(lubridate::days_in_month(fake_date))
+      }
+    }
+
+    paste0(unlist(filler), collapse = splitter)
   }
 
-  # Unroll list and collapse into Date formatted character
-  unlist(filters) %>%
-    paste0(collapse = "-")
+  # Check existance of date / time space
+  date_time <- if(stringr::str_detect(x, "\\s")) {
+    date_time <- unlist(stringr::str_split(x, "\\s"))
+    date <- recurse_split(date_time[1], ymd, "-")
+    time <- recurse_split(date_time[2], hms, ":")
+    paste(date, time, sep = " ")
+  } else {
+    date <- recurse_split(x, ymd, "-")
+    time <- recurse_split("00:00:00", hms, ":")
+    paste(date, time, sep = " ")
+  }
+
+  date_time
 }

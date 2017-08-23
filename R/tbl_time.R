@@ -43,9 +43,11 @@ as_tbl_time.data.frame <- function(x, index, ...) {
   # Validate index
   validate_index(x, index)
 
-  # Set class and index attribute
+  # Set class and time attributes
   class(x) <- c("tbl_time", class(x))
   attr(x, "index") <- index
+  time_zone <- attr(dplyr::pull(x, !! index), "tzone")
+  attr(x, "time_zone") <- ifelse(is.null(time_zone), Sys.timezone(), time_zone)
 
   x
 }

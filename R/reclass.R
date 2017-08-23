@@ -9,6 +9,7 @@ reclass.default <- function(x, original, ...) {
 
   class(x) <- c(setdiff_orig, setdiff_x, overlap)
   attr(x, "index") <- attr(original, "index")
+  attr(x, "time_zone") <- attr(original, "time_zone")
   x
 }
 

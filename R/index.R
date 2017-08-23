@@ -65,3 +65,27 @@ expand_index <- function(x) {
          second = lubridate::second(!! index_name)
          )
 }
+
+
+#' Retrieve a `tbl_time` time zone
+#'
+#' Returns the time zone attribute as a character
+#'
+#'
+#' @param x stuff!!
+#' @param as_name stuff!!
+#'
+#' @export
+#'
+#' @examples
+#'
+#' examples!!
+#'
+retrieve_time_zone <- function(x) {
+  UseMethod("retrieve_time_zone")
+}
+
+#' @export
+retrieve_time_zone.tbl_time <- function(x) {
+  attr(x, "time_zone")
+}
