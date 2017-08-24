@@ -2,20 +2,36 @@
 % Please edit documentation in R/index.R
 \name{expand_index}
 \alias{expand_index}
-\title{Expand a \code{tbl_time} index into it's time signature}
+\title{Expand a \code{tbl_time} index}
 \usage{
 expand_index(x)
 }
 \arguments{
-\item{x}{stuff!!}
-
-\item{as_name}{stuff!!}
+\item{x}{A \code{tbl_time} object}
 }
 \description{
-Returns the index column as a tibble
+Retrieve an expanded version of a \code{tbl_time} index.
+}
+\details{
+The expanded version of the index contains columns for:
+\itemize{
+\item \code{year}
+\item \code{month}
+\item \code{day}
+\item \code{hour}
+\item \code{minute}
+\item \code{second}
+}
 }
 \examples{
 
-examples!!
+x <- tibble::tibble(
+  date  = as.Date(c('2017-01-01', '2017-01-02')),
+  value = c(1, 2)
+)
+
+x <- as_tbl_time(x, date)
+
+expand_index(x)
 
 }

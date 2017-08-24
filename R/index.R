@@ -1,16 +1,22 @@
 #' Retrieve a `tbl_time` index
 #'
-#' Returns the index column as a tibble
+#' Return the index column as a tibble or as a character
 #'
-#'
-#' @param x stuff!!
-#' @param as_name stuff!!
+#' @param x A `tbl_time` object
+#' @param as_name Logical specifying whether to return the the index as a tibble or character
 #'
 #' @export
 #'
 #' @examples
 #'
-#' examples!!
+#' x <- tibble::tibble(
+#'   date  = as.Date(c('2017-01-01', '2017-01-02')),
+#'   value = c(1, 2)
+#' )
+#'
+#' x <- as_tbl_time(x, date)
+#'
+#' retrieve_index(x)
 #'
 retrieve_index <- function(x, as_name = FALSE) {
   UseMethod("retrieve_index")
@@ -37,19 +43,35 @@ retrieve_index.grouped_tbl_time <- function(x, as_name = FALSE) {
   }
 }
 
-#' Expand a `tbl_time` index into it's time signature
+#' Expand a `tbl_time` index
 #'
-#' Returns the index column as a tibble
+#' Retrieve an expanded version of a `tbl_time` index.
+#'
+#' @details
+#'
+#' The expanded version of the index contains columns for:
+#' * `year`
+#' * `month`
+#' * `day`
+#' * `hour`
+#' * `minute`
+#' * `second`
 #'
 #'
-#' @param x stuff!!
-#' @param as_name stuff!!
+#' @param x A `tbl_time` object
 #'
 #' @export
 #'
 #' @examples
 #'
-#' examples!!
+#' x <- tibble::tibble(
+#'   date  = as.Date(c('2017-01-01', '2017-01-02')),
+#'   value = c(1, 2)
+#' )
+#'
+#' x <- as_tbl_time(x, date)
+#'
+#' expand_index(x)
 #'
 expand_index <- function(x) {
 
@@ -69,17 +91,22 @@ expand_index <- function(x) {
 
 #' Retrieve a `tbl_time` time zone
 #'
-#' Returns the time zone attribute as a character
+#' Returns the `time_zone` attribute as a character
 #'
-#'
-#' @param x stuff!!
-#' @param as_name stuff!!
+#' @param x A `tbl_time` object
 #'
 #' @export
 #'
 #' @examples
 #'
-#' examples!!
+#' x <- tibble::tibble(
+#'   date  = as.Date(c('2017-01-01', '2017-01-02')),
+#'   value = c(1, 2)
+#' )
+#'
+#' x <- as_tbl_time(x, date)
+#'
+#' retrieve_time_zone(x)
 #'
 retrieve_time_zone <- function(x) {
   UseMethod("retrieve_time_zone")
