@@ -16,10 +16,8 @@
 #' examples!!
 #'
 tbl_time <- function(x, index, ...) {
-
-  #something here for enquo the index?
-
-  as_tbl_time(x, index, ...)
+  index <- rlang::enquo(index)
+  as_tbl_time(x, !! index, ...)
 }
 
 
@@ -27,6 +25,12 @@ tbl_time <- function(x, index, ...) {
 #' @rdname tbl_time
 as_tbl_time <- function(x, index, ...) {
   UseMethod("as_tbl_time")
+}
+
+#' @export
+as_tbl_time.default <- function(x, index, ...) {
+  index <- rlang::enquo(index)
+  as_tbl_time(tibble::as_tibble(x), !! index, ...)
 }
 
 
