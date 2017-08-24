@@ -11,7 +11,3 @@ distinct.tbl_time <- function(.data, ..., .keep_all = FALSE) {
 
 #' @export
 dplyr::distinct
-
-#' @importFrom dplyr transmute
-#' @export
-dplyr::transmute
