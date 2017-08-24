@@ -13,6 +13,8 @@ as_tbl_time(x, index, ...)
 \item{x}{stuff!!}
 
 \item{index}{stuff!!}
+
+\item{...}{Currently not used}
 }
 \description{
 \code{tbl_time} objects have a time index that contains information about which column should be

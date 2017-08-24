@@ -43,6 +43,9 @@ time_filter <- function(x, period) {
 
 # Util ----
 
+# Check a user supplied period for correct syntax
+# If "2015", duplicate to "2015,2015"
+# Removes leading / trailing spaces
 validate_period <- function(period) {
 
   # Comma separation
@@ -80,6 +83,8 @@ validate_period <- function(period) {
   from_to
 }
 
+# Validates the final dates
+# `from` must be before `to`
 validate_date_order <- function(from, to) {
   from <- as.POSIXct(from)
   to   <- as.POSIXct(to)
@@ -87,57 +92,78 @@ validate_date_order <- function(from, to) {
   assertthat::assert_that(from <= to, msg = "`from` must be a date before `to`")
 }
 
+# Expand date shorthand into a real date
 normalize_date <- function(x, from_to) {
 
-  # Setup ymd or hms lists
+  # Setup ymd / hms lists to fill
   ymd <- switch(from_to,
                 "from" = list(y = "1970", m = "01", d = "01"),
-                "to"   = list(y = "1970", m = "12", d = "00"))
+                "to"   = list(y = "1970", m = "12", d = "00")) # `to` day depends on month selected, filled later if necessary
 
   hms <- switch(from_to,
                 "from" = list(h = "00", m = "00", s = "00"),
                 "to"   = list(h = "23", m = "59", s = "59"))
 
-  recurse_split <- function(x, filler, splitter) {
-    i <- 1
-
-    # While there is something to split on
-    while(stringr::str_detect(x, splitter)) {
-      # Extract the first part of the split
-      piece <- stringr::str_extract(x, paste0("([^", splitter, "]+)"))
-      # Replace the first part with "" in the string
-      x <- stringr::str_replace(x, pattern = paste0("([^", splitter, "]+", splitter, ")"), replacement = "")
-      # Add the new piece to the filler
-      filler[[i]] <- piece
-      # Next
-      i <- i + 1
-    }
-    # Once there is nothing left to split on, add the last piece to the filler
-    filler[[i]] <- x
-
-    # If "to" day was never changed, move to end of chosen month
-    if(!is.null(filler[["d"]])) {
-      if(filler[["d"]] == "00") {
-        filler[["d"]] <- "01"
-        fake_date <- as.Date(paste0(unlist(filler), collapse = splitter))
-        filler[["d"]] <- as.character(lubridate::days_in_month(fake_date))
-      }
-    }
-
-    paste0(unlist(filler), collapse = splitter)
-  }
-
-  # Check existance of date / time space
+  # Check existance of date / time dividing space \\s
   date_time <- if(stringr::str_detect(x, "\\s")) {
+
+    # If there is a date and a time, split them
     date_time <- unlist(stringr::str_split(x, "\\s"))
+
+    # Recurse split to fill the lists
     date <- recurse_split(date_time[1], ymd, "-")
     time <- recurse_split(date_time[2], hms, ":")
+
+    # Paste together
     paste(date, time, sep = " ")
   } else {
+
+    # If there is only a date, no time
+    # Recurse split the date, and pass 0 as time
     date <- recurse_split(x, ymd, "-")
     time <- recurse_split("00:00:00", hms, ":")
+
+    # Paste together
     paste(date, time, sep = " ")
   }
 
   date_time
+}
+
+# Split x by the splitter and fill the filler list with the pieces
+recurse_split <- function(x, filler, splitter) {
+  i <- 1
+
+  # While there is something to split on
+  while(stringr::str_detect(x, splitter)) {
+
+    # Extract the first part of the split
+    piece <- stringr::str_extract(x, paste0("([^", splitter, "]+)"))
+
+    # Replace the first part with "" in the string
+    x <- stringr::str_replace(x, pattern = paste0("([^", splitter, "]+", splitter, ")"), replacement = "")
+
+    # Add the new piece to the filler
+    filler[[i]] <- piece
+
+    # Next
+    i <- i + 1
+  }
+  # Once there is nothing left to split on, add the last piece to the filler
+  filler[[i]] <- x
+
+  # If `to` d was never changed, set as end of chosen month
+  if(!is.null(filler[["d"]])) {
+    if(filler[["d"]] == "00") {
+
+      # Fake a date to find the number of days in that month
+      filler[["d"]] <- "01"
+      fake_date <- as.Date(paste0(unlist(filler), collapse = splitter))
+
+      # Fill the `to` d with the number of days in that month
+      filler[["d"]] <- as.character(lubridate::days_in_month(fake_date))
+    }
+  }
+
+  paste0(unlist(filler), collapse = splitter)
 }

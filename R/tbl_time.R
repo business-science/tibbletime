@@ -6,6 +6,7 @@
 #'
 #' @param x stuff!!
 #' @param index stuff!!
+#' @param ... Currently not used
 #'
 #' @rdname tbl_time
 #'
