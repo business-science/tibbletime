@@ -14,3 +14,8 @@ test_tbl_time <- as_tbl_time(test_time, date)
 test_that("tbl_time class is retained", {
   expect_is(distinct(test_tbl_time), "tbl_time")
 })
+
+test_that("tbl_time class is lost", {
+  no_tbl_time <- distinct(test_tbl_time, value, .keep_all = FALSE)
+  expect_false("tbl_time" %in% class(no_tbl_time))
+})

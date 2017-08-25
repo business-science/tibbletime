@@ -48,11 +48,23 @@ as_tbl_time.data.frame <- function(x, index, ...) {
   # Validate index
   validate_index(x, index)
 
-  # Set class and time attributes
-  class(x) <- c("tbl_time", class(x))
+  # Set main class and time attributes
+  class(x) <- unique(c("tbl_time", class(x)))
   attr(x, "index") <- index
   time_zone <- attr(dplyr::pull(x, !! index), "tzone")
   attr(x, "time_zone") <- ifelse(is.null(time_zone), Sys.timezone(), time_zone)
+
+  x
+}
+
+#' @export
+as_tbl_time.grouped_df <- function(x, index, ...) {
+
+  # Capture index
+  index <- rlang::enquo(index)
+
+  x <- as_tbl_time.data.frame(x, !! index)
+  class(x) <- unique(c("grouped_tbl_time", class(x)))
 
   x
 }

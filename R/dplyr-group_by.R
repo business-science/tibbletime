@@ -9,7 +9,9 @@ group_by.tbl_time <- function(.data, ..., add = FALSE) {
     reclass(.data)
 
   # Add a grouped_tbl_time class if not already there
-  class(tmp_data) <- unique(c("grouped_tbl_time", class(tmp_data)))
+  if("tbl_time" %in% class(tmp_data)) {
+    class(tmp_data) <- unique(c("grouped_tbl_time", class(tmp_data)))
+  }
 
   tmp_data
 }

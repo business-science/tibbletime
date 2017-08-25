@@ -2,29 +2,72 @@
 % Please edit documentation in R/time_filter.R
 \name{time_filter}
 \alias{time_filter}
+\alias{[.tbl_time}
 \title{Succinctly filter a \code{tbl_time} object by date}
 \usage{
 time_filter(x, period)
+
+\method{[}{tbl_time}(x, i, j, drop = FALSE)
 }
 \arguments{
-\item{x}{stuff!!}
+\item{x}{A \code{tbl_time} object}
 
-\item{period}{stuff!!}
+\item{period}{A period to filter}
 }
 \description{
 Use a concise filtering method to filter for rows where the \code{index} falls within a date range
 }
 \details{
-Filtering is specified using the format \code{"from,to"} where the \code{from} and \code{to} are specified as:
+The \code{period} is specified using the format \code{from ~ to}.
+Each side of the \code{period} is specified as \code{YYYY-MM-DD + HH:MM:SS}, but powerful shorthand is available.
+Some examples are:
 \itemize{
-\item Year - "2013,2015"
-\item Month - "2013-01,2016-06"
-\item Day - "2013-01-05,2016-06-04"
-\item Variations - "2013,2016-06"
+\item \strong{Year:} \code{2013 ~ 2015}
+\item \strong{Month:} \code{2013-01 ~ 2016-06}
+\item \strong{Day:} \code{2013-01-05 ~ 2016-06-04}
+\item \strong{Second:} \code{2013-01-05 + 10:22:15 ~ 2018-06-03 + 12:14:22}
+\item \strong{Variations:} \code{2013 ~ 2016-06}
+}
+
+The \code{period} can also use a one sided formula.
+\itemize{
+\item \strong{Only dates in 2015:} \code{~2015}
+\item \strong{Only dates March 2015:} \code{~2015-03}
+}
+
+All shorthand dates are expanded to be valid POSIXct dates.
+\itemize{
+\item The \code{from} side is expanded to be the first date in that period
+\item The \code{to} side is expanded to be the last date in that period
+}
+
+This means that the following examples are equivalent:
+\itemize{
+\item \code{2015 ~ 2016 == 2015-01-01 + 00:00:00 ~ 2016-12-31 + 23:59:59}
+\item \code{~2015 == 2015-01-01 + 00:00:00 ~ 2015-12-31 + 23:59:59}
+\item \code{2015-01-04 + 10:12 ~ 2015-01-05 == 2015-01-04 + 10:12:00 ~ 2015-01-05 + 23:59:59}
 }
 }
 \examples{
 
-examples!!
+library(tidyquant)
+data(FANG)
+FANG <- as_tbl_time(FANG, date) \%>\% group_by(symbol)
+
+# 2013-01-01 to 2014-12-31
+time_filter(FANG, 2013 ~ 2014)
+
+# 2013-05-25 to 2014-06-04
+time_filter(FANG, 2013-05-25 ~ 2014-06-04)
+
+# `[` subset operator
+FANG[2014~2015]
+
+# `[` and one sided formula for only dates in 2014
+FANG[~2014]
+
+# `[` and column selection
+FANG[2013~2016, c("date", "adjusted")]
+
 
 }

@@ -4,25 +4,62 @@
 #'
 #' @details
 #'
-#' Filtering is specified using the format `"from,to"` where the `from` and `to` are specified as:
-#' * Year - "2013,2015"
-#' * Month - "2013-01,2016-06"
-#' * Day - "2013-01-05,2016-06-04"
-#' * Variations - "2013,2016-06"
+#' The `period` is specified using the format `from ~ to`.
+#' Each side of the `period` is specified as `YYYY-MM-DD + HH:MM:SS`, but powerful shorthand is available.
+#' Some examples are:
+#' * __Year:__ `2013 ~ 2015`
+#' * __Month:__ `2013-01 ~ 2016-06`
+#' * __Day:__ `2013-01-05 ~ 2016-06-04`
+#' * __Second:__ `2013-01-05 + 10:22:15 ~ 2018-06-03 + 12:14:22`
+#' * __Variations:__ `2013 ~ 2016-06`
 #'
-#' @param x stuff!!
-#' @param period stuff!!
+#' The `period` can also use a one sided formula.
+#' * __Only dates in 2015:__ `~2015`
+#' * __Only dates March 2015:__ `~2015-03`
+#'
+#' All shorthand dates are expanded to be valid POSIXct dates.
+#' * The `from` side is expanded to be the first date in that period
+#' * The `to` side is expanded to be the last date in that period
+#'
+#' This means that the following examples are equivalent:
+#' * `2015 ~ 2016 == 2015-01-01 + 00:00:00 ~ 2016-12-31 + 23:59:59`
+#' * `~2015 == 2015-01-01 + 00:00:00 ~ 2015-12-31 + 23:59:59`
+#' * `2015-01-04 + 10:12 ~ 2015-01-05 == 2015-01-04 + 10:12:00 ~ 2015-01-05 + 23:59:59`
+#'
+#'
+#' @param x A `tbl_time` object
+#' @param period A period to filter
+#'
+#' @rdname time_filter
 #'
 #' @export
 #'
 #' @examples
 #'
-#' examples!!
+#' library(tidyquant)
+#' data(FANG)
+#' FANG <- as_tbl_time(FANG, date) %>% group_by(symbol)
+#'
+#' # 2013-01-01 to 2014-12-31
+#' time_filter(FANG, 2013 ~ 2014)
+#'
+#' # 2013-05-25 to 2014-06-04
+#' time_filter(FANG, 2013-05-25 ~ 2014-06-04)
+#'
+#' # `[` subset operator
+#' FANG[2014~2015]
+#'
+#' # `[` and one sided formula for only dates in 2014
+#' FANG[~2014]
+#'
+#' # `[` and column selection
+#' FANG[2013~2016, c("date", "adjusted")]
+#'
 #'
 time_filter <- function(x, period) {
 
   # Validate period syntax
-  from_to <- validate_period(period)
+  from_to <- formula_to_char(period)
 
   # Index name as sym
   index_name <- rlang::sym(retrieve_index(x, as_name = TRUE))
@@ -31,13 +68,46 @@ time_filter <- function(x, period) {
   from_to_clean <- purrr::map2_chr(from_to, c("from", "to"), .f = normalize_date)
 
   # Validate period date order
-  validate_date_order(from = from_to_clean[["from"]], to = from_to_clean[["to"]])
+  validate_date_order(from = from_to_clean[1], to = from_to_clean[2])
 
   # Filter for those rows
   dplyr::filter(x,
-                UQ(index_name) >= as.POSIXct(from_to_clean[["from"]], tz = retrieve_time_zone(x)),
-                UQ(index_name) <= as.POSIXct(from_to_clean[["to"]],   tz = retrieve_time_zone(x)))
+                UQ(index_name) >= as.POSIXct(from_to_clean[1], tz = retrieve_time_zone(x)),
+                UQ(index_name) <= as.POSIXct(from_to_clean[2], tz = retrieve_time_zone(x)))
 
+}
+
+#' @export
+#' @rdname time_filter
+`[.tbl_time` <- function(x, i, j, drop = FALSE) {
+
+  # If i exists
+  if(!rlang::is_missing(i)) {
+
+    # And i is a formula
+    if(rlang::is_formula(i)) {
+
+      # time_filter first
+      x <- time_filter(x, i)
+
+      # Then j filter if requested, keeping class
+      if(!rlang::is_missing(j)) {
+        dc_x <- declass(x, "tbl_time")
+        dc_x <- dc_x[,j, drop]
+        dc_x <- reclass(dc_x, x)
+        x <- dc_x
+      }
+
+      # Then return x
+      x
+
+    # If i was missing, or is not a formula, NextMethod()
+    } else {
+      NextMethod()
+    }
+  } else {
+    NextMethod()
+  }
 }
 
 
@@ -46,41 +116,39 @@ time_filter <- function(x, period) {
 # Check a user supplied period for correct syntax
 # If "2015", duplicate to "2015,2015"
 # Removes leading / trailing spaces
-validate_period <- function(period) {
+formula_to_char <- function(period) {
 
-  # Comma separation
-  split_count <- stringr::str_count(period, ",")
+  # Must be a formula
+  assertthat::assert_that(rlang::is_formula(period),
+                          msg = "Period must be specified as a formula using `~`")
 
-  assertthat::assert_that(split_count %in% c(0, 1) ,
-                          msg = "Only a `from` and `to` period can be supplied, separated by a comma")
+  # Split dates, remove ~
+  period <- as.character(period)[-1]
 
-  if(split_count == 0) {
-    period <- paste(period, period, sep = ",")
+  # Remove spaces
+  period <- gsub(" ", "", period)
+
+  # If rhs only, duplicate
+  if(length(period) == 1) {
+    period <- c(period, period)
   }
-
-  # Split by ',' into separate lists
-  from_to <- unlist(strsplit(period, ","))
-  from_to <- list(from = from_to[1], to = from_to[2])
-
-  # Leading and trailing spaces
-  from_to <- lapply(from_to, FUN = function(x) gsub("^\\s+|\\s+$", "", x))
 
   # Check symbols
   check_syms <- function(x) {
     assertthat::assert_that(stringr::str_count(x, "-") <= 2,
-                            msg = "A maximum of three '-' are possible per date")
+                            msg = "A maximum of two '-' are possible per date")
     assertthat::assert_that(stringr::str_count(x, ":") <= 2,
-                            msg = "A maximum of three ':' are possible per date")
-    assertthat::assert_that(stringr::str_count(x, " ") <= 1,
-                            msg = "A maximum of one space is possible per date")
+                            msg = "A maximum of two ':' are possible per date")
+    assertthat::assert_that(stringr::str_count(x, "\\+") <= 1,
+                            msg = "A maximum of one '+' is possible per date")
     assertthat::assert_that(!stringr::str_detect(x, "^:|:$|\\s:|:\\s"),
                             msg = "A ':' can only be used between two numbers")
     assertthat::assert_that(!stringr::str_detect(x, "^-|-$|\\s-|-\\s"),
                             msg = "A '-' can only be used between two numbers")
   }
-  lapply(from_to, check_syms)
+  lapply(period, check_syms)
 
-  from_to
+  period
 }
 
 # Validates the final dates
@@ -105,10 +173,10 @@ normalize_date <- function(x, from_to) {
                 "to"   = list(h = "23", m = "59", s = "59"))
 
   # Check existance of date / time dividing space \\s
-  date_time <- if(stringr::str_detect(x, "\\s")) {
+  date_time <- if(stringr::str_detect(x, "\\+")) {
 
     # If there is a date and a time, split them
-    date_time <- unlist(stringr::str_split(x, "\\s"))
+    date_time <- unlist(stringr::str_split(x, "\\+"))
 
     # Recurse split to fill the lists
     date <- recurse_split(date_time[1], ymd, "-")

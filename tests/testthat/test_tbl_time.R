@@ -19,6 +19,11 @@ test_that("tbl_time index is created", {
   expect_true("index" %in% names(attributes(test_tbl_time)))
 })
 
+test_that("as_tbl_time() on a tbl_time object shouldn't repeat classes", {
+  test_tbl_time2 <- as_tbl_time(test_tbl_time, date)
+  expect_true(length(which(class(test_tbl_time2) == "tbl_time")) == 1)
+})
+
 test_that("tbl_time index can be retrieved", {
   expect_equal(retrieve_index(test_tbl_time), dplyr::select(test_time, date))
 })

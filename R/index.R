@@ -25,6 +25,9 @@ retrieve_index <- function(x, as_name = FALSE) {
 #' @export
 retrieve_index.tbl_time <- function(x, as_name = FALSE) {
 
+  assertthat::assert_that(rlang::quo_name(attr(x, "index")) %in% colnames(x),
+                          msg = "`index` has been removed from the time tibble")
+
   if(as_name) {
     rlang::quo_name(attr(x, "index"))
   } else {
@@ -34,6 +37,9 @@ retrieve_index.tbl_time <- function(x, as_name = FALSE) {
 
 #' @export
 retrieve_index.grouped_tbl_time <- function(x, as_name = FALSE) {
+
+  assertthat::assert_that(rlang::quo_name(attr(x, "index")) %in% colnames(x),
+                          msg = "`index` has been removed from the time tibble")
 
   if(as_name) {
     rlang::quo_name(attr(x, "index"))
