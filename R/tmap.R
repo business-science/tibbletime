@@ -1,4 +1,4 @@
-#' Apply a function to each element of a `tbl_time` tibble.
+#' Apply a function to each element of a `tbl_time` object.
 #'
 #' The tmap functions transform a `tbl_time` input by applying a function to
 #' each column at a specified time interval.
@@ -25,6 +25,7 @@
 #' @inheritParams purrr::map
 #' @param .x A `tbl_time` object
 #' @param period A period to group the mapping by
+#' @param name The name of the list-column generated
 #'
 #' @rdname tmap
 #'
@@ -52,6 +53,84 @@ tmap.grouped_tbl_time <- function(.x, .f, period = "yearly", name = NULL, ...) {
   name <- enquo(name)
   x <- tmap_variant(.x, .f, period = period, name = !! name,
                     map_type = purrr::map, join_cols = join_cols, ...)
+  group_by(x, !!! groups(.x))
+}
+
+##### tmap_dbl -----------------------------------------------------------------
+
+#' @export
+#' @rdname tmap
+#'
+tmap_chr <- function(.x, .f, period = "yearly", name = NULL, ...) {
+  UseMethod("tmap_chr")
+}
+
+#' @export
+tmap_chr.tbl_time <- function(.x, .f, period = "yearly", name = NULL, ...) {
+  join_cols <- retrieve_index(.x, as_name = TRUE)
+  name <- enquo(name)
+  tmap_variant(.x, .f, period = period, name = !! name,
+               map_type = purrr::map_chr, join_cols = join_cols, ...)
+}
+
+#' @export
+tmap_chr.grouped_tbl_time <- function(.x, .f, period = "yearly", name = NULL, ...) {
+  join_cols <- c(group_vars(.x), retrieve_index(.x, as_name = TRUE))
+  name <- enquo(name)
+  x <- tmap_variant(.x, .f, period = period, name = !! name,
+                    map_type = purrr::map_chr, join_cols = join_cols, ...)
+  group_by(x, !!! groups(.x))
+}
+
+##### tmap_int -----------------------------------------------------------------
+
+#' @export
+#' @rdname tmap
+#'
+tmap_int <- function(.x, .f, period = "yearly", name = NULL, ...) {
+  UseMethod("tmap_int")
+}
+
+#' @export
+tmap_int.tbl_time <- function(.x, .f, period = "yearly", name = NULL, ...) {
+  join_cols <- retrieve_index(.x, as_name = TRUE)
+  name <- enquo(name)
+  tmap_variant(.x, .f, period = period, name = !! name,
+               map_type = purrr::map_int, join_cols = join_cols, ...)
+}
+
+#' @export
+tmap_int.grouped_tbl_time <- function(.x, .f, period = "yearly", name = NULL, ...) {
+  join_cols <- c(group_vars(.x), retrieve_index(.x, as_name = TRUE))
+  name <- enquo(name)
+  x <- tmap_variant(.x, .f, period = period, name = !! name,
+                    map_type = purrr::map_int, join_cols = join_cols, ...)
+  group_by(x, !!! groups(.x))
+}
+
+##### tmap_lgl -----------------------------------------------------------------
+
+#' @export
+#' @rdname tmap
+#'
+tmap_lgl <- function(.x, .f, period = "yearly", name = NULL, ...) {
+  UseMethod("tmap_lgl")
+}
+
+#' @export
+tmap_lgl.tbl_time <- function(.x, .f, period = "yearly", name = NULL, ...) {
+  join_cols <- retrieve_index(.x, as_name = TRUE)
+  name <- enquo(name)
+  tmap_variant(.x, .f, period = period, name = !! name,
+               map_type = purrr::map_lgl, join_cols = join_cols, ...)
+}
+
+#' @export
+tmap_lgl.grouped_tbl_time <- function(.x, .f, period = "yearly", name = NULL, ...) {
+  join_cols <- c(group_vars(.x), retrieve_index(.x, as_name = TRUE))
+  name <- enquo(name)
+  x <- tmap_variant(.x, .f, period = period, name = !! name,
+                    map_type = purrr::map_lgl, join_cols = join_cols, ...)
   group_by(x, !!! groups(.x))
 }
 
@@ -167,33 +246,17 @@ tmap_variant <- function(.x, .f,
                          join_cols = NULL,
                          name = NULL, ...) {
 
-  index          <- retrieve_index(.x)
-  index_char     <- retrieve_index(.x, as_name = TRUE)
-  index_sym      <- rlang::sym(index_char)
-  exp_index      <- expand_index(.x, period)
-  key_col        <- enquo(name)
-
+  # Get the key column name
+  key_col <- enquo(name)
   if(rlang::quo_is_null(key_col)) {
     key_col <- rlang::sym("data")
   }
 
-  # Need join_cols = combo of groups and index
-  period_cols    <- setdiff(x = colnames(exp_index), y = join_cols)
+  # Collapse to the correct period
+  time_collapse(.x, period) %>%
 
-  # Join .x with expanded index
-  dplyr::left_join(.x, exp_index, by = join_cols) %>%
-
-    # Additionally group by expanded index periods
-    dplyr::group_by(!!! rlang::syms(period_cols), add = TRUE) %>%
-
-    # Index column becomes the max of that group
-    dplyr::mutate(!! index_sym := max(!! index_sym)) %>%
-
-    # Regroup by original join_cols (removes period grouping)
-    dplyr::group_by(!!! rlang::syms(join_cols)) %>%
-
-    # Remove period cols
-    dplyr::select(- one_of(period_cols)) %>%
+    # Ungroup. nest_cols argument handles them
+    ungroup() %>%
 
     # Nest
     tidyr::nest_(key_col   = rlang::quo_name(key_col),
