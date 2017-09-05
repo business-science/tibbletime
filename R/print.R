@@ -3,7 +3,7 @@
 print.tbl_time <- function(x, ...) {
 
   # Original trunc_mat
-  print_tbl <- trunc_mat(x, ...)
+  print_tbl <- tibble::trunc_mat(x, ...)
 
   # Save summary[[1]] containing "A tibble" and dims
   summary <- print_tbl$summary[[1]]

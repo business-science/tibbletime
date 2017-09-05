@@ -2,7 +2,7 @@
 #' @importFrom dplyr summarise
 #'
 summarise.tbl_time <- function(.data, ...) {
-  dplyr_execute(.data, summarise, ...)
+  tidyverse_execute(.data, summarise, ...)
 }
 
 #' @export

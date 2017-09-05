@@ -2,7 +2,7 @@
 #' @importFrom dplyr select
 #'
 select.tbl_time <- function(.data, ...) {
-  dplyr_execute(.data, select, ...)
+  tidyverse_execute(.data, select, ...)
 }
 
 #' @export

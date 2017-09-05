@@ -2,7 +2,7 @@
 #' @importFrom dplyr group_by
 #'
 group_by.tbl_time <- function(.data, ..., add = FALSE) {
-  x <- dplyr_execute(.data, group_by, ..., add = add)
+  x <- tidyverse_execute(.data, group_by, ..., add = add)
 
   # Add a grouped_tbl_time class if not already there
   if("tbl_time" %in% class(x)) {

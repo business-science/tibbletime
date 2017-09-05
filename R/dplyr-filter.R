@@ -2,7 +2,7 @@
 #' @importFrom dplyr filter
 #'
 filter.tbl_time <- function(.data, ...) {
-  dplyr_execute(.data, filter, ...)
+  tidyverse_execute(.data, filter, ...)
 }
 
 #' @export
