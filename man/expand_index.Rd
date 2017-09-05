@@ -4,10 +4,12 @@
 \alias{expand_index}
 \title{Expand a \code{tbl_time} index}
 \usage{
-expand_index(x)
+expand_index(x, period)
 }
 \arguments{
 \item{x}{A \code{tbl_time} object}
+
+\item{period}{The most granular period to expand to}
 }
 \description{
 Retrieve an expanded version of a \code{tbl_time} index.
@@ -32,6 +34,6 @@ x <- tibble::tibble(
 
 x <- as_tbl_time(x, date)
 
-expand_index(x)
+expand_index(x, "yearly")
 
 }

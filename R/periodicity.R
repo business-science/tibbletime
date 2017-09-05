@@ -2,7 +2,7 @@
 as_period <- function(x, period = "yearly", side = "start") {
 
   # Index tibble/sym
-  index      <- expand_index(x)
+  index      <- expand_index(x, period)
   index_name <- rlang::sym(retrieve_index(x, as_name = TRUE))
 
   # Define grouping symbols
@@ -37,7 +37,7 @@ period_to_syms <- function(period) {
           "hourly"  = list("year", "month", "day", "hour"),
           "minute"  = list("year", "month", "day", "hour", "minute"),
           "second"  = list("year", "month", "day", "hour", "minute", "second"),
-          stop("`period` is not one of: 'yearly', 'monthly', 'daily'", call. = FALSE)
+          stop("`period` is not one of: 'yearly', 'monthly', 'daily', 'hourly', 'minute', 'second'", call. = FALSE)
   )
 
   rlang::syms(groups)

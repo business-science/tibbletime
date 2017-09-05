@@ -74,15 +74,15 @@ as_tbl_time.grouped_df <- function(x, index, ...) {
 
 validate_index <- function(x, index) {
 
-  is_any_date <- function(x) {
-    inherits(x, c("Date", "POSIXct", "POSIXt"))
-  }
-
   # Does the column exist in x?
   assertthat::assert_that(rlang::quo_name(index) %in% colnames(x))
 
   # Is the column time based?
   assertthat::assert_that(is_any_date(dplyr::pull(x, !! index)),
                           msg = "Specified `index` is not time based")
+}
+
+is_any_date <- function(x) {
+  inherits(x, c("Date", "POSIXct", "POSIXt"))
 }
 
