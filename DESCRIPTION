@@ -1,18 +1,30 @@
-Package: tidytime
+Package: tibbletime
 Type: Package
-Title: What the Package Does (Title Case)
-Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
-Encoding: UTF-8
-LazyData: true
+Title: Time Aware tibbles
+Version: 0.0.1
+Date: 2017-09-05
+Authors@R: c(
+    person("Davis", "Vaughan", email = "dvaughan@business-science.io", role = c("aut", "cre")),
+    person("Matt", "Dancho", email = "mdancho@business-science.io", role = c("aut"))
+  )
+Maintainer: Davis Vaughan <dvaughan@business-science.io>
+Description: Built on top of the tibble package, tibbletime is an extension
+    that allows for the creation of time aware tibbles. Some immediate 
+    advantages of this include: the ability to perform time based subsetting 
+    on tibbles, quickly summarising and aggregating results by time periods, 
+    and calling functions similar in spirit to the map family from purrr 
+    on time based tibbles.
+URL: https://github.com/business-science/tibbletime
+BugReports: https://github.com/business-science/tibbletime/issues
+License: MIT + file LICENSE
+Encoding: UTF-8gsub
 Suggests: testthat
 RoxygenNote: 6.0.1
 Roxygen: list(markdown = TRUE)
+Depends:
+    R (>= 3.3.0)
 Imports:
     dplyr (>= 0.7),
     rlang,
-    tibble
+    tibble,
+    tidyr
