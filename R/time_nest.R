@@ -1,35 +1,52 @@
+#' Nest a `tbl_time` to a specified time period
+#'
+#' @export
+#'
 time_nest <- function(data, ..., period = "yearly", .key = data) {
+  UseMethod("time_nest")
+}
 
-  index          <- retrieve_index(data)
-  index_char     <- retrieve_index(data, as_name = TRUE)
-  index_sym      <- rlang::sym(index_char)
-  exp_index      <- expand_index(data, period)
-  key_col        <- enquo(.key)
+#' @export
+#'
+time_nest.tbl_time <- function(data, ..., period = "yearly", .key = data) {
 
-  if(rlang::quo_is_null(key_col)) {
-    key_col <- rlang::sym("data")
-  }
+  # Setup
+  cols_not_nested <- retrieve_index(data, as_name = TRUE)
+  key_col         <- enquo(.key)
 
-  # Need join_cols = combo of groups and index
-  period_cols    <- setdiff(x = colnames(exp_index), y = join_cols)
+  # Collapse. Keeping sep column for the old dates
+  data_coll <- time_collapse(data, period, as_sep_col = TRUE)
 
-  # Join data with expanded index
-  dplyr::left_join(data, exp_index, by = join_cols) %>%
+  data_coll %>%
 
-    # Additionally group by expanded index periods
-    dplyr::group_by(!!! rlang::syms(period_cols), add = TRUE) %>%
-
-    # Index column becomes the max of that group
-    dplyr::mutate(!! index_sym := max(!! index_sym)) %>%
-
-    # Regroup by original join_cols (removes period grouping)
-    dplyr::group_by(!!! rlang::syms(join_cols)) %>%
-
-    # Remove period cols
-    dplyr::select(- one_of(period_cols)) %>%
-
-    # Nest
+    # Nest all non groups and non index cols
     tidyr::nest_(key_col   = rlang::quo_name(key_col),
-                 nest_cols = setdiff(colnames(data), join_cols))
+                 nest_cols = setdiff(colnames(data_coll), cols_not_nested)) %>%
 
+    # Each element in the nest should be a tbl_time
+    dplyr::mutate(!! rlang::quo_name(key_col) := map(!! key_col, ~as_tbl_time(.x, .date)))
+}
+
+#' @export
+#'
+time_nest.grouped_tbl_time <- function(data, ..., period = "yearly", .key = data) {
+
+  # Setup
+  cols_not_nested <- c(group_vars(data), retrieve_index(data, as_name = TRUE))
+  key_col         <- enquo(.key)
+
+  # Collapse. Keeping sep column for the old dates
+  data_coll <- time_collapse(data, period, as_sep_col = TRUE)
+
+  data_coll %>%
+
+    # Ungroup groups. nest_cols argument takes care of them
+    ungroup() %>%
+
+    # Nest all non groups and non index cols
+    tidyr::nest_(key_col   = rlang::quo_name(key_col),
+                 nest_cols = setdiff(colnames(data_coll), cols_not_nested)) %>%
+
+    # Each element in the nest should be a tbl_time
+    dplyr::mutate(!! rlang::quo_name(key_col) := map(!! key_col, ~as_tbl_time(.x, .date)))
 }

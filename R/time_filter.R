@@ -4,8 +4,8 @@
 #'
 #' @details
 #'
-#' The `period` is specified using the format `from ~ to`.
-#' Each side of the `period` is specified as `YYYY-MM-DD + HH:MM:SS`, but powerful shorthand is available.
+#' The `time_formula` is specified using the format `from ~ to`.
+#' Each side of the `time_formula` is specified as `YYYY-MM-DD + HH:MM:SS`, but powerful shorthand is available.
 #' Some examples are:
 #' * __Year:__ `2013 ~ 2015`
 #' * __Month:__ `2013-01 ~ 2016-06`
@@ -13,7 +13,7 @@
 #' * __Second:__ `2013-01-05 + 10:22:15 ~ 2018-06-03 + 12:14:22`
 #' * __Variations:__ `2013 ~ 2016-06`
 #'
-#' The `period` can also use a one sided formula.
+#' The `time_formula` can also use a one sided formula.
 #' * __Only dates in 2015:__ `~2015`
 #' * __Only dates March 2015:__ `~2015-03`
 #'
@@ -28,7 +28,7 @@
 #'
 #'
 #' @param x A `tbl_time` object
-#' @param period A period to filter
+#' @param time_formula A period to filter over
 #'
 #' @rdname time_filter
 #'
@@ -56,10 +56,10 @@
 #' FANG[2013~2016, c("date", "adjusted")]
 #'
 #'
-time_filter <- function(x, period) {
+time_filter <- function(x, time_formula) {
 
-  # Validate period syntax
-  from_to <- formula_to_char(period)
+  # Validate time_formula syntax
+  from_to <- formula_to_char(time_formula)
 
   # Index name as sym
   index_name <- rlang::sym(retrieve_index(x, as_name = TRUE))
@@ -67,7 +67,7 @@ time_filter <- function(x, period) {
   # Normalize
   from_to_clean <- purrr::map2_chr(from_to, c("from", "to"), .f = normalize_date)
 
-  # Validate period date order
+  # Validate time_formula date order
   validate_date_order(from = from_to_clean[1], to = from_to_clean[2])
 
   # Filter for those rows
@@ -113,24 +113,24 @@ time_filter <- function(x, period) {
 
 # Util ----
 
-# Check a user supplied period for correct syntax
+# Check a user supplied time_formula for correct syntax
 # If "2015", duplicate to "2015,2015"
 # Removes leading / trailing spaces
-formula_to_char <- function(period) {
+formula_to_char <- function(time_formula) {
 
   # Must be a formula
-  assertthat::assert_that(rlang::is_formula(period),
+  assertthat::assert_that(rlang::is_formula(time_formula),
                           msg = "Period must be specified as a formula using `~`")
 
   # Split dates, remove ~
-  period <- as.character(period)[-1]
+  time_formula <- as.character(time_formula)[-1]
 
   # Remove spaces
-  period <- gsub(" ", "", period)
+  time_formula <- gsub(" ", "", time_formula)
 
   # If rhs only, duplicate
-  if(length(period) == 1) {
-    period <- c(period, period)
+  if(length(time_formula) == 1) {
+    time_formula <- c(time_formula, time_formula)
   }
 
   # Check symbols
@@ -146,9 +146,9 @@ formula_to_char <- function(period) {
     assertthat::assert_that(!stringr::str_detect(x, "^-|-$|\\s-|-\\s"),
                             msg = "A '-' can only be used between two numbers")
   }
-  lapply(period, check_syms)
+  lapply(time_formula, check_syms)
 
-  period
+  time_formula
 }
 
 # Validates the final dates

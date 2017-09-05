@@ -2,7 +2,7 @@
 #' @importFrom dplyr mutate
 #'
 mutate.tbl_time <- function(.data, ...) {
-  dplyr_execute(.data, mutate, ...)
+  dplyr_execute(.data, fun = mutate, ...)
 }
 
 #' @export

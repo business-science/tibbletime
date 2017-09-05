@@ -4,13 +4,19 @@
 \alias{tmap}
 \alias{tmap_dbl}
 \alias{tmap_dfc}
+\alias{tmap_dfr}
+\alias{tmap_df}
 \title{Apply a function to each element of a \code{tbl_time} tibble.}
 \usage{
-tmap(.x, .f, period = "yearly", ...)
+tmap(.x, .f, period = "yearly", name = NULL, ...)
 
-tmap_dbl(.x, .f, period = "yearly", ...)
+tmap_dbl(.x, .f, period = "yearly", name = NULL, ...)
 
-tmap_dfc(.x, .f, period = "yearly", ...)
+tmap_dfc(.x, .f, period = "yearly", name = NULL, ...)
+
+tmap_dfr(.x, .f, period = "yearly", name = NULL, ...)
+
+tmap_df(.x, .f, period = "yearly", name = NULL, ...)
 }
 \arguments{
 \item{.x}{A \code{tbl_time} object}
@@ -41,15 +47,22 @@ to extract named attributes. If a component is not present, the value of
 \item{...}{Additional arguments passed on to \code{.f}.}
 }
 \value{
-A \code{tbl_time} object
+A \code{tbl_time} object grouped by the time interval specified. The last
+available date in that interval is returned as the new date.
 }
 \description{
 The tmap functions transform a \code{tbl_time} input by applying a function to
 each column at a specified time interval.
 }
 \details{
-These functions are similar to
-\code{\link[purrr:map]{purrr::map()}}, but allow the user to also perform grouped mapping over
-intervals such as \code{"yearly"}, \code{"monthly"}, \code{"hourly"}, etc. Groupings
-applied using \code{\link[dplyr:group_by]{dplyr::group_by()}} are also respected.
+These functions are similar to \code{\link[purrr:map]{purrr::map()}},
+but allow the user to also perform grouped mapping over
+intervals such as \code{"yearly"}, \code{"monthly"}, \code{"hourly"}, etc. For example,
+if \code{"monthly"} is chosen, one could picture the \code{tbl_time} object being
+split into smaller \code{tbl_time}s, one for each month, and having the function
+mapped over all of the columns in each of those smaller tibbles. The results
+are then recombined into one tibble, with a list-column holding the results
+of the mapping over each time interval.
+
+Groupings applied using \code{\link[dplyr:group_by]{dplyr::group_by()}} are respected.
 }

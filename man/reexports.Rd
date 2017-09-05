@@ -2,7 +2,7 @@
 % Please edit documentation in R/dplyr-distinct.R, R/dplyr-filter.R,
 %   R/dplyr-group_by.R, R/dplyr-left_join.R, R/dplyr-mutate.R, R/dplyr-select.R,
 %   R/dplyr-summarise.R, R/dplyr-summarise_at.R, R/dplyr-ungroup.R,
-%   R/tidyr-unnest.R
+%   R/tidyr-gather.R, R/tidyr-unnest.R
 \docType{import}
 \name{reexports}
 \alias{reexports}
@@ -28,6 +28,10 @@
 \alias{reexports}
 \alias{ungroup}
 \alias{reexports}
+\alias{gather}
+\alias{reexports}
+\alias{gather_}
+\alias{reexports}
 \alias{unnest}
 \alias{reexports}
 \alias{unnest_}
@@ -40,6 +44,6 @@ below to see their documentation.
 \describe{
   \item{dplyr}{\code{\link[dplyr]{distinct}}, \code{\link[dplyr]{filter}}, \code{\link[dplyr]{group_by}}, \code{\link[dplyr]{left_join}}, \code{\link[dplyr]{mutate}}, \code{\link[dplyr]{transmute}}, \code{\link[dplyr]{select}}, \code{\link[dplyr]{summarise}}, \code{\link[dplyr]{summarize}}, \code{\link[dplyr]{summarise_at}}, \code{\link[dplyr]{ungroup}}}
 
-  \item{tidyr}{\code{\link[tidyr]{unnest}}, \code{\link[tidyr]{unnest_}}}
+  \item{tidyr}{\code{\link[tidyr]{gather}}, \code{\link[tidyr]{gather_}}, \code{\link[tidyr]{unnest}}, \code{\link[tidyr]{unnest_}}}
 }}
 

@@ -1,25 +1,25 @@
 # dplyr_execute() executes any dplyr function on a tbl_time object,
 # in the process retaining time based classes and attributes
 # that would normally be stripped
-dplyr_execute <- function(x, fun, ...) {
+dplyr_execute <- function(.x, fun, ...) {
   UseMethod("dplyr_execute")
 }
 
-dplyr_execute.default <- function(x, fun, ...) {
+dplyr_execute.default <- function(.x, fun, ...) {
   stop("`dplyr_execute()` should only be called on a `tbl_time` object")
 }
 
-dplyr_execute.tbl_time <- function(x, fun, ...) {
+dplyr_execute.tbl_time <- function(.x, fun, ...) {
 
   # Classes and attributes to keep
-  time_classes <- stringr::str_subset(class(x), "tbl_time")
+  time_classes <- stringr::str_subset(class(.x), "tbl_time")
   time_attrs <- list(
-    index     = attr(x, "index"),
-    time_zone = attr(x, "time_zone")
+    index     = attr(.x, "index"),
+    time_zone = attr(.x, "time_zone")
   )
 
   # Remove, execute dplyr fun, add back
-  x %>%
+  .x %>%
     detime(time_classes, time_attrs) %>%
     fun(...) %>%
     retime(time_classes, time_attrs)
