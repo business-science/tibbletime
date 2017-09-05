@@ -6,5 +6,12 @@ summarise_at.tbl_time <- function(.tbl, .vars, .funs, ..., .cols = NULL) {
 }
 
 #' @export
+#' @importFrom dplyr summarize_at
+#'
+summarize_at.tbl_time <- summarise_at.tbl_time
+
+#' @export
 dplyr::summarise_at
 
+#' @export
+dplyr::summarize_at

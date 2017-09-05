@@ -11,6 +11,20 @@ test_tbl_time <- as_tbl_time(test_time, date)
 
 # Tests
 
+test_that("mutate works as expected", {
+  expect_equal(mutate(test_tbl_time, x = 4),
+               mutate(test_time, x = 4))
+})
+
+test_that("transmute works as expected", {
+  expect_equal(transmute(test_tbl_time, date = date, x = 4),
+               transmute(test_time, date = date, x = 4))
+})
+
 test_that("tbl_time class is retained", {
   expect_is(mutate(test_tbl_time, new_value = 2 * value), "tbl_time")
+})
+
+test_that("tbl_time class is lost on transmute without date", {
+  expect_false("tbl_time" %in% class(transmute(test_tbl_time, new_value = 2 * value)))
 })
