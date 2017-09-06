@@ -28,7 +28,7 @@ tmap_dfr(.x, .f, period = "yearly", name = NULL, ...)
 tmap_df(.x, .f, period = "yearly", name = NULL, ...)
 }
 \arguments{
-\item{.x}{A \code{tbl_time} object}
+\item{.x}{A \code{tbl_time} object.}
 
 \item{.f}{A function, formula, or atomic vector.
 
@@ -51,9 +51,9 @@ and name at different levels. Within a list, wrap strings in \code{get_attr()}
 to extract named attributes. If a component is not present, the value of
 \code{.default} will be returned.}
 
-\item{period}{A period to group the mapping by}
+\item{period}{A period to group the mapping by.}
 
-\item{name}{The name of the list-column generated}
+\item{name}{The bare name of the list-column generated.}
 
 \item{...}{Additional arguments passed on to \code{.f}.}
 }
@@ -73,7 +73,7 @@ if \code{"monthly"} is chosen, one could picture the \code{tbl_time} object bein
 split into smaller \code{tbl_time}s, one for each month, and having the function
 mapped over all of the columns in each of those smaller tibbles. The results
 are then recombined into one tibble, with a list-column holding the results
-of the mapping over each time interval.
+of the mapping over each time period.
 
 Groupings applied using \code{\link[dplyr:group_by]{dplyr::group_by()}} are respected.
 }
@@ -89,4 +89,52 @@ The following periods are available:
 \item \code{"minute"}
 \item \code{"second"}
 }
+}
+\examples{
+
+data(FB)
+FB <- as_tbl_time(FB, date)
+# No need for the symbol column here
+FB <- dplyr::select(FB, -symbol)
+
+# First example -------------------------------------------------------------
+
+# Get the yearly average of every column in FB
+mapped_mean <- FB \%>\%
+  tmap(.f = ~mean(.x), period = "yearly")
+
+# It is returned as a list-column because the time period adds
+# an extra dimension to the mapping
+mapped_mean
+
+# Access individual elements. Here, the 2013 results
+mapped_mean$data[[1]]
+
+# More useful example -------------------------------------------------------
+
+# An easier approach might be to use `tmap_dfc` to coerce each list-column
+# entry to a tibble, then unnest the result
+# Here we calculate the monthly average for each column
+FB \%>\%
+  tmap_dfc(~mean(.x), period = "monthly") \%>\%
+  tidyr::unnest()
+
+# Functions with multiple return values -------------------------------------
+
+# Functions that return more than 1 number per map are possible, but more
+# difficult to work with.
+# Mapping the quantile function to each column of FB at yearly time increments
+mapped_quantile <- FB \%>\%
+  tmap(~quantile(.x), "yearly")
+
+mapped_quantile$data[[1]]
+
+# It is possible to get a cleaner result, but currently not intuitive
+library(tibble)
+FB \%>\%
+  tidyr::gather(key = col_type, value = value, -date) \%>\%
+  dplyr::group_by(col_type) \%>\%
+  tmap_dfr(~quantile(.x) \%>\% as.list \%>\% as.tibble, period = "yearly") \%>\%
+  tidyr::unnest()
+
 }

@@ -30,6 +30,42 @@
 #'
 #' @rdname time_summarise
 #'
+#' @examples
+#'
+#' # Basic functionality -------------------------------------------------------
+#'
+#' data(FB)
+#' FB <- as_tbl_time(FB, date)
+#'
+#' # Calculate the mean and standard deviation of the adjusted column
+#' # at a yearly interval
+#' FB %>%
+#'   time_summarise(period = "yearly",
+#'                  adj_mean = mean(adjusted),
+#'                  adj_sd   = sd(adjusted))
+#'
+#' # Want a more granular view? Look at monthly instead
+#' FB %>%
+#'   time_summarise(period = "monthly",
+#'                  adj_mean = mean(adjusted),
+#'                  adj_sd   = sd(adjusted))
+#'
+#' # Grouped functionality -----------------------------------------------------
+#'
+#' data(FANG)
+#' FANG <- as_tbl_time(FANG, date) %>%
+#'   dplyr::group_by(symbol)
+#'
+#' # Groups are respected, allowing for very useful summaries
+#' # grouped by symbol and by time period
+#' FANG %>%
+#'   time_summarise(period = "yearly",
+#'                  vol_max   = max(volume),
+#'                  vol_min   = min(volume),
+#'                  # Like summarise, you can use columns you just computed
+#'                  vol_range = vol_max - vol_min)
+#'
+#'
 #' @export
 #'
 time_summarise <- function(.data, period = "yearly", ...) {
