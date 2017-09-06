@@ -3,25 +3,49 @@
 \name{tbl_time}
 \alias{tbl_time}
 \alias{as_tbl_time}
-\title{Convert an object into a \code{tbl_time} object}
+\title{Create \code{tbl_time} objects}
 \usage{
 tbl_time(x, index, ...)
 
 as_tbl_time(x, index, ...)
 }
 \arguments{
-\item{x}{stuff!!}
+\item{x}{An object to be converted to \code{tbl_time}. This is generally
+a \code{\link[tibble:tibble]{tibble::tibble()}}, or an object that can first be coerced to a \code{tibble}.}
 
-\item{index}{stuff!!}
+\item{index}{The bare column name of the column to be used as the index.}
 
-\item{...}{Currently not used}
+\item{...}{Arguments passed to \code{\link[tibble:as_tibble]{tibble::as_tibble()}} if coercsion is
+necessary first.}
 }
 \description{
-\code{tbl_time} objects have a time index that contains information about which column should be
-used for time based subsetting and other time based manipulation. Otherwise, they function
-as normal tibbles.
+\code{tbl_time} objects have a time index that contains information about
+which column should be used for time based subsetting and other time based
+manipulation. Otherwise, they function as normal tibbles.
+}
+\details{
+The information stored about \code{tbl_time} objects are the \code{index} and the
+\code{time_zone}. These are stored as attributes, with the \code{index} as a
+\emph{quosure} and the \code{time_zone} as a string.
+
+Currently, only the \code{Date} and \code{POSIXct} classes are supported to be
+time indices.
 }
 \examples{
 
+# Converting a data.frame to a `tbl_time`
+# Using Date index
+ex1 <- data.frame(date = Sys.Date(), value = 1)
+ex1_tbl_time <- as_tbl_time(ex1, date)
+class(ex1_tbl_time)
+attributes(ex1_tbl_time)
+
+# Converting a tibble to a `tbl_time`
+# Using POSIXct index
+ex2 <- tibble::tibble(
+  time  = as.POSIXct(c("2017-01-01 10:12:01", "2017-01-02 12:12:01")),
+  value = c(1, 2)
+)
+as_tbl_time(ex2, time)
 
 }
