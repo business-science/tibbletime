@@ -12,7 +12,7 @@ time_nest.tbl_time <- function(data, ..., period = "yearly", .key = data) {
 
   # Setup
   cols_not_nested <- retrieve_index(data, as_name = TRUE)
-  key_col         <- enquo(.key)
+  key_col         <- rlang::enquo(.key)
 
   # Collapse. Keeping sep column for the old dates
   data_coll <- time_collapse(data, period, as_sep_col = TRUE)
@@ -24,7 +24,7 @@ time_nest.tbl_time <- function(data, ..., period = "yearly", .key = data) {
                  nest_cols = setdiff(colnames(data_coll), cols_not_nested)) %>%
 
     # Each element in the nest should be a tbl_time
-    dplyr::mutate(!! rlang::quo_name(key_col) := map(!! key_col, ~as_tbl_time(.x, .date)))
+    dplyr::mutate(!! rlang::quo_name(key_col) := purrr::map(!! key_col, ~as_tbl_time(.x, .date)))
 }
 
 #' @export
@@ -32,8 +32,8 @@ time_nest.tbl_time <- function(data, ..., period = "yearly", .key = data) {
 time_nest.grouped_tbl_time <- function(data, ..., period = "yearly", .key = data) {
 
   # Setup
-  cols_not_nested <- c(group_vars(data), retrieve_index(data, as_name = TRUE))
-  key_col         <- enquo(.key)
+  cols_not_nested <- c(dplyr::group_vars(data), retrieve_index(data, as_name = TRUE))
+  key_col         <- rlang::enquo(.key)
 
   # Collapse. Keeping sep column for the old dates
   data_coll <- time_collapse(data, period, as_sep_col = TRUE)
@@ -48,5 +48,5 @@ time_nest.grouped_tbl_time <- function(data, ..., period = "yearly", .key = data
                  nest_cols = setdiff(colnames(data_coll), cols_not_nested)) %>%
 
     # Each element in the nest should be a tbl_time
-    dplyr::mutate(!! rlang::quo_name(key_col) := map(!! key_col, ~as_tbl_time(.x, .date)))
+    dplyr::mutate(!! rlang::quo_name(key_col) := purrr::map(!! key_col, ~as_tbl_time(.x, .date)))
 }

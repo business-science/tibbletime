@@ -16,4 +16,8 @@ benefit of being able to summarise by a time period such as \code{"yearly"} or
 }
 \details{
 Groups applied using \code{\link[dplyr:group_by]{dplyr::group_by()}} are respected.
+
+In \code{\link[dplyr:summarise]{dplyr::summarise()}}, one level of grouping is usually removed.
+Because an added group for the time index was added in \code{\link[=time_summarise]{time_summarise()}},
+none of the original groups are removed.
 }

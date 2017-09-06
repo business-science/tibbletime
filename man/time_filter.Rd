@@ -5,21 +5,21 @@
 \alias{[.tbl_time}
 \title{Succinctly filter a \code{tbl_time} object by date}
 \usage{
-time_filter(x, period)
+time_filter(x, time_formula)
 
 \method{[}{tbl_time}(x, i, j, drop = FALSE)
 }
 \arguments{
 \item{x}{A \code{tbl_time} object}
 
-\item{period}{A period to filter}
+\item{time_formula}{A period to filter over}
 }
 \description{
 Use a concise filtering method to filter for rows where the \code{index} falls within a date range
 }
 \details{
-The \code{period} is specified using the format \code{from ~ to}.
-Each side of the \code{period} is specified as \code{YYYY-MM-DD + HH:MM:SS}, but powerful shorthand is available.
+The \code{time_formula} is specified using the format \code{from ~ to}.
+Each side of the \code{time_formula} is specified as \code{YYYY-MM-DD + HH:MM:SS}, but powerful shorthand is available.
 Some examples are:
 \itemize{
 \item \strong{Year:} \code{2013 ~ 2015}
@@ -29,7 +29,7 @@ Some examples are:
 \item \strong{Variations:} \code{2013 ~ 2016-06}
 }
 
-The \code{period} can also use a one sided formula.
+The \code{time_formula} can also use a one sided formula.
 \itemize{
 \item \strong{Only dates in 2015:} \code{~2015}
 \item \strong{Only dates March 2015:} \code{~2015-03}

@@ -2,13 +2,22 @@
 % Please edit documentation in R/tmap.R
 \name{tmap}
 \alias{tmap}
+\alias{tmap_chr}
+\alias{tmap_int}
+\alias{tmap_lgl}
 \alias{tmap_dbl}
 \alias{tmap_dfc}
 \alias{tmap_dfr}
 \alias{tmap_df}
-\title{Apply a function to each element of a \code{tbl_time} tibble.}
+\title{Apply a function to each element of a \code{tbl_time} object.}
 \usage{
 tmap(.x, .f, period = "yearly", name = NULL, ...)
+
+tmap_chr(.x, .f, period = "yearly", name = NULL, ...)
+
+tmap_int(.x, .f, period = "yearly", name = NULL, ...)
+
+tmap_lgl(.x, .f, period = "yearly", name = NULL, ...)
 
 tmap_dbl(.x, .f, period = "yearly", name = NULL, ...)
 
@@ -43,6 +52,8 @@ to extract named attributes. If a component is not present, the value of
 \code{.default} will be returned.}
 
 \item{period}{A period to group the mapping by}
+
+\item{name}{The name of the list-column generated}
 
 \item{...}{Additional arguments passed on to \code{.f}.}
 }

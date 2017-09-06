@@ -14,7 +14,6 @@
 #'
 #' @examples
 #'
-#' examples!!
 #'
 tbl_time <- function(x, index, ...) {
   index <- rlang::enquo(index)

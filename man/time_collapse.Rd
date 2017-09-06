@@ -5,7 +5,7 @@
 \title{Collapse a \code{tbl_time} object so that all observations in a period share the
 same date}
 \usage{
-time_collapse(.data, period = "yearly", ...)
+time_collapse(.data, period = "yearly", as_sep_col = FALSE, ...)
 }
 \description{
 Collapse a \code{tbl_time} object so that all observations in a period share the

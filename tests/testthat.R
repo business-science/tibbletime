@@ -1,4 +1,4 @@
 library(testthat)
-library(tidytime)
+library(tibbletime)
 
-test_check("tidytime")
+test_check("tibbletime")

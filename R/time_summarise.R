@@ -35,7 +35,7 @@ time_summarise.tbl_time <- function(.data, ..., period = "yearly") {
 #'
 time_summarise.grouped_tbl_time <- function(.data, ..., period = "yearly") {
   time_summarise.tbl_time(.data, ..., period = period) %>%
-    dplyr::group_by(!!! groups(.data))
+    dplyr::group_by(!!! dplyr::groups(.data))
 }
 
 # time_summarize ---------------------------------------------------------------

@@ -23,7 +23,7 @@ retrieve_index <- function(x, as_name = FALSE) {
 }
 
 #' @export
-retrieve_index.default <- function(x, as_names = FALSE) {
+retrieve_index.default <- function(x, as_name = FALSE) {
   stop("Object is not of class `tbl_time`, have you called `as_tbl_time()`?", call. = FALSE)
 }
 

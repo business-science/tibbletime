@@ -42,18 +42,18 @@ tmap <- function(.x, .f, period = "yearly", name = NULL, ...) {
 #' @export
 tmap.tbl_time <- function(.x, .f, period = "yearly", name = NULL, ...) {
   join_cols <- retrieve_index(.x, as_name = TRUE)
-  name <- enquo(name)
+  name <- rlang::enquo(name)
   tmap_variant(.x, .f, period = period, name = !! name,
                map_type = purrr::map, join_cols = join_cols, ...)
 }
 
 #' @export
 tmap.grouped_tbl_time <- function(.x, .f, period = "yearly", name = NULL, ...) {
-  join_cols <- c(group_vars(.x), retrieve_index(.x, as_name = TRUE))
-  name <- enquo(name)
+  join_cols <- c(dplyr::group_vars(.x), retrieve_index(.x, as_name = TRUE))
+  name <- rlang::enquo(name)
   x <- tmap_variant(.x, .f, period = period, name = !! name,
                     map_type = purrr::map, join_cols = join_cols, ...)
-  group_by(x, !!! groups(.x))
+  group_by(x, !!! dplyr::groups(.x))
 }
 
 ##### tmap_dbl -----------------------------------------------------------------
@@ -68,18 +68,18 @@ tmap_chr <- function(.x, .f, period = "yearly", name = NULL, ...) {
 #' @export
 tmap_chr.tbl_time <- function(.x, .f, period = "yearly", name = NULL, ...) {
   join_cols <- retrieve_index(.x, as_name = TRUE)
-  name <- enquo(name)
+  name <- rlang::enquo(name)
   tmap_variant(.x, .f, period = period, name = !! name,
                map_type = purrr::map_chr, join_cols = join_cols, ...)
 }
 
 #' @export
 tmap_chr.grouped_tbl_time <- function(.x, .f, period = "yearly", name = NULL, ...) {
-  join_cols <- c(group_vars(.x), retrieve_index(.x, as_name = TRUE))
-  name <- enquo(name)
+  join_cols <- c(dplyr::group_vars(.x), retrieve_index(.x, as_name = TRUE))
+  name <- rlang::enquo(name)
   x <- tmap_variant(.x, .f, period = period, name = !! name,
                     map_type = purrr::map_chr, join_cols = join_cols, ...)
-  group_by(x, !!! groups(.x))
+  group_by(x, !!! dplyr::groups(.x))
 }
 
 ##### tmap_int -----------------------------------------------------------------
@@ -94,18 +94,18 @@ tmap_int <- function(.x, .f, period = "yearly", name = NULL, ...) {
 #' @export
 tmap_int.tbl_time <- function(.x, .f, period = "yearly", name = NULL, ...) {
   join_cols <- retrieve_index(.x, as_name = TRUE)
-  name <- enquo(name)
+  name <- rlang::enquo(name)
   tmap_variant(.x, .f, period = period, name = !! name,
                map_type = purrr::map_int, join_cols = join_cols, ...)
 }
 
 #' @export
 tmap_int.grouped_tbl_time <- function(.x, .f, period = "yearly", name = NULL, ...) {
-  join_cols <- c(group_vars(.x), retrieve_index(.x, as_name = TRUE))
-  name <- enquo(name)
+  join_cols <- c(dplyr::group_vars(.x), retrieve_index(.x, as_name = TRUE))
+  name <- rlang::enquo(name)
   x <- tmap_variant(.x, .f, period = period, name = !! name,
                     map_type = purrr::map_int, join_cols = join_cols, ...)
-  group_by(x, !!! groups(.x))
+  group_by(x, !!! dplyr::groups(.x))
 }
 
 ##### tmap_lgl -----------------------------------------------------------------
@@ -120,18 +120,18 @@ tmap_lgl <- function(.x, .f, period = "yearly", name = NULL, ...) {
 #' @export
 tmap_lgl.tbl_time <- function(.x, .f, period = "yearly", name = NULL, ...) {
   join_cols <- retrieve_index(.x, as_name = TRUE)
-  name <- enquo(name)
+  name <- rlang::enquo(name)
   tmap_variant(.x, .f, period = period, name = !! name,
                map_type = purrr::map_lgl, join_cols = join_cols, ...)
 }
 
 #' @export
 tmap_lgl.grouped_tbl_time <- function(.x, .f, period = "yearly", name = NULL, ...) {
-  join_cols <- c(group_vars(.x), retrieve_index(.x, as_name = TRUE))
-  name <- enquo(name)
+  join_cols <- c(dplyr::group_vars(.x), retrieve_index(.x, as_name = TRUE))
+  name <- rlang::enquo(name)
   x <- tmap_variant(.x, .f, period = period, name = !! name,
                     map_type = purrr::map_lgl, join_cols = join_cols, ...)
-  group_by(x, !!! groups(.x))
+  group_by(x, !!! dplyr::groups(.x))
 }
 
 ##### tmap_dbl -----------------------------------------------------------------
@@ -146,18 +146,18 @@ tmap_dbl <- function(.x, .f, period = "yearly", name = NULL, ...) {
 #' @export
 tmap_dbl.tbl_time <- function(.x, .f, period = "yearly", name = NULL, ...) {
   join_cols <- retrieve_index(.x, as_name = TRUE)
-  name <- enquo(name)
+  name <- rlang::enquo(name)
   tmap_variant(.x, .f, period = period, name = !! name,
                map_type = purrr::map_dbl, join_cols = join_cols, ...)
 }
 
 #' @export
 tmap_dbl.grouped_tbl_time <- function(.x, .f, period = "yearly", name = NULL, ...) {
-  join_cols <- c(group_vars(.x), retrieve_index(.x, as_name = TRUE))
-  name <- enquo(name)
+  join_cols <- c(dplyr::group_vars(.x), retrieve_index(.x, as_name = TRUE))
+  name <- rlang::enquo(name)
   x <- tmap_variant(.x, .f, period = period, name = !! name,
                     map_type = purrr::map_dbl, join_cols = join_cols, ...)
-  group_by(x, !!! groups(.x))
+  group_by(x, !!! dplyr::groups(.x))
 }
 
 ##### tmap_dfc -----------------------------------------------------------------
@@ -172,18 +172,18 @@ tmap_dfc <- function(.x, .f, period = "yearly", name = NULL, ...) {
 #' @export
 tmap_dfc.tbl_time <- function(.x, .f, period = "yearly", name = NULL, ...) {
   join_cols <- retrieve_index(.x, as_name = TRUE)
-  name <- enquo(name)
+  name <- rlang::enquo(name)
   tmap_variant(.x, .f, period = period, name = !! name,
                map_type = purrr::map_dfc, join_cols = join_cols, ...)
 }
 
 #' @export
 tmap_dfc.grouped_tbl_time <- function(.x, .f, period = "yearly", name = NULL, ...) {
-  join_cols <- c(group_vars(.x), retrieve_index(.x, as_name = TRUE))
-  name <- enquo(name)
+  join_cols <- c(dplyr::group_vars(.x), retrieve_index(.x, as_name = TRUE))
+  name <- rlang::enquo(name)
   x <- tmap_variant(.x, .f, period = period, name = !! name,
                     map_type = purrr::map_dfc, join_cols = join_cols, ...)
-  group_by(x, !!! groups(.x))
+  group_by(x, !!! dplyr::groups(.x))
 }
 
 ##### tmap_dfr -----------------------------------------------------------------
@@ -198,18 +198,18 @@ tmap_dfr <- function(.x, .f, period = "yearly", name = NULL, ...) {
 #' @export
 tmap_dfr.tbl_time <- function(.x, .f, period = "yearly", name = NULL, ...) {
   join_cols <- retrieve_index(.x, as_name = TRUE)
-  name <- enquo(name)
+  name <- rlang::enquo(name)
   tmap_variant(.x, .f, period = period, name = !! name,
                map_type = purrr::map_dfr, join_cols = join_cols, ...)
 }
 
 #' @export
 tmap_dfr.grouped_tbl_time <- function(.x, .f, period = "yearly", name = NULL, ...) {
-  join_cols <- c(group_vars(.x), retrieve_index(.x, as_name = TRUE))
-  name <- enquo(name)
+  join_cols <- c(dplyr::group_vars(.x), retrieve_index(.x, as_name = TRUE))
+  name <- rlang::enquo(name)
   x <- tmap_variant(.x, .f, period = period, name = !! name,
                     map_type = purrr::map_dfr, join_cols = join_cols, ...)
-  group_by(x, !!! groups(.x))
+  group_by(x, !!! dplyr::groups(.x))
 }
 
 ##### tmap_df -----------------------------------------------------------------
@@ -224,18 +224,18 @@ tmap_df <- function(.x, .f, period = "yearly", name = NULL, ...) {
 #' @export
 tmap_df.tbl_time <- function(.x, .f, period = "yearly", name = NULL, ...) {
   join_cols <- retrieve_index(.x, as_name = TRUE)
-  name <- enquo(name)
+  name <- rlang::enquo(name)
   tmap_variant(.x, .f, period = period, name = !! name,
                map_type = purrr::map_df, join_cols = join_cols, ...)
 }
 
 #' @export
 tmap_df.grouped_tbl_time <- function(.x, .f, period = "yearly", name = NULL, ...) {
-  join_cols <- c(group_vars(.x), retrieve_index(.x, as_name = TRUE))
-  name <- enquo(name)
+  join_cols <- c(dplyr::group_vars(.x), retrieve_index(.x, as_name = TRUE))
+  name <- rlang::enquo(name)
   x <- tmap_variant(.x, .f, period = period, name = !! name,
                     map_type = purrr::map_df, join_cols = join_cols, ...)
-  group_by(x, !!! groups(.x))
+  group_by(x, !!! dplyr::groups(.x))
 }
 
 ##### Util ---------------------------------------------------------------------
@@ -247,7 +247,7 @@ tmap_variant <- function(.x, .f,
                          name = NULL, ...) {
 
   # Get the key column name
-  key_col <- enquo(name)
+  key_col <- rlang::enquo(name)
   if(rlang::quo_is_null(key_col)) {
     key_col <- rlang::sym("data")
   }

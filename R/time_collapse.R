@@ -14,7 +14,7 @@ time_collapse.tbl_time <- function(.data, period = "yearly", as_sep_col = FALSE,
 
 #' @export
 time_collapse.grouped_tbl_time <- function(.data, period = "yearly", as_sep_col = FALSE, ...) {
-  join_cols <- c(group_vars(.data), retrieve_index(.data, as_name = TRUE))
+  join_cols <- c(dplyr::group_vars(.data), retrieve_index(.data, as_name = TRUE))
   collapse_it(.data, period = period, join_cols = join_cols, as_sep_col = as_sep_col, ...)
 }
 
@@ -33,7 +33,7 @@ collapse_it <- function(.data, period = "yearly", join_cols, as_sep_col = FALSE,
   # Keep the original dates as .date if requested
   if(as_sep_col) {
     .data <- dplyr::mutate(.data, !! rlang::sym(".date") := !! index_sym) %>%
-      select(join_cols, .date, everything())
+      select(join_cols, .data$.date, dplyr::everything())
   }
 
   # Join .data with expanded index
@@ -50,5 +50,5 @@ collapse_it <- function(.data, period = "yearly", join_cols, as_sep_col = FALSE,
     dplyr::group_by(!!! dplyr::groups(.data)) %>%
 
     # Remove period cols
-    dplyr::select(- one_of(period_cols))
+    dplyr::select(- dplyr::one_of(period_cols))
 }

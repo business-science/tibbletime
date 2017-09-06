@@ -1,5 +1,6 @@
 #' @export
 #' @importFrom tibble trunc_mat
+#'
 print.tbl_time <- function(x, ...) {
 
   # Original trunc_mat

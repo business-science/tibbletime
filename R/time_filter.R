@@ -72,8 +72,8 @@ time_filter <- function(x, time_formula) {
 
   # Filter for those rows
   dplyr::filter(x,
-                UQ(index_name) >= as.POSIXct(from_to_clean[1], tz = retrieve_time_zone(x)),
-                UQ(index_name) <= as.POSIXct(from_to_clean[2], tz = retrieve_time_zone(x)))
+                rlang::UQ(index_name) >= as.POSIXct(from_to_clean[1], tz = retrieve_time_zone(x)),
+                rlang::UQ(index_name) <= as.POSIXct(from_to_clean[2], tz = retrieve_time_zone(x)))
 
 }
 
@@ -92,10 +92,7 @@ time_filter <- function(x, time_formula) {
 
       # Then j filter if requested, keeping class
       if(!rlang::is_missing(j)) {
-        dc_x <- declass(x, "tbl_time")
-        dc_x <- dc_x[,j, drop]
-        dc_x <- reclass(dc_x, x)
-        x <- dc_x
+        x <- tidyverse_execute(x, `[`, j = j, drop = drop)
       }
 
       # Then return x

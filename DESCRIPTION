@@ -17,14 +17,18 @@ Description: Built on top of the tibble package, tibbletime is an extension
 URL: https://github.com/business-science/tibbletime
 BugReports: https://github.com/business-science/tibbletime/issues
 License: MIT + file LICENSE
-Encoding: UTF-8gsub
+Encoding: UTF-8
 Suggests: testthat
 RoxygenNote: 6.0.1
 Roxygen: list(markdown = TRUE)
 Depends:
     R (>= 3.3.0)
 Imports:
+    assertthat,
     dplyr (>= 0.7),
+    lubridate,
+    purrr,
     rlang,
+    stringr,
     tibble,
     tidyr

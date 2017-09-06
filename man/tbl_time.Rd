@@ -23,6 +23,5 @@ as normal tibbles.
 }
 \examples{
 
-examples!!
 
 }
