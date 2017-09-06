@@ -16,7 +16,7 @@
 #' @param x An object to be converted to `tbl_time`. This is generally
 #' a [tibble::tibble()], or an object that can first be coerced to a `tibble`.
 #' @param index The bare column name of the column to be used as the index.
-#' @param ... Arguments passed to [tibble::as_tibble()] if coercsion is
+#' @param ... Arguments passed to [tibble::as_tibble()] if coercion is
 #' necessary first.
 #'
 #' @rdname tbl_time
