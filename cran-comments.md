@@ -8,7 +8,10 @@ This is the initial release of tibbletime.
 * win-builder (devel and release)
 
 ## R CMD check results
-There were no ERRORs, WARNINGs or NOTEs.
+On win-builder, a NOTE about "New submission" was shown because Davis Vaughan
+is the main author.
+
+Otherwise there were no ERRORs, WARNINGs or NOTEs.
 
     R CMD check results
     0 errors | 0 warnings | 0 note 

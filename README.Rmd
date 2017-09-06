@@ -15,9 +15,119 @@ devtools::load_all()
 # tibbletime 
 
 [![Travis-CI Build Status](https://travis-ci.org/business-science/tibbletime.svg?branch=master)](https://travis-ci.org/business-science/tibbletime.svg?branch=master)
-[![codecov](https://codecov.io/gh/business-science/tibbletime/branch/master/graph/badge.svg)](https://codecov.io/gh/business-science/tibbletime)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/tibbletime)](https://cran.r-project.org/package=tibbletime)
 
-# Warning
+## A time aware tibble
 
-This package is in its infancy and highly subject to change. Use at your own risk. Reproducible bug reports are welcome.
+Built on top of the `tidyverse`, `tibbletime` is an extension
+that allows for the creation of _time aware tibbles_ through the setting of 
+a time index. 
+
+Some immediate advantages of this include: 
+
+1) The ability to perform compact time based subsetting on tibbles.
+
+2) Quickly summarising and aggregating results by time period
+(yearly, monthly, etc).
+
+3) Changing the periodicity of a time based tibble. This means changing 
+from a daily dataset to a monthly or yearly dataset.
+
+4) Calling functions similar in spirit to the `map` family from `purrr` 
+on time based tibbles.
+
+5) All functions were designed to support the pipe and to work with packages
+like `dplyr` and `tidyr`.
+
+## Installation
+
+Development Version:
+
+``` {r, eval = FALSE}
+# install.packages("devtools")
+devtools::install_github("business-science/tibbletime")
+```
+
+CRAN Version: 
+
+```{r, eval = FALSE}
+install.packages("tibbletime")
+```
+
+## Getting started
+
+The first thing to do is to turn your `tibble` into a `tbl_time` object.
+Notice the specification of the `index` as the `date` column of `FB`.
+
+```{r, message=FALSE, warning=FALSE}
+library(tibbletime)
+
+# Facebook stock prices. Comes with the package
+data(FB)
+
+# Convert FB to tbl_time
+FB <- FB %>% as_tbl_time(index = date)
+
+FB
+```
+
+There are a number of functions that were designed specifically for `tbl_time`
+objects. Some of them are:
+
+1) `time_filter` - Succinctly filter a tbl_time object by date.
+
+2) `time_summarise` - Similar to dplyr::summarise but with the added benefit 
+of being able to summarise by a time period such as "yearly" or "monthly".
+
+3) `tmap` - The family of tmap functions transform a tbl_time input by applying a 
+function to each column at a specified time interval.
+
+4) `as_period` - Convert a tbl_time object from daily to monthly, 
+from minute data to hourly, and more. This allows the user to easily 
+aggregate data to a less granular level.
+
+5) `time_collapse` - When time_collapse is used, the index of a tbl_time object 
+is altered so that all dates that fall in a period share a common date.
+
+To look at just a few:
+
+```{r}
+# Filter for dates from March 2013 to December 2015
+FB %>% 
+  time_filter(2013-03 ~ 2015)
+
+# Change from daily to monthly periodicity
+FB %>% 
+  as_period("monthly")
+
+# Get the average mean and standard deviation for each year
+FB %>%
+  time_summarise(period = "yearly",
+        adj_mean = mean(adjusted),
+        adj_sd   = sd(adjusted))
+```
+
+## Grouping
+
+Groups created through `dplyr::group_by()` are supported throughout the package.
+
+```{r}
+# Facebook, Amazon, Netflix and Google stocks
+data(FANG)
+
+# Summarise by period and by group
+FANG %>% 
+  as_tbl_time(date) %>%
+  group_by(symbol) %>%
+  time_summarise(period = "yearly",
+        adj_min   = min(adjusted),
+        adj_max   = max(adjusted),
+        adj_range = adj_max - adj_min)
+```
+
+
+## Warning
+
+This package is still going through active development and is subject to change. Use at your own risk. Reproducible bug reports are welcome.
+
+Vignettes and more functionality are coming soon. Stay tuned.
