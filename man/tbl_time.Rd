@@ -15,7 +15,7 @@ a \code{\link[tibble:tibble]{tibble::tibble()}}, or an object that can first be 
 
 \item{index}{The bare column name of the column to be used as the index.}
 
-\item{...}{Arguments passed to \code{\link[tibble:as_tibble]{tibble::as_tibble()}} if coercsion is
+\item{...}{Arguments passed to \code{\link[tibble:as_tibble]{tibble::as_tibble()}} if coercion is
 necessary first.}
 }
 \description{
