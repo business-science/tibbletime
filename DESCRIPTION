@@ -32,4 +32,4 @@ Imports:
     rlang,
     stringr,
     tibble,
-    tidyr
+    tidyr (>= 0.7.1)

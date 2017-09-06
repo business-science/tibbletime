@@ -4,18 +4,24 @@
 \alias{time_nest}
 \title{Nest a \code{tbl_time} to a specified time period}
 \usage{
-time_nest(data, period = "yearly", ..., .key = data)
+time_nest(data, period = "yearly", ..., .key = "data")
 }
 \arguments{
 \item{data}{A \code{tbl_time} object.}
 
 \item{period}{The period to nest to.}
 
-\item{...}{Specification of columns to nest. Use bare variable names.
-Select all variables between x and z with \code{x:z}, exclude y with
-\code{-y}. For more options, see the \link[dplyr]{select} documentation.}
+\item{...}{Used to specify columns you do not want in the nest. Specified
+as \code{-col_name}.}
 
-\item{.key}{The name of the new column.}
+\item{.key}{The name of the new column, as a string or symbol.
+
+This argument is passed by expression and supports
+\link[rlang:quasiquotation]{quasiquotation} (you can unquote strings
+and symbols). The name is captured from the expression with
+\code{\link[rlang:quo_name]{rlang::quo_name()}} (note that this kind of interface where
+symbols do not represent actual objects is now discouraged in the
+tidyverse; we support it here for backward compatibility).}
 }
 \description{
 \code{time_nest} allows for quick nesting of \code{tbl_time} objects by period so that

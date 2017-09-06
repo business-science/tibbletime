@@ -11,21 +11,21 @@
 \alias{tmap_df}
 \title{Apply a function to each element of a \code{tbl_time} object.}
 \usage{
-tmap(.x, .f, period = "yearly", name = NULL, ...)
+tmap(.x, .f, period = "yearly", name = "data", ...)
 
-tmap_chr(.x, .f, period = "yearly", name = NULL, ...)
+tmap_chr(.x, .f, period = "yearly", name = "data", ...)
 
-tmap_int(.x, .f, period = "yearly", name = NULL, ...)
+tmap_int(.x, .f, period = "yearly", name = "data", ...)
 
-tmap_lgl(.x, .f, period = "yearly", name = NULL, ...)
+tmap_lgl(.x, .f, period = "yearly", name = "data", ...)
 
-tmap_dbl(.x, .f, period = "yearly", name = NULL, ...)
+tmap_dbl(.x, .f, period = "yearly", name = "data", ...)
 
-tmap_dfc(.x, .f, period = "yearly", name = NULL, ...)
+tmap_dfc(.x, .f, period = "yearly", name = "data", ...)
 
-tmap_dfr(.x, .f, period = "yearly", name = NULL, ...)
+tmap_dfr(.x, .f, period = "yearly", name = "data", ...)
 
-tmap_df(.x, .f, period = "yearly", name = NULL, ...)
+tmap_df(.x, .f, period = "yearly", name = "data", ...)
 }
 \arguments{
 \item{.x}{A \code{tbl_time} object.}
@@ -53,7 +53,7 @@ to extract named attributes. If a component is not present, the value of
 
 \item{period}{A period to group the mapping by.}
 
-\item{name}{The bare name of the list-column generated.}
+\item{name}{The character name of the list-column generated.}
 
 \item{...}{Additional arguments passed on to \code{.f}.}
 }
