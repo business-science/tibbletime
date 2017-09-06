@@ -1,6 +1,6 @@
 Package: tibbletime
 Type: Package
-Title: Time Aware tibbles
+Title: Time Aware Tibbles
 Version: 0.0.1
 Date: 2017-09-05
 Authors@R: c(
