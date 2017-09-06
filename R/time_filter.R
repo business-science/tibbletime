@@ -1,12 +1,13 @@
 #' Succinctly filter a `tbl_time` object by date
 #'
-#' Use a concise filtering method to filter for rows where the `index` falls within a date range
+#' Use a concise filtering method to filter for rows where the `index`
+#' falls within a date range
 #'
 #' @details
 #'
 #' The `time_formula` is specified using the format `from ~ to`.
-#' Each side of the `time_formula` is specified as `YYYY-MM-DD + HH:MM:SS`, but powerful shorthand is available.
-#' Some examples are:
+#' Each side of the `time_formula` is specified as `YYYY-MM-DD + HH:MM:SS`,
+#' but powerful shorthand is available. Some examples are:
 #' * __Year:__ `2013 ~ 2015`
 #' * __Month:__ `2013-01 ~ 2016-06`
 #' * __Day:__ `2013-01-05 ~ 2016-06-04`
@@ -27,8 +28,8 @@
 #' * `2015-01-04 + 10:12 ~ 2015-01-05 == 2015-01-04 + 10:12:00 ~ 2015-01-05 + 23:59:59`
 #'
 #'
-#' @param x A `tbl_time` object
-#' @param time_formula A period to filter over
+#' @param x A `tbl_time` object.
+#' @param time_formula A period to filter over. This is specified as a `formula`.
 #'
 #' @rdname time_filter
 #'
@@ -46,17 +47,27 @@
 #' # 2013-05-25 to 2014-06-04
 #' time_filter(FANG, 2013-05-25 ~ 2014-06-04)
 #'
-#' # `[` subset operator
+#' # Using the `[` subset operator
 #' FANG[2014~2015]
 #'
-#' # `[` and one sided formula for only dates in 2014
+#' # Using `[` and one sided formula for only dates in 2014
 #' FANG[~2014]
 #'
-#' # `[` and column selection
+#' # Using `[` and column selection
 #' FANG[2013~2016, c("date", "adjusted")]
 #'
 #'
 time_filter <- function(x, time_formula) {
+  UseMethod("time_filter")
+}
+
+#' @export
+time_filter.default <- function(x, time_formula) {
+  stop("Object is not of class `tbl_time`.", call. = FALSE)
+}
+
+#' @export
+time_filter.tbl_time <- function(x, time_formula) {
 
   # Validate time_formula syntax
   from_to <- formula_to_char(time_formula)
@@ -65,17 +76,23 @@ time_filter <- function(x, time_formula) {
   index_name <- rlang::sym(retrieve_index(x, as_name = TRUE))
 
   # Normalize
-  from_to_clean <- purrr::map2_chr(from_to, c("from", "to"), .f = normalize_date)
+  from_to_clean <- purrr::map2_chr(.x = from_to,
+                                   .y = c("from", "to"),
+                                   .f = normalize_date)
 
   # Validate time_formula date order
   validate_date_order(from = from_to_clean[1], to = from_to_clean[2])
 
   # Filter for those rows
   dplyr::filter(x,
-                rlang::UQ(index_name) >= as.POSIXct(from_to_clean[1], tz = retrieve_time_zone(x)),
-                rlang::UQ(index_name) <= as.POSIXct(from_to_clean[2], tz = retrieve_time_zone(x)))
+                rlang::UQ(index_name) >= as.POSIXct(from_to_clean[1],
+                                                    tz = retrieve_time_zone(x)),
+                rlang::UQ(index_name) <= as.POSIXct(from_to_clean[2],
+                                                    tz = retrieve_time_zone(x)))
 
 }
+
+# Subset operator --------------------------------------------------------------
 
 #' @export
 #' @rdname time_filter
@@ -108,7 +125,7 @@ time_filter <- function(x, time_formula) {
 }
 
 
-# Util ----
+# Util -------------------------------------------------------------------------
 
 # Check a user supplied time_formula for correct syntax
 # If "2015", duplicate to "2015,2015"
@@ -163,7 +180,8 @@ normalize_date <- function(x, from_to) {
   # Setup ymd / hms lists to fill
   ymd <- switch(from_to,
                 "from" = list(y = "1970", m = "01", d = "01"),
-                "to"   = list(y = "1970", m = "12", d = "00")) # `to` day depends on month selected, filled later if necessary
+                # `to` day depends on month selected, filled later if necessary
+                "to"   = list(y = "1970", m = "12", d = "00"))
 
   hms <- switch(from_to,
                 "from" = list(h = "00", m = "00", s = "00"),
@@ -206,7 +224,9 @@ recurse_split <- function(x, filler, splitter) {
     piece <- stringr::str_extract(x, paste0("([^", splitter, "]+)"))
 
     # Replace the first part with "" in the string
-    x <- stringr::str_replace(x, pattern = paste0("([^", splitter, "]+", splitter, ")"), replacement = "")
+    x <- stringr::str_replace(x,
+                              pattern = paste0("([^", splitter, "]+", splitter, ")"),
+                              replacement = "")
 
     # Add the new piece to the filler
     filler[[i]] <- piece

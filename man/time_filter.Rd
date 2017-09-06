@@ -10,17 +10,18 @@ time_filter(x, time_formula)
 \method{[}{tbl_time}(x, i, j, drop = FALSE)
 }
 \arguments{
-\item{x}{A \code{tbl_time} object}
+\item{x}{A \code{tbl_time} object.}
 
-\item{time_formula}{A period to filter over}
+\item{time_formula}{A period to filter over. This is specified as a \code{formula}.}
 }
 \description{
-Use a concise filtering method to filter for rows where the \code{index} falls within a date range
+Use a concise filtering method to filter for rows where the \code{index}
+falls within a date range
 }
 \details{
 The \code{time_formula} is specified using the format \code{from ~ to}.
-Each side of the \code{time_formula} is specified as \code{YYYY-MM-DD + HH:MM:SS}, but powerful shorthand is available.
-Some examples are:
+Each side of the \code{time_formula} is specified as \code{YYYY-MM-DD + HH:MM:SS},
+but powerful shorthand is available. Some examples are:
 \itemize{
 \item \strong{Year:} \code{2013 ~ 2015}
 \item \strong{Month:} \code{2013-01 ~ 2016-06}
@@ -60,13 +61,13 @@ time_filter(FANG, 2013 ~ 2014)
 # 2013-05-25 to 2014-06-04
 time_filter(FANG, 2013-05-25 ~ 2014-06-04)
 
-# `[` subset operator
+# Using the `[` subset operator
 FANG[2014~2015]
 
-# `[` and one sided formula for only dates in 2014
+# Using `[` and one sided formula for only dates in 2014
 FANG[~2014]
 
-# `[` and column selection
+# Using `[` and column selection
 FANG[2013~2016, c("date", "adjusted")]
 
 
