@@ -27,6 +27,7 @@
 #' * `~2015 == 2015-01-01 + 00:00:00 ~ 2015-12-31 + 23:59:59`
 #' * `2015-01-04 + 10:12 ~ 2015-01-05 == 2015-01-04 + 10:12:00 ~ 2015-01-05 + 23:59:59`
 #'
+#' This function respects [dplyr::group_by()] groups.
 #'
 #' @param x A `tbl_time` object.
 #' @param time_formula A period to filter over. This is specified as a `formula`.
@@ -37,9 +38,10 @@
 #'
 #' @examples
 #'
-#' library(tidyquant)
+#' # FANG contains Facebook, Amazon, Netflix and Google stock prices
 #' data(FANG)
-#' FANG <- as_tbl_time(FANG, date) %>% group_by(symbol)
+#' FANG <- as_tbl_time(FANG, date) %>%
+#'   group_by(symbol)
 #'
 #' # 2013-01-01 to 2014-12-31
 #' time_filter(FANG, 2013 ~ 2014)
@@ -95,7 +97,15 @@ time_filter.tbl_time <- function(x, time_formula) {
 # Subset operator --------------------------------------------------------------
 
 #' @export
+#'
+#' @param i A period to filter over. This is specified the same as
+#' `time_formula` but this follows the normal extraction argument syntax.
+#' @param j Optional argument to also specify column index to subset. Works
+#' exactly like the normal extraction operator.
+#' @param drop Will always be coerced to `FALSE` by `tibble`.
+#'
 #' @rdname time_filter
+#'
 `[.tbl_time` <- function(x, i, j, drop = FALSE) {
 
   # If i exists
@@ -115,12 +125,12 @@ time_filter.tbl_time <- function(x, time_formula) {
       # Then return x
       x
 
-    # If i was missing, or is not a formula, NextMethod()
+    # If i was missing, or is not a formula, execute and keep attrs/class
     } else {
-      NextMethod()
+      tidyverse_execute(x, `[`, i = i, j = j, drop = drop)
     }
   } else {
-    NextMethod()
+    tidyverse_execute(x, `[`, i = i, j = j, drop = drop)
   }
 }
 

@@ -1,6 +1,7 @@
-#' @importFrom dplyr %>%
+#' @importFrom magrittr %>%
+#' @export
 #'
-NULL
+magrittr::`%>%`
 
 #' @importFrom rlang :=
 #'

@@ -7,7 +7,66 @@ same date}
 \usage{
 time_collapse(.data, period = "yearly", as_sep_col = FALSE, ...)
 }
+\arguments{
+\item{.data}{A \code{tbl_time} object.}
+
+\item{period}{A period to collapse to.}
+
+\item{as_sep_col}{Whether to keep the original index as the column \code{.date}
+or to drop it.}
+
+\item{...}{Not currently used.}
+}
 \description{
-Collapse a \code{tbl_time} object so that all observations in a period share the
-same date
+When \code{time_collapse} is used, the index of a \code{tbl_time} object is altered
+so that all dates that fall in a period share a common date.
+}
+\details{
+The date chosen as the common date for a period is always the date
+at the \emph{end} of that period.
+
+It is often useful to use \code{as_sep_col = TRUE} to keep the original dates
+as well.
+
+This function respects \code{\link[dplyr:group_by]{dplyr::group_by()}} groups.
+}
+\note{
+The following periods are available:
+\itemize{
+\item \code{"yearly"}
+\item \code{"quarterly"}
+\item \code{"monthly"}
+\item \code{"weekly"}
+\item \code{"daily"}
+\item \code{"hour"}
+\item \code{"minute"}
+\item \code{"second"}
+}
+}
+\examples{
+
+# Basic functionality -------------------------------------------------------
+
+# Facebook stock prices
+data(FB)
+FB <- as_tbl_time(FB, date)
+
+# Collapse to weekly dates
+time_collapse(FB, period = "weekly")
+
+# Collapse to weekly dates, but keep the original too
+time_collapse(FB, period = "weekly", as_sep_col = TRUE)
+
+# Grouped functionality -----------------------------------------------------
+
+data(FANG)
+FANG <- FANG \%>\%
+  as_tbl_time(date) \%>\%
+  group_by(symbol)
+
+# Collapse each group to monthly
+FANG \%>\%
+  time_collapse("monthly")
+
+
 }

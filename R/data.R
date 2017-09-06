@@ -1,0 +1,37 @@
+#' Stock prices for Facebook, Amazon, Netflix and Google from 2013-2016
+#'
+#' A dataset containing the date, open, high, low, close, volume, and adjusted
+#' stock prices for Facebook, Amazon, Netflix and Google from 2013-2016.
+#'
+#' @format A tibble with 4,032 rows and 8 variables:
+#' \describe{
+#'   \item{symbol}{stock ticker symbol}
+#'   \item{date}{trade date}
+#'   \item{open}{stock price at the open of trading, in USD}
+#'   \item{high}{stock price at the highest point during trading, in USD}
+#'   \item{low}{stock price at the lowest point during trading, in USD}
+#'   \item{close}{stock price at the close of trading, in USD}
+#'   \item{volume}{number of shares traded}
+#'   \item{adjusted}{stock price at the close of trading adjusted for stock splits, in USD}
+#' }
+#' @source \url{http://www.investopedia.com/terms/f/fang-stocks-fb-amzn.asp}
+"FANG"
+
+#' Stock prices for Facebook from 2013-2016
+#'
+#' A dataset containing the date, open, high, low, close, volume, and adjusted
+#' stock prices for Facebook from 2013-2016.
+#'
+#' @format A tibble with 1,008 rows and 8 variables:
+#' \describe{
+#'   \item{symbol}{stock ticker symbol}
+#'   \item{date}{trade date}
+#'   \item{open}{stock price at the open of trading, in USD}
+#'   \item{high}{stock price at the highest point during trading, in USD}
+#'   \item{low}{stock price at the lowest point during trading, in USD}
+#'   \item{close}{stock price at the close of trading, in USD}
+#'   \item{volume}{number of shares traded}
+#'   \item{adjusted}{stock price at the close of trading adjusted for stock splits, in USD}
+#' }
+#' @source \url{http://www.investopedia.com/terms/f/fang-stocks-fb-amzn.asp}
+"FB"

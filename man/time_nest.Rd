@@ -4,8 +4,74 @@
 \alias{time_nest}
 \title{Nest a \code{tbl_time} to a specified time period}
 \usage{
-time_nest(data, ..., period = "yearly", .key = data)
+time_nest(data, period = "yearly", ..., .key = data)
+}
+\arguments{
+\item{data}{A \code{tbl_time} object.}
+
+\item{period}{The period to nest to.}
+
+\item{...}{Specification of columns to nest. Use bare variable names.
+Select all variables between x and z with \code{x:z}, exclude y with
+\code{-y}. For more options, see the \link[dplyr]{select} documentation.}
+
+\item{.key}{The name of the new column.}
 }
 \description{
-Nest a \code{tbl_time} to a specified time period
+\code{time_nest} allows for quick nesting of \code{tbl_time} objects by period so that
+manipulation can be performed on each period's data set individually. See
+\code{\link[tidyr:nest]{tidyr::nest()}} for information on nesting generally.
+}
+\details{
+As an example, nesting by a \code{"yearly"} period will return a \code{tbl_time} object
+with a date column containing the dates at the end of each year, and a
+list-column of smaller \code{tbl_time} objects containing all of the data for
+that year.
+
+Because it is likely the case that the original dates will be required
+inside the nested \code{tbl_time} objects for further manipulation,
+the original dates are kept as a \code{.date} column in each \code{tbl_time} object in
+the list-column.
+
+This function respects \code{\link[dplyr:group_by]{dplyr::group_by()}} groups.
+}
+\note{
+The following periods are available:
+\itemize{
+\item \code{"yearly"}
+\item \code{"quarterly"}
+\item \code{"monthly"}
+\item \code{"weekly"}
+\item \code{"daily"}
+\item \code{"hour"}
+\item \code{"minute"}
+\item \code{"second"}
+}
+}
+\examples{
+
+# Basic functionality -------------------------------------------------------
+
+data(FB)
+FB <- as_tbl_time(FB, date)
+
+# Nest yearly
+time_nest(FB, "yearly")
+
+# Nest yearly, but don't drag symbol into the nest
+time_nest(FB, "yearly", -symbol)
+
+# Nest quarterly
+time_nest(FB, "quarterly")
+
+# Grouped functionality -----------------------------------------------------
+
+data(FANG)
+FANG <- as_tbl_time(FANG, date) \%>\%
+  group_by(symbol)
+
+# Nest yearly, but by group
+FANG \%>\%
+  time_nest("yearly")
+
 }

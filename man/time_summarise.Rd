@@ -5,9 +5,24 @@
 \alias{time_summarize}
 \title{Summarise a \code{tbl_time} by period}
 \usage{
-time_summarise(.data, ..., period = "yearly")
+time_summarise(.data, period = "yearly", ...)
 
-time_summarize(.data, ..., period = "yearly")
+time_summarize(.data, period = "yearly", ...)
+}
+\arguments{
+\item{.data}{A \code{tbl_time} object.}
+
+\item{period}{A period to summarise by.}
+
+\item{...}{Name-value pairs of summary functions. The name will be the
+name of the variable in the result. The value should be an expression
+that returns a single value like \code{min(x)}, \code{n()}, or \code{sum(is.na(y))}.
+
+These arguments are automatically \link[rlang:quo]{quoted} and
+\link[rlang:eval_tidy]{evaluated} in the context of the data
+frame. They support \link[rlang:quasiquotation]{unquoting} and
+splicing. See \code{vignette("programming")} for an introduction to
+these concepts.}
 }
 \description{
 \code{\link[=time_summarise]{time_summarise()}} works similarly to \code{\link[dplyr:summarise]{dplyr::summarise()}} but with the added
@@ -18,6 +33,19 @@ benefit of being able to summarise by a time period such as \code{"yearly"} or
 Groups applied using \code{\link[dplyr:group_by]{dplyr::group_by()}} are respected.
 
 In \code{\link[dplyr:summarise]{dplyr::summarise()}}, one level of grouping is usually removed.
-Because an added group for the time index was added in \code{\link[=time_summarise]{time_summarise()}},
+Because an added group for the time index is added in \code{time_summarise},
 none of the original groups are removed.
+}
+\note{
+The following periods are available:
+\itemize{
+\item \code{"yearly"}
+\item \code{"quarterly"}
+\item \code{"monthly"}
+\item \code{"weekly"}
+\item \code{"daily"}
+\item \code{"hour"}
+\item \code{"minute"}
+\item \code{"second"}
+}
 }

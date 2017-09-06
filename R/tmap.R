@@ -16,11 +16,22 @@
 #'
 #' Groupings applied using [dplyr::group_by()] are respected.
 #'
+#' @note
+#'
+#' The following periods are available:
+#' * `"yearly"`
+#' * `"quarterly"`
+#' * `"monthly"`
+#' * `"weekly"`
+#' * `"daily"`
+#' * `"hour"`
+#' * `"minute"`
+#' * `"second"`
+#'
 #' @return
 #'
 #' A `tbl_time` object grouped by the time interval specified. The last
 #' available date in that interval is returned as the new date.
-#'
 #'
 #' @inheritParams purrr::map
 #' @param .x A `tbl_time` object

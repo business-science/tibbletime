@@ -15,15 +15,8 @@ expand_index(x, period)
 Retrieve an expanded version of a \code{tbl_time} index.
 }
 \details{
-The expanded version of the index contains columns for:
-\itemize{
-\item \code{year}
-\item \code{month}
-\item \code{day}
-\item \code{hour}
-\item \code{minute}
-\item \code{second}
-}
+The expanded version of the index only expands as far as necessary
+to generate a unique row for the period selected
 }
 \examples{
 
@@ -34,6 +27,6 @@ x <- tibble::tibble(
 
 x <- as_tbl_time(x, date)
 
-expand_index(x, "yearly")
+expand_index(x, "monthly")
 
 }

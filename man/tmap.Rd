@@ -77,3 +77,16 @@ of the mapping over each time interval.
 
 Groupings applied using \code{\link[dplyr:group_by]{dplyr::group_by()}} are respected.
 }
+\note{
+The following periods are available:
+\itemize{
+\item \code{"yearly"}
+\item \code{"quarterly"}
+\item \code{"monthly"}
+\item \code{"weekly"}
+\item \code{"daily"}
+\item \code{"hour"}
+\item \code{"minute"}
+\item \code{"second"}
+}
+}

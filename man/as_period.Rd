@@ -23,7 +23,13 @@ aggregate data to a less granular level.
 \details{
 This function respects \code{\link[dplyr:group_by]{dplyr::group_by()}} groups.
 
-The following period conversions are available:
+Currently periods finer than second data are not supported.
+
+The \code{side} argument is useful when you want to return data at, say, the
+end of a quarter, or the end of a month.
+}
+\note{
+The following periods are available:
 \itemize{
 \item \code{"yearly"}
 \item \code{"quarterly"}
@@ -34,23 +40,14 @@ The following period conversions are available:
 \item \code{"minute"}
 \item \code{"second"}
 }
-
-As noted above, currently periods finer than second data are not supported.
-
-The \code{side} argument is useful when you want to return data at, say, the
-end of a quarter, or the end of a month.
 }
 \examples{
 
-library(tidyquant)
-data(FANG)
-FANG <- as_tbl_time(FANG, date)
-
 # Basic usage ---------------------------------------------------------------
 
-# FANG contains Facebook, Amazon, Netflix and Google
-# Only look at Facebook first
-FB <- FANG \%>\% filter(symbol == "FB")
+# FB stock prices
+data(FB)
+FB <- as_tbl_time(FB, date)
 
 # Aggregate FB to yearly data
 as_period(FB, "yearly")
@@ -69,6 +66,10 @@ as_period(FB, "weekly")
 as_period(FB, "minute")
 
 # Grouped usage -------------------------------------------------------------
+
+# FANG contains Facebook, Amazon, Netflix and Google stock prices
+data(FANG)
+FANG <- as_tbl_time(FANG, date)
 
 FANG <- FANG \%>\% group_by(symbol)
 

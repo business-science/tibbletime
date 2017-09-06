@@ -2,8 +2,9 @@
 #'
 #' Return the index column as a tibble or as a character
 #'
-#' @param x A `tbl_time` object
-#' @param as_name Logical specifying whether to return the the index as a tibble or character
+#' @param x A `tbl_time` object.
+#' @param as_name Logical specifying whether to return
+#' the index as a tibble or a character of the column name.
 #'
 #' @export
 #'
@@ -60,13 +61,8 @@ retrieve_index.grouped_tbl_time <- function(x, as_name = FALSE) {
 #'
 #' @details
 #'
-#' The expanded version of the index contains columns for:
-#' * `year`
-#' * `month`
-#' * `day`
-#' * `hour`
-#' * `minute`
-#' * `second`
+#' The expanded version of the index only expands as far as necessary
+#' to generate a unique row for the period selected
 #'
 #'
 #' @param x A `tbl_time` object
@@ -83,7 +79,7 @@ retrieve_index.grouped_tbl_time <- function(x, as_name = FALSE) {
 #'
 #' x <- as_tbl_time(x, date)
 #'
-#' expand_index(x, "yearly")
+#' expand_index(x, "monthly")
 #'
 expand_index <- function(x, period) {
 

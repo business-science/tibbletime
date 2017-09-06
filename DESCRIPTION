@@ -27,6 +27,7 @@ Imports:
     assertthat,
     dplyr (>= 0.7),
     lubridate,
+    magrittr,
     purrr,
     rlang,
     stringr,

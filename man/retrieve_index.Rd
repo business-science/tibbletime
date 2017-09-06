@@ -7,9 +7,10 @@
 retrieve_index(x, as_name = FALSE)
 }
 \arguments{
-\item{x}{A \code{tbl_time} object}
+\item{x}{A \code{tbl_time} object.}
 
-\item{as_name}{Logical specifying whether to return the the index as a tibble or character}
+\item{as_name}{Logical specifying whether to return
+the index as a tibble or a character of the column name.}
 }
 \description{
 Return the index column as a tibble or as a character
