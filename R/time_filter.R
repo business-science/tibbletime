@@ -76,6 +76,8 @@ time_filter.tbl_time <- function(x, time_formula) {
 
   # Index name as sym
   index_name <- rlang::sym(retrieve_index(x, as_name = TRUE))
+  index_raw      <- retrieve_index(x) %>%
+    dplyr::pull()
 
   # Normalize
   from_to_clean <- purrr::map2_chr(.x = from_to,
@@ -85,11 +87,14 @@ time_filter.tbl_time <- function(x, time_formula) {
   # Validate time_formula date order
   validate_date_order(from = from_to_clean[1], to = from_to_clean[2])
 
+  # Date function selection
+  date_fun <- date_fun_selector(x)
+
   # Filter for those rows
   dplyr::filter(x,
-                rlang::UQ(index_name) >= as.POSIXct(from_to_clean[1],
+                rlang::UQ(index_name) >= date_fun(from_to_clean[1],
                                                     tz = retrieve_time_zone(x)),
-                rlang::UQ(index_name) <= as.POSIXct(from_to_clean[2],
+                rlang::UQ(index_name) <= date_fun(from_to_clean[2],
                                                     tz = retrieve_time_zone(x)))
 
 }
@@ -261,4 +266,20 @@ recurse_split <- function(x, filler, splitter) {
   }
 
   paste0(unlist(filler), collapse = splitter)
+}
+
+# Set date conversion function
+date_fun_selector <- function(x) {
+
+  index_raw <- retrieve_index(x) %>%
+    dplyr::pull()
+
+  # Switch based on class of the index
+  if(inherits(index_raw, "Date")) {
+    as.Date
+  } else if(inherits(index_raw, "POSIXct")) {
+    as.POSIXct
+  } else {
+    as.Date
+  }
 }
