@@ -3,15 +3,21 @@
 # tidyverse_execute() executes any dplyr/tidyr/purrr function
 # on a tbl_time object, in the process retaining
 # time based classes and attributes that would normally be stripped
-tidyverse_execute <- function(.x, fun, ...) {
+tidyverse_execute <- function(.x, fun, ..., silent_retime = FALSE) {
   UseMethod("tidyverse_execute")
 }
 
-tidyverse_execute.default <- function(.x, fun, ...) {
+tidyverse_execute.default <- function(.x, fun, ..., silent_retime = FALSE) {
   stop("`tidyverse_execute()` should only be called on a `tbl_time` object")
 }
 
-tidyverse_execute.tbl_time <- function(.x, fun, ...) {
+tidyverse_execute.tbl_time <- function(.x, fun, ..., silent_retime = FALSE) {
+
+  # Assert that attributes still exist
+  assertthat::assert_that(!is.null(attr(.x, "index")),
+        msg = "`index` attribute is `NULL`. Was it removed by a function call?")
+  assertthat::assert_that(!is.null(attr(.x, "time_zone")),
+        msg = "`time_zone` attribute is `NULL`. Was it removed by a function call?")
 
   # Classes and attributes to keep
   time_classes <- stringr::str_subset(class(.x), "tbl_time")
@@ -24,21 +30,23 @@ tidyverse_execute.tbl_time <- function(.x, fun, ...) {
   .x %>%
     detime(time_classes, time_attrs) %>%
     fun(...) %>%
-    retime(time_classes, time_attrs)
+    retime(time_classes, time_attrs, silent_retime)
 }
 
 # retime -----------------------------------------------------------------------
 
 # retime() adds time based classes and attributes after a tidyverse manipulation
-retime <- function(x, time_classes, time_attrs, ...) {
+retime <- function(x, time_classes, time_attrs, silent_retime = FALSE, ...) {
   UseMethod("retime")
 }
 
-retime.default <- function(x, time_classes, time_attrs, ...) {
+retime.default <- function(x, time_classes, time_attrs, silent_retime = FALSE, ...) {
 
   # Only retime if index still exists
   if(!check_for_index(x, time_attrs)) {
-    message("Note: `index` has been removed. Removing `tbl_time` class.")
+    if(!silent_retime) {
+      message("Note: `index` has been removed. Removing `tbl_time` class.")
+    }
     return(x)
   }
 

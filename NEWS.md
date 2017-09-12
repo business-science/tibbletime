@@ -9,6 +9,9 @@
 
 * Bug Fixes
 
+    * Fixed a bug where using `tidyr::nest()` would cause the nested tibbles
+    to lose their time attributes.
+
     * Fix a bug where time_filter(data, ~yyyy-mm-dd) would be parsed as
     `yyyy-mm-dd 00:00:00 ~ yyyy-mm-dd 00:00:00` instead of 
     `yyyy-mm-dd 00:00:00 ~ yyyy-mm-dd 23:59:59`.
