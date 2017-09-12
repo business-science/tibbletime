@@ -9,6 +9,10 @@
 
 * Bug Fixes
 
+    * Fix a bug where time_filter(data, ~yyyy-mm-dd) would be parsed as
+    `yyyy-mm-dd 00:00:00 ~ yyyy-mm-dd 00:00:00` instead of 
+    `yyyy-mm-dd 00:00:00 ~ yyyy-mm-dd 23:59:59`.
+
     * Fix a bug with as.Date / as.POSIXct operator collision in `time_filter()`.
 
 ## tibbletime 0.0.1 

@@ -219,7 +219,8 @@ normalize_date <- function(x, from_to) {
     # If there is only a date, no time
     # Recurse split the date, and pass 0 as time
     date <- recurse_split(x, ymd, "-")
-    time <- recurse_split("00:00:00", hms, ":")
+    hms_default <- paste(unlist(hms), collapse = ":")
+    time <- recurse_split(hms_default, hms, ":")
 
     # Paste together
     paste(date, time, sep = " ")
