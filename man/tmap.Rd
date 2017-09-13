@@ -92,12 +92,12 @@ The following periods are available:
 }
 \examples{
 
+# First example -------------------------------------------------------------
+
 data(FB)
 FB <- as_tbl_time(FB, date)
 # No need for the symbol column here
 FB <- dplyr::select(FB, -symbol)
-
-# First example -------------------------------------------------------------
 
 # Get the yearly average of every column in FB
 mapped_mean <- FB \%>\%
@@ -112,6 +112,11 @@ mapped_mean$data[[1]]
 
 # More useful example -------------------------------------------------------
 
+data(FB)
+FB <- as_tbl_time(FB, date)
+# No need for the symbol column here
+FB <- dplyr::select(FB, -symbol)
+
 # An easier approach might be to use `tmap_dfc` to coerce each list-column
 # entry to a tibble, then unnest the result
 # Here we calculate the monthly average for each column
@@ -120,6 +125,11 @@ FB \%>\%
   tidyr::unnest()
 
 # Functions with multiple return values -------------------------------------
+
+data(FB)
+FB <- as_tbl_time(FB, date)
+# No need for the symbol column here
+FB <- dplyr::select(FB, -symbol)
 
 # Functions that return more than 1 number per map are possible, but more
 # difficult to work with.
