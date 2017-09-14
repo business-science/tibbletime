@@ -1,11 +1,15 @@
 ## tibbletime 0.0.1.9000
 
+* New functionality
+
+    * `rollify` creates a rolling version of any function for 
+    use in `dplyr::mutate`.
+
 * General
 
-    * Added package documentation page
+    * Added package documentation page.
 
-    * Added versions to all imported packages
-
+    * Added versions to all imported packages.
 
 * Bug Fixes
 
