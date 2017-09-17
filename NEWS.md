@@ -13,6 +13,9 @@
 
 * Bug Fixes
 
+    * Fixed an issue with `[` in combination with `tibble::add_column()`. Use 
+    `tibble (>= 1.3.4.9001)` for correct behavior.
+
     * Fixed a bug where using `tidyr::nest()` would cause the nested tibbles
     to lose their time attributes.
 

@@ -111,7 +111,7 @@ time_filter.tbl_time <- function(x, time_formula) {
 #'
 #' @rdname time_filter
 #'
-`[.tbl_time` <- function(x, i, j, drop = FALSE) {
+`[.tbl_time` <- function(x, i, j, drop) {
 
   # If i exists
   if(!rlang::is_missing(i)) {
@@ -124,18 +124,41 @@ time_filter.tbl_time <- function(x, time_formula) {
 
       # Then j filter if requested, keeping class
       if(!rlang::is_missing(j)) {
-        x <- tidyverse_execute(x, `[`, j = j, drop = drop)
+        x <- tidyverse_execute(x, `[`, j = j, drop = FALSE)
       }
 
       # Then return x
       x
 
-    # If i was missing, or is not a formula, execute and keep attrs/class
+    # And i is not a formula
     } else {
-      tidyverse_execute(x, `[`, i = i, j = j, drop = drop)
+
+      # And j is not missing
+      if(!rlang::is_missing(j)) {
+
+        tidyverse_execute(x, `[`, i = i, j = j, drop = FALSE)
+
+      # And j is missing
+      } else {
+
+        # And drop is specified
+        if(!rlang::is_missing(drop)) {
+
+          tidyverse_execute(x, `[`, i = i, drop = FALSE)
+
+        # And drop is not specified
+        } else {
+
+          # Why? This does column subsetting with tibble::`[.tbl_df` narg <= 2
+          tidyverse_execute(x, `[`, i = i)
+
+        }
+      }
+
     }
+  # If i is missing
   } else {
-    tidyverse_execute(x, `[`, i = i, j = j, drop = drop)
+    tidyverse_execute(x, `[`, i = i, j = j, drop = FALSE)
   }
 }
 
