@@ -35,4 +35,3 @@ Imports:
     stringr (>= 1.2.0),
     tibble (>= 1.3.3),
     tidyr (>= 0.7.1)
-

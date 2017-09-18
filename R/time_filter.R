@@ -111,55 +111,51 @@ time_filter.tbl_time <- function(x, time_formula) {
 #'
 #' @rdname time_filter
 #'
-`[.tbl_time` <- function(x, i, j, drop) {
+`[.tbl_time` <- function(x, i, j, drop = FALSE) {
 
-  # If i exists
-  if(!rlang::is_missing(i)) {
+  # Classes and attributes to keep
+  time_classes <- stringr::str_subset(class(x), "tbl_time")
+  time_attrs <- list(
+    index     = attr(x, "index"),
+    time_zone = attr(x, "time_zone")
+  )
 
-    # And i is a formula
+  # This helps decide whether i is used for column subset or row subset
+  .nargs <- nargs() - !missing(drop)
+
+  # time_filter if required
+  if(!missing(i)) {
     if(rlang::is_formula(i)) {
-
-      # time_filter first
       x <- time_filter(x, i)
+    }
+  }
 
-      # Then j filter if requested, keeping class
-      if(!rlang::is_missing(j)) {
-        x <- tidyverse_execute(x, `[`, j = j, drop = FALSE)
-      }
+  # detime
+  x <- detime(x, time_classes, time_attrs)
 
-      # Then return x
-      x
-
-    # And i is not a formula
-    } else {
-
-      # And j is not missing
-      if(!rlang::is_missing(j)) {
-
-        tidyverse_execute(x, `[`, i = i, j = j, drop = FALSE)
-
-      # And j is missing
+  # i filter
+  if(!missing(i)) {
+    if(!rlang::is_formula(i)) {
+      if(.nargs <= 2) {
+        # Column subset
+        # Preferred if tibble issue is addressed
+        # x <- x[i, drop = drop]
+        x <- x[i]
       } else {
-
-        # And drop is specified
-        if(!rlang::is_missing(drop)) {
-
-          tidyverse_execute(x, `[`, i = i, drop = FALSE)
-
-        # And drop is not specified
-        } else {
-
-          # Why? This does column subsetting with tibble::`[.tbl_df` narg <= 2
-          tidyverse_execute(x, `[`, i = i)
-
-        }
+        # Row subset
+        x <- x[i, , drop = drop]
       }
 
     }
-  # If i is missing
-  } else {
-    tidyverse_execute(x, `[`, i = i, j = j, drop = FALSE)
   }
+
+  # j filter
+  if(!missing(j)) {
+    x <- x[, j, drop = drop]
+  }
+
+  # retime
+  retime(x, time_classes, time_attrs)
 }
 
 
