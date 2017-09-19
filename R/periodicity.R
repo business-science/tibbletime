@@ -100,7 +100,8 @@ as_period.tbl_time <- function(x, period = "yearly", side = "start") {
     dplyr::filter(rlang::UQ(index_name) == side_fun(!! index_name))
 
   # Filter the entire data based on the new index
-  # Then remove duplicate times (i.e. if multiple trades at 15:00:01, only the first is returned)
+  # Then remove duplicate times
+  # (i.e. if multiple trades at 15:00:01, only the first is returned)
   by_vars <- intersect(colnames(x), colnames(index))
   dplyr::semi_join(x, new_dates, by = by_vars) %>%
     dplyr::distinct(!! index_name, .keep_all = TRUE)
