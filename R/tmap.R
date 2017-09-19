@@ -108,6 +108,11 @@ tmap <- function(.x, .f, period = "yearly", name = "data", ...) {
 }
 
 #' @export
+tmap.default <- function(.x, .f, period = "yearly", name = "data", ...) {
+  stop("Object is not of class `tbl_time`.", call. = FALSE)
+}
+
+#' @export
 tmap.tbl_time <- function(.x, .f, period = "yearly", name = "data", ...) {
   join_cols <- retrieve_index(.x, as_name = TRUE)
   tmap_variant(.x, .f, period = period, name = name,
@@ -129,6 +134,11 @@ tmap.grouped_tbl_time <- function(.x, .f, period = "yearly", name = "data", ...)
 #'
 tmap_chr <- function(.x, .f, period = "yearly", name = "data", ...) {
   UseMethod("tmap_chr")
+}
+
+#' @export
+tmap_chr.default <- function(.x, .f, period = "yearly", name = "data", ...) {
+  stop("Object is not of class `tbl_time`.", call. = FALSE)
 }
 
 #' @export
@@ -156,6 +166,11 @@ tmap_int <- function(.x, .f, period = "yearly", name = "data", ...) {
 }
 
 #' @export
+tmap_int.default <- function(.x, .f, period = "yearly", name = "data", ...) {
+  stop("Object is not of class `tbl_time`.", call. = FALSE)
+}
+
+#' @export
 tmap_int.tbl_time <- function(.x, .f, period = "yearly", name = "data", ...) {
   join_cols <- retrieve_index(.x, as_name = TRUE)
   tmap_variant(.x, .f, period = period, name = name,
@@ -177,6 +192,11 @@ tmap_int.grouped_tbl_time <- function(.x, .f, period = "yearly", name = "data", 
 #'
 tmap_lgl <- function(.x, .f, period = "yearly", name = "data", ...) {
   UseMethod("tmap_lgl")
+}
+
+#' @export
+tmap_lgl.default <- function(.x, .f, period = "yearly", name = "data", ...) {
+  stop("Object is not of class `tbl_time`.", call. = FALSE)
 }
 
 #' @export
@@ -204,6 +224,11 @@ tmap_dbl <- function(.x, .f, period = "yearly", name = "data", ...) {
 }
 
 #' @export
+tmap_dbl.default <- function(.x, .f, period = "yearly", name = "data", ...) {
+  stop("Object is not of class `tbl_time`.", call. = FALSE)
+}
+
+#' @export
 tmap_dbl.tbl_time <- function(.x, .f, period = "yearly", name = "data", ...) {
   join_cols <- retrieve_index(.x, as_name = TRUE)
   tmap_variant(.x, .f, period = period, name = name,
@@ -225,6 +250,11 @@ tmap_dbl.grouped_tbl_time <- function(.x, .f, period = "yearly", name = "data", 
 #'
 tmap_dfc <- function(.x, .f, period = "yearly", name = "data", ...) {
   UseMethod("tmap_dfc")
+}
+
+#' @export
+tmap_dfc.default <- function(.x, .f, period = "yearly", name = "data", ...) {
+  stop("Object is not of class `tbl_time`.", call. = FALSE)
 }
 
 #' @export
@@ -252,6 +282,11 @@ tmap_dfr <- function(.x, .f, period = "yearly", name = "data", ...) {
 }
 
 #' @export
+tmap_dfr.default <- function(.x, .f, period = "yearly", name = "data", ...) {
+  stop("Object is not of class `tbl_time`.", call. = FALSE)
+}
+
+#' @export
 tmap_dfr.tbl_time <- function(.x, .f, period = "yearly", name = "data", ...) {
   join_cols <- retrieve_index(.x, as_name = TRUE)
   tmap_variant(.x, .f, period = period, name = name,
@@ -273,6 +308,11 @@ tmap_dfr.grouped_tbl_time <- function(.x, .f, period = "yearly", name = "data", 
 #'
 tmap_df <- function(.x, .f, period = "yearly", name = "data", ...) {
   UseMethod("tmap_df")
+}
+
+#' @export
+tmap_df.default <- function(.x, .f, period = "yearly", name = "data", ...) {
+  stop("Object is not of class `tbl_time`.", call. = FALSE)
 }
 
 #' @export
