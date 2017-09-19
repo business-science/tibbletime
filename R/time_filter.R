@@ -299,7 +299,5 @@ date_fun_selector <- function(x) {
     as.Date
   } else if(inherits(index_raw, "POSIXct")) {
     as.POSIXct
-  } else {
-    as.Date
   }
 }
