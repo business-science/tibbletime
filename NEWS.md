@@ -7,6 +7,8 @@
 
 * General
 
+    * Added complete test coverage
+
     * Added package documentation page.
 
     * Added versions to all imported packages.

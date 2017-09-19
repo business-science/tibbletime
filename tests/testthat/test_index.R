@@ -26,3 +26,8 @@ test_that("tbl_time index can be retrieved with multiple groups", {
   test_tbl_time <- dplyr::group_by(test_tbl_time, group1, group2)
   expect_equal(retrieve_index(test_tbl_time), dplyr::select(test_time, group1, group2, date))
 })
+
+test_that("Error with non tbl_time object", {
+  expect_error(retrieve_index(test_time),
+               "Object is not of class `tbl_time`.")
+})

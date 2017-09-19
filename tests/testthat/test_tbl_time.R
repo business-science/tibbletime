@@ -8,6 +8,7 @@ test_time <- tibble::tibble(
   value = c(1, 2, 3)
 )
 
+test_time_data_frame <- as.data.frame(test_time)
 test_tbl_time_base <- tbl_time(test_time, date)
 test_tbl_time      <- as_tbl_time(test_time, date)
 test_tbl_time_g    <- as_tbl_time(dplyr::group_by(test_time, group), date)
@@ -20,7 +21,13 @@ test_that("tbl_time class is created", {
   expect_is(test_tbl_time_g,    "tbl_time")
 })
 
+test_that("data.frame objects can be coerced by default method", {
+  test_tbl <- as_tbl_time(test_time_data_frame, date)
+  expect_is(test_tbl,      "tbl_time")
+})
+
 test_that("grouped_tbl_time class is created when converting a grouped_df", {
+  test_tbl_time_g    <- as_tbl_time(dplyr::group_by(test_time, group), date)
   expect_is(test_tbl_time_g, "grouped_tbl_time")
 })
 
