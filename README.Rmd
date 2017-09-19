@@ -16,6 +16,7 @@ devtools::load_all()
 
 [![Travis-CI Build Status](https://travis-ci.org/business-science/tibbletime.svg?branch=master)](https://travis-ci.org/business-science/tibbletime.svg?branch=master)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/tibbletime)](https://cran.r-project.org/package=tibbletime)
+[![codecov](https://codecov.io/gh/business-science/tibbletime/branch/master/graph/badge.svg)](https://codecov.io/gh/business-science/tibbletime)
 
 ## A time aware tibble
 

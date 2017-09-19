@@ -10,7 +10,7 @@ test_time <- tibble::tibble(
   value3 = c(1, 3, 7)
 )
 
-test_tbl_time      <- as_tbl_time(test_time, date)
+test_tbl_time <- as_tbl_time(test_time, date)
 
 # Tests
 
@@ -51,3 +51,13 @@ test_that("rollify() result works alone", {
   test_roll <- rollify(~mean(.x), window = 2)
   expect_equal(test_roll(c(1,3,4)), c(NA, 2.0, 3.5))
 })
+
+test_that("rollify() with unlist = FALSE works", {
+  test_roll <- rollify(~c(mean(.x), sd(.x)), window = 2, unlist = FALSE)
+  test_rolled <- mutate(test_tbl_time, test = test_roll(value))
+  expect_is(test_rolled$test[[1]], "logical")
+  expect_is(test_rolled$test[[2]], "numeric")
+  expect_is(test_rolled$test[[3]], "numeric")
+  expect_equal(length(test_rolled$test[[2]]), 2L)
+})
+

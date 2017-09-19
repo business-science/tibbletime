@@ -8,7 +8,7 @@ tidyverse_execute <- function(.x, fun, ..., silent_retime = FALSE) {
 }
 
 tidyverse_execute.default <- function(.x, fun, ..., silent_retime = FALSE) {
-  stop("`tidyverse_execute()` should only be called on a `tbl_time` object")
+  stop("Object is not of class `tbl_time`.")
 }
 
 tidyverse_execute.tbl_time <- function(.x, fun, ..., silent_retime = FALSE) {

@@ -62,3 +62,7 @@ test_that("retime adds time based attributes/classes back with groups", {
   expect_match(names(attributes(retime_tbl_time)), "time_zone", all = FALSE)
 })
 
+test_that("Error with non tbl_time object", {
+  expect_error(tidyverse_execute(test_time, mutate, x_new=2),
+               "Object is not of class `tbl_time`.")
+})
