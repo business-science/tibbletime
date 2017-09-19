@@ -72,6 +72,10 @@ time_summarise <- function(.data, period = "yearly", ...) {
   UseMethod("time_summarise")
 }
 
+time_summarise.default <- function(.data, period = "yearly", ...) {
+  stop("Object is not of class `tbl_time`.", call. = FALSE)
+}
+
 #' @export
 #'
 time_summarise.tbl_time <- function(.data, period = "yearly", ...) {
