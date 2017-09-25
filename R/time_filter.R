@@ -205,7 +205,8 @@ validate_date_order <- function(from, to) {
   from <- as.POSIXct(from)
   to   <- as.POSIXct(to)
 
-  assertthat::assert_that(from <= to, msg = "`from` must be a date before `to`")
+  assertthat::assert_that(from <= to,
+                          msg = "`from` must be a date before `to`")
 }
 
 # Expand date shorthand into a real date
