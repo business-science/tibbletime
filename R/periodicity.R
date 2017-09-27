@@ -4,8 +4,8 @@
 #' from minute data to hourly, and more. This allows the user to easily
 #' aggregate data to a less granular level.
 #'
+#' @inheritParams time_group
 #' @param x A `tbl_time` object.
-#' @param period The period to convert to. By default, yearly.
 #' @param side Whether to return the date at the beginning or the end of the
 #' new period. By default, the `"start"` of the period. Use `"end"` to change
 #' to the end of the period.
@@ -14,23 +14,11 @@
 #'
 #' This function respects [dplyr::group_by()] groups.
 #'
-#'
 #' Currently periods finer than second data are not supported.
 #'
 #' The `side` argument is useful when you want to return data at, say, the
 #' end of a quarter, or the end of a month.
 #'
-#' @note
-#'
-#' The following periods are available:
-#' * `"yearly"`
-#' * `"quarterly"`
-#' * `"monthly"`
-#' * `"weekly"`
-#' * `"daily"`
-#' * `"hour"`
-#' * `"minute"`
-#' * `"second"`
 #'
 #' @export
 #'
@@ -45,6 +33,9 @@
 #' # Aggregate FB to yearly data
 #' as_period(FB, "yearly")
 #'
+#' # Aggregate FB to yearly data using a period formula
+#' as_period(FB, 1~y)
+#'
 #' # Aggregate FB to yearly data, but use the last data point available
 #' # in that period
 #' as_period(FB, "yearly", "end")
@@ -53,6 +44,9 @@
 #' # in the data set at that periodicity. It will not set the date of the first
 #' # row to 2013-01-01 because that date did not exist in the original data set.
 #' as_period(FB, "weekly")
+#'
+#' # Aggregate to every other week
+#' as_period(FB, 2~w)
 #'
 #' # FB is daily data, aggregate to minute?
 #' # Does nothing and returns the original data set.
@@ -69,41 +63,74 @@
 #' # Respects groups
 #' FANG %>% as_period("yearly")
 #'
-as_period <- function(x, period = "yearly", side = "start") {
+#' # Every 6 months, respecting groups
+#' as_period(FANG, 6~m)
+#'
+#' # Using start_date ----------------------------------------------------------
+#'
+#' # FB stock prices
+#' data(FB)
+#' FB <- as_tbl_time(FB, date)
+#'
+#' # The Facebook series starts at 2013-01-02 so the 'every 2 day' counter
+#' # starts at that date as well. Groups become (2013-01-02, 2013-01-03),
+#' # (2013-01-04, 2013-01-05) and so on.
+#' as_period(FB, 2~d)
+#'
+#' # Specifying the `start_date = "2013-01-01"` might be preferable.
+#' # Groups become (2013-01-01, 2013-01-02), (2013-01-03, 2013-01-04) and so on.
+#' as_period(FB, 2~d, start_date = "2013-01-01")
+#'
+as_period <- function(x, period = "yearly", side = "start", start_date = NULL) {
   UseMethod("as_period")
 }
 
 #' @export
-as_period.default <- function(x, period = "yearly", side = "start") {
+as_period.default <- function(x, period = "yearly", side = "start", start_date = NULL) {
   stop("Object is not of class `tbl_time`.", call. = FALSE)
 }
 
 #' @export
-as_period.tbl_time <- function(x, period = "yearly", side = "start") {
+as_period.tbl_time <- function(x, period = "yearly", side = "start", start_date = NULL) {
+
+  # Parse character period to formula
+  if(is.character(period)) {
+    period <- parse_period_to_formula(period)
+  }
 
   # Index tibble/sym
-  index      <- expand_index(x, period)
   index_name <- rlang::sym(retrieve_index(x, as_name = TRUE))
-
-  # Define grouping symbols
-  groups <- period_to_syms(period)
 
   # Beginning or end of period?
   side_fun <- switch (side,
-    "start" = min,
-    "end"   = max
-  )
+                      "start" = min,
+                      "end"   = max)
 
-  # Change periodicity of the index alone
-  new_dates <- index %>%
-    dplyr::group_by(!!! groups, add = TRUE) %>%
-    dplyr::filter(rlang::UQ(index_name) == side_fun(!! index_name))
+  # Add time group column
+  x <- dplyr::mutate(x, .time_group = time_group(!! index_name,
+                                                 period = period,
+                                                 start_date = start_date))
 
-  # Filter the entire data based on the new index
-  # Then remove duplicate times
-  # (i.e. if multiple trades at 15:00:01, only the first is returned)
-  by_vars <- intersect(colnames(x), colnames(index))
-  dplyr::semi_join(x, new_dates, by = by_vars) %>%
+  # Grouped filter to select the correct dates
+  x <- x %>%
+    dplyr::group_by(.time_group, add = TRUE) %>%
+    dplyr::filter(rlang::UQ(index_name) == side_fun(!! index_name)) %>%
+    # Remove potential date duplicates. This keeps the first only
     dplyr::distinct(!! index_name, .keep_all = TRUE)
 
+  # Ungroup and remove time group column
+  x <- x %>%
+    dplyr::ungroup() %>%
+    dplyr::select(-.time_group)
+
+  x
 }
+
+#' @export
+as_period.grouped_tbl_time <- function(x, period = "yearly", side = "start", start_date = NULL) {
+
+  # 'Do' it to each group
+  dplyr::do(x, as_period(., period = period, side = side, start_date = start_date))
+
+}
+

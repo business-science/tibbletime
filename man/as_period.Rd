@@ -4,16 +4,49 @@
 \alias{as_period}
 \title{Change \code{tbl_time} periodicity}
 \usage{
-as_period(x, period = "yearly", side = "start")
+as_period(x, period = "yearly", side = "start", start_date = NULL)
 }
 \arguments{
 \item{x}{A \code{tbl_time} object.}
 
-\item{period}{The period to convert to. By default, yearly.}
+\item{period}{A formula or character specification used for time-based grouping.
+
+If a formula, e.g. \code{1~year}, the formula is split and parsed to form the
+grouping period. The \code{period} argument accepts a formula of the form
+\code{multiple ~ period} allowing for flexible period grouping.
+The following are examples:
+\itemize{
+\item 1 Year: \code{1~y}
+\item 3 Months: \code{3~m}
+\item 90 Days: \code{90~d}
+}
+
+Note that while shorthand is used above, an attempt is made to recognize
+more explicit period names such as:
+\itemize{
+\item 2 Year: \code{2~year} / \code{2~years} / \code{2~yearly}
+}
+
+The \code{period} argument also accepts characters that are converted to their
+corresponding periods. The following are accepted:
+\itemize{
+\item \code{"yearly"} or \code{"y"}
+\item \code{"quarterly"} or \code{"q"}
+\item \code{"monthly"} or \code{"m"}
+\item \code{"weekly"} or \code{"w"}
+\item \code{"daily"} or \code{"d"}
+\item \code{"hour"} or \code{"h"}
+\item \code{"minute"} or \code{"M"}
+\item \code{"second"} or \code{"s"}
+}}
 
 \item{side}{Whether to return the date at the beginning or the end of the
 new period. By default, the \code{"start"} of the period. Use \code{"end"} to change
 to the end of the period.}
+
+\item{start_date}{Optional argument used to specify the start date for the
+first group. The default is to start at the closest period boundary
+below the minimum date in the supplied index.}
 }
 \description{
 Convert a \code{tbl_time} object from daily to monthly,
@@ -28,19 +61,6 @@ Currently periods finer than second data are not supported.
 The \code{side} argument is useful when you want to return data at, say, the
 end of a quarter, or the end of a month.
 }
-\note{
-The following periods are available:
-\itemize{
-\item \code{"yearly"}
-\item \code{"quarterly"}
-\item \code{"monthly"}
-\item \code{"weekly"}
-\item \code{"daily"}
-\item \code{"hour"}
-\item \code{"minute"}
-\item \code{"second"}
-}
-}
 \examples{
 
 # Basic usage ---------------------------------------------------------------
@@ -52,6 +72,9 @@ FB <- as_tbl_time(FB, date)
 # Aggregate FB to yearly data
 as_period(FB, "yearly")
 
+# Aggregate FB to yearly data using a period formula
+as_period(FB, 1~y)
+
 # Aggregate FB to yearly data, but use the last data point available
 # in that period
 as_period(FB, "yearly", "end")
@@ -60,6 +83,9 @@ as_period(FB, "yearly", "end")
 # in the data set at that periodicity. It will not set the date of the first
 # row to 2013-01-01 because that date did not exist in the original data set.
 as_period(FB, "weekly")
+
+# Aggregate to every other week
+as_period(FB, 2~w)
 
 # FB is daily data, aggregate to minute?
 # Does nothing and returns the original data set.
@@ -75,5 +101,23 @@ FANG <- FANG \%>\% group_by(symbol)
 
 # Respects groups
 FANG \%>\% as_period("yearly")
+
+# Every 6 months, respecting groups
+as_period(FANG, 6~m)
+
+# Using start_date ----------------------------------------------------------
+
+# FB stock prices
+data(FB)
+FB <- as_tbl_time(FB, date)
+
+# The Facebook series starts at 2013-01-02 so the 'every 2 day' counter
+# starts at that date as well. Groups become (2013-01-02, 2013-01-03),
+# (2013-01-04, 2013-01-05) and so on.
+as_period(FB, 2~d)
+
+# Specifying the `start_date = "2013-01-01"` might be preferable.
+# Groups become (2013-01-01, 2013-01-02), (2013-01-03, 2013-01-04) and so on.
+as_period(FB, 2~d, start_date = "2013-01-01")
 
 }
