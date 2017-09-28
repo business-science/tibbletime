@@ -93,11 +93,6 @@ as_period.default <- function(x, period = "yearly", side = "start", start_date =
 #' @export
 as_period.tbl_time <- function(x, period = "yearly", side = "start", start_date = NULL) {
 
-  # Parse character period to formula
-  if(is.character(period)) {
-    period <- parse_period_to_formula(period)
-  }
-
   # Index tibble/sym
   index_name <- rlang::sym(retrieve_index(x, as_name = TRUE))
 
