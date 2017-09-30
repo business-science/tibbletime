@@ -238,9 +238,14 @@ normalize_date <- function(x, from_to) {
   } else {
 
     # If there is only a date, no time
-    # Recurse split the date, and pass 0 as time
+    # Recurse split the date, and pass default time
     date <- recurse_split(x, ymd, "-")
-    time <- "00:00:00"
+
+    if(from_to == "from") {
+      time <- "00:00:00"
+    } else {
+      time <- "23:59:59"
+    }
 
     # Paste together
     paste(date, time, sep = " ")
