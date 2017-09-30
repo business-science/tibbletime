@@ -91,7 +91,7 @@ time_collapse.tbl_time <- function(.data, period = "yearly", start_date = NULL,
                                     start_date = start_date, ...)) %>%
 
     # Group by them
-    group_by(.time_group, add = TRUE) %>%
+    group_by(.data$.time_group, add = TRUE) %>%
 
     # Max the date per group
     mutate(!! index_sym := max(!! index_sym)) %>%
@@ -100,7 +100,7 @@ time_collapse.tbl_time <- function(.data, period = "yearly", start_date = NULL,
     ungroup() %>%
 
     # Remove .time_group
-    dplyr::select(- .time_group)
+    dplyr::select(- .data$.time_group)
 
 }
 

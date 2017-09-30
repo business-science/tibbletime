@@ -111,7 +111,7 @@ as_period.tbl_time <- function(x, period = "yearly",
 
   # Grouped slice to select only the max/min date for each group
   x <- x %>%
-    dplyr::group_by(.time_group, add = TRUE) %>%
+    dplyr::group_by(.data$.time_group, add = TRUE) %>%
     dplyr::slice(which(rlang::UQ(index_name) == side_fun(!! index_name))) %>%
     # Remove potential date duplicates. This keeps the first only
     dplyr::distinct(!! index_name, .keep_all = TRUE)
@@ -119,7 +119,7 @@ as_period.tbl_time <- function(x, period = "yearly",
   # Ungroup and remove time group column
   x <- x %>%
     dplyr::ungroup() %>%
-    dplyr::select(-.time_group)
+    dplyr::select(-.data$.time_group)
 
   x
 }
@@ -131,7 +131,7 @@ as_period.grouped_tbl_time <- function(x, period = "yearly",
   # Nest and apply to each group
   x %>%
     tidyr::nest() %>%
-    dplyr::mutate(data = purrr::map(data,
+    dplyr::mutate(data = purrr::map(.data$data,
                                     ~as_period(.x,
                                                period = period,
                                                side = side,

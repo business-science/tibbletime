@@ -9,6 +9,10 @@ magrittr::`%>%`
 #'
 NULL
 
+#' @importFrom rlang .data
+#'
+NULL
+
 # Global Util ------------------------------------------------------------------
 
 # Convert a period to an expanded list of syms required to expand the index
