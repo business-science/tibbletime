@@ -4,9 +4,9 @@
 #' benefit of being able to summarise by a time period such as `"yearly"` or
 #' `"monthly"`.
 #'
+#' @inheritParams time_group
 #' @inheritParams dplyr::summarise
 #' @param .data A `tbl_time` object.
-#' @param period A period to summarise by.
 #'
 #' @details
 #'
@@ -16,17 +16,6 @@
 #' Because an added group for the time index is added in `time_summarise`,
 #' none of the original groups are removed.
 #'
-#' @note
-#'
-#' The following periods are available:
-#' * `"yearly"`
-#' * `"quarterly"`
-#' * `"monthly"`
-#' * `"weekly"`
-#' * `"daily"`
-#' * `"hour"`
-#' * `"minute"`
-#' * `"second"`
 #'
 #' @rdname time_summarise
 #'
@@ -68,29 +57,34 @@
 #'
 #' @export
 #'
-time_summarise <- function(.data, period = "yearly", ...) {
+time_summarise <- function(.data, period = "yearly",
+                           ..., start_date = NULL) {
   UseMethod("time_summarise")
 }
 
-time_summarise.default <- function(.data, period = "yearly", ...) {
+time_summarise.default <- function(.data, period = "yearly",
+                                  ..., start_date = NULL) {
   stop("Object is not of class `tbl_time`.", call. = FALSE)
 }
 
 #' @export
 #'
-time_summarise.tbl_time <- function(.data, period = "yearly", ...) {
+time_summarise.tbl_time <- function(.data, period = "yearly",
+                                    ..., start_date = NULL) {
 
   index_sym <- rlang::sym(retrieve_index(.data, as_name = TRUE))
 
-  time_collapse(.data, period) %>%
+  time_collapse(.data, period = period, start_date = start_date) %>%
     dplyr::group_by(!! index_sym, add = TRUE) %>%
     dplyr::summarise(...)
 }
 
 #' @export
 #'
-time_summarise.grouped_tbl_time <- function(.data, period = "yearly", ...) {
-  time_summarise.tbl_time(.data, ..., period = period) %>%
+time_summarise.grouped_tbl_time <- function(.data, period = "yearly",
+                                            ..., start_date = NULL) {
+  time_summarise.tbl_time(.data, ...,
+                          period = period, start_date = start_date) %>%
     dplyr::group_by(!!! dplyr::groups(.data))
 }
 
@@ -98,7 +92,8 @@ time_summarise.grouped_tbl_time <- function(.data, period = "yearly", ...) {
 
 #' @export
 #' @rdname time_summarise
-time_summarize <- function(.data, period = "yearly", ...) {
+time_summarize <- function(.data, period = "yearly",
+                           ..., start_date = NULL) {
   UseMethod("time_summarize")
 }
 

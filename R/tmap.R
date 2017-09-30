@@ -16,26 +16,15 @@
 #'
 #' Groupings applied using [dplyr::group_by()] are respected.
 #'
-#' @note
-#'
-#' The following periods are available:
-#' * `"yearly"`
-#' * `"quarterly"`
-#' * `"monthly"`
-#' * `"weekly"`
-#' * `"daily"`
-#' * `"hour"`
-#' * `"minute"`
-#' * `"second"`
 #'
 #' @return
 #'
 #' A `tbl_time` object grouped by the time interval specified. The last
 #' available date in that interval is returned as the new date.
 #'
+#' @inheritParams time_group
 #' @inheritParams purrr::map
 #' @param .x A `tbl_time` object.
-#' @param period A period to group the mapping by.
 #' @param name The character name of the list-column generated.
 #'
 #' @examples
@@ -103,27 +92,32 @@
 #' @export
 #' @rdname tmap
 #'
-tmap <- function(.x, .f, period = "yearly", name = "data", ...) {
+tmap <- function(.x, .f, period = "yearly", start_date = NULL,
+                 name = "data", ...) {
   UseMethod("tmap")
 }
 
 #' @export
-tmap.default <- function(.x, .f, period = "yearly", name = "data", ...) {
+tmap.default <- function(.x, .f, period = "yearly", start_date = NULL,
+                         name = "data", ...) {
   stop("Object is not of class `tbl_time`.", call. = FALSE)
 }
 
 #' @export
-tmap.tbl_time <- function(.x, .f, period = "yearly", name = "data", ...) {
+tmap.tbl_time <- function(.x, .f, period = "yearly", start_date = NULL,
+                          name = "data", ...) {
   join_cols <- retrieve_index(.x, as_name = TRUE)
-  tmap_variant(.x, .f, period = period, name = name,
+  tmap_variant(.x, .f, period = period, start_date = start_date, name = name,
                map_type = purrr::map, join_cols = join_cols, ...)
 }
 
 #' @export
-tmap.grouped_tbl_time <- function(.x, .f, period = "yearly", name = "data", ...) {
+tmap.grouped_tbl_time <- function(.x, .f, period = "yearly", start_date = NULL,
+                                  name = "data", ...) {
   join_cols <- c(dplyr::group_vars(.x), retrieve_index(.x, as_name = TRUE))
-  x <- tmap_variant(.x, .f, period = period, name = name,
-                    map_type = purrr::map, join_cols = join_cols, ...)
+  x <- tmap_variant(.x, .f, period = period, start_date = start_date,
+                    name = name, map_type = purrr::map,
+                    join_cols = join_cols, ...)
   group_by(x, !!! dplyr::groups(.x))
 }
 
@@ -132,27 +126,33 @@ tmap.grouped_tbl_time <- function(.x, .f, period = "yearly", name = "data", ...)
 #' @export
 #' @rdname tmap
 #'
-tmap_chr <- function(.x, .f, period = "yearly", name = "data", ...) {
+tmap_chr <- function(.x, .f, period = "yearly", start_date = NULL,
+                     name = "data", ...) {
   UseMethod("tmap_chr")
 }
 
 #' @export
-tmap_chr.default <- function(.x, .f, period = "yearly", name = "data", ...) {
+tmap_chr.default <- function(.x, .f, period = "yearly", start_date = NULL,
+                             name = "data", ...) {
   stop("Object is not of class `tbl_time`.", call. = FALSE)
 }
 
 #' @export
-tmap_chr.tbl_time <- function(.x, .f, period = "yearly", name = "data", ...) {
+tmap_chr.tbl_time <- function(.x, .f, period = "yearly", start_date = NULL,
+                              name = "data", ...) {
   join_cols <- retrieve_index(.x, as_name = TRUE)
-  tmap_variant(.x, .f, period = period, name = name,
+  tmap_variant(.x, .f, period = period, start_date = start_date, name = name,
                map_type = purrr::map_chr, join_cols = join_cols, ...)
 }
 
 #' @export
-tmap_chr.grouped_tbl_time <- function(.x, .f, period = "yearly", name = "data", ...) {
+tmap_chr.grouped_tbl_time <- function(.x, .f, period = "yearly",
+                                      start_date = NULL,
+                                      name = "data", ...) {
   join_cols <- c(dplyr::group_vars(.x), retrieve_index(.x, as_name = TRUE))
-  x <- tmap_variant(.x, .f, period = period, name = name,
-                    map_type = purrr::map_chr, join_cols = join_cols, ...)
+  x <- tmap_variant(.x, .f, period = period, start_date = start_date,
+                    name = name, map_type = purrr::map_chr,
+                    join_cols = join_cols, ...)
   group_by(x, !!! dplyr::groups(.x))
 }
 
@@ -161,27 +161,33 @@ tmap_chr.grouped_tbl_time <- function(.x, .f, period = "yearly", name = "data", 
 #' @export
 #' @rdname tmap
 #'
-tmap_int <- function(.x, .f, period = "yearly", name = "data", ...) {
+tmap_int <- function(.x, .f, period = "yearly", start_date = NULL,
+                     name = "data", ...) {
   UseMethod("tmap_int")
 }
 
 #' @export
-tmap_int.default <- function(.x, .f, period = "yearly", name = "data", ...) {
+tmap_int.default <- function(.x, .f, period = "yearly", start_date = NULL,
+                             name = "data", ...) {
   stop("Object is not of class `tbl_time`.", call. = FALSE)
 }
 
 #' @export
-tmap_int.tbl_time <- function(.x, .f, period = "yearly", name = "data", ...) {
+tmap_int.tbl_time <- function(.x, .f, period = "yearly", start_date = NULL,
+                              name = "data", ...) {
   join_cols <- retrieve_index(.x, as_name = TRUE)
-  tmap_variant(.x, .f, period = period, name = name,
+  tmap_variant(.x, .f, period = period, start_date = start_date, name = name,
                map_type = purrr::map_int, join_cols = join_cols, ...)
 }
 
 #' @export
-tmap_int.grouped_tbl_time <- function(.x, .f, period = "yearly", name = "data", ...) {
+tmap_int.grouped_tbl_time <- function(.x, .f, period = "yearly",
+                                      start_date = NULL,
+                                      name = "data", ...) {
   join_cols <- c(dplyr::group_vars(.x), retrieve_index(.x, as_name = TRUE))
-  x <- tmap_variant(.x, .f, period = period, name = name,
-                    map_type = purrr::map_int, join_cols = join_cols, ...)
+  x <- tmap_variant(.x, .f, period = period, start_date = start_date,
+                    name = name, map_type = purrr::map_int,
+                    join_cols = join_cols, ...)
   group_by(x, !!! dplyr::groups(.x))
 }
 
@@ -190,27 +196,33 @@ tmap_int.grouped_tbl_time <- function(.x, .f, period = "yearly", name = "data", 
 #' @export
 #' @rdname tmap
 #'
-tmap_lgl <- function(.x, .f, period = "yearly", name = "data", ...) {
+tmap_lgl <- function(.x, .f, period = "yearly", start_date = NULL,
+                     name = "data", ...) {
   UseMethod("tmap_lgl")
 }
 
 #' @export
-tmap_lgl.default <- function(.x, .f, period = "yearly", name = "data", ...) {
+tmap_lgl.default <- function(.x, .f, period = "yearly", start_date = NULL,
+                             name = "data", ...) {
   stop("Object is not of class `tbl_time`.", call. = FALSE)
 }
 
 #' @export
-tmap_lgl.tbl_time <- function(.x, .f, period = "yearly", name = "data", ...) {
+tmap_lgl.tbl_time <- function(.x, .f, period = "yearly", start_date = NULL,
+                              name = "data", ...) {
   join_cols <- retrieve_index(.x, as_name = TRUE)
-  tmap_variant(.x, .f, period = period, name = name,
+  tmap_variant(.x, .f, period = period, start_date = start_date, name = name,
                map_type = purrr::map_lgl, join_cols = join_cols, ...)
 }
 
 #' @export
-tmap_lgl.grouped_tbl_time <- function(.x, .f, period = "yearly", name = "data", ...) {
+tmap_lgl.grouped_tbl_time <- function(.x, .f, period = "yearly",
+                                      start_date = NULL,
+                                      name = "data", ...) {
   join_cols <- c(dplyr::group_vars(.x), retrieve_index(.x, as_name = TRUE))
-  x <- tmap_variant(.x, .f, period = period, name = name,
-                    map_type = purrr::map_lgl, join_cols = join_cols, ...)
+  x <- tmap_variant(.x, .f, period = period, start_date = start_date,
+                    name = name, map_type = purrr::map_lgl,
+                    join_cols = join_cols, ...)
   group_by(x, !!! dplyr::groups(.x))
 }
 
@@ -219,27 +231,33 @@ tmap_lgl.grouped_tbl_time <- function(.x, .f, period = "yearly", name = "data", 
 #' @export
 #' @rdname tmap
 #'
-tmap_dbl <- function(.x, .f, period = "yearly", name = "data", ...) {
+tmap_dbl <- function(.x, .f, period = "yearly", start_date = NULL,
+                     name = "data", ...) {
   UseMethod("tmap_dbl")
 }
 
 #' @export
-tmap_dbl.default <- function(.x, .f, period = "yearly", name = "data", ...) {
+tmap_dbl.default <- function(.x, .f, period = "yearly", start_date = NULL,
+                             name = "data", ...) {
   stop("Object is not of class `tbl_time`.", call. = FALSE)
 }
 
 #' @export
-tmap_dbl.tbl_time <- function(.x, .f, period = "yearly", name = "data", ...) {
+tmap_dbl.tbl_time <- function(.x, .f, period = "yearly", start_date = NULL,
+                              name = "data", ...) {
   join_cols <- retrieve_index(.x, as_name = TRUE)
-  tmap_variant(.x, .f, period = period, name = name,
+  tmap_variant(.x, .f, period = period, start_date = start_date, name = name,
                map_type = purrr::map_dbl, join_cols = join_cols, ...)
 }
 
 #' @export
-tmap_dbl.grouped_tbl_time <- function(.x, .f, period = "yearly", name = "data", ...) {
+tmap_dbl.grouped_tbl_time <- function(.x, .f, period = "yearly",
+                                      start_date = NULL,
+                                      name = "data", ...) {
   join_cols <- c(dplyr::group_vars(.x), retrieve_index(.x, as_name = TRUE))
-  x <- tmap_variant(.x, .f, period = period, name = name,
-                    map_type = purrr::map_dbl, join_cols = join_cols, ...)
+  x <- tmap_variant(.x, .f, period = period, start_date = start_date,
+                    name = name, map_type = purrr::map_dbl,
+                    join_cols = join_cols, ...)
   group_by(x, !!! dplyr::groups(.x))
 }
 
@@ -248,27 +266,33 @@ tmap_dbl.grouped_tbl_time <- function(.x, .f, period = "yearly", name = "data", 
 #' @export
 #' @rdname tmap
 #'
-tmap_dfc <- function(.x, .f, period = "yearly", name = "data", ...) {
+tmap_dfc <- function(.x, .f, period = "yearly", start_date = NULL,
+                     name = "data", ...) {
   UseMethod("tmap_dfc")
 }
 
 #' @export
-tmap_dfc.default <- function(.x, .f, period = "yearly", name = "data", ...) {
+tmap_dfc.default <- function(.x, .f, period = "yearly", start_date = NULL,
+                             name = "data", ...) {
   stop("Object is not of class `tbl_time`.", call. = FALSE)
 }
 
 #' @export
-tmap_dfc.tbl_time <- function(.x, .f, period = "yearly", name = "data", ...) {
+tmap_dfc.tbl_time <- function(.x, .f, period = "yearly", start_date = NULL,
+                              name = "data", ...) {
   join_cols <- retrieve_index(.x, as_name = TRUE)
-  tmap_variant(.x, .f, period = period, name = name,
+  tmap_variant(.x, .f, period = period, start_date = start_date, name = name,
                map_type = purrr::map_dfc, join_cols = join_cols, ...)
 }
 
 #' @export
-tmap_dfc.grouped_tbl_time <- function(.x, .f, period = "yearly", name = "data", ...) {
+tmap_dfc.grouped_tbl_time <- function(.x, .f, period = "yearly",
+                                      start_date = NULL,
+                                      name = "data", ...) {
   join_cols <- c(dplyr::group_vars(.x), retrieve_index(.x, as_name = TRUE))
-  x <- tmap_variant(.x, .f, period = period, name = name,
-                    map_type = purrr::map_dfc, join_cols = join_cols, ...)
+  x <- tmap_variant(.x, .f, period = period, start_date = start_date,
+                    name = name, map_type = purrr::map_dfc,
+                    join_cols = join_cols, ...)
   group_by(x, !!! dplyr::groups(.x))
 }
 
@@ -277,27 +301,33 @@ tmap_dfc.grouped_tbl_time <- function(.x, .f, period = "yearly", name = "data", 
 #' @export
 #' @rdname tmap
 #'
-tmap_dfr <- function(.x, .f, period = "yearly", name = "data", ...) {
+tmap_dfr <- function(.x, .f, period = "yearly", start_date = NULL,
+                     name = "data", ...) {
   UseMethod("tmap_dfr")
 }
 
 #' @export
-tmap_dfr.default <- function(.x, .f, period = "yearly", name = "data", ...) {
+tmap_dfr.default <- function(.x, .f, period = "yearly", start_date = NULL,
+                             name = "data", ...) {
   stop("Object is not of class `tbl_time`.", call. = FALSE)
 }
 
 #' @export
-tmap_dfr.tbl_time <- function(.x, .f, period = "yearly", name = "data", ...) {
+tmap_dfr.tbl_time <- function(.x, .f, period = "yearly", start_date = NULL,
+                              name = "data", ...) {
   join_cols <- retrieve_index(.x, as_name = TRUE)
-  tmap_variant(.x, .f, period = period, name = name,
+  tmap_variant(.x, .f, period = period, start_date = start_date, name = name,
                map_type = purrr::map_dfr, join_cols = join_cols, ...)
 }
 
 #' @export
-tmap_dfr.grouped_tbl_time <- function(.x, .f, period = "yearly", name = "data", ...) {
+tmap_dfr.grouped_tbl_time <- function(.x, .f, period = "yearly",
+                                      start_date = NULL,
+                                      name = "data", ...) {
   join_cols <- c(dplyr::group_vars(.x), retrieve_index(.x, as_name = TRUE))
-  x <- tmap_variant(.x, .f, period = period, name = name,
-                    map_type = purrr::map_dfr, join_cols = join_cols, ...)
+  x <- tmap_variant(.x, .f, period = period, start_date = start_date,
+                    name = name, map_type = purrr::map_dfr,
+                    join_cols = join_cols, ...)
   group_by(x, !!! dplyr::groups(.x))
 }
 
@@ -306,27 +336,33 @@ tmap_dfr.grouped_tbl_time <- function(.x, .f, period = "yearly", name = "data", 
 #' @export
 #' @rdname tmap
 #'
-tmap_df <- function(.x, .f, period = "yearly", name = "data", ...) {
+tmap_df <- function(.x, .f, period = "yearly", start_date = NULL,
+                    name = "data", ...) {
   UseMethod("tmap_df")
 }
 
 #' @export
-tmap_df.default <- function(.x, .f, period = "yearly", name = "data", ...) {
+tmap_df.default <- function(.x, .f, period = "yearly", start_date = NULL,
+                            name = "data", ...) {
   stop("Object is not of class `tbl_time`.", call. = FALSE)
 }
 
 #' @export
-tmap_df.tbl_time <- function(.x, .f, period = "yearly", name = "data", ...) {
+tmap_df.tbl_time <- function(.x, .f, period = "yearly", start_date = NULL,
+                             name = "data", ...) {
   join_cols <- retrieve_index(.x, as_name = TRUE)
-  tmap_variant(.x, .f, period = period, name = name,
+  tmap_variant(.x, .f, period = period, start_date = start_date, name = name,
                map_type = purrr::map_df, join_cols = join_cols, ...)
 }
 
 #' @export
-tmap_df.grouped_tbl_time <- function(.x, .f, period = "yearly", name = "data", ...) {
+tmap_df.grouped_tbl_time <- function(.x, .f, period = "yearly",
+                                     start_date = NULL,
+                                     name = "data", ...) {
   join_cols <- c(dplyr::group_vars(.x), retrieve_index(.x, as_name = TRUE))
-  x <- tmap_variant(.x, .f, period = period, name = name,
-                    map_type = purrr::map_df, join_cols = join_cols, ...)
+  x <- tmap_variant(.x, .f, period = period, start_date = start_date,
+                    name = name, map_type = purrr::map_df,
+                    join_cols = join_cols, ...)
   group_by(x, !!! dplyr::groups(.x))
 }
 
@@ -334,6 +370,7 @@ tmap_df.grouped_tbl_time <- function(.x, .f, period = "yearly", name = "data", .
 
 tmap_variant <- function(.x, .f,
                          period = "yearly",
+                         start_date = NULL,
                          map_type = NULL,
                          join_cols = NULL,
                          name = "data", ...) {
@@ -342,7 +379,7 @@ tmap_variant <- function(.x, .f,
   .key <- rlang::sym(name)
 
   # Collapse to the correct period
-  time_collapse(.x, period) %>%
+  time_collapse(.x, period, start_date) %>%
 
     # Ungroup. nest_cols argument handles them
     ungroup() %>%

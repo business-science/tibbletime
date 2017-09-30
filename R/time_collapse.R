@@ -2,10 +2,11 @@
 #' same date
 #'
 #' When `time_collapse` is used, the index of a `tbl_time` object is altered
-#' so that all dates that fall in a period share a common date.
+#' so that all dates that fall in a period share a common date. This can be
+#' useful for further groupwise calculations.
 #'
+#' @inheritParams time_group
 #' @param .data A `tbl_time` object.
-#' @param period A period to collapse to.
 #' @param as_sep_col Whether to keep the original index as the column `.date`
 #' or to drop it.
 #' @param ... Not currently used.
@@ -20,17 +21,6 @@
 #'
 #' This function respects [dplyr::group_by()] groups.
 #'
-#' @note
-#'
-#' The following periods are available:
-#' * `"yearly"`
-#' * `"quarterly"`
-#' * `"monthly"`
-#' * `"weekly"`
-#' * `"daily"`
-#' * `"hour"`
-#' * `"minute"`
-#' * `"second"`
 #'
 #' @examples
 #'
@@ -42,6 +32,9 @@
 #'
 #' # Collapse to weekly dates
 #' time_collapse(FB, period = "weekly")
+#'
+#' # Collapse to every other week dates
+#' time_collapse(FB, period = 2~w)
 #'
 #' # Collapse to weekly dates, but keep the original too
 #' time_collapse(FB, period = "weekly", as_sep_col = TRUE)
@@ -57,48 +50,29 @@
 #' FANG %>%
 #'   time_collapse("monthly")
 #'
+#' # Collapse each group to every other month
+#' FANG %>%
+#'   time_collapse(2~m)
 #'
 #' @export
-time_collapse <- function(.data, period = "yearly",
+time_collapse <- function(.data, period = "yearly", start_date = NULL,
                           as_sep_col = FALSE, ...) {
   UseMethod("time_collapse")
 }
 
 #' @export
-time_collapse.default <- function(.data, period = "yearly",
+time_collapse.default <- function(.data, period = "yearly", start_date = NULL,
                                   as_sep_col = FALSE, ...) {
   stop("Object is not of class `tbl_time`.", call. = FALSE)
 }
 
 #' @export
-time_collapse.tbl_time <- function(.data, period = "yearly",
+time_collapse.tbl_time <- function(.data, period = "yearly", start_date = NULL,
                                    as_sep_col = FALSE, ...) {
-  join_cols <- retrieve_index(.data, as_name = TRUE)
-  collapse_it(.data, period = period, join_cols = join_cols,
-              as_sep_col = as_sep_col, ...)
-}
 
-#' @export
-time_collapse.grouped_tbl_time <- function(.data, period = "yearly",
-                                           as_sep_col = FALSE, ...) {
-  join_cols <- c(dplyr::group_vars(.data),
-                 retrieve_index(.data, as_name = TRUE))
-  collapse_it(.data, period = period, join_cols = join_cols,
-              as_sep_col = as_sep_col, ...)
-}
-
-# Utils -----
-
-collapse_it <- function(.data, period = "yearly", join_cols,
-                        as_sep_col = FALSE, ...) {
-
-  index          <- retrieve_index(.data)
+  # Setup
   index_char     <- retrieve_index(.data, as_name = TRUE)
   index_sym      <- rlang::sym(index_char)
-  exp_index      <- expand_index(.data, period)
-
-  # Need join_cols = combo of groups and index
-  period_cols    <- setdiff(x = colnames(exp_index), y = join_cols)
 
   # Keep the original dates as .date if requested
   if(as_sep_col) {
@@ -110,19 +84,34 @@ collapse_it <- function(.data, period = "yearly", join_cols,
     .data <- .data[,c(1:index_pos, ncol(.data), (index_pos+1):(ncol(.data)-1))]
   }
 
-  # Join .data with expanded index
-  dplyr::left_join(.data, exp_index, by = join_cols) %>%
+  .data %>%
 
-    # Additionally group by expanded index periods
-    dplyr::group_by(!!! rlang::syms(period_cols), add = TRUE) %>%
+    # Add time groups
+    mutate(.time_group = time_group(!! index_sym, period = period,
+                                    start_date = start_date, ...)) %>%
 
-    # Index column becomes the max of that group
-    # Keep the original dates as .date if requested
-    dplyr::mutate(!! index_sym := max(!! index_sym)) %>%
+    # Group by them
+    group_by(.time_group, add = TRUE) %>%
 
-    # Regroup by original groups (removes period grouping)
-    dplyr::group_by(!!! dplyr::groups(.data)) %>%
+    # Max the date per group
+    mutate(!! index_sym := max(!! index_sym)) %>%
 
-    # Remove period cols
-    dplyr::select(- dplyr::one_of(period_cols))
+    # Ungroup
+    ungroup() %>%
+
+    # Remove .time_group
+    dplyr::select(- .time_group)
+
+}
+
+#' @export
+time_collapse.grouped_tbl_time <- function(.data,
+                                           period = "yearly",
+                                           start_date = NULL,
+                                           as_sep_col = FALSE, ...) {
+
+  time_collapse.tbl_time(.data, period = period, as_sep_col = as_sep_col,
+                         start_date = start_date) %>%
+    group_by(!!! dplyr::groups(.data))
+
 }

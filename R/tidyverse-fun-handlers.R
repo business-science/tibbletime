@@ -15,16 +15,13 @@ tidyverse_execute.tbl_time <- function(.x, fun, ..., silent_retime = FALSE) {
 
   # Assert that attributes still exist
   assertthat::assert_that(!is.null(attr(.x, "index")),
-        msg = "`index` attribute is `NULL`. Was it removed by a function call?")
+    msg = "`index` attribute is `NULL`. Was it removed by a function call?")
   assertthat::assert_that(!is.null(attr(.x, "time_zone")),
-        msg = "`time_zone` attribute is `NULL`. Was it removed by a function call?")
+    msg = "`time_zone` attribute is `NULL`. Was it removed by a function call?")
 
   # Classes and attributes to keep
-  time_classes <- stringr::str_subset(class(.x), "tbl_time")
-  time_attrs <- list(
-    index     = attr(.x, "index"),
-    time_zone = attr(.x, "time_zone")
-  )
+  time_classes <- extract_time_classes(.x)
+  time_attrs   <- extract_time_attrs(.x)
 
   # Remove, execute dplyr fun, add back
   .x %>%
@@ -36,11 +33,13 @@ tidyverse_execute.tbl_time <- function(.x, fun, ..., silent_retime = FALSE) {
 # retime -----------------------------------------------------------------------
 
 # retime() adds time based classes and attributes after a tidyverse manipulation
-retime <- function(x, time_classes, time_attrs, silent_retime = FALSE, ...) {
+retime <- function(x, time_classes, time_attrs,
+                   silent_retime = FALSE, ...) {
   UseMethod("retime")
 }
 
-retime.default <- function(x, time_classes, time_attrs, silent_retime = FALSE, ...) {
+retime.default <- function(x, time_classes, time_attrs,
+                           silent_retime = FALSE, ...) {
 
   # Only retime if index still exists
   if(!check_for_index(x, time_attrs)) {
@@ -65,11 +64,17 @@ detime <- function(x, time_classes, time_attrs, ...) {
 }
 
 detime.default <- function(x, time_classes, time_attrs, ...) {
+
+  # Get names of the attributes
+  time_attrs_names <- rlang::names2(time_attrs)
+
+  # Strip time classes
   class(x) <- base::setdiff(class(x), time_classes)
 
-  nontime_attrs <- setdiff(rlang::names2(attributes(x)),
-                           rlang::names2(time_attrs))
-  attributes(x) <- attributes(x)[nontime_attrs]
+  # Strip time attributes
+  for(i in time_attrs_names) {
+    attr(x, i) <- NULL
+  }
 
   x
 }
@@ -80,3 +85,13 @@ check_for_index <- function(x, time_attrs) {
   rlang::quo_name(time_attrs[["index"]]) %in% colnames(x)
 }
 
+extract_time_classes <- function(x) {
+  stringr::str_subset(class(x), "tbl_time")
+}
+
+extract_time_attrs <- function(x) {
+  list(
+    index     = attr(x, "index"),
+    time_zone = attr(x, "time_zone")
+  )
+}

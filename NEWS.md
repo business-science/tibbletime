@@ -1,25 +1,34 @@
-## tibbletime 0.0.1.9000
+## tibbletime 0.0.1.9004
 
 * New functionality
+  
+    * `time_unnest()` is used to specifically unnest a `tibble` object
+    with a list-column of `tbl_time` objects.
   
     * `create_series()` allows the user to create a `tbl_time` object with
     a regularly spaced sequence of dates.
     
     * `time_group()` has become the workhorse function for creating time based
-    groups used in changing periodicity and eventually other time based 
-    groupwise operations.
+    groups used in changing periodicity and other grouped 
+    time based calculations.
     
-    * `as_period()` now accepts a formula based `period` that provides an 
+    * `time_summarise()` and `tmap()` now also accept a formula-based `period`.
+    
+    * `as_period()` now accepts a formula-based `period` that provides an 
     incredible amount of flexibility in creating groups.
 
-    * `rollify` creates a rolling version of any function for 
-    use in `dplyr::mutate`.
+    * `rollify()` creates a rolling version of any function for 
+    use in `dplyr::mutate()`.
 
 * General
+    
+    * Added more extensive `dplyr` support.
+    
+    * Speed increases for `as_period()` and `create_series()`.
 
-    * Internal global utilities moved to `utils.R`
+    * Internal global utilities moved to `utils.R`.
 
-    * Added complete test coverage
+    * Added complete test coverage.
 
     * Added package documentation page.
 

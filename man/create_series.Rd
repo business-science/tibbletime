@@ -4,11 +4,12 @@
 \alias{create_series}
 \title{Create a \code{tbl_time} object with a sequence of regularly spaced dates}
 \usage{
-create_series(time_formula, period = "yearly", include_end = FALSE,
-  tz = NULL, force_class = NULL)
+create_series(time_formula, period = "daily", include_end = FALSE,
+  tz = NULL, force_class = NULL, as_date_vector = FALSE)
 }
 \arguments{
-\item{time_formula}{A period to create the series over. This is specified as a formula.
+\item{time_formula}{A period to create the series over.
+This is specified as a formula.
 See the \code{Details} section of \code{\link[=time_filter]{time_filter()}} for more information.}
 
 \item{period}{A formula or character specification used for time-based grouping.
@@ -50,6 +51,9 @@ even if it does not match the regularly spaced index.}
 \item{force_class}{Either \code{"Date"} or \code{"POSIXct"}. The default is to infer
 the simplest class required from the \code{period} specified, but this will
 override that.}
+
+\item{as_date_vector}{Should the series be returned as a vector instead of
+a tibble?}
 }
 \description{
 \code{\link[=create_series]{create_series()}} allows the user to quickly create a \code{tbl_time} object with
