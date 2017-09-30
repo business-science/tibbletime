@@ -9,6 +9,8 @@
 #' use `unlist = TRUE`. If the function returns more than one value, or a more
 #' complicated object (like a linear model), use `unlist = FALSE` to create
 #' a list-column of the rolling results.
+#' @param na_value A default value for the `NA` values at the beginning of the
+#' roll.
 #'
 #' @details
 #'
@@ -18,7 +20,7 @@
 #'
 #' Because of it's intended use with [dplyr::mutate()], `rollify` always
 #' returns output with the same length of the input, aligned right, and filled
-#' with `NA`.
+#' with `NA` unless otherwise specified by `na_value`.
 #'
 #' The form of the `.f` argument is the same as the form that can be passed
 #' to [purrr::map()]. Use `.x` or `.` to refer to the first object to roll over,
@@ -124,21 +126,26 @@
 #'
 #' @export
 #'
-rollify <- function(.f, window = 1, unlist = TRUE) {
+rollify <- function(.f, window = 1, unlist = TRUE, na_value = NULL) {
 
   # Mappify the function
   .f <- purrr::as_mapper(.f)
 
   # Return function that calls roller
   function(...) {
-    roller(..., .f = .f, window = window, unlist = unlist)
+    roller(..., .f = .f, window = window, unlist = unlist, na_value = na_value)
   }
 }
 
 
 # Utils ------------------------------------------------------------------------
 
-roller <- function(..., .f, window, unlist = TRUE) {
+roller <- function(..., .f, window, unlist = TRUE, na_value = NULL) {
+
+  # na_value as NA if not specified
+  if(is.null(na_value)) {
+    na_value = NA
+  }
 
   # Capture dots as list. These should be the arguments that are rolled
   .dots <- rlang::dots_list(...)
@@ -151,7 +158,7 @@ roller <- function(..., .f, window, unlist = TRUE) {
   roll_length <- length(.dots[[1]])
 
   # Initialize `filled` vector
-  filled <- rlang::rep_along(1:roll_length, list(NA))
+  filled <- rlang::rep_along(1:roll_length, list(na_value))
 
   # Roll and fill
   for(i in window:roll_length) {
