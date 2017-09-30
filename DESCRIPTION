@@ -20,7 +20,8 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 Suggests: 
     testthat,
-    gapminder
+    gapminder,
+    knitr
 RoxygenNote: 6.0.1
 Roxygen: list(markdown = TRUE)
 Depends:
