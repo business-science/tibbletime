@@ -81,17 +81,20 @@
 #' # Groups become (2013-01-01, 2013-01-02), (2013-01-03, 2013-01-04) and so on.
 #' as_period(FB, 2~d, start_date = "2013-01-01")
 #'
-as_period <- function(x, period = "yearly", side = "start", start_date = NULL) {
+as_period <- function(x, period = "yearly",
+                      side = "start", start_date = NULL) {
   UseMethod("as_period")
 }
 
 #' @export
-as_period.default <- function(x, period = "yearly", side = "start", start_date = NULL) {
+as_period.default <- function(x, period = "yearly",
+                              side = "start", start_date = NULL) {
   stop("Object is not of class `tbl_time`.", call. = FALSE)
 }
 
 #' @export
-as_period.tbl_time <- function(x, period = "yearly", side = "start", start_date = NULL) {
+as_period.tbl_time <- function(x, period = "yearly",
+                               side = "start", start_date = NULL) {
 
   # Index tibble/sym
   index_name <- rlang::sym(retrieve_index(x, as_name = TRUE))
@@ -106,10 +109,10 @@ as_period.tbl_time <- function(x, period = "yearly", side = "start", start_date 
                                                  period = period,
                                                  start_date = start_date))
 
-  # Grouped filter to select the correct dates
+  # Grouped slice to select only the max/min date for each group
   x <- x %>%
     dplyr::group_by(.time_group, add = TRUE) %>%
-    dplyr::filter(rlang::UQ(index_name) == side_fun(!! index_name)) %>%
+    dplyr::slice(which(rlang::UQ(index_name) == side_fun(!! index_name))) %>%
     # Remove potential date duplicates. This keeps the first only
     dplyr::distinct(!! index_name, .keep_all = TRUE)
 
@@ -122,10 +125,18 @@ as_period.tbl_time <- function(x, period = "yearly", side = "start", start_date 
 }
 
 #' @export
-as_period.grouped_tbl_time <- function(x, period = "yearly", side = "start", start_date = NULL) {
+as_period.grouped_tbl_time <- function(x, period = "yearly",
+                                       side = "start", start_date = NULL) {
 
-  # 'Do' it to each group
-  dplyr::do(x, as_period(., period = period, side = side, start_date = start_date))
-
+  # Nest and apply to each group
+  x %>%
+    tidyr::nest() %>%
+    dplyr::mutate(data = purrr::map(data,
+                                    ~as_period(.x,
+                                               period = period,
+                                               side = side,
+                                               start_date = start_date))) %>%
+    time_unnest() %>%
+    dplyr::group_by(!!! dplyr::groups(x))
 }
 

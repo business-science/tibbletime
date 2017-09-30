@@ -1,7 +1,10 @@
 #' Succinctly filter a `tbl_time` object by date
 #'
-#' Use a concise filtering method to filter for rows where the `index`
-#' falls within a date range
+#' Use a concise filtering method to filter a `tbl_time` object by it's `index`.
+#'
+#' @param x A `tbl_time` object.
+#' @param time_formula A period to filter over.
+#' This is specified as a `formula`. See `Details`.
 #'
 #' @details
 #'
@@ -29,8 +32,6 @@
 #'
 #' This function respects [dplyr::group_by()] groups.
 #'
-#' @param x A `tbl_time` object.
-#' @param time_formula A period to filter over. This is specified as a `formula`.
 #'
 #' @rdname time_filter
 #'
@@ -104,7 +105,7 @@ time_filter.tbl_time <- function(x, time_formula) {
 #' @export
 #'
 #' @param i A period to filter over. This is specified the same as
-#' `time_formula` but this follows the normal extraction argument syntax.
+#' `time_formula` or can use the traditional row extraction method.
 #' @param j Optional argument to also specify column index to subset. Works
 #' exactly like the normal extraction operator.
 #' @param drop Will always be coerced to `FALSE` by `tibble`.
@@ -239,8 +240,7 @@ normalize_date <- function(x, from_to) {
     # If there is only a date, no time
     # Recurse split the date, and pass 0 as time
     date <- recurse_split(x, ymd, "-")
-    hms_default <- paste(unlist(hms), collapse = ":")
-    time <- recurse_split(hms_default, hms, ":")
+    time <- "00:00:00"
 
     # Paste together
     paste(date, time, sep = " ")
@@ -260,9 +260,9 @@ recurse_split <- function(x, filler, splitter) {
     piece <- stringr::str_extract(x, paste0("([^", splitter, "]+)"))
 
     # Replace the first part with "" in the string
-    x <- stringr::str_replace(x,
-                              pattern = paste0("([^", splitter, "]+", splitter, ")"),
-                              replacement = "")
+    x <- sub(x = x,
+             pattern = paste0("([^", splitter, "]+", splitter, ")"),
+             replacement = "")
 
     # Add the new piece to the filler
     filler[[i]] <- piece

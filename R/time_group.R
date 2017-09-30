@@ -44,11 +44,11 @@
 #'
 #' Grouping can only be done on the minimum periodicity of the index and above.
 #' This means that a daily series cannot be grouped by minute. An hourly series
-#' cannot be grouped by 5 seconds, and so on.
+#' cannot be grouped by 5 seconds, and so on. If the user attempts this,
+#' groups will be returned at the minimum periodicity (a daily series will
+#' return 1 group per day).
 #'
 #' The `start_date` argument allows the user to control where the periods begin.
-#' This allows the user to, say, use the Australian fiscal year quarters
-#' (starting July 1) instead of the default standard of starting January 1.
 #'
 #' This function respects [dplyr::group_by()] groups.
 #'
@@ -72,7 +72,7 @@ time_group <- function(index, period = "yearly", start_date = NULL, ...) {
   }
 
   # Min / max used to create series
-  index_tib <- as_tbl_time(tibble::tibble(date = index), date)
+  #index_tib <- as_tbl_time(tibble::tibble(date = index), date)
   index_min <- min(index)
   index_max <- max(index)
 
@@ -113,21 +113,31 @@ time_group <- function(index, period = "yearly", start_date = NULL, ...) {
   from_to_f <- rlang::new_formula(from, to)
 
   # Create series
-  endpoint_dates <- create_series(from_to_f, period = period, tz = tz, force_class = class(index)[1])
+  endpoint_dates <- create_series(from_to_f, period = period,
+                                  tz = tz, force_class = class(index)[1],
+                                  as_date_vector = TRUE)
 
-  # Add endpoint groups
-  endpoint_dates <- endpoint_dates %>%
-    mutate(.time_group = seq_len(nrow(endpoint_dates)))
+  # Set initial names. NA for index, groups for endpoints
+  # These become groups
+  names(index) <- NA_character_
+  names(endpoint_dates) <- seq_len(length(endpoint_dates))
 
-  # Full join to definitely hit all the dates
-  full_series <- index_tib %>%
-    dplyr::full_join(endpoint_dates, by = "date") %>%
-    dplyr::arrange(date) %>%
-    tidyr::fill(.time_group, .direction = "down")
+  # Combine the two, remove endpoint duplicates, and sort
+  # All the while keeping the groups as the names in the correct position
+  combinded_dates <- c(endpoint_dates, index)
+  combinded_dates <- combinded_dates[!duplicated(combinded_dates)]
+  combinded_dates_sorted <- sort(combinded_dates)
 
-  # Semi join to trim down to only necessary dates
-  .time_group <- dplyr::semi_join(full_series, index_tib, by = "date") %>%
-    dplyr::pull(.time_group)
+  # Remove the names and convert to numeric
+  full_time_group <- as.numeric(names(combinded_dates_sorted))
+
+  # 'fill' the NA values forward with the correct group
+  not_na <- !is.na(full_time_group)
+  full_time_group <- cumsum(not_na)
+
+  # Remove any extra dates added from starting the series too early /
+  # going too late
+  .time_group <- full_time_group[combinded_dates_sorted %in% index]
 
   # Subtract off min-1 (takes care of starting the groups too early)
   .time_group <- .time_group - (min(.time_group) - 1)

@@ -2,8 +2,8 @@
 % Please edit documentation in R/dplyr-arrange.R, R/dplyr-distinct.R,
 %   R/dplyr-filter.R, R/dplyr-full_join.R, R/dplyr-group_by.R,
 %   R/dplyr-inner_join.R, R/dplyr-left_join.R, R/dplyr-mutate.R,
-%   R/dplyr-select.R, R/dplyr-summarise.R, R/dplyr-ungroup.R, R/tidyr-gather.R,
-%   R/tidyr-nest.R, R/tidyr-unnest.R, R/utils.R
+%   R/dplyr-select.R, R/dplyr-slice.R, R/dplyr-summarise.R, R/dplyr-ungroup.R,
+%   R/tidyr-gather.R, R/tidyr-nest.R, R/tidyr-unnest.R, R/utils.R
 \docType{import}
 \name{reexports}
 \alias{reexports}
@@ -27,6 +27,8 @@
 \alias{reexports}
 \alias{select}
 \alias{reexports}
+\alias{slice}
+\alias{reexports}
 \alias{summarise}
 \alias{reexports}
 \alias{summarize}
@@ -47,7 +49,7 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{dplyr}{\code{\link[dplyr]{arrange}}, \code{\link[dplyr]{distinct}}, \code{\link[dplyr]{filter}}, \code{\link[dplyr]{full_join}}, \code{\link[dplyr]{group_by}}, \code{\link[dplyr]{inner_join}}, \code{\link[dplyr]{left_join}}, \code{\link[dplyr]{mutate}}, \code{\link[dplyr]{transmute}}, \code{\link[dplyr]{select}}, \code{\link[dplyr]{summarise}}, \code{\link[dplyr]{summarize}}, \code{\link[dplyr]{ungroup}}}
+  \item{dplyr}{\code{\link[dplyr]{arrange}}, \code{\link[dplyr]{distinct}}, \code{\link[dplyr]{filter}}, \code{\link[dplyr]{full_join}}, \code{\link[dplyr]{group_by}}, \code{\link[dplyr]{inner_join}}, \code{\link[dplyr]{left_join}}, \code{\link[dplyr]{mutate}}, \code{\link[dplyr]{transmute}}, \code{\link[dplyr]{select}}, \code{\link[dplyr]{slice}}, \code{\link[dplyr]{summarise}}, \code{\link[dplyr]{summarize}}, \code{\link[dplyr]{ungroup}}}
 
   \item{magrittr}{\code{\link[magrittr]{\%>\%}}}
 

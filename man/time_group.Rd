@@ -56,11 +56,11 @@ when they need to perform a grouped operation not supported by \code{tibbletime}
 
 Grouping can only be done on the minimum periodicity of the index and above.
 This means that a daily series cannot be grouped by minute. An hourly series
-cannot be grouped by 5 seconds, and so on.
+cannot be grouped by 5 seconds, and so on. If the user attempts this,
+groups will be returned at the minimum periodicity (a daily series will
+return 1 group per day).
 
 The \code{start_date} argument allows the user to control where the periods begin.
-This allows the user to, say, use the Australian fiscal year quarters
-(starting July 1) instead of the default standard of starting January 1.
 
 This function respects \code{\link[dplyr:group_by]{dplyr::group_by()}} groups.
 }

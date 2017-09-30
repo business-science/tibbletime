@@ -4,7 +4,8 @@
 #' a `date` column populated with a sequence of dates.
 #'
 #' @inheritParams time_group
-#' @param time_formula A period to create the series over. This is specified as a formula.
+#' @param time_formula A period to create the series over.
+#' This is specified as a formula.
 #' See the `Details` section of [time_filter()] for more information.
 #' @param include_end Whether to always include the RHS of the `time_formula`
 #' even if it does not match the regularly spaced index.
@@ -12,6 +13,8 @@
 #' @param force_class Either `"Date"` or `"POSIXct"`. The default is to infer
 #' the simplest class required from the `period` specified, but this will
 #' override that.
+#' @param as_date_vector Should the series be returned as a vector instead of
+#' a tibble?
 #'
 #' @examples
 #'
@@ -37,8 +40,9 @@
 #' create_series(~2013, 1~d, force_class = "POSIXct")
 #'
 #' @export
-create_series <- function(time_formula, period = "yearly",
-                          include_end = FALSE, tz = NULL, force_class = NULL) {
+create_series <- function(time_formula, period = "daily",
+                          include_end = FALSE, tz = NULL, force_class = NULL,
+                          as_date_vector = FALSE) {
 
   period_list <- split_period(period)
 
@@ -83,10 +87,16 @@ create_series <- function(time_formula, period = "yearly",
   date_seq <- seq_fun(from, to, by = paste(period_list[["num"]], period_list[["period"]]))
 
   # Add the end date if required
-  if(!any(date_seq > to) & include_end) {
-    date_seq <- unique(c(date_seq, to))
+  if(include_end) {
+    if(max(date_seq) < to) {
+      date_seq <- unique(c(date_seq, to))
+    }
   }
 
   # Convert to tbl_time
-  as_tbl_time(tibble::tibble(date = date_seq), date)
+  if(as_date_vector) {
+    date_seq
+  } else {
+    as_tbl_time(tibble::tibble(date = date_seq), date)
+  }
 }

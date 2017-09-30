@@ -20,13 +20,13 @@ necessary first.}
 }
 \description{
 \code{tbl_time} objects have a time index that contains information about
-which column should be used for time based subsetting and other time based
+which column should be used for time-based subsetting and other time-based
 manipulation. Otherwise, they function as normal tibbles.
 }
 \details{
 The information stored about \code{tbl_time} objects are the \code{index} and the
 \code{time_zone}. These are stored as attributes, with the \code{index} as a
-\emph{quosure} and the \code{time_zone} as a string.
+\code{\link[rlang:quosure]{rlang::quosure()}} and the \code{time_zone} as a string.
 
 Currently, only the \code{Date} and \code{POSIXct} classes are supported to be
 time indices.

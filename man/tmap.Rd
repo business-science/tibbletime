@@ -11,21 +11,21 @@
 \alias{tmap_df}
 \title{Apply a function to each element of a \code{tbl_time} object.}
 \usage{
-tmap(.x, .f, period = "yearly", name = "data", ...)
+tmap(.x, .f, period = "yearly", start_date = NULL, name = "data", ...)
 
-tmap_chr(.x, .f, period = "yearly", name = "data", ...)
+tmap_chr(.x, .f, period = "yearly", start_date = NULL, name = "data", ...)
 
-tmap_int(.x, .f, period = "yearly", name = "data", ...)
+tmap_int(.x, .f, period = "yearly", start_date = NULL, name = "data", ...)
 
-tmap_lgl(.x, .f, period = "yearly", name = "data", ...)
+tmap_lgl(.x, .f, period = "yearly", start_date = NULL, name = "data", ...)
 
-tmap_dbl(.x, .f, period = "yearly", name = "data", ...)
+tmap_dbl(.x, .f, period = "yearly", start_date = NULL, name = "data", ...)
 
-tmap_dfc(.x, .f, period = "yearly", name = "data", ...)
+tmap_dfc(.x, .f, period = "yearly", start_date = NULL, name = "data", ...)
 
-tmap_dfr(.x, .f, period = "yearly", name = "data", ...)
+tmap_dfr(.x, .f, period = "yearly", start_date = NULL, name = "data", ...)
 
-tmap_df(.x, .f, period = "yearly", name = "data", ...)
+tmap_df(.x, .f, period = "yearly", start_date = NULL, name = "data", ...)
 }
 \arguments{
 \item{.x}{A \code{tbl_time} object.}
@@ -51,11 +51,44 @@ and name at different levels. Within a list, wrap strings in \code{get_attr()}
 to extract named attributes. If a component is not present, the value of
 \code{.default} will be returned.}
 
-\item{period}{A period to group the mapping by.}
+\item{period}{A formula or character specification used for time-based grouping.
+
+If a formula, e.g. \code{1~year}, the formula is split and parsed to form the
+grouping period. The \code{period} argument accepts a formula of the form
+\code{multiple ~ period} allowing for flexible period grouping.
+The following are examples:
+\itemize{
+\item 1 Year: \code{1~y}
+\item 3 Months: \code{3~m}
+\item 90 Days: \code{90~d}
+}
+
+Note that while shorthand is used above, an attempt is made to recognize
+more explicit period names such as:
+\itemize{
+\item 2 Year: \code{2~year} / \code{2~years} / \code{2~yearly}
+}
+
+The \code{period} argument also accepts characters that are converted to their
+corresponding periods. The following are accepted:
+\itemize{
+\item \code{"yearly"} or \code{"y"}
+\item \code{"quarterly"} or \code{"q"}
+\item \code{"monthly"} or \code{"m"}
+\item \code{"weekly"} or \code{"w"}
+\item \code{"daily"} or \code{"d"}
+\item \code{"hour"} or \code{"h"}
+\item \code{"minute"} or \code{"M"}
+\item \code{"second"} or \code{"s"}
+}}
+
+\item{start_date}{Optional argument used to specify the start date for the
+first group. The default is to start at the closest period boundary
+below the minimum date in the supplied index.}
 
 \item{name}{The character name of the list-column generated.}
 
-\item{...}{Additional arguments passed on to \code{.f}.}
+\item{...}{Not currently used.}
 }
 \value{
 A \code{tbl_time} object grouped by the time interval specified. The last
@@ -76,19 +109,6 @@ are then recombined into one tibble, with a list-column holding the results
 of the mapping over each time period.
 
 Groupings applied using \code{\link[dplyr:group_by]{dplyr::group_by()}} are respected.
-}
-\note{
-The following periods are available:
-\itemize{
-\item \code{"yearly"}
-\item \code{"quarterly"}
-\item \code{"monthly"}
-\item \code{"weekly"}
-\item \code{"daily"}
-\item \code{"hour"}
-\item \code{"minute"}
-\item \code{"second"}
-}
 }
 \examples{
 

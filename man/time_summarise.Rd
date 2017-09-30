@@ -5,24 +5,49 @@
 \alias{time_summarize}
 \title{Summarise a \code{tbl_time} by period}
 \usage{
-time_summarise(.data, period = "yearly", ...)
+time_summarise(.data, period = "yearly", ..., start_date = NULL)
 
-time_summarize(.data, period = "yearly", ...)
+time_summarize(.data, period = "yearly", ..., start_date = NULL)
 }
 \arguments{
 \item{.data}{A \code{tbl_time} object.}
 
-\item{period}{A period to summarise by.}
+\item{period}{A formula or character specification used for time-based grouping.
 
-\item{...}{Name-value pairs of summary functions. The name will be the
-name of the variable in the result. The value should be an expression
-that returns a single value like \code{min(x)}, \code{n()}, or \code{sum(is.na(y))}.
+If a formula, e.g. \code{1~year}, the formula is split and parsed to form the
+grouping period. The \code{period} argument accepts a formula of the form
+\code{multiple ~ period} allowing for flexible period grouping.
+The following are examples:
+\itemize{
+\item 1 Year: \code{1~y}
+\item 3 Months: \code{3~m}
+\item 90 Days: \code{90~d}
+}
 
-These arguments are automatically \link[rlang:quo]{quoted} and
-\link[rlang:eval_tidy]{evaluated} in the context of the data
-frame. They support \link[rlang:quasiquotation]{unquoting} and
-splicing. See \code{vignette("programming")} for an introduction to
-these concepts.}
+Note that while shorthand is used above, an attempt is made to recognize
+more explicit period names such as:
+\itemize{
+\item 2 Year: \code{2~year} / \code{2~years} / \code{2~yearly}
+}
+
+The \code{period} argument also accepts characters that are converted to their
+corresponding periods. The following are accepted:
+\itemize{
+\item \code{"yearly"} or \code{"y"}
+\item \code{"quarterly"} or \code{"q"}
+\item \code{"monthly"} or \code{"m"}
+\item \code{"weekly"} or \code{"w"}
+\item \code{"daily"} or \code{"d"}
+\item \code{"hour"} or \code{"h"}
+\item \code{"minute"} or \code{"M"}
+\item \code{"second"} or \code{"s"}
+}}
+
+\item{...}{Not currently used.}
+
+\item{start_date}{Optional argument used to specify the start date for the
+first group. The default is to start at the closest period boundary
+below the minimum date in the supplied index.}
 }
 \description{
 \code{\link[=time_summarise]{time_summarise()}} works similarly to \code{\link[dplyr:summarise]{dplyr::summarise()}} but with the added
@@ -35,19 +60,6 @@ Groups applied using \code{\link[dplyr:group_by]{dplyr::group_by()}} are respect
 In \code{\link[dplyr:summarise]{dplyr::summarise()}}, one level of grouping is usually removed.
 Because an added group for the time index is added in \code{time_summarise},
 none of the original groups are removed.
-}
-\note{
-The following periods are available:
-\itemize{
-\item \code{"yearly"}
-\item \code{"quarterly"}
-\item \code{"monthly"}
-\item \code{"weekly"}
-\item \code{"daily"}
-\item \code{"hour"}
-\item \code{"minute"}
-\item \code{"second"}
-}
 }
 \examples{
 

@@ -5,12 +5,46 @@
 \title{Collapse a \code{tbl_time} object so that all observations in a period share the
 same date}
 \usage{
-time_collapse(.data, period = "yearly", as_sep_col = FALSE, ...)
+time_collapse(.data, period = "yearly", start_date = NULL,
+  as_sep_col = FALSE, ...)
 }
 \arguments{
 \item{.data}{A \code{tbl_time} object.}
 
-\item{period}{A period to collapse to.}
+\item{period}{A formula or character specification used for time-based grouping.
+
+If a formula, e.g. \code{1~year}, the formula is split and parsed to form the
+grouping period. The \code{period} argument accepts a formula of the form
+\code{multiple ~ period} allowing for flexible period grouping.
+The following are examples:
+\itemize{
+\item 1 Year: \code{1~y}
+\item 3 Months: \code{3~m}
+\item 90 Days: \code{90~d}
+}
+
+Note that while shorthand is used above, an attempt is made to recognize
+more explicit period names such as:
+\itemize{
+\item 2 Year: \code{2~year} / \code{2~years} / \code{2~yearly}
+}
+
+The \code{period} argument also accepts characters that are converted to their
+corresponding periods. The following are accepted:
+\itemize{
+\item \code{"yearly"} or \code{"y"}
+\item \code{"quarterly"} or \code{"q"}
+\item \code{"monthly"} or \code{"m"}
+\item \code{"weekly"} or \code{"w"}
+\item \code{"daily"} or \code{"d"}
+\item \code{"hour"} or \code{"h"}
+\item \code{"minute"} or \code{"M"}
+\item \code{"second"} or \code{"s"}
+}}
+
+\item{start_date}{Optional argument used to specify the start date for the
+first group. The default is to start at the closest period boundary
+below the minimum date in the supplied index.}
 
 \item{as_sep_col}{Whether to keep the original index as the column \code{.date}
 or to drop it.}
@@ -19,7 +53,8 @@ or to drop it.}
 }
 \description{
 When \code{time_collapse} is used, the index of a \code{tbl_time} object is altered
-so that all dates that fall in a period share a common date.
+so that all dates that fall in a period share a common date. This can be
+useful for further groupwise calculations.
 }
 \details{
 The date chosen as the common date for a period is always the date
@@ -29,19 +64,6 @@ It is often useful to use \code{as_sep_col = TRUE} to keep the original dates
 as well.
 
 This function respects \code{\link[dplyr:group_by]{dplyr::group_by()}} groups.
-}
-\note{
-The following periods are available:
-\itemize{
-\item \code{"yearly"}
-\item \code{"quarterly"}
-\item \code{"monthly"}
-\item \code{"weekly"}
-\item \code{"daily"}
-\item \code{"hour"}
-\item \code{"minute"}
-\item \code{"second"}
-}
 }
 \examples{
 
@@ -53,6 +75,9 @@ FB <- as_tbl_time(FB, date)
 
 # Collapse to weekly dates
 time_collapse(FB, period = "weekly")
+
+# Collapse to every other week dates
+time_collapse(FB, period = 2~w)
 
 # Collapse to weekly dates, but keep the original too
 time_collapse(FB, period = "weekly", as_sep_col = TRUE)
@@ -68,5 +93,8 @@ FANG <- FANG \%>\%
 FANG \%>\%
   time_collapse("monthly")
 
+# Collapse each group to every other month
+FANG \%>\%
+  time_collapse(2~m)
 
 }
