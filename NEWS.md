@@ -21,6 +21,8 @@
     use in `dplyr::mutate()`.
 
 * General
+
+    * Added vignettes on intro, filtering, and as_period().
     
     * Added more extensive `dplyr` support.
     

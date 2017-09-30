@@ -1,22 +1,20 @@
 ---
-output: github_document
+title: "Introduction to tibbletime"
+author: "Davis Vaughan"
+date: "`r Sys.Date()`"
+output: 
+  rmarkdown::html_vignette:
+    toc: true
+    toc_depth: 2
+vignette: >
+  %\VignetteIndexEntry{Introduction to tibbletime}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
-
-```{r, echo = FALSE, message = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
-devtools::load_all()
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+library(tibbletime)
 ```
-
-# tibbletime 
-
-[![Travis-CI Build Status](https://travis-ci.org/business-science/tibbletime.svg?branch=master)](https://travis-ci.org/business-science/tibbletime.svg?branch=master)
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/tibbletime)](https://cran.r-project.org/package=tibbletime)
-[![codecov](https://codecov.io/gh/business-science/tibbletime/branch/master/graph/badge.svg)](https://codecov.io/gh/business-science/tibbletime)
 
 ## A time aware tibble
 
@@ -45,21 +43,6 @@ like `dplyr` and `tidyr`. Each function has also been designed to work with
 
 7) Quickly creating `tbl_time` time series objects.
 
-## Installation
-
-Development Version:
-
-``` {r, eval = FALSE}
-# install.packages("devtools")
-devtools::install_github("business-science/tibbletime")
-```
-
-CRAN Version: 
-
-```{r, eval = FALSE}
-install.packages("tibbletime")
-```
-
 ## Getting started
 
 The first thing to do is to turn your `tibble` into a `tbl_time` object.
@@ -72,7 +55,7 @@ library(tibbletime)
 data(FB)
 
 # Convert FB to tbl_time
-FB <- FB %>% as_tbl_time(index = date)
+FB <- as_tbl_time(FB, index = date)
 
 FB
 ```
@@ -147,10 +130,3 @@ FANG %>%
         adj_max   = max(adjusted),
         adj_range = adj_max - adj_min)
 ```
-
-
-## Warning
-
-This package is still going through active development and is subject to change. Use at your own risk. Reproducible bug reports are welcome.
-
-Vignettes and more functionality are coming soon. Stay tuned.

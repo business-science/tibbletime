@@ -1,0 +1,142 @@
+---
+title: "Time-based filtering"
+author: "Davis Vaughan"
+date: "`r Sys.Date()`"
+output: 
+  rmarkdown::html_vignette:
+    toc: true
+    toc_depth: 2
+vignette: >
+  %\VignetteIndexEntry{Time-based filtering}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+library(tibbletime)
+```
+
+## `time_filter()`
+
+`time_filter()` attempts to make filtering data frames by date much easier 
+than `dplyr::filter()`. It includes a flexible shorthand notation that allows
+you to specify entire date ranges with very little typing. The general form 
+of the `time_formula` that you will use to filter rows is `from ~ to`, where 
+the left hand side (LHS) is the start date, and the right hand side (RHS) is
+the end date. Both endpoints are included. Each side of the `time_formula` can
+be maximally specified as `YYYY-MM-DD + HH:MM:SS`.
+
+### Datasets required
+
+```{r, message=FALSE, warning=FALSE}
+library(tibbletime)
+
+# Facebook stock prices.
+data(FB)
+
+# Convert FB to tbl_time
+FB <- as_tbl_time(FB, index = date)
+
+# FANG stock prices
+data(FANG)
+
+# Convert FANG to tbl_time and group
+FANG <- as_tbl_time(FANG, index = date) %>%
+  group_by(symbol)
+
+```
+
+### Year filtering example
+
+In `dplyr`, if you wanted to get the dates for `2013` in the `FB` dataset, you 
+might do something like this:
+
+```{r}
+filter(FB, date >= as.Date("2013-01-01"), date <= as.Date("2013-12-31"))
+```
+
+That's a lot of typing for one filter step. With `tibbletime`, because
+the `index` was specified at creation, we can do this:
+
+```{r}
+time_filter(FB, time_formula = 2013-01-01 ~ 2013-12-31)
+```
+
+At first glance, this might not look like less code, but this is before any
+shorthand is applied. Note how the filtering condition is specified as a 
+`formula` separated by a `~`. 
+
+Using `time_filter` shorthand, this can be written:
+
+```{r}
+time_filter(FB, 2013 ~ 2013)
+```
+
+Or even more succinctly as:
+
+```{r}
+time_filter(FB, ~2013)
+```
+
+The shorthand notation works as follows. In the first example, `2013 ~ 2013` is
+expanded to `2013-01-01 + 00:00:00 ~ 2013-12-31 + 23:59:59`. It works by 
+identifying the periodicity of the provided input (yearly), and expanding it
+the the beginning and end of that period. The one sided formula `~2013` works 
+similarly, and it useful when you want to select every date inside a period. 
+
+### Month filtering example
+
+As another example of this shorthand, if you wanted to select every date in
+March, 2015:
+
+```{r}
+time_filter(FB, ~2015-03)
+
+# In dplyr it looks like this
+# (and you have to think, does March have 30 or 31 days?)
+# filter(FB, date >= as.Date("2015-03-01"), date <= as.Date("2015-03-31"))
+```
+
+### Grouped example
+
+Working with grouped `tbl_time` objects is just as you might expect.
+
+```{r}
+FANG %>%
+  time_filter(2013-01-01 ~ 2013-01-04)
+```
+
+### Finer periods
+
+Filtering can also be done by hour / minute / second. Note that the form of this
+is slightly different than the standard, `YYYY-MM-DD + HH:MM:SS`. The big 
+difference here is that a `+` is required to divide the date from the time.
+
+```{r}
+# Dummy example. Every second in a day
+example <- create_series(~2013-01-01, period = 1~s)
+
+# The first 2 minutes of the day
+example %>%
+  time_filter(2013-01-01 ~ 2013-01-01 + 00:02)
+
+# 3 specific hours of the day
+# Equivalent to:
+# 2013-01-01 + 03:00:00 ~ 2013-01-01 + 06:59:59
+example %>%
+  time_filter(2013-01-01 + 3 ~ 2013-01-01 + 6)
+```
+
+### `[` syntax
+
+For interactive use, to get an even quicker look at a dataset you can use 
+the traditional extraction operator `[` with the formula syntax.
+
+```{r}
+FB[~2013]
+```
+
+```{r}
+FB[2013~2014-02, c(1,2,3)]
+```
+
