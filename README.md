@@ -18,7 +18,7 @@ Some immediate advantages of this include:
 
 3.  Changing the periodicity of a time-based tibble. This means changing from a daily dataset to a monthly or yearly dataset.
 
-4.  Calling functions similar in spirit to the `map()` family from `purrr` on time-based tibbles.
+4.  Calling functions similar in spirit to the `purrr::map()` family on time-based tibbles.
 
 5.  All functions were designed to support the pipe and to work with packages like `dplyr` and `tidyr`. Each function has also been designed to work with `dplyr::group_by()` allowing for powerful data manipulation.
 
@@ -76,15 +76,15 @@ FB
 
 There are a number of functions that were designed specifically for `tbl_time` objects. Some of them are:
 
-1.  `time_filter` - Succinctly filter a tbl\_time object by date.
+1.  `time_filter()` - Succinctly filter a tbl\_time object by date.
 
-2.  `time_summarise` - Similar to dplyr::summarise but with the added benefit of being able to summarise by a time period such as "yearly" or "monthly".
+2.  `time_summarise()` - Similar to dplyr::summarise but with the added benefit of being able to summarise by a time period such as "yearly" or "monthly".
 
-3.  `tmap` - The family of tmap functions transform a tbl\_time input by applying a function to each column at a specified time interval.
+3.  `tmap()` - The family of tmap functions transform a tbl\_time input by applying a function to each column at a specified time interval.
 
-4.  `as_period` - Convert a tbl\_time object from daily to monthly, from minute data to hourly, and more. This allows the user to easily aggregate data to a less granular level.
+4.  `as_period()` - Convert a tbl\_time object from daily to monthly, from minute data to hourly, and more. This allows the user to easily aggregate data to a less granular level.
 
-5.  `time_collapse` - When time\_collapse is used, the index of a tbl\_time object is altered so that all dates that fall in a period share a common date.
+5.  `time_collapse()` - When time\_collapse is used, the index of a tbl\_time object is altered so that all dates that fall in a period share a common date.
 
 6.  `rollify()` - Modify a function so that it calculates a value (or a set of values) at specific time intervals. This can be used for rolling averages and other rolling calculations inside the `tidyverse` framework.
 

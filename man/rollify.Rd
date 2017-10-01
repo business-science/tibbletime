@@ -4,7 +4,7 @@
 \alias{rollify}
 \title{Create a rolling version of any function}
 \usage{
-rollify(.f, window = 1, unlist = TRUE)
+rollify(.f, window = 1, unlist = TRUE, na_value = NULL)
 }
 \arguments{
 \item{.f}{A function, formula, or atomic vector.
@@ -34,6 +34,9 @@ to extract named attributes. If a component is not present, the value of
 use \code{unlist = TRUE}. If the function returns more than one value, or a more
 complicated object (like a linear model), use \code{unlist = FALSE} to create
 a list-column of the rolling results.}
+
+\item{na_value}{A default value for the \code{NA} values at the beginning of the
+roll.}
 }
 \description{
 \code{rollify} returns a rolling version of the input function, with a
@@ -46,7 +49,7 @@ equally as well when called from \code{\link[purrr:map]{purrr::map()}}.
 
 Because of it's intended use with \code{\link[dplyr:mutate]{dplyr::mutate()}}, \code{rollify} always
 returns output with the same length of the input, aligned right, and filled
-with \code{NA}.
+with \code{NA} unless otherwise specified by \code{na_value}.
 
 The form of the \code{.f} argument is the same as the form that can be passed
 to \code{\link[purrr:map]{purrr::map()}}. Use \code{.x} or \code{.} to refer to the first object to roll over,

@@ -16,7 +16,7 @@ vignette: >
 library(tibbletime)
 ```
 
-## `as_period()`
+# Introducing as_period()
 
 Often with time series you want to aggregate your dataset to a more 
 granular period. An example of this might be moving from a daily series to 
@@ -34,7 +34,7 @@ you to do exactly this.
   `"y"` is accepted as `"yearly"`. See the documentation for more detail, 
   `?as_period()`.
 
-### Datasets required
+## Datasets required
 
 ```{r, message=FALSE, warning=FALSE}
 library(tibbletime)
@@ -54,7 +54,7 @@ FANG <- as_tbl_time(FANG, index = date) %>%
 
 ```
 
-### Daily to monthly
+## Daily to monthly
 
 To see this in action, transform the daily `FB` data set to monthly data.
 
@@ -67,7 +67,7 @@ as_period(FB, 1~month)
 # as_period(FB, "m")
 ```
 
-### Generic periods
+## Generic periods
 
 You aren't restricted to only 1 month periods. Maybe you wanted every 2 months?
 
@@ -85,7 +85,7 @@ as_period(FB, 25~d)
 ```
 
 
-### Details and the `start_date` argument
+## Details and the `start_date` argument
 
 By default, the date that starts the first group is calculated as:
 
@@ -115,7 +115,7 @@ as_period(FB, 2~d, start_date = "2013-01-01")
 ```
 
 
-### The `side` argument
+## The `side` argument
 
 By default, the first date per period is returned. If you want the end of each
 period instead, specify the `side = "end"` argument.
@@ -124,7 +124,7 @@ period instead, specify the `side = "end"` argument.
 as_period(FB, 1~y, side = "end")
 ```
 
-### Grouped datasets
+## Grouped datasets
 
 One of the neat things about working in the `tidyverse` is that these functions
 can also work with grouped datasets. Here we transform the daily series of the 

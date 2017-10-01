@@ -21,7 +21,8 @@ Encoding: UTF-8
 Suggests: 
     testthat,
     gapminder,
-    knitr
+    knitr,
+    broom
 RoxygenNote: 6.0.1
 Roxygen: list(markdown = TRUE)
 Depends:

@@ -12,7 +12,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-## `rollify()`
+# Introducing rollify()
 
 A common task in financial analyses is to perform a rolling calculation. This
 might be a single value like a rolling mean or standard deviation, or it 
@@ -24,7 +24,7 @@ In the `tidyverse`, this type of function is known as an _adverb_
 because it _modifies_ an existing function, which are 
 typically given _verb_ names.
 
-### Datasets required
+## Datasets required
 
 ```{r, message=FALSE, warning=FALSE}
 library(tibbletime)
@@ -38,7 +38,7 @@ FB <- select(FB, symbol, date, open, close, adjusted)
 ```
 
 
-### A rolling average
+## A rolling average
 
 To calculate a rolling average, picture a column in a data frame where you take
 the average of the values in rows 1-5, then in rows 2-6, then in 3-7, and so on
@@ -78,7 +78,7 @@ FB %>% mutate(
 )
 ```
 
-### Purrr functional syntax
+## Purrr functional syntax
 
 `rollify()` is built using pieces from the `purrr` package. One of those is 
 the ability to accept an anonymous function using the `~` function syntax.
@@ -102,7 +102,7 @@ rolling_avg_sum <- rollify(~ mean(.x + .y), window = 5)
 mutate(FB, avg_sum = rolling_avg_sum(open, close))
 ```
 
-### Optional arguments
+## Optional arguments
 
 To pass optional arguments (not `.x` or `.y`) to your rolling function,
 they must be specified in the non-rolling form in the call to `rollify()`.
@@ -127,7 +127,7 @@ data(FB)
 FB <- select(FB, symbol, date, adjusted)
 ```
 
-### Returning more than 1 value per call
+## Returning more than 1 value per call
 
 Say our rolling function returned a call to a custom `summary_df()` function. 
 This function calculates a 5 number number summary and returns it as a tidy 
@@ -167,7 +167,7 @@ FB_summarised %>%
   unnest()
 ```
 
-### Custom missing values
+## Custom missing values
 
 The last example was a little clunky because to unnest we had to remove the first
 few missing rows manually. If those missing values were empty data frames then
@@ -204,7 +204,7 @@ FB_summarised <- mutate(FB, summary_list_col = rolling_summary(adjusted))
 FB_summarised %>% unnest()
 ```
 
-### Rolling regressions
+## Rolling regressions
 
 A final use of this flexible function is to calculate rolling regressions.
 

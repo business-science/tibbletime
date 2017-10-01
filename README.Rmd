@@ -34,7 +34,7 @@ Some immediate advantages of this include:
 3) Changing the periodicity of a time-based tibble. This means changing 
 from a daily dataset to a monthly or yearly dataset.
 
-4) Calling functions similar in spirit to the `map()` family from `purrr` 
+4) Calling functions similar in spirit to the `purrr::map()` family 
 on time-based tibbles.
 
 5) All functions were designed to support the pipe and to work with packages
@@ -80,19 +80,19 @@ FB
 There are a number of functions that were designed specifically for `tbl_time`
 objects. Some of them are:
 
-1) `time_filter` - Succinctly filter a tbl_time object by date.
+1) `time_filter()` - Succinctly filter a tbl_time object by date.
 
-2) `time_summarise` - Similar to dplyr::summarise but with the added benefit 
+2) `time_summarise()` - Similar to dplyr::summarise but with the added benefit 
 of being able to summarise by a time period such as "yearly" or "monthly".
 
-3) `tmap` - The family of tmap functions transform a tbl_time input by applying a 
+3) `tmap()` - The family of tmap functions transform a tbl_time input by applying a 
 function to each column at a specified time interval.
 
-4) `as_period` - Convert a tbl_time object from daily to monthly, 
+4) `as_period()` - Convert a tbl_time object from daily to monthly, 
 from minute data to hourly, and more. This allows the user to easily 
 aggregate data to a less granular level.
 
-5) `time_collapse` - When time_collapse is used, the index of a tbl_time object 
+5) `time_collapse()` - When time_collapse is used, the index of a tbl_time object 
 is altered so that all dates that fall in a period share a common date.
 
 6) `rollify()` - Modify a function so that it calculates a value 

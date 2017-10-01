@@ -5,7 +5,7 @@ date: "`r Sys.Date()`"
 output: 
   rmarkdown::html_vignette:
     toc: true
-    toc_depth: 2
+    toc_depth: 3
 vignette: >
   %\VignetteIndexEntry{Time-based filtering}
   %\VignetteEngine{knitr::rmarkdown}
@@ -16,7 +16,7 @@ vignette: >
 library(tibbletime)
 ```
 
-## `time_filter()`
+# Introducing time_filter()
 
 `time_filter()` attempts to make filtering data frames by date much easier 
 than `dplyr::filter()`. It includes a flexible shorthand notation that allows
@@ -26,7 +26,7 @@ the left hand side (LHS) is the start date, and the right hand side (RHS) is
 the end date. Both endpoints are included. Each side of the `time_formula` can
 be maximally specified as `YYYY-MM-DD + HH:MM:SS`.
 
-### Datasets required
+## Datasets required
 
 ```{r, message=FALSE, warning=FALSE}
 library(tibbletime)
@@ -46,7 +46,7 @@ FANG <- as_tbl_time(FANG, index = date) %>%
 
 ```
 
-### Year filtering example
+## Year filtering example
 
 In `dplyr`, if you wanted to get the dates for `2013` in the `FB` dataset, you 
 might do something like this:
@@ -84,7 +84,7 @@ identifying the periodicity of the provided input (yearly), and expanding it
 the the beginning and end of that period. The one sided formula `~2013` works 
 similarly, and it useful when you want to select every date inside a period. 
 
-### Month filtering example
+## Month filtering example
 
 As another example of this shorthand, if you wanted to select every date in
 March, 2015:
@@ -97,7 +97,7 @@ time_filter(FB, ~2015-03)
 # filter(FB, date >= as.Date("2015-03-01"), date <= as.Date("2015-03-31"))
 ```
 
-### Grouped example
+## Grouped example
 
 Working with grouped `tbl_time` objects is just as you might expect.
 
@@ -106,7 +106,7 @@ FANG %>%
   time_filter(2013-01-01 ~ 2013-01-04)
 ```
 
-### Finer periods
+## Finer periods
 
 Filtering can also be done by hour / minute / second. Note that the form of this
 is slightly different than the standard, `YYYY-MM-DD + HH:MM:SS`. The big 
@@ -127,7 +127,7 @@ example %>%
   time_filter(2013-01-01 + 3 ~ 2013-01-01 + 6)
 ```
 
-### `[` syntax
+## `[` syntax
 
 For interactive use, to get an even quicker look at a dataset you can use 
 the traditional extraction operator `[` with the formula syntax.

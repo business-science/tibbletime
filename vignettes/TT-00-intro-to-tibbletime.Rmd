@@ -5,7 +5,7 @@ date: "`r Sys.Date()`"
 output: 
   rmarkdown::html_vignette:
     toc: true
-    toc_depth: 2
+    toc_depth: 3
 vignette: >
   %\VignetteIndexEntry{Introduction to tibbletime}
   %\VignetteEngine{knitr::rmarkdown}
@@ -16,7 +16,7 @@ vignette: >
 library(tibbletime)
 ```
 
-## A time aware tibble
+# A time aware tibble
 
 Built on top of the `tidyverse`, `tibbletime` is an extension
 that allows for the creation of _time aware tibbles_ through the setting of 
