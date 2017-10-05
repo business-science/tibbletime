@@ -49,7 +49,7 @@ retime.default <- function(x, time_classes, time_attrs,
     return(x)
   }
 
-  class(x) <- c(time_classes, class(x))
+  class(x) <- unique(c(time_classes, class(x)))
   attributes(x) <- c(attributes(x), time_attrs)
 
   x
