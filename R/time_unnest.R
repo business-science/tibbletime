@@ -60,6 +60,11 @@ time_unnest.tbl_df <- function(data, ...) {
   time_classes <- extract_time_classes(nested_time[[1]])
   time_attrs <- extract_time_attrs(nested_time[[1]])
 
+  # If data is grouped_df, also add grouped_tbl_time
+  if(inherits(data, "grouped_df")) {
+    time_classes <- c("grouped_tbl_time", time_classes)
+  }
+
   # Unnest and add the inner time class/attributes to the outer result
   unnest(data, ...) %>%
     retime(time_classes, time_attrs)
