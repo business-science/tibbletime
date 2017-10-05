@@ -64,19 +64,19 @@
 #'
 #' @export
 #'
-time_nest <- function(data, period = "yearly", ..., .key = "data") {
+time_nest <- function(data, period = "yearly", ..., .key = "data", keep_inner_dates = TRUE) {
   UseMethod("time_nest")
 }
 
 #' @export
 #'
-time_nest.default <- function(data, period = "yearly", ..., .key = "data") {
+time_nest.default <- function(data, period = "yearly", ..., .key = "data", keep_inner_dates = TRUE) {
   stop("Object is not of class `tbl_time`.", call. = FALSE)
 }
 
 #' @export
 #'
-time_nest.tbl_time <- function(data, period = "yearly", ..., .key = "data") {
+time_nest.tbl_time <- function(data, period = "yearly", ..., .key = "data", keep_inner_dates = TRUE) {
 
   # Setup
   cols_not_nested <- retrieve_index(data, as_name = TRUE)
@@ -84,21 +84,28 @@ time_nest.tbl_time <- function(data, period = "yearly", ..., .key = "data") {
   .key_sym <- rlang::sym(rlang::quo_name(.key))
 
   # Collapse. Keeping sep column for the old dates
-  data_coll <- time_collapse(data, period, as_sep_col = TRUE)
+  data_coll <- time_collapse(data, period, as_sep_col = keep_inner_dates)
 
-  data_coll %>%
+  # Nest, allowing for user specified columns in ...
+  data_coll <- tidyr::nest(data_coll, ...,
+                           - dplyr::one_of(cols_not_nested),
+                           .key = !! .key)
 
-    # Nest, allowing for user specified columns in ...
-    tidyr::nest(..., - dplyr::one_of(cols_not_nested), .key = !! .key) %>%
-
+  if(keep_inner_dates) {
     # Each element in the nest should be a tbl_time
-    dplyr::mutate(!! .key_sym := purrr::map(!! .key_sym, ~as_tbl_time(.x, .date)))
+    data_coll <- dplyr::mutate(data_coll,
+                  !! .key_sym := purrr::map(!! .key_sym,
+                                            ~as_tbl_time(.x, .date)))
+  }
+
+  data_coll
+
 }
 
 #' @export
 #'
 time_nest.grouped_tbl_time <- function(data, period = "yearly",
-                                       ..., .key = "data") {
+                                       ..., .key = "data", keep_inner_dates = TRUE) {
 
   # Setup
   cols_not_nested <- c(dplyr::group_vars(data),
@@ -107,16 +114,22 @@ time_nest.grouped_tbl_time <- function(data, period = "yearly",
   .key_sym <- rlang::sym(rlang::quo_name(.key))
 
   # Collapse. Keeping sep column for the old dates
-  data_coll <- time_collapse(data, period, as_sep_col = TRUE)
+  data_coll <- time_collapse(data, period, as_sep_col = keep_inner_dates)
 
-  data_coll %>%
+  data_coll <- data_coll %>%
 
     # Enforce ungrouping
     dplyr::ungroup() %>%
 
     # Nest, allowing for user specified columns in ...
-    tidyr::nest(..., - dplyr::one_of(cols_not_nested), .key = !! .key) %>%
+    tidyr::nest(..., - dplyr::one_of(cols_not_nested), .key = !! .key)
 
+  if(keep_inner_dates) {
     # Each element in the nest should be a tbl_time
-    dplyr::mutate(!! .key_sym := purrr::map(!! .key_sym, ~as_tbl_time(.x, .date)))
+    data_coll <- dplyr::mutate(data_coll,
+                               !! .key_sym := purrr::map(!! .key_sym,
+                                                         ~as_tbl_time(.x, .date)))
+  }
+
+  data_coll
 }

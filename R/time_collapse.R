@@ -87,8 +87,10 @@ time_collapse.tbl_time <- function(.data, period = "yearly", start_date = NULL,
   .data %>%
 
     # Add time groups
-    mutate(.time_group = time_group(!! index_sym, period = period,
-                                    start_date = start_date, ...)) %>%
+    mutate(.time_group = time_group(!! index_sym,
+                                    period = period,
+                                    start_date = start_date,
+                                    ...)) %>%
 
     # Group by them
     group_by(.data$.time_group, add = TRUE) %>%
@@ -108,7 +110,8 @@ time_collapse.tbl_time <- function(.data, period = "yearly", start_date = NULL,
 time_collapse.grouped_tbl_time <- function(.data,
                                            period = "yearly",
                                            start_date = NULL,
-                                           as_sep_col = FALSE, ...) {
+                                           as_sep_col = FALSE,
+                                           ...) {
 
   time_collapse.tbl_time(.data, period = period, as_sep_col = as_sep_col,
                          start_date = start_date) %>%

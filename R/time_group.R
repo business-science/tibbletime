@@ -122,22 +122,22 @@ time_group <- function(index, period = "yearly", start_date = NULL, ...) {
   names(index) <- NA_character_
   names(endpoint_dates) <- seq_len(length(endpoint_dates))
 
-  # Combine the two, remove endpoint duplicates, and sort
+  # Combine the two and sort
   # All the while keeping the groups as the names in the correct position
-  combinded_dates <- c(endpoint_dates, index)
-  combinded_dates <- combinded_dates[!duplicated(combinded_dates)]
-  combinded_dates_sorted <- sort(combinded_dates)
+  combined_dates <- c(endpoint_dates, index)
+
+  combined_dates_sorted <- sort(combined_dates)
 
   # Remove the names and convert to numeric
-  full_time_group <- as.numeric(names(combinded_dates_sorted))
+  full_time_group <- as.numeric(names(combined_dates_sorted))
 
   # 'fill' the NA values forward with the correct group
   not_na <- !is.na(full_time_group)
   full_time_group <- cumsum(not_na)
 
-  # Remove any extra dates added from starting the series too early /
-  # going too late
-  .time_group <- full_time_group[combinded_dates_sorted %in% index]
+  # Pull the endpoint_dates back out so we don't have duplicates
+  # Match only finds the first match so this works correctly
+  .time_group <- full_time_group[-match(endpoint_dates, combined_dates_sorted)]
 
   # Subtract off min-1 (takes care of starting the groups too early)
   .time_group <- .time_group - (min(.time_group) - 1)

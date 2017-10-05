@@ -99,27 +99,25 @@ as_period.tbl_time <- function(x, period = "yearly",
   # Index tibble/sym
   index_name <- rlang::sym(retrieve_index(x, as_name = TRUE))
 
-  # Beginning or end of period?
-  side_fun <- switch (side,
-                      "start" = min,
-                      "end"   = max)
-
   # Add time group column
   x <- dplyr::mutate(x, .time_group = time_group(!! index_name,
                                                  period = period,
                                                  start_date = start_date))
 
-  # Grouped slice to select only the max/min date for each group
-  x <- x %>%
-    dplyr::group_by(.data$.time_group, add = TRUE) %>%
-    dplyr::slice(which(rlang::UQ(index_name) == side_fun(!! index_name))) %>%
-    # Remove potential date duplicates. This keeps the first only
-    dplyr::distinct(!! index_name, .keep_all = TRUE)
+  # Select the max or min row of each group
+  .tg <- x[[".time_group"]]
+  .tg_unique <- unique(.tg)
 
-  # Ungroup and remove time group column
-  x <- x %>%
-    dplyr::ungroup() %>%
-    dplyr::select(-.data$.time_group)
+  if(side == "start") {
+    # Match the first time group value in each group
+    x <- x[match(.tg_unique, .tg),]
+  } else if (side == "end") {
+    # Match the last time group value in each group
+    x <- x[length(.tg) - match(.tg_unique, rev(.tg)) + 1,]
+  }
+
+  # Remove time group column
+  x[[".time_group"]] <- NULL
 
   x
 }
