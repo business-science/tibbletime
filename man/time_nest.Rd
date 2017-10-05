@@ -4,7 +4,8 @@
 \alias{time_nest}
 \title{Nest a \code{tbl_time} to a specified time period}
 \usage{
-time_nest(data, period = "yearly", ..., .key = "data")
+time_nest(data, period = "yearly", ..., .key = "data",
+  keep_inner_dates = TRUE)
 }
 \arguments{
 \item{data}{A \code{tbl_time} object.}

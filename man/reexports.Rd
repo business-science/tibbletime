@@ -3,7 +3,8 @@
 %   R/dplyr-filter.R, R/dplyr-full_join.R, R/dplyr-group_by.R,
 %   R/dplyr-inner_join.R, R/dplyr-left_join.R, R/dplyr-mutate.R,
 %   R/dplyr-select.R, R/dplyr-slice.R, R/dplyr-summarise.R, R/dplyr-ungroup.R,
-%   R/tidyr-gather.R, R/tidyr-nest.R, R/tidyr-unnest.R, R/utils.R
+%   R/tidyr-gather.R, R/tidyr-nest.R, R/tidyr-spread.R, R/tidyr-unnest.R,
+%   R/utils.R
 \docType{import}
 \name{reexports}
 \alias{reexports}
@@ -39,6 +40,8 @@
 \alias{reexports}
 \alias{nest}
 \alias{reexports}
+\alias{spread}
+\alias{reexports}
 \alias{unnest}
 \alias{reexports}
 \alias{\%>\%}
@@ -53,6 +56,6 @@ below to see their documentation.
 
   \item{magrittr}{\code{\link[magrittr]{\%>\%}}}
 
-  \item{tidyr}{\code{\link[tidyr]{gather}}, \code{\link[tidyr]{nest}}, \code{\link[tidyr]{unnest}}}
+  \item{tidyr}{\code{\link[tidyr]{gather}}, \code{\link[tidyr]{nest}}, \code{\link[tidyr]{spread}}, \code{\link[tidyr]{unnest}}}
 }}
 
