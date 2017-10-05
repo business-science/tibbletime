@@ -20,7 +20,7 @@ This allows you to unnest that list-column and retain time information.
 
 data(FANG)
 FANG <- as_tbl_time(FANG, date) \%>\%
-   group_by(symbol)
+   dplyr::group_by(symbol)
 
 FANG_nested <- tidyr::nest(FANG)
 

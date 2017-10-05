@@ -10,7 +10,36 @@ time_nest(data, period = "yearly", ..., .key = "data",
 \arguments{
 \item{data}{A \code{tbl_time} object.}
 
-\item{period}{The period to nest to.}
+\item{period}{A formula or character specification used for time-based grouping.
+
+If a formula, e.g. \code{1~year}, the formula is split and parsed to form the
+grouping period. The \code{period} argument accepts a formula of the form
+\code{multiple ~ period} allowing for flexible period grouping.
+The following are examples:
+\itemize{
+\item 1 Year: \code{1~y}
+\item 3 Months: \code{3~m}
+\item 90 Days: \code{90~d}
+}
+
+Note that while shorthand is used above, an attempt is made to recognize
+more explicit period names such as:
+\itemize{
+\item 2 Year: \code{2~year} / \code{2~years} / \code{2~yearly}
+}
+
+The \code{period} argument also accepts characters that are converted to their
+corresponding periods. The following are accepted:
+\itemize{
+\item \code{"yearly"} or \code{"y"}
+\item \code{"quarterly"} or \code{"q"}
+\item \code{"monthly"} or \code{"m"}
+\item \code{"weekly"} or \code{"w"}
+\item \code{"daily"} or \code{"d"}
+\item \code{"hour"} or \code{"h"}
+\item \code{"minute"} or \code{"M"}
+\item \code{"second"} or \code{"s"}
+}}
 
 \item{...}{Used to specify columns you do not want in the nest. Specified
 as \code{-col_name}.}
@@ -23,6 +52,9 @@ and symbols). The name is captured from the expression with
 \code{\link[rlang:quo_name]{rlang::quo_name()}} (note that this kind of interface where
 symbols do not represent actual objects is now discouraged in the
 tidyverse; we support it here for backward compatibility).}
+
+\item{keep_inner_dates}{Whether to add dates to each nested object as the
+column, \code{.date}.}
 }
 \description{
 \code{time_nest} allows for quick nesting of \code{tbl_time} objects by period so that
@@ -41,19 +73,6 @@ the original dates are kept as a \code{.date} column in each \code{tbl_time} obj
 the list-column.
 
 This function respects \code{\link[dplyr:group_by]{dplyr::group_by()}} groups.
-}
-\note{
-The following periods are available:
-\itemize{
-\item \code{"yearly"}
-\item \code{"quarterly"}
-\item \code{"monthly"}
-\item \code{"weekly"}
-\item \code{"daily"}
-\item \code{"hour"}
-\item \code{"minute"}
-\item \code{"second"}
-}
 }
 \examples{
 
@@ -75,7 +94,7 @@ time_nest(FB, "quarterly")
 
 data(FANG)
 FANG <- as_tbl_time(FANG, date) \%>\%
-  group_by(symbol)
+  dplyr::group_by(symbol)
 
 # Nest yearly, but by group
 FANG \%>\%

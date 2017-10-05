@@ -14,5 +14,3 @@ spread.tbl_time <- function(data, key, value, fill = NA,
                     sep = sep)
 }
 
-#' @export
-tidyr::spread

@@ -70,7 +70,7 @@ data(FB)
 
 time_group(FB$date, 2~y)
 
-mutate(FB, time_group = time_group(date, 2~d))
+dplyr::mutate(FB, time_group = time_group(date, 2~d))
 
 }
 \seealso{

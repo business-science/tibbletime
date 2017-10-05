@@ -28,6 +28,8 @@ typically given _verb_ names.
 
 ```{r, message=FALSE, warning=FALSE}
 library(tibbletime)
+library(dplyr)
+library(tidyr)
 
 # Facebook stock prices.
 data(FB)

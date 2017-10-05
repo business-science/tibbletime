@@ -8,6 +8,3 @@ ungroup.tbl_time <- function(x, ...) {
   x
 }
 
-#' @export
-dplyr::ungroup
-

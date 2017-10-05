@@ -44,7 +44,7 @@
 #' data(FANG)
 #' FANG <- FANG %>%
 #'   as_tbl_time(date) %>%
-#'   group_by(symbol)
+#'   dplyr::group_by(symbol)
 #'
 #' # Collapse each group to monthly
 #' FANG %>%

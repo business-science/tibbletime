@@ -6,8 +6,8 @@ mutate.tbl_time <- function(.data, ...) {
 }
 
 #' @export
-dplyr::mutate
-
 #' @importFrom dplyr transmute
-#' @export
-dplyr::transmute
+#'
+transmute.tbl_time <- function(.data, ...) {
+  tidyverse_execute(.data, fun = transmute, ...)
+}

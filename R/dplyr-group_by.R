@@ -11,7 +11,3 @@ group_by.tbl_time <- function(.data, ..., add = FALSE) {
 
   x
 }
-
-#' @export
-dplyr::group_by
-

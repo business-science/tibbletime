@@ -58,7 +58,7 @@
 #' data(FANG)
 #' FANG <- as_tbl_time(FANG, date)
 #'
-#' FANG <- FANG %>% group_by(symbol)
+#' FANG <- FANG %>% dplyr::group_by(symbol)
 #'
 #' # Respects groups
 #' FANG %>% as_period("yearly")

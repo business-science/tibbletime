@@ -12,5 +12,3 @@ gather.tbl_time <- function(data, key = "key", value = "value", ..., na.rm = FAL
                     convert = convert, factor_key = factor_key)
 }
 
-#' @export
-tidyr::gather

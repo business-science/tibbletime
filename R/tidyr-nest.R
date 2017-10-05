@@ -23,5 +23,3 @@ nest.tbl_time <- function(data, ..., .key = "data")  {
                                            silent_retime = TRUE)))
 }
 
-#' @export
-tidyr::nest

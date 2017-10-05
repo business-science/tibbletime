@@ -9,20 +9,20 @@ test_time <- tibble::tibble(
 )
 
 test_tbl_time <- as_tbl_time(test_time, date)
-grouped_test  <- group_by(test_tbl_time, group)
-grouped_test_time  <- group_by(test_time, group)
+grouped_test  <- dplyr::group_by(test_tbl_time, group)
+grouped_test_time  <- dplyr::group_by(test_time, group)
 
 # Tests
 
 test_that("ungroup works as expected", {
-  expect_equal(ungroup(grouped_test),
-               ungroup(grouped_test_time))
+  expect_equal(dplyr::ungroup(grouped_test),
+               dplyr::ungroup(grouped_test_time))
 })
 
 test_that("tbl_time class is retained", {
-  expect_is(ungroup(test_tbl_time), "tbl_time")
+  expect_is(dplyr::ungroup(test_tbl_time), "tbl_time")
 })
 
 test_that("grouped_tbl_time class is lost", {
-  expect_false("grouped_tbl_time" %in% class(ungroup(test_tbl_time)))
+  expect_false("grouped_tbl_time" %in% class(dplyr::ungroup(test_tbl_time)))
 })

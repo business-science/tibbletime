@@ -11,6 +11,3 @@ arrange.tbl_time <- function(.data, ...) {
 arrange.grouped_tbl_time <- function(.data, ..., .by_group = FALSE) {
   tidyverse_execute(.data, arrange, ..., .by_group = .by_group)
 }
-
-#' @export
-dplyr::arrange

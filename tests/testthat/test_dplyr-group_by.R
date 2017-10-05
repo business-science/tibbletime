@@ -9,7 +9,7 @@ test_time <- tibble::tibble(
 )
 
 test_tbl_time <- as_tbl_time(test_time, date)
-grouped_test  <- group_by(test_tbl_time, group)
+grouped_test  <- dplyr::group_by(test_tbl_time, group)
 
 # Tests
 
@@ -22,7 +22,7 @@ test_that("grouped_tbl_time class is added", {
 })
 
 test_that("grouped_tbl_time class is retained when grouping on a grouped_tbl_time dataframe", {
-  expect_is(group_by(grouped_test, group), "grouped_tbl_time")
+  expect_is(dplyr::group_by(grouped_test, group), "grouped_tbl_time")
 })
 
 test_that("grouped_tbl_time and tbl_time classes are before grouped_df and tbl_df", {

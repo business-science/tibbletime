@@ -8,7 +8,7 @@ test_tbl_time <- as_tbl_time(test_time, date)
 
 data(FANG)
 test_tbl_time_g <- as_tbl_time(FANG, date) %>%
-  group_by(symbol)
+  dplyr::group_by(symbol)
 
 # Tests
 
@@ -40,7 +40,7 @@ test_that("Time filter works with POSIXct objects", {
   test_filter <- dplyr::filter(test_tbl_time,
                                date >= "2013-01-03",
                                date <= "2014-01-31") %>%
-    mutate(date = as.POSIXct(date))
+    dplyr::mutate(date = as.POSIXct(date))
   expect_equal(test, test_filter)
 })
 

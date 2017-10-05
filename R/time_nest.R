@@ -4,9 +4,11 @@
 #' manipulation can be performed on each period's data set individually. See
 #' [tidyr::nest()] for information on nesting generally.
 #'
+#' @inheritParams time_group
 #' @inheritParams tidyr::nest
 #' @param data A `tbl_time` object.
-#' @param period The period to nest to.
+#' @param keep_inner_dates Whether to add dates to each nested object as the
+#' column, `.date`.
 #' @param ... Used to specify columns you do not want in the nest. Specified
 #' as `-col_name`.
 #'
@@ -24,17 +26,6 @@
 #'
 #' This function respects [dplyr::group_by()] groups.
 #'
-#' @note
-#'
-#' The following periods are available:
-#' * `"yearly"`
-#' * `"quarterly"`
-#' * `"monthly"`
-#' * `"weekly"`
-#' * `"daily"`
-#' * `"hour"`
-#' * `"minute"`
-#' * `"second"`
 #'
 #' @examples
 #'
@@ -56,7 +47,7 @@
 #'
 #' data(FANG)
 #' FANG <- as_tbl_time(FANG, date) %>%
-#'   group_by(symbol)
+#'   dplyr::group_by(symbol)
 #'
 #' # Nest yearly, but by group
 #' FANG %>%

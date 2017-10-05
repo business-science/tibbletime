@@ -8,9 +8,3 @@ summarise.tbl_time <- function(.data, ...) {
 #' @export
 #' @importFrom dplyr summarize
 summarize.tbl_time <- summarise.tbl_time
-
-#' @export
-dplyr::summarise
-
-#' @export
-dplyr::summarize

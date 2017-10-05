@@ -42,7 +42,7 @@
 #' # FANG contains Facebook, Amazon, Netflix and Google stock prices
 #' data(FANG)
 #' FANG <- as_tbl_time(FANG, date) %>%
-#'   group_by(symbol)
+#'   dplyr::group_by(symbol)
 #'
 #' # 2013-01-01 to 2014-12-31
 #' time_filter(FANG, 2013 ~ 2014)

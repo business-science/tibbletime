@@ -9,7 +9,7 @@ test_time <- tibble::tibble(
 )
 
 test_tbl_time <- as_tbl_time(test_time, date)
-grouped_test  <- group_by(test_tbl_time, group)
+grouped_test  <- dplyr::group_by(test_tbl_time, group)
 
 time_classes <- stringr::str_subset(class(test_tbl_time), "tbl_time")
 time_attrs <- list(

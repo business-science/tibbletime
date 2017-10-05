@@ -5,5 +5,3 @@ inner_join.tbl_time <- function(x, y, by = NULL, copy = FALSE, suffix = c(".x", 
   tidyverse_execute(x, inner_join, y = y, by = by, copy = copy, suffix = suffix, ...)
 }
 
-#' @export
-dplyr::inner_join

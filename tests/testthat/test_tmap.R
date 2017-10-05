@@ -3,12 +3,12 @@ context("tmap testing")
 # Test objects
 
 data(FB)
-test_time <- FB %>% select(-symbol)
+test_time <- FB %>% dplyr::select(-symbol)
 test_tbl_time <- as_tbl_time(test_time, date)
 
 data(FANG)
 test_tbl_time_g <- as_tbl_time(FANG, date) %>%
-  group_by(symbol)
+  dplyr::group_by(symbol)
 
 # Tests
 

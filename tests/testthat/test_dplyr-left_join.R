@@ -19,15 +19,15 @@ test_tbl_time_2 <- as_tbl_time(test_time_2, date)
 # Tests
 
 test_that("left_join works as expected", {
-  expect_equal(left_join(test_tbl_time, test_tbl_time_2),
-               left_join(test_time, test_time_2))
+  expect_equal(dplyr::left_join(test_tbl_time, test_tbl_time_2),
+               dplyr::left_join(test_time, test_time_2))
 })
 
 test_that("tbl_time class is retained if at least the left side is tbl_time", {
-  expect_is(left_join(test_tbl_time, test_tbl_time_2), "tbl_time")
-  expect_is(left_join(test_tbl_time, test_time_2),     "tbl_time")
+  expect_is(dplyr::left_join(test_tbl_time, test_tbl_time_2), "tbl_time")
+  expect_is(dplyr::left_join(test_tbl_time, test_time_2),     "tbl_time")
 })
 
 test_that("tbl_time class is lost if the left side is not tbl_time", {
-  expect_false("tbl_time" %in% class(left_join(test_time_2, test_tbl_time)))
+  expect_false("tbl_time" %in% class(dplyr::left_join(test_time_2, test_tbl_time)))
 })
