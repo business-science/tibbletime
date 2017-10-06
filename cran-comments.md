@@ -8,7 +8,12 @@ This is the second release of tibbletime. This release introduces new functional
 * win-builder (devel and release)
 
 ## R CMD check results
-There were no ERRORs, WARNINGs or NOTEs.
+
+On win-builder there were 2 errors and 1 warning, all related to a timezone
+error, "Evaluation error: Unrecognized timezone: "Europe/Berlin"." I do not
+think that this is caused by tibbletime.
+
+Otherwise there were no ERRORs, WARNINGs or NOTEs.
 
     R CMD check results
     0 errors | 0 warnings | 0 note 
