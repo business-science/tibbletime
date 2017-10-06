@@ -49,6 +49,7 @@ The first thing to do is to turn your `tibble` into a `tbl_time` object. Notice 
 
 ``` r
 library(tibbletime)
+library(dplyr)
 
 # Facebook stock prices. Comes with the package
 data(FB)
@@ -225,9 +226,20 @@ FANG %>%
 #> 16   NFLX 2016-12-30  82.79000 128.35001  45.56001
 ```
 
+Vignettes
+---------
+
+There are currently 4 vignettes for `tibbletime`.
+
+1.  [Introduction to tibbletime](https://business-science.github.io/tibbletime/articles/TT-00-intro-to-tibbletime.html)
+
+2.  [Time-based filtering](https://business-science.github.io/tibbletime/articles/TT-01-time-based-filtering.html)
+
+3.  [Changing periodicity](https://business-science.github.io/tibbletime/articles/TT-02-changing-time-periods.html)
+
+4.  [Rolling calculations](https://business-science.github.io/tibbletime/articles/TT-03-rollify-for-rolling-analysis.html)
+
 Warning
 -------
 
-This package is still going through active development and is subject to change. Use at your own risk. Reproducible bug reports are welcome.
-
-Vignettes and more functionality are coming soon. Stay tuned.
+This package is still going through active development and is subject to change. Use at your own risk. Reproducible bug reports and suggestions for new features are welcome!

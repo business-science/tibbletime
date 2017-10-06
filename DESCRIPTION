@@ -1,8 +1,8 @@
 Package: tibbletime
 Type: Package
 Title: Time Aware Tibbles
-Version: 0.0.1.9004
-Date: 2017-09-30
+Version: 0.0.2
+Date: 2017-10-06
 Authors@R: c(
     person("Davis", "Vaughan", email = "dvaughan@business-science.io", role = c("aut", "cre")),
     person("Matt", "Dancho", email = "mdancho@business-science.io", role = c("aut"))

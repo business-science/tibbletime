@@ -1,6 +1,9 @@
-## tibbletime 0.0.1.9004
+## tibbletime 0.0.2
 
 * New functionality
+  
+    * `time_floor()` and `time_ceiling()` are convenient wrappers to 
+    `lubridate` functions for altering dates to period boundaries.
   
     * `time_unnest()` is used to specifically unnest a `tibble` object
     with a list-column of `tbl_time` objects.
@@ -15,14 +18,18 @@
     * `time_summarise()` and `tmap()` now also accept a formula-based `period`.
     
     * `as_period()` now accepts a formula-based `period` that provides an 
-    incredible amount of flexibility in creating groups.
+    incredible amount of flexibility in creating groups. (#9, #14, #15)
 
     * `rollify()` creates a rolling version of any function for 
-    use in `dplyr::mutate()`.
+    use in `dplyr::mutate()`. (#7)
 
 * General
 
-    * Added vignettes on intro, filtering, and as_period().
+    * You now have to explicitely load `dplyr` or `tidyr` to use any functions 
+    from those packages. Previously they were reexported, but this seems 
+    unnecessary.
+
+    * Added vignettes on intro, filtering, and `as_period()`.
     
     * Added more extensive `dplyr` support.
     
@@ -30,9 +37,9 @@
 
     * Internal global utilities moved to `utils.R`.
 
-    * Added complete test coverage.
+    * Added test coverage. (#2)
 
-    * Added package documentation page.
+    * Added package documentation page. (#3)
 
     * Added versions to all imported packages.
 
