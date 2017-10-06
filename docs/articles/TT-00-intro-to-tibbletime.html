@@ -90,7 +90,7 @@
       <h1>Introduction to tibbletime</h1>
                         <h4 class="author">Davis Vaughan</h4>
             
-            <h4 class="date">2017-09-30</h4>
+            <h4 class="date">2017-10-06</h4>
           </div>
 
     
@@ -201,7 +201,7 @@ FB <span class="op">%&gt;%</span>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Perform a 5 period rolling average</span>
 mean_<span class="dv">5</span> &lt;-<span class="st"> </span><span class="kw"><a href="../reference/rollify.html">rollify</a></span>(mean, <span class="dt">window =</span> <span class="dv">5</span>)
 FB <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">roll_mean =</span> <span class="kw">mean_5</span>(adjusted))</code></pre></div>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">roll_mean =</span> <span class="kw">mean_5</span>(adjusted))</code></pre></div>
 <pre><code>## # A time tibble: 1,008 x 9
 ## # Index: date
 ##    symbol       date  open  high   low close    volume adjusted roll_mean
@@ -246,7 +246,7 @@ FB <span class="op">%&gt;%</span>
 <span class="co"># Summarise by period and by group</span>
 FANG <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="../reference/tbl_time.html">as_tbl_time</a></span>(date) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(symbol) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(symbol) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw"><a href="../reference/time_summarise.html">time_summarise</a></span>(<span class="dt">period =</span> <span class="st">"yearly"</span>,
         <span class="dt">adj_min   =</span> <span class="kw">min</span>(adjusted),
         <span class="dt">adj_max   =</span> <span class="kw">max</span>(adjusted),

@@ -142,7 +142,7 @@ This allows you to unnest that list-column and retain time information.</p>
     <pre class="examples"><div class='input'>
 <span class='fu'>data</span>(<span class='no'>FANG</span>)
 <span class='no'>FANG</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='tbl_time.html'>as_tbl_time</a></span>(<span class='no'>FANG</span>, <span class='no'>date</span>) <span class='kw'>%&gt;%</span>
-   <span class='fu'><a href='http://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>symbol</span>)
+   <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>symbol</span>)
 
 <span class='no'>FANG_nested</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>tidyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/tidyr/topics/nest'>nest</a></span>(<span class='no'>FANG</span>)
 

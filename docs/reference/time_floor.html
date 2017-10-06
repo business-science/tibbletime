@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create <code>tbl_time</code> objects — tbl_time • tibbletime</title>
+<title>Floor a <code>tbl_time</code> object — time_floor • tibbletime</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -113,81 +113,106 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create <code>tbl_time</code> objects</h1>
+    <h1>Floor a <code>tbl_time</code> object</h1>
     </div>
 
     
-    <p><code>tbl_time</code> objects have a time index that contains information about
-which column should be used for time-based subsetting and other time-based
-manipulation. Otherwise, they function as normal tibbles.</p>
+    <p>This is essentially a convenient wrapper to <code><a href='http://www.rdocumentation.org/packages/lubridate/topics/round_date'>lubridate::floor_date()</a></code> that
+allows flooring of a <code>tbl_time</code> object using a period formula.</p>
     
 
-    <pre class="usage"><span class='fu'>tbl_time</span>(<span class='no'>x</span>, <span class='no'>index</span>, <span class='no'>...</span>)
-
-<span class='fu'>as_tbl_time</span>(<span class='no'>x</span>, <span class='no'>index</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>time_floor</span>(<span class='no'>x</span>, <span class='no'>period</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>An object to be converted to <code>tbl_time</code>. This is generally
-a <code><a href='http://www.rdocumentation.org/packages/tibble/topics/tibble'>tibble::tibble()</a></code>, or an object that can first be coerced to a <code>tibble</code>.</p></td>
+      <td><p>A <code>tbl_time</code> object.</p></td>
     </tr>
     <tr>
-      <th>index</th>
-      <td><p>The bare column name of the column to be used as the index.</p></td>
+      <th>period</th>
+      <td><p>A formula or character specification used for time-based grouping.</p>
+<p>If a formula, e.g. <code>1~year</code>, the formula is split and parsed to form the
+grouping period. The <code>period</code> argument accepts a formula of the form
+<code>multiple ~ period</code> allowing for flexible period grouping.
+The following are examples:</p><ul>
+<li><p>1 Year: <code>1~y</code></p></li>
+<li><p>3 Months: <code>3~m</code></p></li>
+<li><p>90 Days: <code>90~d</code></p></li>
+</ul>
+
+<p>Note that while shorthand is used above, an attempt is made to recognize
+more explicit period names such as:</p><ul>
+<li><p>2 Year: <code>2~year</code> / <code>2~years</code> / <code>2~yearly</code></p></li>
+</ul>
+
+<p>The <code>period</code> argument also accepts characters that are converted to their
+corresponding periods. The following are accepted:</p><ul>
+<li><p><code>"yearly"</code> or <code>"y"</code></p></li>
+<li><p><code>"quarterly"</code> or <code>"q"</code></p></li>
+<li><p><code>"monthly"</code> or <code>"m"</code></p></li>
+<li><p><code>"weekly"</code> or <code>"w"</code></p></li>
+<li><p><code>"daily"</code> or <code>"d"</code></p></li>
+<li><p><code>"hour"</code> or <code>"h"</code></p></li>
+<li><p><code>"minute"</code> or <code>"M"</code></p></li>
+<li><p><code>"second"</code> or <code>"s"</code></p></li>
+</ul></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Arguments passed to <code><a href='http://www.rdocumentation.org/packages/tibble/topics/as_tibble'>tibble::as_tibble()</a></code> if coercion is
-necessary first.</p></td>
+      <td><p>Arguments passed on to <code><a href='http://www.rdocumentation.org/packages/lubridate/topics/round_date'>lubridate::floor_date()</a></code></p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The information stored about <code>tbl_time</code> objects are the <code>index</code> and the
-<code>time_zone</code>. These are stored as attributes, with the <code>index</code> as a
-<code><a href='http://www.rdocumentation.org/packages/rlang/topics/quosure'>rlang::quosure()</a></code> and the <code>time_zone</code> as a string.</p>
-<p>Currently, only the <code>Date</code> and <code>POSIXct</code> classes are supported to be
-time indices.</p>
+    <p>This function respects <code><a href='http://dplyr.tidyverse.org/reference/group_by.html'>dplyr::group_by()</a></code> groups.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='co'># Converting a data.frame to a `tbl_time`</span>
-<span class='co'># Using Date index</span>
-<span class='no'>ex1</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>date</span> <span class='kw'>=</span> <span class='fu'>Sys.Date</span>(), <span class='kw'>value</span> <span class='kw'>=</span> <span class='fl'>1</span>)
-<span class='no'>ex1_tbl_time</span> <span class='kw'>&lt;-</span> <span class='fu'>as_tbl_time</span>(<span class='no'>ex1</span>, <span class='no'>date</span>)
-<span class='fu'>class</span>(<span class='no'>ex1_tbl_time</span>)</div><div class='output co'>#&gt; [1] "tbl_time"   "tbl_df"     "tbl"        "data.frame"</div><div class='input'><span class='fu'>attributes</span>(<span class='no'>ex1_tbl_time</span>)</div><div class='output co'>#&gt; $names
-#&gt; [1] "date"  "value"
-#&gt; 
-#&gt; $row.names
-#&gt; [1] 1
-#&gt; 
-#&gt; $class
-#&gt; [1] "tbl_time"   "tbl_df"     "tbl"        "data.frame"
-#&gt; 
-#&gt; $index
-#&gt; &lt;quosure: local&gt;
-#&gt; ~date
-#&gt; 
-#&gt; $time_zone
-#&gt; [1] "America/New_York"
-#&gt; </div><div class='input'>
-<span class='co'># Converting a tibble to a `tbl_time`</span>
-<span class='co'># Using POSIXct index</span>
-<span class='no'>ex2</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>tibble</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/tibble'>tibble</a></span>(
-  <span class='kw'>time</span>  <span class='kw'>=</span> <span class='fu'>as.POSIXct</span>(<span class='fu'>c</span>(<span class='st'>"2017-01-01 10:12:01"</span>, <span class='st'>"2017-01-02 12:12:01"</span>)),
-  <span class='kw'>value</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>1</span>, <span class='fl'>2</span>)
-)
-<span class='fu'>as_tbl_time</span>(<span class='no'>ex2</span>, <span class='no'>time</span>)</div><div class='output co'>#&gt; # A time tibble: 2 x 2
-#&gt; # Index: time
-#&gt;                  time value
-#&gt;                &lt;dttm&gt; &lt;dbl&gt;
-#&gt; 1 2017-01-01 10:12:01     1
-#&gt; 2 2017-01-02 12:12:01     2</div><div class='input'>
+<span class='no'>example_series</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='create_series.html'>create_series</a></span>(~<span class='fl'>2013</span>, <span class='fl'>2</span>~<span class='no'>day</span>)
+
+<span class='co'># When you convert to a period, the lowest available date in that period</span>
+<span class='co'># is chosen</span>
+<span class='no'>example_series</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='as_period.html'>as_period</a></span>(<span class='fl'>1</span>~<span class='no'>m</span>)</div><div class='output co'>#&gt; # A time tibble: 12 x 1
+#&gt; # Index: date
+#&gt;          date
+#&gt;  *     &lt;date&gt;
+#&gt;  1 2013-01-01
+#&gt;  2 2013-02-02
+#&gt;  3 2013-03-02
+#&gt;  4 2013-04-01
+#&gt;  5 2013-05-01
+#&gt;  6 2013-06-02
+#&gt;  7 2013-07-02
+#&gt;  8 2013-08-01
+#&gt;  9 2013-09-02
+#&gt; 10 2013-10-02
+#&gt; 11 2013-11-01
+#&gt; 12 2013-12-01</div><div class='input'>
+<span class='co'># Sometimes you want to additionally floor that date so that all dates</span>
+<span class='co'># are consistent</span>
+<span class='no'>example_series</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='as_period.html'>as_period</a></span>(<span class='fl'>1</span>~<span class='no'>m</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'>time_floor</span>(<span class='fl'>1</span>~<span class='no'>m</span>)</div><div class='output co'>#&gt; # A time tibble: 12 x 1
+#&gt; # Index: date
+#&gt;          date
+#&gt;  *     &lt;date&gt;
+#&gt;  1 2013-01-01
+#&gt;  2 2013-02-01
+#&gt;  3 2013-03-01
+#&gt;  4 2013-04-01
+#&gt;  5 2013-05-01
+#&gt;  6 2013-06-01
+#&gt;  7 2013-07-01
+#&gt;  8 2013-08-01
+#&gt;  9 2013-09-01
+#&gt; 10 2013-10-01
+#&gt; 11 2013-11-01
+#&gt; 12 2013-12-01</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

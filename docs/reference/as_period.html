@@ -275,7 +275,7 @@ end of a quarter, or the end of a month.</p>
 <span class='fu'>data</span>(<span class='no'>FANG</span>)
 <span class='no'>FANG</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='tbl_time.html'>as_tbl_time</a></span>(<span class='no'>FANG</span>, <span class='no'>date</span>)
 
-<span class='no'>FANG</span> <span class='kw'>&lt;-</span> <span class='no'>FANG</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>symbol</span>)
+<span class='no'>FANG</span> <span class='kw'>&lt;-</span> <span class='no'>FANG</span> <span class='kw'>%&gt;%</span> <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>symbol</span>)
 
 <span class='co'># Respects groups</span>
 <span class='no'>FANG</span> <span class='kw'>%&gt;%</span> <span class='fu'>as_period</span>(<span class='st'>"yearly"</span>)</div><div class='output co'>#&gt; # A time tibble: 16 x 8

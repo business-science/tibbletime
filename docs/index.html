@@ -125,6 +125,7 @@ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocument
 <a href="#getting-started" class="anchor"></a>Getting started</h2>
 <p>The first thing to do is to turn your <code>tibble</code> into a <code>tbl_time</code> object. Notice the specification of the <code>index</code> as the <code>date</code> column of <code>FB</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tibbletime)
+<span class="kw">library</span>(dplyr)
 
 <span class="co"># Facebook stock prices. Comes with the package</span>
 <span class="kw">data</span>(FB)
@@ -287,11 +288,21 @@ FANG <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="co">#&gt; 15   NFLX 2015-12-31  45.54714 130.92999  85.38285</span>
 <span class="co">#&gt; 16   NFLX 2016-12-30  82.79000 128.35001  45.56001</span></code></pre></div>
 </div>
+<div id="vignettes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#vignettes" class="anchor"></a>Vignettes</h2>
+<p>There are currently 4 vignettes for <code>tibbletime</code>.</p>
+<ol style="list-style-type: decimal">
+<li><p><a href="https://business-science.github.io/tibbletime/articles/TT-00-intro-to-tibbletime.html">Introduction to tibbletime</a></p></li>
+<li><p><a href="https://business-science.github.io/tibbletime/articles/TT-01-time-based-filtering.html">Time-based filtering</a></p></li>
+<li><p><a href="https://business-science.github.io/tibbletime/articles/TT-02-changing-time-periods.html">Changing periodicity</a></p></li>
+<li><p><a href="https://business-science.github.io/tibbletime/articles/TT-03-rollify-for-rolling-analysis.html">Rolling calculations</a></p></li>
+</ol>
+</div>
 <div id="warning" class="section level2">
 <h2 class="hasAnchor">
 <a href="#warning" class="anchor"></a>Warning</h2>
-<p>This package is still going through active development and is subject to change. Use at your own risk. Reproducible bug reports are welcome.</p>
-<p>Vignettes and more functionality are coming soon. Stay tuned.</p>
+<p>This package is still going through active development and is subject to change. Use at your own risk. Reproducible bug reports and suggestions for new features are welcome!</p>
 </div>
 </div>
 </div>

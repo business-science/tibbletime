@@ -221,7 +221,7 @@ return 1 group per day).</p>
 #&gt;  [963] 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
 #&gt; [1000] 2
 #&gt;  [ reached getOption("max.print") -- omitted 8 entries ]</div><div class='input'>
-<span class='fu'><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='no'>FB</span>, <span class='kw'>time_group</span> <span class='kw'>=</span> <span class='fu'>time_group</span>(<span class='no'>date</span>, <span class='fl'>2</span>~<span class='no'>d</span>))</div><div class='output co'>#&gt; # A tibble: 1,008 x 9
+<span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='no'>FB</span>, <span class='kw'>time_group</span> <span class='kw'>=</span> <span class='fu'>time_group</span>(<span class='no'>date</span>, <span class='fl'>2</span>~<span class='no'>d</span>))</div><div class='output co'>#&gt; # A tibble: 1,008 x 9
 #&gt;    symbol       date  open  high   low close    volume adjusted time_group
 #&gt;     &lt;chr&gt;     &lt;date&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;
 #&gt;  1     FB 2013-01-02 27.44 28.18 27.42 28.00  69846400    28.00          1

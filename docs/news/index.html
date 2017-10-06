@@ -118,30 +118,32 @@
     </div>
 
     <div class="contents">
-    <div id="tibbletime-0-0-1-9004" class="section level2">
+    <div id="tibbletime-0-0-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#tibbletime-0-0-1-9004" class="anchor"></a>tibbletime 0.0.1.9004</h2>
+<a href="#tibbletime-0-0-2" class="anchor"></a>tibbletime 0.0.2</h2>
 <ul>
 <li>
 <p>New functionality</p>
 <ul>
+<li><p><code><a href="../reference/time_floor.html">time_floor()</a></code> and <code><a href="../reference/time_ceiling.html">time_ceiling()</a></code> are convenient wrappers to <code>lubridate</code> functions for altering dates to period boundaries.</p></li>
 <li><p><code><a href="../reference/time_unnest.html">time_unnest()</a></code> is used to specifically unnest a <code>tibble</code> object with a list-column of <code>tbl_time</code> objects.</p></li>
 <li><p><code><a href="../reference/create_series.html">create_series()</a></code> allows the user to create a <code>tbl_time</code> object with a regularly spaced sequence of dates.</p></li>
 <li><p><code><a href="../reference/time_group.html">time_group()</a></code> has become the workhorse function for creating time based groups used in changing periodicity and other grouped time based calculations.</p></li>
 <li><p><code><a href="../reference/time_summarise.html">time_summarise()</a></code> and <code><a href="../reference/tmap.html">tmap()</a></code> now also accept a formula-based <code>period</code>.</p></li>
-<li><p><code><a href="../reference/as_period.html">as_period()</a></code> now accepts a formula-based <code>period</code> that provides an incredible amount of flexibility in creating groups.</p></li>
-<li><p><code><a href="../reference/rollify.html">rollify()</a></code> creates a rolling version of any function for use in <code><a href="http://dplyr.tidyverse.org/reference/mutate.html">dplyr::mutate()</a></code>.</p></li>
+<li><p><code><a href="../reference/as_period.html">as_period()</a></code> now accepts a formula-based <code>period</code> that provides an incredible amount of flexibility in creating groups. (#9, #14, #15)</p></li>
+<li><p><code><a href="../reference/rollify.html">rollify()</a></code> creates a rolling version of any function for use in <code><a href="http://dplyr.tidyverse.org/reference/mutate.html">dplyr::mutate()</a></code>. (#7)</p></li>
 </ul>
 </li>
 <li>
 <p>General</p>
 <ul>
-<li><p>Added vignettes on intro, filtering, and as_period().</p></li>
+<li><p>You now have to explicitely load <code>dplyr</code> or <code>tidyr</code> to use any functions from those packages. Previously they were reexported, but this seems unnecessary.</p></li>
+<li><p>Added vignettes on intro, filtering, and <code><a href="../reference/as_period.html">as_period()</a></code>.</p></li>
 <li><p>Added more extensive <code>dplyr</code> support.</p></li>
 <li><p>Speed increases for <code><a href="../reference/as_period.html">as_period()</a></code> and <code><a href="../reference/create_series.html">create_series()</a></code>.</p></li>
 <li><p>Internal global utilities moved to <code>utils.R</code>.</p></li>
-<li><p>Added complete test coverage.</p></li>
-<li><p>Added package documentation page.</p></li>
+<li><p>Added test coverage. (#2)</p></li>
+<li><p>Added package documentation page. (#3)</p></li>
 <li><p>Added versions to all imported packages.</p></li>
 </ul>
 </li>
@@ -170,7 +172,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#tibbletime-0-0-1-9004">0.0.1.9004</a></li>
+        <li><a href="#tibbletime-0-0-2">0.0.2</a></li>
         <li><a href="#tibbletime-0-0-1">0.0.1</a></li>
       </ul>
     </div>

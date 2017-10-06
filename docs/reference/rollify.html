@@ -121,7 +121,7 @@
 rolling <code>window</code> specified by the user.</p>
     
 
-    <pre class="usage"><span class='fu'>rollify</span>(<span class='no'>.f</span>, <span class='kw'>window</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>unlist</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>rollify</span>(<span class='no'>.f</span>, <span class='kw'>window</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>unlist</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>na_value</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -156,6 +156,11 @@ use <code>unlist = TRUE</code>. If the function returns more than one value, or 
 complicated object (like a linear model), use <code>unlist = FALSE</code> to create
 a list-column of the rolling results.</p></td>
     </tr>
+    <tr>
+      <th>na_value</th>
+      <td><p>A default value for the <code>NA</code> values at the beginning of the
+roll.</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
@@ -165,7 +170,7 @@ of itself for use inside of a call to <code><a href='http://dplyr.tidyverse.org/
 equally as well when called from <code><a href='http://www.rdocumentation.org/packages/purrr/topics/map'>purrr::map()</a></code>.</p>
 <p>Because of it's intended use with <code><a href='http://dplyr.tidyverse.org/reference/mutate.html'>dplyr::mutate()</a></code>, <code>rollify</code> always
 returns output with the same length of the input, aligned right, and filled
-with <code>NA</code>.</p>
+with <code>NA</code> unless otherwise specified by <code>na_value</code>.</p>
 <p>The form of the <code>.f</code> argument is the same as the form that can be passed
 to <code><a href='http://www.rdocumentation.org/packages/purrr/topics/map'>purrr::map()</a></code>. Use <code>.x</code> or <code>.</code> to refer to the first object to roll over,
 and <code>.y</code> to refer to the second object if required. The examples explain this
@@ -188,7 +193,7 @@ function. See the examples for more details.</p>
 <span class='co'># Turn the normal mean function into a rolling mean with a 5 row window</span>
 <span class='no'>mean_roll_5</span> <span class='kw'>&lt;-</span> <span class='fu'>rollify</span>(<span class='no'>mean</span>, <span class='kw'>window</span> <span class='kw'>=</span> <span class='fl'>5</span>)
 
-<span class='fu'><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='no'>FB</span>,
+<span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='no'>FB</span>,
        <span class='kw'>normal_mean</span>  <span class='kw'>=</span> <span class='fu'>mean</span>(<span class='no'>adjusted</span>),
        <span class='kw'>rolling_mean</span> <span class='kw'>=</span> <span class='fu'>mean_roll_5</span>(<span class='no'>adjusted</span>))</div><div class='output co'>#&gt; # A tibble: 1,008 x 10
 #&gt;    symbol       date  open  high   low close    volume adjusted normal_mean
@@ -208,7 +213,7 @@ function. See the examples for more details.</p>
 <span class='co'># different window sizes in the same mutate call</span>
 <span class='no'>mean_roll_10</span> <span class='kw'>&lt;-</span> <span class='fu'>rollify</span>(<span class='no'>mean</span>, <span class='kw'>window</span> <span class='kw'>=</span> <span class='fl'>10</span>)
 
-<span class='fu'><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='no'>FB</span>,
+<span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='no'>FB</span>,
        <span class='kw'>rolling_mean_5</span>  <span class='kw'>=</span> <span class='fu'>mean_roll_5</span>(<span class='no'>adjusted</span>),
        <span class='kw'>rolling_mean_10</span> <span class='kw'>=</span> <span class='fu'>mean_roll_10</span>(<span class='no'>adjusted</span>))</div><div class='output co'>#&gt; # A tibble: 1,008 x 10
 #&gt;    symbol       date  open  high   low close    volume adjusted rolling_mean_5
@@ -230,7 +235,7 @@ function. See the examples for more details.</p>
 <span class='co'># Rolling correlation example</span>
 <span class='no'>cor_roll</span> <span class='kw'>&lt;-</span> <span class='fu'>rollify</span>(~<span class='fu'>cor</span>(<span class='no'>.x</span>, <span class='no'>.y</span>), <span class='kw'>window</span> <span class='kw'>=</span> <span class='fl'>5</span>)
 
-<span class='fu'><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='no'>FB</span>, <span class='kw'>running_cor</span> <span class='kw'>=</span> <span class='fu'>cor_roll</span>(<span class='no'>adjusted</span>, <span class='no'>open</span>))</div><div class='output co'>#&gt; # A tibble: 1,008 x 9
+<span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='no'>FB</span>, <span class='kw'>running_cor</span> <span class='kw'>=</span> <span class='fu'>cor_roll</span>(<span class='no'>adjusted</span>, <span class='no'>open</span>))</div><div class='output co'>#&gt; # A tibble: 1,008 x 9
 #&gt;    symbol       date  open  high   low close    volume adjusted running_cor
 #&gt;     &lt;chr&gt;     &lt;date&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;       &lt;dbl&gt;
 #&gt;  1     FB 2013-01-02 27.44 28.18 27.42 28.00  69846400    28.00          NA
@@ -255,7 +260,7 @@ function. See the examples for more details.</p>
 <span class='no'>avg_of_avgs</span> <span class='kw'>&lt;-</span> <span class='fu'>rollify</span>(~(<span class='fu'>mean</span>(<span class='no'>..1</span>) + <span class='fu'>mean</span>(<span class='no'>..2</span>) + <span class='fu'>mean</span>(<span class='no'>..3</span>)) / <span class='fl'>3</span>,
                        <span class='kw'>window</span> <span class='kw'>=</span> <span class='fl'>10</span>)
 
-<span class='fu'><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='no'>FB</span>, <span class='kw'>avg_of_avgs</span> <span class='kw'>=</span> <span class='fu'>avg_of_avgs</span>(<span class='no'>open</span>, <span class='no'>high</span>, <span class='no'>low</span>))</div><div class='output co'>#&gt; # A tibble: 1,008 x 9
+<span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='no'>FB</span>, <span class='kw'>avg_of_avgs</span> <span class='kw'>=</span> <span class='fu'>avg_of_avgs</span>(<span class='no'>open</span>, <span class='no'>high</span>, <span class='no'>low</span>))</div><div class='output co'>#&gt; # A tibble: 1,008 x 9
 #&gt;    symbol       date  open  high   low close    volume adjusted avg_of_avgs
 #&gt;     &lt;chr&gt;     &lt;date&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;       &lt;dbl&gt;
 #&gt;  1     FB 2013-01-02 27.44 28.18 27.42 28.00  69846400    28.00          NA
@@ -276,7 +281,7 @@ function. See the examples for more details.</p>
 
 <span class='no'>roll_mean_na_rm</span> <span class='kw'>&lt;-</span> <span class='fu'>rollify</span>(~<span class='fu'>mean</span>(<span class='no'>.x</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>), <span class='kw'>window</span> <span class='kw'>=</span> <span class='fl'>5</span>)
 
-<span class='fu'><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='no'>FB</span>, <span class='kw'>roll_mean</span> <span class='kw'>=</span> <span class='fu'>roll_mean_na_rm</span>(<span class='no'>adjusted</span>))</div><div class='output co'>#&gt; # A tibble: 1,008 x 9
+<span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='no'>FB</span>, <span class='kw'>roll_mean</span> <span class='kw'>=</span> <span class='fu'>roll_mean_na_rm</span>(<span class='no'>adjusted</span>))</div><div class='output co'>#&gt; # A tibble: 1,008 x 9
 #&gt;    symbol       date  open  high   low close    volume adjusted roll_mean
 #&gt;     &lt;chr&gt;     &lt;date&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
 #&gt;  1     FB 2013-01-02 27.44 28.18 27.42 28.00  69846400       NA        NA
@@ -298,7 +303,7 @@ function. See the examples for more details.</p>
 <span class='co'># Running 5 number summary</span>
 <span class='no'>summary_roll</span> <span class='kw'>&lt;-</span> <span class='fu'>rollify</span>(<span class='no'>summary</span>, <span class='kw'>window</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>unlist</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
-<span class='no'>FB_summarised</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='no'>FB</span>, <span class='kw'>summary_roll</span> <span class='kw'>=</span> <span class='fu'>summary_roll</span>(<span class='no'>adjusted</span>))
+<span class='no'>FB_summarised</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='no'>FB</span>, <span class='kw'>summary_roll</span> <span class='kw'>=</span> <span class='fu'>summary_roll</span>(<span class='no'>adjusted</span>))
 <span class='no'>FB_summarised</span>$<span class='no'>summary_roll</span><span class='kw'>[[</span><span class='fl'>5</span>]]</div><div class='output co'>#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
 #&gt;   27.77   28.51   28.91   28.75   29.15   29.42       1 </div><div class='input'>
 <span class='co'># Rolling regressions -------------------------------------------------------</span>
@@ -312,8 +317,8 @@ function. See the examples for more details.</p>
 <span class='no'>lm_roll</span> <span class='kw'>&lt;-</span> <span class='fu'>rollify</span>(~<span class='fu'>lm</span>(<span class='no'>.x</span> ~ <span class='no'>.y</span>), <span class='kw'>window</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>unlist</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='no'>gapminder</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>country</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>rolling_lm</span> <span class='kw'>=</span> <span class='fu'>lm_roll</span>(<span class='no'>lifeExp</span>, <span class='no'>year</span>))</div><div class='output co'>#&gt; # A tibble: 1,704 x 7
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>country</span>) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>rolling_lm</span> <span class='kw'>=</span> <span class='fu'>lm_roll</span>(<span class='no'>lifeExp</span>, <span class='no'>year</span>))</div><div class='output co'>#&gt; # A tibble: 1,704 x 7
 #&gt; # Groups:   country [142]
 #&gt;        country continent  year lifeExp      pop gdpPercap rolling_lm
 #&gt;         &lt;fctr&gt;    &lt;fctr&gt; &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;     &lt;list&gt;
@@ -334,12 +339,12 @@ function. See the examples for more details.</p>
 <span class='co'># groups since `mutate` is being used</span>
 <span class='fu'>data</span>(<span class='no'>FANG</span>)
 <span class='no'>FANG</span> <span class='kw'>&lt;-</span> <span class='no'>FANG</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>symbol</span>)
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>symbol</span>)
 
 <span class='no'>mean_roll_3</span> <span class='kw'>&lt;-</span> <span class='fu'>rollify</span>(<span class='no'>mean</span>, <span class='kw'>window</span> <span class='kw'>=</span> <span class='fl'>3</span>)
 
 <span class='no'>FANG</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>mean_roll</span> <span class='kw'>=</span> <span class='fu'>mean_roll_3</span>(<span class='no'>adjusted</span>)) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>mean_roll</span> <span class='kw'>=</span> <span class='fu'>mean_roll_3</span>(<span class='no'>adjusted</span>)) <span class='kw'>%&gt;%</span>
   <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>1</span>:<span class='fl'>5</span>)</div><div class='output co'>#&gt; # A tibble: 20 x 9
 #&gt; # Groups:   symbol [4]
 #&gt;    symbol       date     open     high      low    close   volume  adjusted

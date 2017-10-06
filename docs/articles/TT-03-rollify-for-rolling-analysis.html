@@ -90,7 +90,7 @@
       <h1>Rolling calculations in tibbletime</h1>
                         <h4 class="author">Davis Vaughan</h4>
             
-            <h4 class="date">2017-09-30</h4>
+            <h4 class="date">2017-10-06</h4>
           </div>
 
     
@@ -105,6 +105,8 @@
 <h2 class="hasAnchor">
 <a href="#datasets-required" class="anchor"></a>Datasets required</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tibbletime)
+<span class="kw">library</span>(dplyr)
+<span class="kw">library</span>(tidyr)
 
 <span class="co"># Facebook stock prices.</span>
 <span class="kw">data</span>(FB)
@@ -125,7 +127,7 @@ rolling_mean</code></pre></div>
 <pre><code>## function(...) {
 ##     roller(..., .f = .f, window = window, unlist = unlist, na_value = na_value)
 ##   }
-## &lt;environment: 0x7feb3fd26860&gt;</code></pre>
+## &lt;environment: 0x7ff60c4bb838&gt;</code></pre>
 <p>We now have a rolling version of the function, <code>mean()</code>. You use it in a similar way to how you might use <code>mean()</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(FB, <span class="dt">mean_5 =</span> <span class="kw">rolling_mean</span>(adjusted))</code></pre></div>
 <pre><code>## # A tibble: 1,008 x 6
