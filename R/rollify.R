@@ -14,7 +14,7 @@
 #'
 #' @details
 #'
-#' The intented use of `rollify` is to turn a function into a rolling version
+#' The intended use of `rollify` is to turn a function into a rolling version
 #' of itself for use inside of a call to [dplyr::mutate()], however it works
 #' equally as well when called from [purrr::map()].
 #'

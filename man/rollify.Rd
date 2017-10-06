@@ -43,7 +43,7 @@ roll.}
 rolling \code{window} specified by the user.
 }
 \details{
-The intented use of \code{rollify} is to turn a function into a rolling version
+The intended use of \code{rollify} is to turn a function into a rolling version
 of itself for use inside of a call to \code{\link[dplyr:mutate]{dplyr::mutate()}}, however it works
 equally as well when called from \code{\link[purrr:map]{purrr::map()}}.
 
