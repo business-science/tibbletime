@@ -1,3 +1,9 @@
+## tibbletime 0.0.2.9000
+
+* Bug Fixes
+
+    * Ensure that `tidyr::spread()` passes the `fill` argument through.
+
 ## tibbletime 0.0.2
 
 * New functionality
