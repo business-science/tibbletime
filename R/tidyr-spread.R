@@ -9,7 +9,7 @@ spread.tbl_time <- function(data, key, value, fill = NA,
   value <- rlang::enquo(value)
 
   tidyverse_execute(data, spread,
-                    key = !! key, value = !! value, fill = NA,
+                    key = !! key, value = !! value, fill = fill,
                     convert = convert, drop = drop,
                     sep = sep)
 }
