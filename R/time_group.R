@@ -138,6 +138,11 @@ time_group <- function(index, period = "yearly", start_date = NULL, ...) {
   # Pull the endpoint_dates back out so we don't have duplicates
   # Match only finds the first match so this works correctly
   .time_group <- full_time_group[-match(endpoint_dates, combined_dates_sorted)]
+  # add dates as names
+  names(.time_group) <- as.character(combined_dates_sorted[-match(endpoint_dates, combined_dates_sorted)])
+  # restore original order of the index using name subsetting and discard names
+  .time_group<-.time_group[as.character(index)]
+  names(.time_group) <- NULL
 
   # Subtract off min-1 (takes care of starting the groups too early)
   .time_group <- .time_group - (min(.time_group) - 1)
