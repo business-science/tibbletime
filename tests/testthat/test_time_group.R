@@ -22,10 +22,10 @@ test_index_tbl_g <- FANG %>% dplyr::select(date)
 test_that("Weekly period counting works", {
   test <- time_group(index=test_index_g, period = "weekly")
   test_filter_yw <- test_index_tbl_g %>%
-    mutate(year_week=paste(isoyear(date), isoweek(date), sep="-"))
-  test_filter <- test_filter_yw %>% group_by(year_week) %>%
-    summarise(date=max(date)) %>% arrange(date) %>%
-    mutate(group_num=1:n()) %>% select(-date) %>%
-      right_join(test_filter_yw, by="year_week") %>% pull(group_num)
+    dplyr::mutate(year_week=paste(lubridate::isoyear(date), lubridate::isoweek(date), sep="-"))
+  test_filter <- test_filter_yw %>% dplyr::group_by(year_week) %>%
+    dplyr::summarise(date=max(date)) %>% dplyr::arrange(date) %>%
+    dplyr::mutate(group_num=1:n()) %>% dplyr::select(-date) %>%
+      dplyr::right_join(test_filter_yw, by="year_week") %>% dplyr::pull(group_num)
   expect_equal(test, test_filter)
 })
