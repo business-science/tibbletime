@@ -59,6 +59,11 @@
 #' # Using `[` and column selection
 #' FANG[2013~2016, c("date", "adjusted")]
 #'
+#' # You can filter with variables
+#' lhs_date <- "2013"
+#' rhs_date <- as.Date("2014-01-01")
+#' time_filter(FANG, lhs_date ~ rhs_date)
+#'
 #'
 time_filter <- function(x, time_formula) {
   UseMethod("time_filter")
@@ -171,15 +176,35 @@ formula_to_char <- function(time_formula) {
   assertthat::assert_that(rlang::is_formula(time_formula),
                           msg = "Period must be specified as a formula using `~`")
 
-  # Split dates, remove ~
-  time_formula <- as.character(time_formula)[-1]
+  # Vars
+  time_f_lhs <- rlang::f_lhs(time_formula)
+  time_f_rhs <- rlang::f_rhs(time_formula)
+  time_f_env <- rlang::f_env(time_formula)
+
+  # Create RHS formulas from the time_formula
+  time_formula_list <- purrr::map(c(time_f_lhs, time_f_rhs),
+                           ~rlang::new_formula(NULL, .x,
+                                               env = time_f_env))
+
+  # tidy_eval the pieces of time_formula containing user variables
+  time_formula_list <- eval_tidy_time_formula(time_formula_list)
+
+  # If it is date type class, a + is needed for POSIXct
+  # and for Date you have to explicitely coerce the rhs alone to character
+  # otherwise you get a numeric version of it as char
+  time_formula_char <- purrr::map_chr(time_formula_list,
+                           .f = ~if(is_any_date(.x)) {
+                                   gsub(" ", "+", .x)
+                                 } else {
+                                   .x
+                                 })
 
   # Remove spaces
-  time_formula <- gsub(" ", "", time_formula)
+  time_formula_char <- gsub(" ", "", time_formula_char)
 
   # If rhs only, duplicate
-  if(length(time_formula) == 1) {
-    time_formula <- c(time_formula, time_formula)
+  if(length(time_formula_char) == 1) {
+    time_formula_char <- c(time_formula_char, time_formula_char)
   }
 
   # Check symbols
@@ -195,9 +220,9 @@ formula_to_char <- function(time_formula) {
     assertthat::assert_that(!stringr::str_detect(x, "^-|-$|\\s-|-\\s"),
                             msg = "A '-' can only be used between two numbers")
   }
-  lapply(time_formula, check_syms)
+  lapply(time_formula_char, check_syms)
 
-  time_formula
+  time_formula_char
 }
 
 # Validates the final dates
@@ -306,4 +331,33 @@ date_fun_selector <- function(x) {
   } else if(inherits(index_raw, "POSIXct")) {
     as.POSIXct
   }
+}
+
+# Evaluates each side of the time_formula in a tidy way where necessary
+eval_tidy_time_formula <- function(time_formula_list) {
+
+  # Convert to character, remove ~
+  time_formula_char <- purrr::map_chr(time_formula_list, ~as.character(.x)[-1])
+
+  # Check normalizable
+  normalizable <- purrr::map_lgl(time_formula_char, function(x) {
+    # Attempt to normalize
+    # If it fails, then it returns invisibly with class try-error
+    !try({
+      gsub(" ", "", x) %>%
+        normalize_date("from") %>%
+        as.POSIXct()
+    }, silent = TRUE) %>%
+    inherits("try-error")
+  })
+
+  # If normalizable, to character, otherwise evaluate
+  time_formula_list <- purrr::map2(time_formula_list, normalizable,
+       ~if(.y) {
+         as.character(.x)[-1]
+        } else {
+          rlang::eval_tidy(rlang::f_rhs(.x))
+        })
+
+  time_formula_list
 }
