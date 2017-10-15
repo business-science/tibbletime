@@ -72,7 +72,7 @@ time_group <- function(index, period = "yearly", start_date = NULL, ...) {
   }
 
   # Min / max used to create series
-  #index_tib <- as_tbl_time(tibble::tibble(date = index), date)
+  index_tib <- as_tbl_time(tibble::tibble(date = index), date)
   index_min <- min(index)
   index_max <- max(index)
 
@@ -113,31 +113,54 @@ time_group <- function(index, period = "yearly", start_date = NULL, ...) {
   from_to_f <- rlang::new_formula(from, to)
 
   # Create series
-  endpoint_dates <- create_series(from_to_f, period = period,
-                                  tz = tz, force_class = class(index)[1],
-                                  as_date_vector = TRUE)
+  #endpoint_dates <- create_series(from_to_f, period = period,
+  #                                tz = tz, force_class = class(index)[1],
+  #                                as_date_vector = TRUE)
+  endpoint_dates_tbl <- create_series(from_to_f, period = period,
+                                  tz = tz, force_class = class(index)[1]) %>%
+    dplyr::mutate(.time_group=1)
+
+  # days seem to be the most granular unit at this moment
+  # since smaller units were early returned by terminate_early()
+  #index_grid <-create_series(from_to_f, period = "days",
+  #                     tz = tz, force_class = class(index)[1])
+
+  # merge in period start indicators and create period numbers
+  index_grid <- dplyr::full_join(index_tib, endpoint_dates_tbl, by="date")
+  index_grid <- distinct(index_grid)
+  index_grid <- arrange(index_grid, date)
+  index_grid <-  dplyr::mutate(index_grid,.time_group=cumsum(!is.na(.time_group)))
 
   # Set initial names. NA for index, groups for endpoints
   # These become groups
-  names(index) <- NA_character_
-  names(endpoint_dates) <- seq_len(length(endpoint_dates))
+  #names(index) <- NA_character_
+  #names(endpoint_dates) <- seq_len(length(endpoint_dates))
 
   # Combine the two and sort
   # All the while keeping the groups as the names in the correct position
-  combined_dates <- c(endpoint_dates, index)
+  #combined_dates <- c(endpoint_dates, index)
 
-  combined_dates_sorted <- sort(combined_dates)
+  #combined_dates_sorted <- sort(combined_dates)
 
   # Remove the names and convert to numeric
-  full_time_group <- as.numeric(names(combined_dates_sorted))
+  #full_time_group <- as.numeric(names(combined_dates_sorted))
 
   # 'fill' the NA values forward with the correct group
-  not_na <- !is.na(full_time_group)
-  full_time_group <- cumsum(not_na)
+  #not_na <- !is.na(full_time_group)
+  #full_time_group <- cumsum(not_na)
 
   # Pull the endpoint_dates back out so we don't have duplicates
   # Match only finds the first match so this works correctly
-  .time_group <- full_time_group[-match(endpoint_dates, combined_dates_sorted)]
+  #.time_group <- full_time_group[-match(endpoint_dates, combined_dates_sorted)]
+  # add dates as names
+  #names(.time_group) <- as.character(combined_dates_sorted[-match(endpoint_dates, combined_dates_sorted)])
+  # restore original order of the index using name subsetting and discard names
+  #.time_group<-.time_group[as.character(index)]
+  #names(.time_group) <- NULL
+
+  # join the index to grid to match period number
+  index_tib <- dplyr::left_join(index_tib, index_grid, by="date")
+  .time_group <- dplyr::pull(index_tib, .time_group)
 
   # Subtract off min-1 (takes care of starting the groups too early)
   .time_group <- .time_group - (min(.time_group) - 1)
