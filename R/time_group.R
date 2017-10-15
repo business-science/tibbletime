@@ -122,11 +122,13 @@ time_group <- function(index, period = "yearly", start_date = NULL, ...) {
 
   # days seem to be the most granular unit at this moment
   # since smaller units were early returned by terminate_early()
-  index_grid <-create_series(from_to_f, period = "days",
-                       tz = tz, force_class = class(index)[1])
+  #index_grid <-create_series(from_to_f, period = "days",
+  #                     tz = tz, force_class = class(index)[1])
 
   # merge in period start indicators and create period numbers
-  index_grid <- dplyr::left_join(index_grid, endpoint_dates_tbl, by="date")
+  index_grid <- dplyr::full_join(index_tib, endpoint_dates_tbl, by="date")
+  index_grid <- distinct(index_grid)
+  index_grid <- arrange(index_grid, date)
   index_grid <-  dplyr::mutate(index_grid,.time_group=cumsum(!is.na(.time_group)))
 
   # Set initial names. NA for index, groups for endpoints
