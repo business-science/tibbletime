@@ -117,19 +117,30 @@ time_group <- function(index, period = "yearly", start_date = NULL, ...) {
                                   tz = tz, force_class = class(index)[1],
                                   as_date_vector = TRUE)
 
+  # Numeric?
+  index <- as.numeric(index)
+  endpoint_dates <- as.numeric(endpoint_dates)
+
   # Set initial names. NA for index, groups for endpoints
   # These become groups
-  names(index) <- NA_character_
+  #names(index) <- NA_character_
   names(endpoint_dates) <- seq_len(length(endpoint_dates))
 
   # Combine the two and sort
   # All the while keeping the groups as the names in the correct position
   combined_dates <- c(endpoint_dates, index)
 
-  combined_dates_sorted <- sort(combined_dates)
+  #combined_dates_sorted <- sort(combined_dates)
+  sorted_order <- order(combined_dates)
 
   # Remove the names and convert to numeric
-  full_time_group <- as.numeric(names(combined_dates_sorted))
+  # Sorting the names only is much faster than sorting dates
+  #full_time_group <- as.numeric(names(combined_dates_sorted))
+  full_time_group <- as.numeric(names(combined_dates))[sorted_order]
+
+  # Remember location of endpoint_dates for removal later
+  endpoint_locations <- match(as.numeric(names(endpoint_dates)),
+                              full_time_group)
 
   # 'fill' the NA values forward with the correct group
   not_na <- !is.na(full_time_group)
@@ -137,7 +148,8 @@ time_group <- function(index, period = "yearly", start_date = NULL, ...) {
 
   # Pull the endpoint_dates back out so we don't have duplicates
   # Match only finds the first match so this works correctly
-  .time_group <- full_time_group[-match(endpoint_dates, combined_dates_sorted)]
+  #.time_group <- full_time_group[-match(endpoint_dates, combined_dates_sorted)]
+  .time_group <- full_time_group[-endpoint_locations]
 
   # Subtract off min-1 (takes care of starting the groups too early)
   .time_group <- .time_group - (min(.time_group) - 1)
