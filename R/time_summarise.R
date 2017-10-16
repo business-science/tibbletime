@@ -7,6 +7,8 @@
 #' @inheritParams time_group
 #' @inheritParams dplyr::summarise
 #' @param .data A `tbl_time` object.
+#' @param normalize Whether to discard lower levels of detail in the date/time
+#' infomation of the index up to the level corresponding to `period`.
 #'
 #' @details
 #'
@@ -15,6 +17,14 @@
 #' In [dplyr::summarise()], one level of grouping is usually removed.
 #' Because an added group for the time index is added in `time_summarise`,
 #' none of the original groups are removed.
+#'
+#' When function is applied, observations falling into the same period will share
+#' an index value, corresponding to the latest observation found in the original
+#' index for each period. Specifying `normalize = TRUE` will reset lower levels
+#' of detail in the index to the "default" value, e.g. if `period` is set to
+#' "monthly", all dates in the index would be reset to the 1st of the month and
+#' time information, if any, will be set to 00:00:00. This may be useful for
+#' joining datasets of different date/time frequencies.
 #'
 #'
 #' @rdname time_summarise
@@ -39,6 +49,12 @@
 #'                  adj_mean = mean(adjusted),
 #'                  adj_sd   = sd(adjusted))
 #'
+#'  # Intend to join your data to another source with monthly frequency?
+#' FB %>%
+#'   time_summarise(period = "monthly",
+#'                  normalize = TRUE,
+#'                  month_close = last(adjusted))
+#'
 #' # Grouped functionality -----------------------------------------------------
 #'
 #' data(FANG)
@@ -57,34 +73,34 @@
 #'
 #' @export
 #'
-time_summarise <- function(.data, period = "yearly",
+time_summarise <- function(.data, period = "yearly", normalize=FALSE,
                            ..., start_date = NULL) {
   UseMethod("time_summarise")
 }
 
-time_summarise.default <- function(.data, period = "yearly",
+time_summarise.default <- function(.data, period = "yearly", normalize=FALSE,
                                   ..., start_date = NULL) {
   stop("Object is not of class `tbl_time`.", call. = FALSE)
 }
 
 #' @export
 #'
-time_summarise.tbl_time <- function(.data, period = "yearly",
+time_summarise.tbl_time <- function(.data, period = "yearly", normalize=FALSE,
                                     ..., start_date = NULL) {
 
   index_sym <- rlang::sym(retrieve_index(.data, as_name = TRUE))
 
-  time_collapse(.data, period = period, start_date = start_date) %>%
+  time_collapse(.data, period = period, start_date = start_date, normalize=normalize) %>%
     dplyr::group_by(!! index_sym, add = TRUE) %>%
     dplyr::summarise(...)
 }
 
 #' @export
 #'
-time_summarise.grouped_tbl_time <- function(.data, period = "yearly",
+time_summarise.grouped_tbl_time <- function(.data, period = "yearly", normalize=FALSE,
                                             ..., start_date = NULL) {
   time_summarise.tbl_time(.data, ...,
-                          period = period, start_date = start_date) %>%
+                          period = period, start_date = start_date, normalize=normalize) %>%
     dplyr::group_by(!!! dplyr::groups(.data))
 }
 
@@ -92,7 +108,7 @@ time_summarise.grouped_tbl_time <- function(.data, period = "yearly",
 
 #' @export
 #' @rdname time_summarise
-time_summarize <- function(.data, period = "yearly",
+time_summarize <- function(.data, period = "yearly", normalize=FALSE,
                            ..., start_date = NULL) {
   UseMethod("time_summarize")
 }
