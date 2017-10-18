@@ -18,11 +18,12 @@ URL: https://github.com/business-science/tibbletime
 BugReports: https://github.com/business-science/tibbletime/issues
 License: MIT + file LICENSE
 Encoding: UTF-8
-Suggests:
+Suggests: 
     testthat,
     gapminder,
     knitr,
-    broom
+    broom,
+    covr
 RoxygenNote: 6.0.1
 Roxygen: list(markdown = TRUE)
 Depends:
