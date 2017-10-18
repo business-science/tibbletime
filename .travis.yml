@@ -10,8 +10,8 @@ sudo: false
 cache: packages
 
 before_install:
-- sudo rm -vf /etc/apt/sources.list.d/*riak*
-- sudo apt-get update
+  - sudo rm -vf /etc/apt/sources.list.d/*riak*
+  - sudo apt-get update
 
 notifications:
   email:
