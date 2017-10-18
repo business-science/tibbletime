@@ -9,6 +9,8 @@
 #' @param .data A `tbl_time` object.
 #' @param as_sep_col Whether to keep the original index as the column `.date`
 #' or to drop it.
+#' @param normalize Whether to discard lower levels of detail in the date/time
+#' infomation of the index up to the level corresponding to `period`.
 #' @param ... Not currently used.
 #'
 #' @details
@@ -19,7 +21,15 @@
 #' It is often useful to use `as_sep_col = TRUE` to keep the original dates
 #' as well.
 #'
-#' This function respects [dplyr::group_by()] groups.
+#' When function is applied, observations falling into the same period will share
+#' an index value, corresponding to the latest observation found in the original
+#' index for each period. Specifying `normalize = TRUE` will reset lower levels
+#' of detail in the index to the "default" value, e.g. if `period` is set to
+#' "monthly", all dates in the index would be reset to the 1st of the month and
+#' time information, if any, will be set to 00:00:00. This may be useful for
+#' joining datasets of different date/time frequencies.
+#'
+#' The function respects [dplyr::group_by()] groups.
 #'
 #'
 #' @examples
@@ -35,6 +45,9 @@
 #'
 #' # Collapse to every other week dates
 #' time_collapse(FB, period = 2~w)
+#'
+#' # Collapse to monthly dates, discard day, hour, minute and second details
+#' time_collapse(FB, period = "monthly", normalize = TRUE)
 #'
 #' # Collapse to weekly dates, but keep the original too
 #' time_collapse(FB, period = "weekly", as_sep_col = TRUE)
@@ -56,23 +69,26 @@
 #'
 #' @export
 time_collapse <- function(.data, period = "yearly", start_date = NULL,
-                          as_sep_col = FALSE, ...) {
+                          as_sep_col = FALSE, normalize=FALSE, ...) {
   UseMethod("time_collapse")
 }
 
 #' @export
 time_collapse.default <- function(.data, period = "yearly", start_date = NULL,
-                                  as_sep_col = FALSE, ...) {
+                                  as_sep_col = FALSE, normalize=FALSE, ...) {
   stop("Object is not of class `tbl_time`.", call. = FALSE)
 }
 
 #' @export
 time_collapse.tbl_time <- function(.data, period = "yearly", start_date = NULL,
-                                   as_sep_col = FALSE, ...) {
+                                   as_sep_col = FALSE, normalize=FALSE, ...) {
 
   # Setup
   index_char     <- retrieve_index(.data, as_name = TRUE)
   index_sym      <- rlang::sym(index_char)
+
+  # Check and normalize group period
+  period_list <- split_period(period)
 
   # Keep the original dates as .date if requested
   if(as_sep_col) {
@@ -84,7 +100,7 @@ time_collapse.tbl_time <- function(.data, period = "yearly", start_date = NULL,
     .data <- .data[,c(1:index_pos, ncol(.data), (index_pos+1):(ncol(.data)-1))]
   }
 
-  .data %>%
+  collapsed_data <- .data %>%
 
     # Add time groups
     mutate(.time_group = time_group(!! index_sym,
@@ -95,7 +111,7 @@ time_collapse.tbl_time <- function(.data, period = "yearly", start_date = NULL,
     # Group by them
     group_by(.data$.time_group, add = TRUE) %>%
 
-    # Max the date per group
+    # Normalize or Max the date per group
     mutate(!! index_sym := max(!! index_sym)) %>%
 
     # Ungroup
@@ -104,6 +120,14 @@ time_collapse.tbl_time <- function(.data, period = "yearly", start_date = NULL,
     # Remove .time_group
     dplyr::select(- .data$.time_group)
 
+
+  if(normalize){
+    collapsed_data <- collapsed_data %>%
+      mutate(!! index_sym := lubridate::floor_date(!! index_sym, period_list[["period"]]))
+  }
+
+  collapsed_data
+
 }
 
 #' @export
@@ -111,10 +135,11 @@ time_collapse.grouped_tbl_time <- function(.data,
                                            period = "yearly",
                                            start_date = NULL,
                                            as_sep_col = FALSE,
+                                           normalize=FALSE,
                                            ...) {
 
   time_collapse.tbl_time(.data, period = period, as_sep_col = as_sep_col,
-                         start_date = start_date) %>%
+                         start_date = start_date, normalize = normalize) %>%
     group_by(!!! dplyr::groups(.data))
 
 }
