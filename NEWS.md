@@ -4,6 +4,9 @@
 
     * Even faster `time_group()`. This speeds up all time functions, especially
     on large datasets.
+    
+    * Any `time_*()` function will now warn the user if they aren't using 
+    a sorted index. 
 
 * Bug Fixes
 
