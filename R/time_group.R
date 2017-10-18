@@ -65,16 +65,19 @@
 #' @export
 time_group <- function(index, period = "yearly", start_date = NULL, ...) {
 
+  # Check and normalize group period
+  period_list <- split_period(period)
+
   # Early termination
-  terminate <- terminate_early(index, period)
-  if(terminate) {
+  terminate <- terminate_early(index, period_list$period)
+  if (terminate) {
     return(seq_len(length(index)))
   }
 
   # Min / max used to create series
-  #index_tib <- as_tbl_time(tibble::tibble(date = index), date)
-  index_min <- min(index)
-  index_max <- max(index)
+  # Assumed to be in order
+  index_min <- dplyr::first(index)
+  index_max <- dplyr::last(index)
 
   # Used to force the created series to be of the same class
   # Ex) POSIXct Even if `period` is higher periods like month/year
@@ -82,16 +85,12 @@ time_group <- function(index, period = "yearly", start_date = NULL, ...) {
 
   # Time zone of the index
   tz <- attr(index, "tz")
-  if(is.null(tz)) {
+  if (is.null(tz)) {
     tz <- Sys.timezone()
   }
 
-  # Check and normalize group period
-  period_list <- split_period(period)
-
   # If the start date is not missing, it is the start
   if (!is.null(start_date)) {
-
     assertthat::assert_that(as.POSIXct(start_date, tz = tz) <= index_min,
                             msg = "Start date must be less than index minimum")
     from <- start_date
@@ -100,13 +99,13 @@ time_group <- function(index, period = "yearly", start_date = NULL, ...) {
 
     # Otherwise floor the min
     from <- index_min %>%
-      lubridate::floor_date(period_list[["period"]]) %>%
+      lubridate::floor_date(period_list$period) %>%
       as.character()
   }
 
   # Ceiling the max date
-  to   <- index_max %>%
-    lubridate::ceiling_date(period_list[["period"]]) %>%
+  to <- index_max %>%
+    lubridate::ceiling_date(period_list$period) %>%
     as.character()
 
   # Formularize
@@ -114,45 +113,34 @@ time_group <- function(index, period = "yearly", start_date = NULL, ...) {
 
   # Create series
   endpoint_dates <- create_series(from_to_f, period = period,
-                                  tz = tz, force_class = class(index)[1],
+                                  tz = tz, force_class = index_class,
                                   as_date_vector = TRUE)
 
-  # Numeric?
+  # Coerce to numeric. Faster than manipulating dates
   index <- as.numeric(index)
   endpoint_dates <- as.numeric(endpoint_dates)
 
-  # Set initial names. NA for index, groups for endpoints
-  # These become groups
-  #names(index) <- NA_character_
-  names(endpoint_dates) <- seq_len(length(endpoint_dates))
-
-  # Combine the two and sort
-  # All the while keeping the groups as the names in the correct position
+  # Combine the two and obtain the correct order
   combined_dates <- c(endpoint_dates, index)
-
-  #combined_dates_sorted <- sort(combined_dates)
   sorted_order <- order(combined_dates)
 
-  # Remove the names and convert to numeric
-  # Sorting the names only is much faster than sorting dates
-  #full_time_group <- as.numeric(names(combined_dates_sorted))
-  full_time_group <- as.numeric(names(combined_dates))[sorted_order]
+  # Create the unfilled time group vector and put it in the correct order
+  endpoint_groups  <- rlang::seq2_along(1, endpoint_dates)
+  endpoint_fillers <- rep(NA, times = length(index))
+  full_time_group <- c(endpoint_groups, endpoint_fillers)[sorted_order]
 
   # Remember location of endpoint_dates for removal later
-  endpoint_locations <- match(as.numeric(names(endpoint_dates)),
-                              full_time_group)
+  endpoint_locations <- match(endpoint_groups, full_time_group)
 
   # 'fill' the NA values forward with the correct group
   not_na <- !is.na(full_time_group)
   full_time_group <- cumsum(not_na)
 
   # Pull the endpoint_dates back out so we don't have duplicates
-  # Match only finds the first match so this works correctly
-  #.time_group <- full_time_group[-match(endpoint_dates, combined_dates_sorted)]
   .time_group <- full_time_group[-endpoint_locations]
 
   # Subtract off min-1 (takes care of starting the groups too early)
-  .time_group <- .time_group - (min(.time_group) - 1)
+  .time_group <- .time_group - (.time_group[1] - 1)
 
   .time_group
 }
@@ -164,9 +152,6 @@ terminate_early <- function(index, period) {
 
   # Originally don't terminate
   terminate <- FALSE
-
-  # Split period, grab normalized period character
-  period <- split_period(period)[[2]]
 
   # If it's a Date and sec/min/hour, yes terminate. No ability to change
   # periodicity
