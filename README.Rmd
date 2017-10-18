@@ -149,6 +149,13 @@ FANG %>%
         adj_range = adj_max - adj_min)
 ```
 
+## Index order
+
+`tibbletime` assumes that your dates are in _ascending order_. A warning will
+be generated if they are not when you try and use any `time_*()` function. We do
+this for speed purposes and to not force a change on the user's dataset by sorting
+for them.
+
 ## Vignettes
 
 There are currently 4 vignettes for `tibbletime`.

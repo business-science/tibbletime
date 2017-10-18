@@ -18,7 +18,7 @@ URL: https://github.com/business-science/tibbletime
 BugReports: https://github.com/business-science/tibbletime/issues
 License: MIT + file LICENSE
 Encoding: UTF-8
-Suggests: 
+Suggests:
     testthat,
     gapminder,
     knitr,
@@ -36,5 +36,7 @@ Imports:
     rlang (>= 0.1.2),
     stringr (>= 1.2.0),
     tibble (>= 1.3.3),
-    tidyr (>= 0.7.1)
+    tidyr (>= 0.7.1),
+    Rcpp
 VignetteBuilder: knitr
+LinkingTo: Rcpp

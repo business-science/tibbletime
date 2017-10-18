@@ -13,6 +13,12 @@ NULL
 #'
 NULL
 
+# Rcpp -------------------------------------------------------------------------
+
+#' @useDynLib tibbletime
+#' @importFrom Rcpp sourceCpp
+NULL
+
 # Global Util ------------------------------------------------------------------
 
 # Convert a period to an expanded list of syms required to expand the index
