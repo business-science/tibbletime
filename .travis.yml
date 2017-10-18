@@ -8,10 +8,6 @@ r:
 warnings_are_errors: true
 cache: packages
 
-before_install:
-  - sudo rm -vf /etc/apt/sources.list.d/*riak*
-  - sudo apt-get update
-
 notifications:
   email:
     on_success: change
