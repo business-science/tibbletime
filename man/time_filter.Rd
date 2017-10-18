@@ -81,5 +81,10 @@ FANG[~2014]
 # Using `[` and column selection
 FANG[2013~2016, c("date", "adjusted")]
 
+# You can filter with variables
+lhs_date <- "2013"
+rhs_date <- as.Date("2014-01-01")
+time_filter(FANG, lhs_date ~ rhs_date)
+
 
 }

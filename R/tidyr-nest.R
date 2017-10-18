@@ -7,10 +7,7 @@ nest.tbl_time <- function(data, ..., .key = "data")  {
 
   # Attributes to keep on the list-column
   # Classes are kept on nest
-  time_attrs <- list(
-    index     = attr(data, "index"),
-    time_zone = attr(data, "time_zone")
-  )
+  time_attrs <- extract_time_attrs(data)
 
   # silent_retime because normally the outer tibble won't have dates anymore
   tidyverse_execute(data, nest, ..., .key = !! .key, silent_retime = TRUE) %>%

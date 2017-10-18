@@ -1,4 +1,9 @@
-## tibbletime 0.0.2.9000
+## tibbletime 0.0.2.9001
+
+* General
+
+    * Even faster `time_group()`. This speeds up all time functions, especially
+    on large datasets.
 
 * Bug Fixes
 
