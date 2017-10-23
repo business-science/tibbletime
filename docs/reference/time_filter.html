@@ -271,6 +271,10 @@ but powerful shorthand is available. Some examples are:</p><ul>
 #&gt;  9 2013-01-14    30.95
 #&gt; 10 2013-01-15    30.10
 #&gt; # ... with 4,022 more rows</div><div class='input'>
+<span class='co'># You can filter with variables</span>
+<span class='no'>lhs_date</span> <span class='kw'>&lt;-</span> <span class='st'>"2013"</span>
+<span class='no'>rhs_date</span> <span class='kw'>&lt;-</span> <span class='fu'>as.Date</span>(<span class='st'>"2014-01-01"</span>)
+<span class='fu'>time_filter</span>(<span class='no'>FANG</span>, <span class='no'>lhs_date</span> ~ <span class='no'>rhs_date</span>)</div><div class='output co'>#&gt; <span class='error'>Error in overscope_eval_next(overscope, expr): object 'lhs_date' not found</span></div><div class='input'>
 
 </div></pre>
   </div>

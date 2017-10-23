@@ -12,7 +12,7 @@ knitr::opts_chunk$set(
 devtools::load_all()
 ```
 
-# tibbletime 
+# tibbletime <img src="man/figures/tibbletime-logo.png" width="147" height="170" align="right" />
 
 [![Travis-CI Build Status](https://travis-ci.org/business-science/tibbletime.svg?branch=master)](https://travis-ci.org/business-science/tibbletime.svg?branch=master)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/tibbletime)](https://cran.r-project.org/package=tibbletime)
