@@ -11,6 +11,9 @@
 * Bug Fixes
 
     * Ensure that `tidyr::spread()` passes the `fill` argument through.
+    
+    * Default time zone is now `EST` rather than `Sys.timezone()` to handle
+    a daylight savings issue.
 
 ## tibbletime 0.0.2
 
