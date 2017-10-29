@@ -75,7 +75,7 @@ as_tbl_time.tbl_df <- function(x, index, ...) {
   class(x) <- unique(c("tbl_time", class(x)))
   attr(x, "index") <- index
   time_zone <- attr(x[[index_name]][[1]], "tzone")
-  attr(x, "time_zone") <- ifelse(is.null(time_zone), Sys.timezone(), time_zone)
+  attr(x, "time_zone") <- time_zone %||% get_default_time_zone()
 
   x
 }

@@ -4,10 +4,16 @@
 
     * Even faster `time_group()`. This speeds up all time functions, especially
     on large datasets.
+    
+    * Any `time_*()` function will now warn the user if they aren't using 
+    a sorted index. 
 
 * Bug Fixes
 
     * Ensure that `tidyr::spread()` passes the `fill` argument through.
+    
+    * Default time zone is now `EST` rather than `Sys.timezone()` to handle
+    a daylight savings issue.
 
 ## tibbletime 0.0.2
 

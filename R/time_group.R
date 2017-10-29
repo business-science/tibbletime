@@ -120,6 +120,9 @@ time_group <- function(index, period = "yearly", start_date = NULL, ...) {
   index <- as.numeric(index)
   endpoint_dates <- as.numeric(endpoint_dates)
 
+  # Check ordering of numeric index
+  check_index_order(index)
+
   # Combine the two and obtain the correct order
   combined_dates <- c(endpoint_dates, index)
   sorted_order <- order(combined_dates)
@@ -160,4 +163,16 @@ terminate_early <- function(index, period) {
   }
 
   terminate
+}
+
+# Check if index in in ascending order, warn user if not.
+check_index_order <- function(index) {
+
+  if(!is.numeric(index)) {
+    index <- as.numeric(index)
+  }
+
+  if(!is_ordered_numeric(index)) {
+    message("Note: Index not ordered. tibbletime assumes index is in ascending order. Results may not be as desired.")
+  }
 }

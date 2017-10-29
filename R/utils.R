@@ -13,6 +13,16 @@ NULL
 #'
 NULL
 
+#' @importFrom rlang %||%
+#'
+NULL
+
+# Rcpp -------------------------------------------------------------------------
+
+#' @useDynLib tibbletime
+#' @importFrom Rcpp sourceCpp
+NULL
+
 # Global Util ------------------------------------------------------------------
 
 # Convert a period to an expanded list of syms required to expand the index
@@ -174,3 +184,8 @@ split_period <- function(period) {
   list(num = period_num, period = period_char)
 }
 
+# Get the default time zone. Use a non daylight savings default
+# to avoid issues like issue #31
+get_default_time_zone <- function() {
+  "EST"
+}

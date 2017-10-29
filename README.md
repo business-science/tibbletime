@@ -226,6 +226,11 @@ FANG %>%
 #> 16   NFLX 2016-12-30  82.79000 128.35001  45.56001
 ```
 
+Index order
+-----------
+
+`tibbletime` assumes that your dates are in *ascending order*. A warning will be generated if they are not when you try and use any `time_*()` function. We do this for speed purposes and to not force a change on the user's dataset by sorting for them.
+
 Vignettes
 ---------
 

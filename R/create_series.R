@@ -66,7 +66,7 @@ create_series <- function(time_formula, period = "daily",
 
   # If time zone is missing, default
   if(is.null(tz)) {
-    tz <- Sys.timezone()
+    tz <- get_default_time_zone()
   }
 
   # Period to character
