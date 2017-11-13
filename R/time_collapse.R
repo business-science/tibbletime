@@ -76,12 +76,9 @@ time_collapse.tbl_time <- function(.data, period = "yearly", start_date = NULL,
 
   # Keep the original dates as .date if requested
   if(as_sep_col) {
-    .data <- dplyr::mutate(.data, !! rlang::sym(".date") := !! index_sym)
-
-    # Order columns correctly
-    # tibble::add_column doesn't work because not generic. Strips class.
+    .date <- retrieve_index(.data)[["date"]]
     index_pos <- which(colnames(.data) == index_char)
-    .data <- .data[,c(1:index_pos, ncol(.data), (index_pos+1):(ncol(.data)-1))]
+    .data <- tibble::add_column(.data, .date, .after = index_pos)
   }
 
   .data %>%
