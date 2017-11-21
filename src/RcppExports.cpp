@@ -16,9 +16,23 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// sorted_range_search
+LogicalVector sorted_range_search(NumericVector x, double lower, double upper);
+RcppExport SEXP _tibbletime_sorted_range_search(SEXP xSEXP, SEXP lowerSEXP, SEXP upperSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< double >::type lower(lowerSEXP);
+    Rcpp::traits::input_parameter< double >::type upper(upperSEXP);
+    rcpp_result_gen = Rcpp::wrap(sorted_range_search(x, lower, upper));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_tibbletime_is_ordered_numeric", (DL_FUNC) &_tibbletime_is_ordered_numeric, 1},
+    {"_tibbletime_sorted_range_search", (DL_FUNC) &_tibbletime_sorted_range_search, 3},
     {NULL, NULL, 0}
 };
 

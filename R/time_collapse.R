@@ -70,37 +70,32 @@ time_collapse.default <- function(.data, period = "yearly", start_date = NULL,
 time_collapse.tbl_time <- function(.data, period = "yearly", start_date = NULL,
                                    as_sep_col = FALSE, ...) {
 
-  # Setup
-  index_char     <- retrieve_index(.data, as_name = TRUE)
-  index_sym      <- rlang::sym(index_char)
-
   # Keep the original dates as .date if requested
   if(as_sep_col) {
-    .date <- retrieve_index(.data)[["date"]]
+    index_char <- get_index_char(.data)
+    .date <- get_index_col(.data)
     index_pos <- which(colnames(.data) == index_char)
     .data <- tibble::add_column(.data, .date, .after = index_pos)
   }
 
-  .data %>%
+  collapsed_data <- .data %>%
 
     # Add time groups
-    mutate(.time_group = time_group(!! index_sym,
-                                    period = period,
-                                    start_date = start_date,
-                                    ...)) %>%
+    time_group(period, start_date) %>%
 
     # Group by them
-    group_by(.data$.time_group, add = TRUE) %>%
+    dplyr::group_by(.data$.time_group, add = TRUE) %>%
 
     # Max the date per group
-    mutate(!! index_sym := max(!! index_sym)) %>%
+    max_collapse() %>%
 
     # Ungroup
-    ungroup() %>%
+    dplyr::ungroup() %>%
 
     # Remove .time_group
-    dplyr::select(- .data$.time_group)
+    remove_time_group()
 
+  collapsed_data
 }
 
 #' @export

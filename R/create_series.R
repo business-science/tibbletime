@@ -41,62 +41,71 @@
 #'
 #' @export
 create_series <- function(time_formula, period = "daily",
-                          include_end = FALSE, tz = NULL, force_class = NULL,
-                          as_date_vector = FALSE) {
+                          class = "POSIXct", include_end = FALSE,
+                          tz = "UTC", as_vector = FALSE) {
 
-  period_list <- split_period(period)
+  period_list <- parse_period(period)
 
-  # Switch based on class of the period
-  if(period_list[["period"]] %in% c("day", "month", "year", "quarter", "week")) {
-    date_fun <- as.Date
-    seq_fun  <- seq.Date
+  # Generic validation based on the class
+  dummy_index <- make_dummy_dispatch_obj(class)
+  assert_allowed_datetime(dummy_index)
+  assert_period_matches_index_class(dummy_index, period_list$period)
 
-    # Override if force_class to POSIXct
-    if(!is.null(force_class)) {
-      if(force_class == "POSIXct") {
-        date_fun <- as.POSIXct
-        seq_fun  <- seq.POSIXt
-      }
-    }
+  # Get seq.* functions
+  seq_fun <- lookup_seq_fun(dummy_index)
 
-  } else {
-    date_fun <- as.POSIXct
-    seq_fun  <- seq.POSIXt
-  }
+  # Parse the time_formula, don't convert to dates yet
+  tf_list <- parse_time_formula(dummy_index, time_formula)
 
-  # If time zone is missing, default
-  if(is.null(tz)) {
-    tz <- get_default_time_zone()
-  }
+  # Could allow for multifilter idea here, but instead applied to series
 
-  # Period to character
-  time_char <- formula_to_char(time_formula)
+  # Then convert to datetime
+  from_to <- purrr::map(tf_list, ~list_to_datetime(dummy_index, .x, tz = tz))
 
-  # Normalize
-  from <- normalize_date(time_char[1], "from")
-  to   <- normalize_date(time_char[2], "to")
+  # Get sequence creation pieces ready
+  from <- from_to[[1]]
+  to   <- from_to[[2]]
+  by   <- paste(period_list$freq, period_list$period)
 
-  # Validate time_formula date order
-  validate_date_order(from, to)
-
-  # Coerce to dates
-  from <- date_fun(from, tz = tz)
-  to   <- date_fun(to,   tz = tz)
+  # Final assertion of order
+  assert_from_before_to(from, to)
 
   # Create the sequence
-  date_seq <- seq_fun(from, to, by = paste(period_list[["num"]], period_list[["period"]]))
+  date_seq <- seq_fun(from, to, by = by)
 
   # Add the end date if required
   if(include_end) {
     if(max(date_seq) < to) {
-      date_seq <- unique(c(date_seq, to))
+      date_seq <- push_datetime(date_seq, to)
     }
   }
 
   # Convert to tbl_time
-  if(as_date_vector) {
+  if(as_vector) {
     date_seq
   } else {
     as_tbl_time(tibble::tibble(date = date_seq), date)
   }
+
 }
+
+#### Utils ---------------------------------------------------------------------
+
+assert_allowed_datetime <- function(x) {
+  assertthat::assert_that(
+    is_allowed_datetime(x),
+    msg = "Specified `class` is not one of the allowed time-based classes"
+  )
+}
+
+assert_from_before_to <- function(from, to) {
+  from <- to_posixct_numeric(from)
+  to   <- to_posixct_numeric(to)
+
+  assertthat::assert_that(
+    from <= to,
+    msg = "`from` must be before `to`"
+  )
+}
+
+

@@ -42,14 +42,16 @@ time_ceiling.default <- function(x, period, ...) {
 time_ceiling.tbl_time <- function(x, period, ...) {
 
   # Period and index
-  period <- split_period(period)
-  index <- rlang::sym(retrieve_index(x, as_name = TRUE))
+  period_list <- parse_period(period)
+  index_sym   <- rlang::sym(get_index_char(x))
 
   # Unit for lubridate
-  lub_unit <- paste(period[["num"]], period[["period"]])
+  lub_unit <- paste(period_list$freq, period_list$period)
 
-  # Apply floor
-  mutate(x,
-         !! index := lubridate::ceiling_date(!! index, unit = lub_unit, ...))
+  # Apply ceiling
+  dplyr::mutate(
+    x,
+    !! index_sym := ceiling_date_time(!! index_sym, unit = lub_unit)
+  )
 
 }

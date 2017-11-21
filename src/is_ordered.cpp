@@ -1,4 +1,5 @@
 #include <Rcpp.h>
+#include "is_ordered.h"
 using namespace Rcpp;
 
 // [[Rcpp::export]]

@@ -11,7 +11,7 @@ print.tbl_time <- function(x, ...) {
   names(summary) <- "A time tibble"
 
   # Overwrite "A tibble" and dims with the index
-  print_tbl$summary[[1]] <- retrieve_index(x, as_name = TRUE)
+  print_tbl$summary[[1]] <- get_index_char(x)
   names(print_tbl$summary)[[1]] <- "Index"
 
   # Print

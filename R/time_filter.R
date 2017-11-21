@@ -77,32 +77,30 @@ time_filter.default <- function(x, time_formula) {
 #' @export
 time_filter.tbl_time <- function(x, time_formula) {
 
-  # Validate time_formula syntax
-  from_to <- formula_to_char(time_formula)
+  index_col  <- get_index_col(x)
+  index_quo  <- get_index_quo(x)
 
-  # Index name as sym
-  index_name <- rlang::sym(retrieve_index(x, as_name = TRUE))
-  index_raw      <- retrieve_index(x) %>%
-    dplyr::pull()
+  # Parse the time_formula, don't convert to dates yet
+  tf_list <- parse_time_formula(index_col, time_formula)
 
-  # Normalize
-  from_to_clean <- purrr::map2_chr(.x = from_to,
-                                   .y = c("from", "to"),
-                                   .f = normalize_date)
+  # Could allow for multifilter idea here
 
-  # Validate time_formula date order
-  validate_date_order(from = from_to_clean[1], to = from_to_clean[2])
+  # Then convert to datetime
+  from_to <- purrr::map(
+    .x = tf_list,
+    .f = ~list_to_datetime(index_col, .x, tz = get_index_time_zone(x))
+  )
 
-  # Date function selection
-  date_fun <- date_fun_selector(x)
+  # Get sequence creation pieces ready
+  from <- from_to[[1]]
+  to   <- from_to[[2]]
 
-  # Filter for those rows
-  dplyr::filter(x,
-                rlang::UQ(index_name) >= date_fun(from_to_clean[1],
-                                                    tz = retrieve_time_zone(x)),
-                rlang::UQ(index_name) <= date_fun(from_to_clean[2],
-                                                    tz = retrieve_time_zone(x)))
+  # Final assertion of order
+  assert_from_before_to(from, to)
+  
+  x_filtered <- dplyr::filter(x, sorted_range_search(!! index_quo, from, to))
 
+  sloop::reconstruct(x_filtered, x)
 }
 
 # Subset operator --------------------------------------------------------------
@@ -119,13 +117,6 @@ time_filter.tbl_time <- function(x, time_formula) {
 #'
 `[.tbl_time` <- function(x, i, j, drop = FALSE) {
 
-  # Classes and attributes to keep
-  time_classes <- stringr::str_subset(class(x), "tbl_time")
-  time_attrs <- list(
-    index     = attr(x, "index"),
-    time_zone = attr(x, "time_zone")
-  )
-
   # This helps decide whether i is used for column subset or row subset
   .nargs <- nargs() - !missing(drop)
 
@@ -136,8 +127,8 @@ time_filter.tbl_time <- function(x, time_formula) {
     }
   }
 
-  # detime
-  x <- detime(x, time_classes, time_attrs)
+  # Remove time class/attribs to let tibble::`[` do the rest
+  x_tbl <- as_tibble(x)
 
   # i filter
   if(!missing(i)) {
@@ -146,10 +137,10 @@ time_filter.tbl_time <- function(x, time_formula) {
         # Column subset
         # Preferred if tibble issue is addressed
         # x <- x[i, drop = drop]
-        x <- x[i]
+        x_tbl <- x_tbl[i]
       } else {
         # Row subset
-        x <- x[i, , drop = drop]
+        x_tbl <- x_tbl[i, , drop = drop]
       }
 
     }
@@ -157,207 +148,49 @@ time_filter.tbl_time <- function(x, time_formula) {
 
   # j filter
   if(!missing(j)) {
-    x <- x[, j, drop = drop]
+    x_tbl <- x_tbl[, j, drop = drop]
   }
 
-  # retime
-  retime(x, time_classes, time_attrs)
-}
-
-
-# Util -------------------------------------------------------------------------
-
-# Check a user supplied time_formula for correct syntax
-# If "2015", duplicate to "2015,2015"
-# Removes leading / trailing spaces
-formula_to_char <- function(time_formula) {
-
-  # Must be a formula
-  assertthat::assert_that(rlang::is_formula(time_formula),
-                          msg = "Period must be specified as a formula using `~`")
-
-  # Vars
-  time_f_lhs <- rlang::f_lhs(time_formula)
-  time_f_rhs <- rlang::f_rhs(time_formula)
-  time_f_env <- rlang::f_env(time_formula)
-
-  # Create RHS formulas from the time_formula
-  time_formula_list <- purrr::map(c(time_f_lhs, time_f_rhs),
-                           ~rlang::new_formula(NULL, .x,
-                                               env = time_f_env))
-
-  # tidy_eval the pieces of time_formula containing user variables
-  time_formula_list <- eval_tidy_time_formula(time_formula_list)
-
-  # If it is date type class, a + is needed for POSIXct
-  # and for Date you have to explicitely coerce the rhs alone to character
-  # otherwise you get a numeric version of it as char
-  time_formula_char <- purrr::map_chr(time_formula_list,
-                           .f = ~if(is_any_date(.x)) {
-                                   gsub(" ", "+", .x)
-                                 } else {
-                                   .x
-                                 })
-
-  # Remove spaces
-  time_formula_char <- gsub(" ", "", time_formula_char)
-
-  # If rhs only, duplicate
-  if(length(time_formula_char) == 1) {
-    time_formula_char <- c(time_formula_char, time_formula_char)
+  # If the index still exists, convert to tbl_time again
+  if(get_index_char(x) %in% colnames(x_tbl)) {
+    x_tbl <- as_tbl_time(x_tbl, !! get_index_quo(x))
   }
 
-  # Check symbols
-  check_syms <- function(x) {
-    assertthat::assert_that(stringr::str_count(x, "-") <= 2,
-                            msg = "A maximum of two '-' are possible per date")
-    assertthat::assert_that(stringr::str_count(x, ":") <= 2,
-                            msg = "A maximum of two ':' are possible per date")
-    assertthat::assert_that(stringr::str_count(x, "\\+") <= 1,
-                            msg = "A maximum of one '+' is possible per date")
-    assertthat::assert_that(!stringr::str_detect(x, "^:|:$|\\s:|:\\s"),
-                            msg = "A ':' can only be used between two numbers")
-    assertthat::assert_that(!stringr::str_detect(x, "^-|-$|\\s-|-\\s"),
-                            msg = "A '-' can only be used between two numbers")
-  }
-  lapply(time_formula_char, check_syms)
-
-  time_formula_char
+  x_tbl
 }
 
-# Validates the final dates
-# `from` must be before `to`
-validate_date_order <- function(from, to) {
-  from <- as.POSIXct(from)
-  to   <- as.POSIXct(to)
+#' @export
+# `[.grouped_tbl_time` <- function(x, i, j, drop = FALSE) {
+#   x_tbl <- NextMethod()
+# 
+#   group_names <- dplyr::group_vars(x)
+# 
+#   # If the groups have been removed
+#   if(!all(group_names %in% colnames(x_tbl))) {
+# 
+#     if(inherits(x_tbl, "tbl_time")) {
+# 
+#       as_tbl_time(x_tbl, !! get_index_quo(x_tbl))
+# 
+#     } else {
+# 
+#       as_tibble(x_tbl)
+# 
+#     }
+# 
+#     # If all the groups are still there
+#   } else {
+# 
+#     if(inherits(x_tbl, "tbl_time")) {
+# 
+#       grouped_tbl_time(dplyr::grouped_df(x_tbl, group_names), !! get_index_quo(x_tbl))
+# 
+#     } else {
+# 
+#       dplyr::grouped_df(x_tbl, group_names)
+# 
+#     }
+# 
+#   }
+# }
 
-  assertthat::assert_that(from <= to,
-                          msg = "`from` must be a date before `to`")
-}
-
-# Expand date shorthand into a real date
-normalize_date <- function(x, from_to) {
-
-  # Setup ymd / hms lists to fill
-  ymd <- switch(from_to,
-                "from" = list(y = "1970", m = "01", d = "01"),
-                # `to` day depends on month selected, filled later if necessary
-                "to"   = list(y = "1970", m = "12", d = "00"))
-
-  hms <- switch(from_to,
-                "from" = list(h = "00", m = "00", s = "00"),
-                "to"   = list(h = "23", m = "59", s = "59"))
-
-  # Check existance of date / time dividing space \\s
-  date_time <- if(stringr::str_detect(x, "\\+")) {
-
-    # If there is a date and a time, split them
-    date_time <- unlist(stringr::str_split(x, "\\+"))
-
-    # Recurse split to fill the lists
-    date <- recurse_split(date_time[1], ymd, "-")
-    time <- recurse_split(date_time[2], hms, ":")
-
-    # Paste together
-    paste(date, time, sep = " ")
-  } else {
-
-    # If there is only a date, no time
-    # Recurse split the date, and pass default time
-    date <- recurse_split(x, ymd, "-")
-
-    if(from_to == "from") {
-      time <- "00:00:00"
-    } else {
-      time <- "23:59:59"
-    }
-
-    # Paste together
-    paste(date, time, sep = " ")
-  }
-
-  date_time
-}
-
-# Split x by the splitter and fill the filler list with the pieces
-recurse_split <- function(x, filler, splitter) {
-  i <- 1
-
-  # While there is something to split on
-  while(stringr::str_detect(x, splitter)) {
-
-    # Extract the first part of the split
-    piece <- stringr::str_extract(x, paste0("([^", splitter, "]+)"))
-
-    # Replace the first part with "" in the string
-    x <- sub(x = x,
-             pattern = paste0("([^", splitter, "]+", splitter, ")"),
-             replacement = "")
-
-    # Add the new piece to the filler
-    filler[[i]] <- piece
-
-    # Next
-    i <- i + 1
-  }
-  # Once there is nothing left to split on, add the last piece to the filler
-  filler[[i]] <- x
-
-  # If `to` d was never changed, set as end of chosen month
-  if(!is.null(filler[["d"]])) {
-    if(filler[["d"]] == "00") {
-
-      # Fake a date to find the number of days in that month
-      filler[["d"]] <- "01"
-      fake_date <- as.Date(paste0(unlist(filler), collapse = splitter))
-
-      # Fill the `to` d with the number of days in that month
-      filler[["d"]] <- as.character(lubridate::days_in_month(fake_date))
-    }
-  }
-
-  paste0(unlist(filler), collapse = splitter)
-}
-
-# Set date conversion function
-date_fun_selector <- function(x) {
-
-  index_raw <- retrieve_index(x) %>%
-    dplyr::pull()
-
-  # Switch based on class of the index
-  if(inherits(index_raw, "Date")) {
-    as.Date
-  } else if(inherits(index_raw, "POSIXct")) {
-    as.POSIXct
-  }
-}
-
-# Evaluates each side of the time_formula in a tidy way where necessary
-eval_tidy_time_formula <- function(time_formula_list) {
-
-  # Convert to character, remove ~
-  time_formula_char <- purrr::map_chr(time_formula_list, ~as.character(.x)[-1])
-
-  # Check normalizable
-  normalizable <- purrr::map_lgl(time_formula_char, function(x) {
-    # Attempt to normalize
-    # If it fails, then it returns invisibly with class try-error
-    !try({
-      gsub(" ", "", x) %>%
-        normalize_date("from") %>%
-        as.POSIXct()
-    }, silent = TRUE) %>%
-    inherits("try-error")
-  })
-
-  # If normalizable, to character, otherwise evaluate
-  time_formula_list <- purrr::map2(time_formula_list, normalizable,
-       ~if(.y) {
-         as.character(.x)[-1]
-        } else {
-          rlang::eval_tidy(rlang::f_rhs(.x))
-        })
-
-  time_formula_list
-}

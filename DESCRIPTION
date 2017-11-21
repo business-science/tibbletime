@@ -24,13 +24,14 @@ Suggests:
     knitr,
     broom,
     covr
-RoxygenNote: 6.0.1
+RoxygenNote: 6.0.1.9000
 Roxygen: list(markdown = TRUE)
 Depends:
     R (>= 3.3.0)
 Imports:
     assertthat (>= 0.2.0),
     dplyr (>= 0.7),
+    hms,
     lubridate (>= 1.6.0),
     magrittr (>= 1.5),
     purrr (>= 0.2.3),
@@ -38,6 +39,11 @@ Imports:
     stringr (>= 1.2.0),
     tibble (>= 1.3.3),
     tidyr (>= 0.7.1),
+    tidyselect,
+    zoo,
     Rcpp
+Remotes:
+    tidyverse/tibble,
+    hadley/sloop
 VignetteBuilder: knitr
 LinkingTo: Rcpp

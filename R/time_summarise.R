@@ -62,8 +62,9 @@ time_summarise <- function(.data, period = "yearly",
   UseMethod("time_summarise")
 }
 
+#' @export
 time_summarise.default <- function(.data, period = "yearly",
-                                  ..., start_date = NULL) {
+                                   ..., start_date = NULL) {
   stop("Object is not of class `tbl_time`.", call. = FALSE)
 }
 
@@ -72,10 +73,10 @@ time_summarise.default <- function(.data, period = "yearly",
 time_summarise.tbl_time <- function(.data, period = "yearly",
                                     ..., start_date = NULL) {
 
-  index_sym <- rlang::sym(retrieve_index(.data, as_name = TRUE))
+  index_quo <- get_index_quo(.data)
 
   time_collapse(.data, period = period, start_date = start_date) %>%
-    dplyr::group_by(!! index_sym, add = TRUE) %>%
+    dplyr::group_by(!! index_quo, add = TRUE) %>%
     dplyr::summarise(...)
 }
 
@@ -83,8 +84,8 @@ time_summarise.tbl_time <- function(.data, period = "yearly",
 #'
 time_summarise.grouped_tbl_time <- function(.data, period = "yearly",
                                             ..., start_date = NULL) {
-  time_summarise.tbl_time(.data, ...,
-                          period = period, start_date = start_date) %>%
+  time_summarise.tbl_time(.data, period = period, ...,
+                          start_date = start_date) %>%
     dplyr::group_by(!!! dplyr::groups(.data))
 }
 

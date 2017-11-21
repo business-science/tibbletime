@@ -2,13 +2,14 @@
 % Please edit documentation in R/time_group.R
 \name{time_group}
 \alias{time_group}
-\title{Generate a vector of time-based groupings}
+\alias{make_time_group_vector}
+\title{Add time-based groupings to a tibble}
 \usage{
-time_group(index, period = "yearly", start_date = NULL, ...)
+time_group(x, period = "yearly", start_date = NULL, ...)
+
+make_time_group_vector(index_col, period, start_date = NULL, ...)
 }
 \arguments{
-\item{index}{A vector of date indices to create groups for.}
-
 \item{period}{A formula or character specification used for time-based grouping.
 
 If a formula, e.g. \code{1~year}, the formula is split and parsed to form the
@@ -45,6 +46,8 @@ first group. The default is to start at the closest period boundary
 below the minimum date in the supplied index.}
 
 \item{...}{Not currently used.}
+
+\item{index}{A vector of date indices to create groups for.}
 }
 \description{
 \code{\link[=time_group]{time_group()}} accepts a date index vector and returns an integer vector that

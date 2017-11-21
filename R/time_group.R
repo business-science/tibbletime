@@ -1,4 +1,4 @@
-#' Generate a vector of time-based groupings
+#' Add time-based groupings to a tibble
 #'
 #' [time_group()] accepts a date index vector and returns an integer vector that
 #'  can be used for grouping by periods.
@@ -63,73 +63,111 @@
 #' dplyr::mutate(FB, time_group = time_group(date, 2~d))
 #'
 #' @export
-time_group <- function(index, period = "yearly", start_date = NULL, ...) {
+#' @rdname time_group
+time_group <- function(x, period = "yearly", start_date = NULL, ...) {
+  UseMethod("time_group")
+}
 
-  # Check and normalize group period
-  period_list <- split_period(period)
+#' @export
+time_group.default <- function(x, period = "yearly", start_date = NULL, ...) {
+  stop("Object is not of class `tbl_time`.", call. = FALSE)
+}
 
-  # Early termination
-  terminate <- terminate_early(index, period_list$period)
-  if (terminate) {
-    return(seq_len(length(index)))
-  }
+#' @export
+time_group.tbl_time <- function(x, period = "yearly", start_date = NULL, ...) {
 
-  # Min / max used to create series
-  # Assumed to be in order
-  index_min <- dplyr::first(index)
-  index_max <- dplyr::last(index)
+  index_quo <- get_index_quo(x)
 
-  # Used to force the created series to be of the same class
-  # Ex) POSIXct Even if `period` is higher periods like month/year
-  index_class <- class(index)[1]
+  x_with_groups <- dplyr::mutate(
+    .data = x,
+    .time_group = make_time_group_vector(!! index_quo, period, start_date)
+  )
 
-  # Time zone of the index
-  tz <- attr(index, "tz")
-  if (is.null(tz)) {
-    tz <- Sys.timezone()
-  }
+  sloop::reconstruct(x_with_groups, x)
+}
 
-  # If the start date is not missing, it is the start
-  if (!is.null(start_date)) {
-    assertthat::assert_that(as.POSIXct(start_date, tz = tz) <= index_min,
-                            msg = "Start date must be less than index minimum")
-    from <- start_date
 
-  } else {
+#' @export
+#' @rdname time_group
+make_time_group_vector <- function(index_col, period, start_date = NULL, ...) {
 
-    # Otherwise floor the min
-    from <- index_min %>%
-      lubridate::floor_date(period_list$period) %>%
-      as.character()
-  }
-
-  # Ceiling the max date
-  to <- index_max %>%
-    lubridate::ceiling_date(period_list$period) %>%
-    as.character()
-
-  # Formularize
-  from_to_f <- rlang::new_formula(from, to)
-
-  # Create series
-  endpoint_dates <- create_series(from_to_f, period = period,
-                                  tz = tz, force_class = index_class,
-                                  as_date_vector = TRUE)
-
-  # Coerce to numeric. Faster than manipulating dates
-  index <- as.numeric(index)
-  endpoint_dates <- as.numeric(endpoint_dates)
+  .index_col      <- to_posixct_numeric(index_col)
+  index_class     <- get_index_col_class(index_col)
+  index_time_zone <- get_index_col_time_zone(index_col)
 
   # Check ordering of numeric index
-  check_index_order(index)
+  check_index_order(.index_col)
 
+  # Parse the period
+  period_list <- parse_period(period)
+
+  # Generic validation of user defined period
+  assert_period_matches_index_class(index_col, period_list$period)
+
+  # Make endpoint time_formula
+  endpoint_time_formula <- make_endpoint_formula(
+    x = index_col,
+    rounding_period = period_list$period,
+    start_date = start_date
+  )
+
+  # Create series
+  endpoints <- create_series(
+    time_formula = endpoint_time_formula,
+    period = period,
+    class = index_class,
+    tz = index_time_zone,
+    as_vector = TRUE
+  )
+
+  endpoints <- to_posixct_numeric(endpoints)
+
+  .time_group <- make_time_groups(.index_col, endpoints)
+
+  .time_group
+}
+
+#### Utils ---------------------------------------------------------------------
+
+make_endpoint_formula <- function(x, rounding_period, start_date = NULL) {
+  # Get start_date
+  if(is.null(start_date)) {
+    start_date <- dplyr::first(x)
+
+    # Auto start_date get's floored
+    start_date <- start_date %>%
+      floor_date_time(rounding_period)
+
+  } else {
+    # Coerce the user specified start_date
+    start_date <- coerce_start_date(x, start_date)
+    assert_start_date_before_index_min(x, start_date)
+  }
+
+  # Get end_date
+  end_date <- dplyr::last(x) %>%
+    ceiling_date_time(rounding_period)
+
+  # As formula
+  make_time_formula(start_date, end_date)
+}
+
+
+assert_start_date_before_index_min <- function(x, start_date) {
+  assertthat::assert_that(
+    to_posixct_numeric(dplyr::first(x)) >= to_posixct_numeric(start_date),
+    msg = "start_date must be less than or equal to the minimum of the index column"
+  )
+}
+
+make_time_groups <- function(x, endpoints) {
   # Combine the two and obtain the correct order
-  combined_dates <- c(endpoint_dates, index)
-  sorted_order <- order(combined_dates)
+  combined_dates <- c(endpoints, x)
+  sorted_order   <- order(combined_dates)
 
   # Create the unfilled time group vector and put it in the correct order
-  endpoint_groups  <- rlang::seq2_along(1, endpoint_dates)
-  endpoint_fillers <- rep(NA, times = length(index))
+  endpoint_groups  <- rlang::seq2_along(1, endpoints)
+  endpoint_fillers <- rep(NA, times = length(x))
   full_time_group <- c(endpoint_groups, endpoint_fillers)[sorted_order]
 
   # Remember location of endpoint_dates for removal later
@@ -143,36 +181,18 @@ time_group <- function(index, period = "yearly", start_date = NULL, ...) {
   .time_group <- full_time_group[-endpoint_locations]
 
   # Subtract off min-1 (takes care of starting the groups too early)
-  .time_group <- .time_group - (.time_group[1] - 1)
-
-  .time_group
-}
-
-# Util -------------------------------------------------------------------------
-
-# Decide whether to terminate early and return original data
-terminate_early <- function(index, period) {
-
-  # Originally don't terminate
-  terminate <- FALSE
-
-  # If it's a Date and sec/min/hour, yes terminate. No ability to change
-  # periodicity
-  if(inherits(index, "Date") & period %in% c("sec", "min", "hour")) {
-    terminate <- TRUE
-  }
-
-  terminate
+  .time_group <- .time_group - (.time_group[1] - 1L)
 }
 
 # Check if index in in ascending order, warn user if not.
 check_index_order <- function(index) {
-
+  
   if(!is.numeric(index)) {
     index <- as.numeric(index)
   }
-
+  
   if(!is_ordered_numeric(index)) {
     message("Note: Index not ordered. tibbletime assumes index is in ascending order. Results may not be as desired.")
   }
 }
+

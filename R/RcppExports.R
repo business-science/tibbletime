@@ -5,3 +5,7 @@ is_ordered_numeric <- function(x) {
     .Call('_tibbletime_is_ordered_numeric', PACKAGE = 'tibbletime', x)
 }
 
+sorted_range_search <- function(x, lower, upper) {
+    .Call('_tibbletime_sorted_range_search', PACKAGE = 'tibbletime', x, lower, upper)
+}
+
