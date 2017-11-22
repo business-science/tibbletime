@@ -149,7 +149,7 @@ make_endpoint_formula <- function(x, rounding_period, start_date = NULL) {
     ceiling_date_time(rounding_period)
 
   # As formula
-  make_time_formula(start_date, end_date)
+  start_date ~ end_date
 }
 
 
@@ -186,11 +186,11 @@ make_time_groups <- function(x, endpoints) {
 
 # Check if index in in ascending order, warn user if not.
 check_index_order <- function(index) {
-  
+
   if(!is.numeric(index)) {
     index <- as.numeric(index)
   }
-  
+
   if(!is_ordered_numeric(index)) {
     message("Note: Index not ordered. tibbletime assumes index is in ascending order. Results may not be as desired.")
   }

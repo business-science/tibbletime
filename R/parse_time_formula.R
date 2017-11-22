@@ -1,68 +1,95 @@
 parse_time_formula <- function(index, time_formula) {
 
+  # lhs/rhs list
+  tf <- list(
+    lhs = rlang::f_lhs(time_formula),
+    rhs = rlang::f_rhs(time_formula)
+  )
+
+  # Environment to evaluate the sides in
+  tf_env <- rlang::f_env(time_formula)
+
+  # Tidy evaluation
+  tf <- lapply(tf, function(x) {
+    rlang::eval_tidy(x, env = tf_env)
+    }
+  )
+
   # Double up if 1 sided
   # length = 2 means that it has ~ and 1 side
   if(length(time_formula) == 2) {
-    .rhs <- rlang::f_rhs(time_formula)
-    .lhs <- .rhs
-    .env <- rlang::f_env(time_formula)
-    time_formula <- rlang::new_formula(.lhs, .rhs, .env)
+    tf$lhs <- tf$rhs
   }
 
-  # Split time formula into lhs and rhs and list() each
-  tf_list <- rlang::lang_args(time_formula)
-  tf_list <- lapply(tf_list, list)
-
-  # Split each formula side into it's time pieces
-  tf_fully_split <- lapply(tf_list, lang_args_recursive)
+  # Split the input
+  tf <- lapply(tf, split_to_list)
 
   # Add default times
   # map2 is a bit slow here
-  tf_final    <- list(NA, NA)
-  tf_final[[1]] <- add_time_defaults(index, tf_fully_split[[1]], "lhs")
-  tf_final[[2]] <- add_time_defaults(index, tf_fully_split[[2]], "rhs")
+  tf_final      <- list(NA, NA)
+  tf_final[[1]] <- add_time_defaults(index, tf[[1]], "lhs")
+  tf_final[[2]] <- add_time_defaults(index, tf[[2]], "rhs")
 
   tf_final
 }
 
-#### Utils ---------------------------------------------------------------------
+### Utils ----
 
-## Functions for recursively splitting the formula sides --------------------
-
-# Used to recursively apply lang_args to 1 side of the time formula
-# End up with a flat list of split time pieces
-lang_args_recursive <- function(lang) {
-  while(needs_recursion(lang)) {
-    lang <- map_lang_args(lang)
-  }
-  lang
+split_to_list <- function(x) {
+  UseMethod("split_to_list")
 }
 
-# If any of the lang sides are longer than 1, it needs splitting
-needs_recursion <- function(lang) {
-  sum(
-    vapply(
-      lang, 
-      function(x) length(x) > 1, 
-      FUN.VALUE = logical(1)
-    )
+split_to_list.default <- function(x) {
+  stop("Unrecognized time formula input")
+}
+
+split_to_list.Date <- function(x) {
+  x_lt <- as.POSIXlt(x, tz = get_default_time_zone())
+  list(x_lt$year + 1900, x_lt$mon + 1, x_lt$mday)
+}
+
+split_to_list.POSIXct <- function(x) {
+  x_lt <- as.POSIXlt(x, tz = attr(x, "tzone"))
+  list(x_lt$year + 1900, x_lt$mon + 1, x_lt$mday,
+       x_lt$hour,        x_lt$min, x_lt$sec)
+}
+
+split_to_list.yearmon <- split_to_list.Date
+
+split_to_list.yearqtr <- split_to_list.Date
+
+split_to_list.hms <- function(x) {
+  x_lt <- as.POSIXlt(x, tz = get_default_time_zone())
+  list(x_lt$hour, x_lt$min, x_lt$sec)
+}
+
+split_to_list.character <- function(x) {
+  # Split on - / , : * + space (notably not .)
+  split_str <- stringr::str_split(x, "-|/|:|[*]|[+]|[,]|[[:space:]]", simplify = F) %>%
+    unlist()
+
+  # Remove the "" that get left
+  split_str <- split_str[stringr::str_length(split_str) >= 1]
+
+  split_list <- as.list(split_str)
+
+  maybe_to_numeric <- function(x) {
+    if(x != ".") {
+      x <- suppressWarnings(as.numeric(x))
+      if(is.na(x)) {
+        stop("Cannot parse time formula specification", call. = FALSE)
+      }
+    }
+    x
+  }
+
+  # Attempt to coerce to numeric unless '.'
+  split_list <- lapply(
+    split_list,
+    maybe_to_numeric
   )
-}
 
-# For each tf side, apply a lang_args call
-map_lang_args <- function(lang) {
-  unlist(lapply(lang, safe_lang_args), recursive = FALSE)
-}
-
-# A safer version of lang_args for this case
-# Safer because if it is not a lang, it returns a list of itself which
-# is what is needed for this to flatten correctly
-safe_lang_args <- function(lang) {
-  if(rlang::is_lang(lang)) {
-    rlang::lang_args(lang)
-  } else {
-    list(lang)
-  }
+  split_list
 }
 
 ## Functions for adding defaults ------------------------------------------
