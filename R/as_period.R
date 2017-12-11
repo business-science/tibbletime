@@ -97,7 +97,7 @@ as_period.tbl_time <- function(x, period = "yearly",
                                start_date = NULL, side = "start", ...) {
 
   # Add time groups
-  x_tg <- time_group(x, period, start_date)
+  x_tg <- dplyr::mutate(x, .time_group = partition_index(!! get_index_quo(x), period, start_date))
 
   # Filter
   if(side == "start")
