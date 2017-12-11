@@ -1,6 +1,6 @@
 #' Add time-based groupings to a tibble
 #'
-#' [time_group()] accepts a date index vector and returns an integer vector that
+#' [partition_index()] accepts a date index vector and returns an integer vector that
 #'  can be used for grouping by periods.
 #'
 #' @param index A vector of date indices to create groups for.
@@ -58,38 +58,23 @@
 #'
 #' data(FB)
 #'
-#' time_group(FB$date, 2~y)
+#' partition_index(FB$date, 2~y)
 #'
-#' dplyr::mutate(FB, time_group = time_group(date, 2~d))
+#' dplyr::mutate(FB, partition_index = partition_index(date, 2~d))
 #'
 #' @export
-#' @rdname time_group
-time_group <- function(x, period = "yearly", start_date = NULL, ...) {
-  UseMethod("time_group")
-}
+#' @rdname partition_index
+#'
+partition_index <- function(index, period = "yearly", start_date = NULL, ...) {
 
-#' @export
-time_group.default <- function(x, period = "yearly", start_date = NULL, ...) {
-  stop("Object is not of class `tbl_time`.", call. = FALSE)
-}
+   make_partition_index_vector(index, period, start_date, ...)
 
-#' @export
-time_group.tbl_time <- function(x, period = "yearly", start_date = NULL, ...) {
-
-  index_quo <- get_index_quo(x)
-
-  x_with_groups <- dplyr::mutate(
-    .data = x,
-    .time_group = make_time_group_vector(!! index_quo, period, start_date)
-  )
-
-  sloop::reconstruct(x_with_groups, x)
 }
 
 
 #' @export
-#' @rdname time_group
-make_time_group_vector <- function(index_col, period, start_date = NULL, ...) {
+#' @rdname partition_index
+make_partition_index_vector <- function(index_col, period, start_date = NULL, ...) {
 
   .index_col      <- to_posixct_numeric(index_col)
   index_class     <- get_index_col_class(index_col)
@@ -106,7 +91,7 @@ make_time_group_vector <- function(index_col, period, start_date = NULL, ...) {
 
   # Make endpoint time_formula
   endpoint_time_formula <- make_endpoint_formula(
-    x = index_col,
+    index = index_col,
     rounding_period = period_list$period,
     start_date = start_date
   )
@@ -122,66 +107,66 @@ make_time_group_vector <- function(index_col, period, start_date = NULL, ...) {
 
   endpoints <- to_posixct_numeric(endpoints)
 
-  .time_group <- make_time_groups(.index_col, endpoints)
+  .partition_index <- make_partition_index(.index_col, endpoints)
 
-  .time_group
+  .partition_index
 }
 
 #### Utils ---------------------------------------------------------------------
 
-make_endpoint_formula <- function(x, rounding_period, start_date = NULL) {
+make_endpoint_formula <- function(index, rounding_period, start_date = NULL) {
   # Get start_date
   if(is.null(start_date)) {
-    start_date <- dplyr::first(x)
+    start_date <- dplyr::first(index)
 
     # Auto start_date get's floored
     start_date <- start_date %>%
-      floor_date_time(rounding_period)
+      floor_index(rounding_period)
 
   } else {
     # Coerce the user specified start_date
-    start_date <- coerce_start_date(x, start_date)
-    assert_start_date_before_index_min(x, start_date)
+    start_date <- coerce_start_date(index, start_date)
+    assert_start_date_before_index_min(index, start_date)
   }
 
   # Get end_date
-  end_date <- dplyr::last(x) %>%
-    ceiling_date_time(rounding_period)
+  end_date <- dplyr::last(index) %>%
+    ceiling_index(rounding_period)
 
   # As formula
   start_date ~ end_date
 }
 
 
-assert_start_date_before_index_min <- function(x, start_date) {
+assert_start_date_before_index_min <- function(index, start_date) {
   assertthat::assert_that(
-    to_posixct_numeric(dplyr::first(x)) >= to_posixct_numeric(start_date),
+    to_posixct_numeric(dplyr::first(index)) >= to_posixct_numeric(start_date),
     msg = "start_date must be less than or equal to the minimum of the index column"
   )
 }
 
-make_time_groups <- function(x, endpoints) {
+make_partition_index <- function(index, endpoints) {
   # Combine the two and obtain the correct order
-  combined_dates <- c(endpoints, x)
+  combined_dates <- c(endpoints, index)
   sorted_order   <- order(combined_dates)
 
   # Create the unfilled time group vector and put it in the correct order
   endpoint_groups  <- rlang::seq2_along(1, endpoints)
-  endpoint_fillers <- rep(NA, times = length(x))
-  full_time_group <- c(endpoint_groups, endpoint_fillers)[sorted_order]
+  endpoint_fillers <- rep(NA, times = length(index))
+  full_partition_index <- c(endpoint_groups, endpoint_fillers)[sorted_order]
 
   # Remember location of endpoint_dates for removal later
-  endpoint_locations <- match(endpoint_groups, full_time_group)
+  endpoint_locations <- match(endpoint_groups, full_partition_index)
 
   # 'fill' the NA values forward with the correct group
-  not_na <- !is.na(full_time_group)
-  full_time_group <- cumsum(not_na)
+  not_na <- !is.na(full_partition_index)
+  full_partition_index <- cumsum(not_na)
 
   # Pull the endpoint_dates back out so we don't have duplicates
-  .time_group <- full_time_group[-endpoint_locations]
+  .partition_index <- full_partition_index[-endpoint_locations]
 
   # Subtract off min-1 (takes care of starting the groups too early)
-  .time_group <- .time_group - (.time_group[1] - 1L)
+  .partition_index <- .partition_index - (.partition_index[1] - 1L)
 }
 
 # Check if index in in ascending order, warn user if not.
