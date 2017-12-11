@@ -27,13 +27,6 @@ validate_side.yearmon <- function(x) {
   paste0(year, "-", month)
 }
 
-floor_date_time.yearmon <- function(x, unit = "seconds") {
-  as.yearmon(floor_date_time(zoo::as.Date(x), unit))
-}
-
-ceiling_date_time.yearmon <- function(x, unit = "seconds") {
-  as.yearmon(ceiling_date_time(zoo::as.Date(x), unit))
-}
 
 #### create_series -------------------------------------------------------------
 

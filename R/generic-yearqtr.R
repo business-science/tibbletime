@@ -23,13 +23,6 @@ validate_side.yearqtr <- function(x) {
   paste0(year, "-", quarter)
 }
 
-floor_date_time.yearqtr <- function(x, unit = "seconds") {
-  as.yearqtr(floor_date_time(zoo::as.Date(x), unit))
-}
-
-ceiling_date_time.yearqtr <- function(x, unit = "seconds") {
-  as.yearqtr(ceiling_date_time(zoo::as.Date(x), unit))
-}
 
 #### create_series -------------------------------------------------------------
 

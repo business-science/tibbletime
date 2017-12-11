@@ -13,24 +13,6 @@ validate_side <- function(x) {
   UseMethod("validate_side")
 }
 
-# Most of the time this uses lubridate::floor_date()
-floor_date_time <- function(x, unit = "seconds") {
-  UseMethod("floor_date_time")
-}
-
-floor_date_time.default <- function(x, unit = "seconds") {
-  lubridate::floor_date(x, unit)
-}
-
-# Most of the time this uses lubridate::ceiling_date()
-ceiling_date_time <- function(x, unit = "seconds") {
-  UseMethod("ceiling_date_time")
-}
-
-ceiling_date_time.default <- function(x, unit = "seconds") {
-  lubridate::ceiling_date(x, unit)
-}
-
 #### create_series -------------------------------------------------------------
 
 # For sequence creation in create_series()

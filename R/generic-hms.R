@@ -6,14 +6,6 @@ validate_side.hms <- function(x) {
   x
 }
 
-floor_date_time.hms <- function(x, unit = "seconds") {
-  hms::as.hms(floor_date_time(as.POSIXct(x), unit))
-}
-
-ceiling_date_time.hms <- function(x, unit = "seconds") {
-  hms::as.hms(ceiling_date_time(as.POSIXct(x), unit))
-}
-
 #### create_series -------------------------------------------------------------
 
 lookup_seq_fun.hms <- function(x) {
