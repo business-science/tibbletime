@@ -4,6 +4,7 @@
 \name{tibbletime}
 \alias{tibbletime}
 \alias{tibbletime-package}
+\alias{tibbletime-package}
 \title{tibbletime: time-aware tibbles}
 \description{
 Built on top of the 'tibble' package, 'tibbletime' is an extension

@@ -4,14 +4,52 @@
 \alias{as_period}
 \title{Change \code{tbl_time} periodicity}
 \usage{
-as_period(x, period = "yearly", start_date = NULL, side = "start", ...)
+as_period(x, period = "yearly", start_date = NULL, side = "start",
+  include_endpoints = FALSE, ...)
 }
 \arguments{
 \item{x}{A \code{tbl_time} object.}
 
+\item{period}{A formula or character specification used for time-based grouping.
+
+If a formula, e.g. \code{1~year}, the formula is split and parsed to form the
+grouping period. The \code{period} argument accepts a formula of the form
+\code{multiple ~ period} allowing for flexible period grouping.
+The following are examples:
+\itemize{
+\item 1 Year: \code{1~y}
+\item 3 Months: \code{3~m}
+\item 90 Days: \code{90~d}
+}
+
+Note that while shorthand is used above, an attempt is made to recognize
+more explicit period names such as:
+\itemize{
+\item 2 Year: \code{2~year} / \code{2~years} / \code{2~yearly}
+}
+
+The \code{period} argument also accepts characters that are converted to their
+corresponding periods. The following are accepted:
+\itemize{
+\item \code{"yearly"} or \code{"y"}
+\item \code{"quarterly"} or \code{"q"}
+\item \code{"monthly"} or \code{"m"}
+\item \code{"weekly"} or \code{"w"}
+\item \code{"daily"} or \code{"d"}
+\item \code{"hour"} or \code{"h"}
+\item \code{"minute"} or \code{"M"}
+\item \code{"second"} or \code{"s"}
+}}
+
+\item{start_date}{Optional argument used to specify the start date for the
+first group. The default is to start at the closest period boundary
+below the minimum date in the supplied index.}
+
 \item{side}{Whether to return the date at the beginning or the end of the
 new period. By default, the \code{"start"} of the period. Use \code{"end"} to change
 to the end of the period.}
+
+\item{...}{Not currently used.}
 }
 \description{
 Convert a \code{tbl_time} object from daily to monthly,

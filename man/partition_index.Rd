@@ -2,12 +2,9 @@
 % Please edit documentation in R/partition_index.R
 \name{partition_index}
 \alias{partition_index}
-\alias{make_partition_index_vector}
 \title{Add time-based groupings to a tibble}
 \usage{
 partition_index(index, period = "yearly", start_date = NULL, ...)
-
-make_partition_index_vector(index_col, period, start_date = NULL, ...)
 }
 \arguments{
 \item{index}{A vector of date indices to create groups for.}
