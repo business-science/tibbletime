@@ -4,7 +4,7 @@
 #' from minute data to hourly, and more. This allows the user to easily
 #' aggregate data to a less granular level.
 #'
-#' @inheritParams time_group
+#' @inheritParams partition_index
 #' @param x A `tbl_time` object.
 #' @param side Whether to return the date at the beginning or the end of the
 #' new period. By default, the `"start"` of the period. Use `"end"` to change
@@ -82,19 +82,19 @@
 #' as_period(FB, 2~d, start_date = "2013-01-01")
 #'
 as_period <- function(x, period = "yearly",
-                      start_date = NULL, side = "start", ...) {
+                      start_date = NULL, side = "start", include_endpoints = FALSE, ...) {
   UseMethod("as_period")
 }
 
 #' @export
 as_period.default <- function(x, period = "yearly",
-                              start_date = NULL, side = "start", ...) {
+                              start_date = NULL, side = "start", include_endpoints = FALSE, ...) {
   stop("Object is not of class `tbl_time`.", call. = FALSE)
 }
 
 #' @export
 as_period.tbl_time <- function(x, period = "yearly",
-                               start_date = NULL, side = "start", ...) {
+                               start_date = NULL, side = "start", include_endpoints = FALSE, ...) {
 
   # Add time groups
   x_tg <- dplyr::mutate(x, .time_group = partition_index(!! get_index_quo(x), period, start_date))
@@ -106,6 +106,12 @@ as_period.tbl_time <- function(x, period = "yearly",
       {
         criteria <- vector(length = length(.time_group))
         criteria[match(unique(.time_group), .time_group)] <- TRUE
+
+        # Include last data point
+        if(include_endpoints) {
+          criteria[length(criteria)] <- TRUE
+        }
+
         criteria
       }
     )
@@ -115,6 +121,12 @@ as_period.tbl_time <- function(x, period = "yearly",
       {
         criteria <- vector(length = length(.time_group))
         criteria[length(.time_group) - match(unique(.time_group), rev(.time_group)) + 1] <- TRUE
+
+        # Include first data point
+        if(include_endpoints) {
+          criteria[1] <- TRUE
+        }
+
         criteria
       }
     )
