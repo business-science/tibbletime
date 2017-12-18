@@ -5,7 +5,7 @@
 #' so that all dates that fall in a period share a common date. This can be
 #' useful for further groupwise calculations.
 #'
-#' @inheritParams time_group
+#' @inheritParams partition_index
 #' @param .data A `tbl_time` object.
 #' @param as_sep_col Whether to keep the original index as the column `.date`
 #' or to drop it.
@@ -56,7 +56,7 @@
 #'
 #' @export
 #'
-collapse_index <- function(index, period = "yearly", start_date = NULL, where = "start", normalize = FALSE, ...) {
+collapse_index <- function(index, period = "yearly", start_date = NULL, where = "start", ...) {
 
   # Partition index
   index_part <- partition_index(index, period, start_date)

@@ -3,7 +3,7 @@
 #' [create_series()] allows the user to quickly create a `tbl_time` object with
 #' a `date` column populated with a sequence of dates.
 #'
-#' @inheritParams time_group
+#' @inheritParams partition_index
 #' @param time_formula A period to create the series over.
 #' This is specified as a formula.
 #' See the `Details` section of [time_filter()] for more information.
