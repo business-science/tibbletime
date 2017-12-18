@@ -67,31 +67,22 @@
 #'
 partition_index <- function(index, period = "yearly", start_date = NULL, ...) {
 
-   make_partition_index_vector(index, period, start_date, ...)
-
-}
-
-
-#' @export
-#' @rdname partition_index
-make_partition_index_vector <- function(index_col, period, start_date = NULL, ...) {
-
-  .index_col      <- to_posixct_numeric(index_col)
-  index_class     <- get_index_col_class(index_col)
-  index_time_zone <- get_index_col_time_zone(index_col)
+  .index          <- to_posixct_numeric(index)
+  index_class     <- get_index_col_class(index)
+  index_time_zone <- get_index_col_time_zone(index)
 
   # Check ordering of numeric index
-  check_index_order(.index_col)
+  check_index_order(.index)
 
   # Parse the period
   period_list <- parse_period(period)
 
   # Generic validation of user defined period
-  assert_period_matches_index_class(index_col, period_list$period)
+  assert_period_matches_index_class(index, period_list$period)
 
   # Make endpoint time_formula
   endpoint_time_formula <- make_endpoint_formula(
-    index = index_col,
+    index = index,
     rounding_period = period_list$period,
     start_date = start_date
   )
@@ -107,9 +98,7 @@ make_partition_index_vector <- function(index_col, period, start_date = NULL, ..
 
   endpoints <- to_posixct_numeric(endpoints)
 
-  .partition_index <- make_partition_index(.index_col, endpoints)
-
-  .partition_index
+  make_partition_index(.index, endpoints)
 }
 
 #### Utils ---------------------------------------------------------------------
