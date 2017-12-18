@@ -35,34 +35,42 @@ parse_time_formula <- function(index, time_formula) {
 
 ### Utils ----
 
+
 split_to_list <- function(x) {
   UseMethod("split_to_list")
 }
 
+#' @export
 split_to_list.default <- function(x) {
   stop("Unrecognized time formula input")
 }
 
+#' @export
 split_to_list.Date <- function(x) {
   x_lt <- as.POSIXlt(x, tz = get_default_time_zone())
   list(x_lt$year + 1900, x_lt$mon + 1, x_lt$mday)
 }
 
+#' @export
 split_to_list.POSIXct <- function(x) {
   x_lt <- as.POSIXlt(x, tz = attr(x, "tzone"))
   list(x_lt$year + 1900, x_lt$mon + 1, x_lt$mday,
        x_lt$hour,        x_lt$min, x_lt$sec)
 }
 
+#' @export
 split_to_list.yearmon <- split_to_list.Date
 
+#' @export
 split_to_list.yearqtr <- split_to_list.Date
 
+#' @export
 split_to_list.hms <- function(x) {
   x_lt <- as.POSIXlt(x, tz = get_default_time_zone())
   list(x_lt$hour, x_lt$min, x_lt$sec)
 }
 
+#' @export
 split_to_list.character <- function(x) {
   # Split on - / , : * + space (notably not .)
   split_str <- stringr::str_split(x, "-|/|:|[*]|[+]|[,]|[[:space:]]", simplify = F) %>%
