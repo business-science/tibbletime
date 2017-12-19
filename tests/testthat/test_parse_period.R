@@ -3,9 +3,9 @@ context("parse_period testing")
 # Tests
 
 test_that("Basic parsing", {
-  expect_equal(parse_period("d"), list(freq = 1, period = "day"))
-  expect_equal(parse_period(2~d), list(freq = 2, period = "day"))
-  expect_equal(parse_period(3~m), list(freq = 3, period = "month"))
+  expect_equal(parse_period('d'), list(freq = 1, period = "day"))
+  expect_equal(parse_period('2 day'), list(freq = 2, period = "day"))
+  expect_equal(parse_period('3 m'), list(freq = 3, period = "month"))
 })
 
 test_that("Minute vs Month parsing works", {
@@ -14,7 +14,7 @@ test_that("Minute vs Month parsing works", {
 })
 
 test_that("Errors are thrown with incorrect specification", {
-  expect_error(parse_period("t"), "Period specified incorrectly.")
-  expect_error(parse_period(2~test), "Period specified incorrectly.")
-  expect_error(parse_period(test~y), "LHS of `period` formula must be numeric.")
+  expect_error(parse_period("t"), "Period 't' specified incorrectly.")
+  expect_error(parse_period('hi q'), "Frequency must be coercible to numeric.")
+  expect_error(parse_period('2 test'), "Period 'test' specified incorrectly.")
 })
