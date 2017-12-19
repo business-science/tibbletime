@@ -20,5 +20,5 @@ get_index_time_zone(x)
 get_index_class(x)
 }
 \description{
-Getters
+Accessors to attributes of \code{tbl_time} objects.
 }

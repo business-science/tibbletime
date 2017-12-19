@@ -2,9 +2,14 @@
 
 #' Getters
 #'
+#' Accessors to attributes of `tbl_time` objects.
+#'
+#' @param x A `tbl_time` object.
+#'
 #' @name getters
 #' @export
 get_index_quo <- function(x) {
+  if(!inherits(x, "tbl_time")) glue_stop("Object is not of class `tbl_time`.")
   attr(x, "index_quo")
 }
 
@@ -20,13 +25,10 @@ get_index_col <- function(x) {
   x[[get_index_char(x)]]
 }
 
-get_.index_col <- function(x) {
-  to_posixct_numeric(get_index_col(x))
-}
-
 #' @rdname getters
 #' @export
 get_index_time_zone <- function(x) {
+  if(!inherits(x, "tbl_time")) glue_stop("Object is not of class `tbl_time`.")
   attr(x, "index_time_zone")
 }
 
@@ -34,6 +36,10 @@ get_index_time_zone <- function(x) {
 #' @export
 get_index_class <- function(x) {
   class(get_index_col(x))[[1]]
+}
+
+get_.index_col <- function(x) {
+  to_posixct_numeric(get_index_col(x))
 }
 
 get_index_dispatcher <- function(x) {
