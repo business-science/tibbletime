@@ -15,6 +15,8 @@
 #'
 #' dplyr::mutate(time_test, date2 = ceiling_index(date, "hour"))
 #'
+#' @seealso [lubridate::ceiling_date()]
+#'
 #' @export
 ceiling_index <- function(x, unit = "seconds") {
   UseMethod("ceiling_index")

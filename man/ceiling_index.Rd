@@ -31,3 +31,6 @@ time_test <- create_series('00:00:00'~'12:00:00',
 dplyr::mutate(time_test, date2 = ceiling_index(date, "hour"))
 
 }
+\seealso{
+\code{\link[lubridate:ceiling_date]{lubridate::ceiling_date()}}
+}
