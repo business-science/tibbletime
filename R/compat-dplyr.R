@@ -83,8 +83,6 @@ group_by.tbl_time <- function(.data, ..., add = FALSE) {
 #' @importFrom dplyr ungroup
 #'
 ungroup.tbl_time <- function(x, ...) {
-  #ungrouped_data <- NextMethod()
-  #as_tbl_time(ungrouped_data, !! get_index_quo(x))
   sloop::reconstruct(NextMethod(), x)
 }
 

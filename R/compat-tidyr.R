@@ -11,14 +11,14 @@ nest.tbl_time <- function(data, ..., .key = "data") {
   ..original_data <- data
 
   # Perform the nest on a tibble
-  .data_nested <- nest(as_tibble(data), ..., .key = !! .key)
+  .data_nested <- tidyr::nest(as_tibble(data), ..., .key = !! .key)
 
   # See if the index is nested
   index_is_nested <- index_char %in% colnames(.data_nested[[.key_char]][[1]])
 
   # Each nested element should be a tbl_time with attributes
   if(index_is_nested) {
-    mutate(
+    dplyr::mutate(
       .data_nested,
       !! .key_sym := purrr::map(
         .x = !! .key_sym,
@@ -33,14 +33,14 @@ nest.tbl_time <- function(data, ..., .key = "data") {
 #' @export
 #' @importFrom tidyr unnest
 unnest.tbl_time <- function(data, ..., .drop = NA, .id = NULL, .sep = NULL) {
-  # Used after nesting but excluding the index in the nest
+  # This is called after nesting but excluding the index in the nest
   sloop::reconstruct(NextMethod(), data)
 }
 
 #' @export
 #' @importFrom tidyr unnest
 unnest.tbl_df <- function(data, ..., .drop = NA, .id = NULL, .sep = NULL) {
-  # Called after nesting a tbl_time, then unnesting
+  # Called after nesting a tbl_time, index is in the nest, then unnesting
   quos <- rlang::quos(...)
 
   list_cols <- names(data)[purrr::map_lgl(data, rlang::is_list)]
@@ -54,6 +54,8 @@ unnest.tbl_df <- function(data, ..., .drop = NA, .id = NULL, .sep = NULL) {
   contains_inner_tbl_time <- any(list_col_is_tbl_time)
   contains_outer_tbl_time <- inherits(data, "tbl_time")
 
+  # Inner is tbl_time, but the outer tbl is not one. Want to maintain
+  # tbl_time class
   if(contains_inner_tbl_time & !contains_outer_tbl_time) {
 
     # Grab nested columns
@@ -71,38 +73,44 @@ unnest.tbl_df <- function(data, ..., .drop = NA, .id = NULL, .sep = NULL) {
     sloop::reconstruct(unnested_data, nested_time)
 
   } else (
+    # No special handling, pass on to unnest()
     NextMethod()
   )
 }
 
-#' @export
-#' @importFrom tidyr gather
-#'
-gather.tbl_time <- function(data, key = "key", value = "value", ..., na.rm = FALSE,
-                            convert = FALSE, factor_key = FALSE)  {
 
-  key   <- rlang::enquo(key)
-  value <- rlang::enquo(value)
-  quos  <- rlang::quos(...)
+# ------------------------------------------------------------------------------
+# Unsure if gather / spread are needed, but these would do the trick
 
-  gathered_data <- gather(as_tibble(data), key = !! key, value = !! value, !!! quos,
-                          na.rm = na.rm, convert = convert, factor_key = factor_key)
+# #' @export
+# #' @importFrom tidyr gather
+# #'
+# gather.tbl_time <- function(data, key = "key", value = "value", ..., na.rm = FALSE,
+#                             convert = FALSE, factor_key = FALSE)  {
+#
+#   key   <- rlang::enquo(key)
+#   value <- rlang::enquo(value)
+#   quos  <- rlang::quos(...)
+#
+#   gathered_data <- gather(as_tibble(data), key = !! key, value = !! value, !!! quos,
+#                           na.rm = na.rm, convert = convert, factor_key = factor_key)
+#
+#   sloop::reconstruct(gathered_data, data)
+# }
 
-  sloop::reconstruct(gathered_data, data)
-}
+# #' @export
+# #' @importFrom tidyr spread
+# #'
+# spread.tbl_time <- function(data, key, value, fill = NA, convert = FALSE, drop = TRUE,
+#                             sep = NULL)  {
+#
+#   key   <- rlang::enquo(key)
+#   value <- rlang::enquo(value)
+#
+#   spread_data <- spread(as_tibble(data), key = !! key, value = !! value,
+#                         fill = fill, convert = convert, drop = drop,
+#                         sep = sep)
+#
+#   sloop::reconstruct(spread_data, data)
+# }
 
-#' @export
-#' @importFrom tidyr spread
-#'
-spread.tbl_time <- function(data, key, value, fill = NA, convert = FALSE, drop = TRUE,
-                            sep = NULL)  {
-
-  key   <- rlang::enquo(key)
-  value <- rlang::enquo(value)
-
-  spread_data <- spread(as_tibble(data), key = !! key, value = !! value,
-                        fill = fill, convert = convert, drop = drop,
-                        sep = sep)
-
-  sloop::reconstruct(spread_data, data)
-}
