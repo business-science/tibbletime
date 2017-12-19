@@ -2,14 +2,14 @@
 % Please edit documentation in R/collapse_index.R
 \name{collapse_index}
 \alias{collapse_index}
-\title{Collapse a \code{tbl_time} object so that all observations in a period share the
+\title{Collapse an index vector so that all observations in an interval share the
 same date}
 \usage{
-collapse_index(index, period = "yearly", start_date = NULL,
-  where = "start", ...)
+collapse_index(index, period = "yearly", start_date = NULL, side = "end",
+  ...)
 }
 \arguments{
-\item{index}{A vector of date indices to create groups for.}
+\item{index}{An index vector.}
 
 \item{period}{A formula or character specification used for time-based grouping.
 
@@ -46,26 +46,21 @@ corresponding periods. The following are accepted:
 first group. The default is to start at the closest period boundary
 below the minimum date in the supplied index.}
 
+\item{side}{Whether to return the date at the beginning or the end of
+the new period. By default, the "end" of the period.
+Use "start" to change to the start of the period.}
+
 \item{...}{Not currently used.}
-
-\item{.data}{A \code{tbl_time} object.}
-
-\item{as_sep_col}{Whether to keep the original index as the column \code{.date}
-or to drop it.}
 }
 \description{
-When \code{time_collapse} is used, the index of a \code{tbl_time} object is altered
-so that all dates that fall in a period share a common date. This can be
-useful for further groupwise calculations.
+When \code{collapse_index()} is used, the index vector is altered
+so that all dates that fall in a specified interval share a common date.
+The most common use case for this is to then group on the collapsed index.
 }
 \details{
-The date chosen as the common date for a period is always the date
-at the \emph{end} of that period.
-
-It is often useful to use \code{as_sep_col = TRUE} to keep the original dates
-as well.
-
-This function respects \code{\link[dplyr:group_by]{dplyr::group_by()}} groups.
+Because this is often used for end of period summaries, the default is to
+use \code{side = "end"}. Note that this is the opposite of \code{\link[=as_period]{as_period()}} where
+the default is \code{side = "start"}.
 }
 \examples{
 
@@ -76,13 +71,15 @@ data(FB)
 FB <- as_tbl_time(FB, date)
 
 # Collapse to weekly dates
-time_collapse(FB, period = "weekly")
+dplyr::mutate(FB, date = collapse_index(date, "weekly"))
 
-# Collapse to every other week dates
-time_collapse(FB, period = 2~w)
+# A common workflow is the group on the new date column
+# to perform a time based summary
+FB \%>\%
+ dplyr::mutate(date = collapse_index(date, "yearly")) \%>\%
+ dplyr::group_by(date) \%>\%
+ dplyr::summarise_if(is.numeric, mean)
 
-# Collapse to weekly dates, but keep the original too
-time_collapse(FB, period = "weekly", as_sep_col = TRUE)
 
 # Grouped functionality -----------------------------------------------------
 
@@ -91,12 +88,12 @@ FANG <- FANG \%>\%
   as_tbl_time(date) \%>\%
   dplyr::group_by(symbol)
 
-# Collapse each group to monthly
+# Collapse each group to monthly,
+# calculate monthly standard deviation for each column
 FANG \%>\%
-  time_collapse("monthly")
+  dplyr::mutate(date = collapse_index(date, "monthly")) \%>\%
+  dplyr::group_by(date, add = TRUE) \%>\%
+  dplyr::summarise_all(sd)
 
-# Collapse each group to every other month
-FANG \%>\%
-  time_collapse(2~m)
 
 }
