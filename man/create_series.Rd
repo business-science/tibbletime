@@ -43,16 +43,15 @@ corresponding periods. The following are accepted:
 \item \code{"second"} or \code{"s"}
 }}
 
+\item{class}{One of \code{"Date"}, \code{"POSIXct"}, \code{"hms"}, \code{"yearmon"}, \code{"yearqtr"}.
+The default is \code{"POSIXct"}.}
+
 \item{include_end}{Whether to always include the RHS of the \code{time_formula}
 even if it does not match the regularly spaced index.}
 
 \item{tz}{Time zone of the new series.}
 
-\item{force_class}{Either \code{"Date"} or \code{"POSIXct"}. The default is to infer
-the simplest class required from the \code{period} specified, but this will
-override that.}
-
-\item{as_date_vector}{Should the series be returned as a vector instead of
+\item{as_vector}{Should the series be returned as a vector instead of
 a tibble?}
 }
 \description{
@@ -62,24 +61,31 @@ a \code{date} column populated with a sequence of dates.
 \examples{
 
 # Every day in 2013
-create_series(~2013, "daily")
+create_series(~'2013', 'daily')
 
 # Every other day in 2013
-create_series(~2013, 2~d)
+create_series(~'2013', '2 d')
 
 # Every quarter in 2013
-create_series(~2013, 1~q)
+create_series(~'2013', '1 q')
 
-# Daily series for 2 years
-create_series(2013~2015, 1~d)
+# Daily series for 2013-2015
+create_series('2013' ~ '2015', '1 d')
 
 # Minute series for 2 months
-create_series(2012-01~2012-02, 1~M)
+create_series('2012-01' ~ '2012-02', 'M')
 
 # Second series for 2 minutes
-create_series(2011-01-01 + 12:10:00 ~ 2011-01-01 + 12:12:00, 1~s)
+create_series('2011-01-01 12:10:00' ~ '2011-01-01 12:12:00', 's')
 
-# Force POSIXct class
-create_series(~2013, 1~d, force_class = "POSIXct")
+# Date class
+create_series(~'2013', 'day', class = "Date")
+
+# yearmon class
+create_series(~'2013', 'month', class = "yearmon")
+
+# hms class. time_formula specified as HH:MM:SS here
+create_series('00:00:00' ~ '12:00:00', 'second' , class = "hms")
+
 
 }
