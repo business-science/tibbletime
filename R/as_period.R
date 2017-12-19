@@ -37,12 +37,16 @@
 #' # Aggregate FB to yearly data
 #' as_period(FB, "yearly")
 #'
-#' # Aggregate FB to yearly data using a period formula
-#' as_period(FB, 1~y)
+#' # Aggregate FB to every 2 years
+#' as_period(FB, "2 years")
 #'
 #' # Aggregate FB to yearly data, but use the last data point available
 #' # in that period
-#' as_period(FB, "yearly", "end")
+#' as_period(FB, "yearly", side = "end")
+#'
+#' # Aggregate FB to yearly data, end of period, and include the first
+#' # endpoint
+#' as_period(FB, "yearly", side = "end", include_endpoints = TRUE)
 #'
 #' # Aggregate to weekly. Notice that it only uses the earliest day available
 #' # in the data set at that periodicity. It will not set the date of the first
@@ -50,11 +54,11 @@
 #' as_period(FB, "weekly")
 #'
 #' # Aggregate to every other week
-#' as_period(FB, 2~w)
+#' as_period(FB, "2 weeks")
 #'
 #' # FB is daily data, aggregate to minute?
-#' # Does nothing and returns the original data set.
-#' as_period(FB, "minute")
+#' # Not allowed for Date class indices, an error is thrown
+#' # as_period(FB, "minute")
 #'
 #' # Grouped usage -------------------------------------------------------------
 #'
@@ -62,13 +66,13 @@
 #' data(FANG)
 #' FANG <- as_tbl_time(FANG, date)
 #'
-#' FANG <- FANG %>% dplyr::group_by(symbol)
+#' FANG <- dplyr::group_by(FANG, symbol)
 #'
 #' # Respects groups
-#' FANG %>% as_period("yearly")
+#' as_period(FANG, "yearly")
 #'
 #' # Every 6 months, respecting groups
-#' as_period(FANG, 6~m)
+#' as_period(FANG, "6 months")
 #'
 #' # Using start_date ----------------------------------------------------------
 #'
@@ -79,31 +83,37 @@
 #' # The Facebook series starts at 2013-01-02 so the 'every 2 day' counter
 #' # starts at that date as well. Groups become (2013-01-02, 2013-01-03),
 #' # (2013-01-04, 2013-01-05) and so on.
-#' as_period(FB, 2~d)
+#' as_period(FB, "2 day")
 #'
 #' # Specifying the `start_date = "2013-01-01"` might be preferable.
 #' # Groups become (2013-01-01, 2013-01-02), (2013-01-03, 2013-01-04) and so on.
-#' as_period(FB, 2~d, start_date = "2013-01-01")
+#' as_period(FB, "2 day", start_date = "2013-01-01")
 #'
 #' @export
 #'
 as_period <- function(x, period = "yearly",
-                      start_date = NULL, side = "start", include_endpoints = FALSE, ...) {
+                      start_date = NULL, side = "start",
+                      include_endpoints = FALSE, ...) {
   UseMethod("as_period")
 }
 
 #' @export
 as_period.default <- function(x, period = "yearly",
-                              start_date = NULL, side = "start", include_endpoints = FALSE, ...) {
+                              start_date = NULL, side = "start",
+                              include_endpoints = FALSE, ...) {
   stop("Object is not of class `tbl_time`.", call. = FALSE)
 }
 
 #' @export
 as_period.tbl_time <- function(x, period = "yearly",
-                               start_date = NULL, side = "start", include_endpoints = FALSE, ...) {
+                               start_date = NULL, side = "start",
+                               include_endpoints = FALSE, ...) {
 
   # Add time groups
-  x_tg <- dplyr::mutate(x, .time_group = partition_index(!! get_index_quo(x), period, start_date))
+  x_tg <- dplyr::mutate(
+    x,
+    .time_group = partition_index(!! get_index_quo(x), period, start_date)
+  )
 
   # Filter
   if(side == "start")
@@ -113,7 +123,7 @@ as_period.tbl_time <- function(x, period = "yearly",
         criteria <- vector(length = length(.time_group))
         criteria[match(unique(.time_group), .time_group)] <- TRUE
 
-        # Include last data point
+        # Include last end point
         if(include_endpoints) {
           criteria[length(criteria)] <- TRUE
         }
@@ -128,7 +138,7 @@ as_period.tbl_time <- function(x, period = "yearly",
         criteria <- vector(length = length(.time_group))
         criteria[length(.time_group) - match(unique(.time_group), rev(.time_group)) + 1] <- TRUE
 
-        # Include first data point
+        # Include first end point
         if(include_endpoints) {
           criteria[1] <- TRUE
         }

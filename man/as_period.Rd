@@ -49,6 +49,9 @@ below the minimum date in the supplied index.}
 new period. By default, the \code{"start"} of the period. Use \code{"end"} to change
 to the end of the period.}
 
+\item{include_endpoints}{Whether to include the first or last data point in
+addition to the transformed data.}
+
 \item{...}{Not currently used.}
 }
 \description{
@@ -63,6 +66,10 @@ Currently periods finer than second data are not supported.
 
 The \code{side} argument is useful when you want to return data at, say, the
 end of a quarter, or the end of a month.
+
+\code{include_endpoints} can be useful when calculating a change over time.
+In addition to changing to monthly dates, you often need the first data point
+as a baseline for the first calculation.
 }
 \examples{
 
@@ -75,12 +82,16 @@ FB <- as_tbl_time(FB, date)
 # Aggregate FB to yearly data
 as_period(FB, "yearly")
 
-# Aggregate FB to yearly data using a period formula
-as_period(FB, 1~y)
+# Aggregate FB to every 2 years
+as_period(FB, "2 years")
 
 # Aggregate FB to yearly data, but use the last data point available
 # in that period
-as_period(FB, "yearly", "end")
+as_period(FB, "yearly", side = "end")
+
+# Aggregate FB to yearly data, end of period, and include the first
+# endpoint
+as_period(FB, "yearly", side = "end", include_endpoints = TRUE)
 
 # Aggregate to weekly. Notice that it only uses the earliest day available
 # in the data set at that periodicity. It will not set the date of the first
@@ -88,11 +99,11 @@ as_period(FB, "yearly", "end")
 as_period(FB, "weekly")
 
 # Aggregate to every other week
-as_period(FB, 2~w)
+as_period(FB, "2 weeks")
 
 # FB is daily data, aggregate to minute?
-# Does nothing and returns the original data set.
-as_period(FB, "minute")
+# Not allowed for Date class indices, an error is thrown
+# as_period(FB, "minute")
 
 # Grouped usage -------------------------------------------------------------
 
@@ -100,13 +111,13 @@ as_period(FB, "minute")
 data(FANG)
 FANG <- as_tbl_time(FANG, date)
 
-FANG <- FANG \%>\% dplyr::group_by(symbol)
+FANG <- dplyr::group_by(FANG, symbol)
 
 # Respects groups
-FANG \%>\% as_period("yearly")
+as_period(FANG, "yearly")
 
 # Every 6 months, respecting groups
-as_period(FANG, 6~m)
+as_period(FANG, "6 months")
 
 # Using start_date ----------------------------------------------------------
 
@@ -117,10 +128,10 @@ FB <- as_tbl_time(FB, date)
 # The Facebook series starts at 2013-01-02 so the 'every 2 day' counter
 # starts at that date as well. Groups become (2013-01-02, 2013-01-03),
 # (2013-01-04, 2013-01-05) and so on.
-as_period(FB, 2~d)
+as_period(FB, "2 day")
 
 # Specifying the `start_date = "2013-01-01"` might be preferable.
 # Groups become (2013-01-01, 2013-01-02), (2013-01-03, 2013-01-04) and so on.
-as_period(FB, 2~d, start_date = "2013-01-01")
+as_period(FB, "2 day", start_date = "2013-01-01")
 
 }
