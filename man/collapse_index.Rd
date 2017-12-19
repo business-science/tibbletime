@@ -11,36 +11,19 @@ collapse_index(index, period = "yearly", start_date = NULL, side = "end",
 \arguments{
 \item{index}{An index vector.}
 
-\item{period}{A formula or character specification used for time-based grouping.
+\item{period}{A character specification used for time-based grouping. The
+general format to use is \code{"frequency period"} where frequency is a number
+like 1 or 2, and period is an interval like weekly or yearly. There must be
+a space between the two.
 
-If a formula, e.g. \code{1~year}, the formula is split and parsed to form the
-grouping period. The \code{period} argument accepts a formula of the form
-\code{multiple ~ period} allowing for flexible period grouping.
-The following are examples:
+Note that you can pass the specification in a flexible way:
 \itemize{
-\item 1 Year: \code{1~y}
-\item 3 Months: \code{3~m}
-\item 90 Days: \code{90~d}
+\item 1 Year: \code{'1 year'} / \code{'1 Y'} / \code{'1 yearly'} / \code{'yearly'}
 }
 
-Note that while shorthand is used above, an attempt is made to recognize
-more explicit period names such as:
-\itemize{
-\item 2 Year: \code{2~year} / \code{2~years} / \code{2~yearly}
-}
-
-The \code{period} argument also accepts characters that are converted to their
-corresponding periods. The following are accepted:
-\itemize{
-\item \code{"yearly"} or \code{"y"}
-\item \code{"quarterly"} or \code{"q"}
-\item \code{"monthly"} or \code{"m"}
-\item \code{"weekly"} or \code{"w"}
-\item \code{"daily"} or \code{"d"}
-\item \code{"hour"} or \code{"h"}
-\item \code{"minute"} or \code{"M"}
-\item \code{"second"} or \code{"s"}
-}}
+This shorthand is available for year, quarter, month, day, hour, minute,
+and second periodicities. Note that "m" is the 1 letter specification used
+for "month" and "M" is used for "minute". Otherwise case does not matter.}
 
 \item{start_date}{Optional argument used to specify the start date for the
 first group. The default is to start at the closest period boundary
