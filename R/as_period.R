@@ -9,6 +9,8 @@
 #' @param side Whether to return the date at the beginning or the end of the
 #' new period. By default, the `"start"` of the period. Use `"end"` to change
 #' to the end of the period.
+#' @param include_endpoints Whether to include the first or last data point in
+#' addition to the transformed data.
 #'
 #' @details
 #'
@@ -19,8 +21,10 @@
 #' The `side` argument is useful when you want to return data at, say, the
 #' end of a quarter, or the end of a month.
 #'
+#' `include_endpoints` can be useful when calculating a change over time.
+#' In addition to changing to monthly dates, you often need the first data point
+#' as a baseline for the first calculation.
 #'
-#' @export
 #'
 #' @examples
 #'
@@ -80,6 +84,8 @@
 #' # Specifying the `start_date = "2013-01-01"` might be preferable.
 #' # Groups become (2013-01-01, 2013-01-02), (2013-01-03, 2013-01-04) and so on.
 #' as_period(FB, 2~d, start_date = "2013-01-01")
+#'
+#' @export
 #'
 as_period <- function(x, period = "yearly",
                       start_date = NULL, side = "start", include_endpoints = FALSE, ...) {
