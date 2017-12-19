@@ -1,29 +1,6 @@
 
 #### General -------------------------------------------------------------------
 
-# yearqtr is more complicated. Need to switch the position of quarter/year
-# and convert the quarter to a numeric
-validate_side.yearqtr <- function(x) {
-
-  x <- as.character(x)
-  x_list <- stringr::str_split(
-    string = x,
-    pattern = " ",
-    simplify = TRUE
-  )
-
-  replace_char_quarter <- function(x) {
-    switch(x, "Q1" = 1, "Q2" = 2, "Q3" = 3, "Q4" = 4)
-  }
-
-  year    <- x_list[1, 1]
-  quarter <- x_list[1, 2]
-  quarter <- replace_char_quarter(quarter)
-
-  paste0(year, "-", quarter)
-}
-
-
 #### create_series -------------------------------------------------------------
 
 lookup_seq_fun.yearqtr <- function(x) {

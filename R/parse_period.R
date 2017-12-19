@@ -4,33 +4,47 @@ parse_period <- function(period) {
 }
 
 parse_period.default <- function(period) {
-  stop("Unsupported period specification. Only formulas or characters are allowed", call. = FALSE)
+  glue_stop("Unsupported period specification. Only characters are allowed.")
 }
 
 parse_period.character <- function(period) {
-  period_char <- parse_period_rhs(period)
-  list(freq = 1, period = period_char)
-}
 
-parse_period.formula <- function(period) {
+  # Cannot supply vector of periods. 1 character only
+  if(length(period) != 1) {
+    glue_stop("Only 1 period can be specified.")
+  }
 
-  # Check LHS
-  period_freq <- rlang::f_lhs(period)
-  assert_freq_is_numeric(period_freq)
+  # Split on " "
+  period_split <- unlist(strsplit(period, " "))
 
-  # Check RHS
-  period_char <- as.character(rlang::f_rhs(period))
-  period_char <- parse_period_rhs(period_char)
+  # Assign period_freq / period_char
+  if(length(period_split) == 1) {
+
+    period_freq <- 1
+    period_char <- period_split
+
+  } else if(length(period_split) == 2) {
+
+    assert_freq_coerce_to_numeric(period_split[1])
+    period_freq <- as.numeric(period_split[1])
+    period_char <- period_split[2]
+
+  } else {
+    glue_stop("A maximum of 1 space character is allowed in the period.")
+  }
+
+  period_char <- parse_period_char(period_char)
 
   list(freq = period_freq, period = period_char)
 }
 
+
 #### Utils ---------------------------------------------------------------------
 
 # Check that the RHS of period is correct
-parse_period_rhs <- function(period) {
+parse_period_char <- function(period) {
 
-  if(stringr::str_length(period) == 1) {
+  if(string_length(period) == 1) {
     p <- parse_letter_period(period)
   } else {
     p <- parse_word_period(period)
@@ -43,7 +57,9 @@ parse_period_rhs <- function(period) {
 parse_word_period <- function(period) {
 
   partial_detect <- function(period, detect_pattern) {
-    stringr::str_detect(period, stringr::coll(detect_pattern, TRUE))
+    # Partial match the detect_pattern in the period.
+    # Coerce to logical TRUE/FALSE for existance.
+    as.logical(pmatch(detect_pattern, period, nomatch = FALSE))
   }
 
   p <- dplyr::case_when(
@@ -59,7 +75,7 @@ parse_word_period <- function(period) {
   )
 
   if(p == "NULL") {
-    stop("Period specified incorrectly.", call. = FALSE)
+    glue_stop("Period '{period}' specified incorrectly.")
   }
 
   p
@@ -76,14 +92,15 @@ parse_letter_period <- function(period) {
           "h" = "hour",    "H" = "hour",
           "M" = "min",      # Case sensitive
           "s" = "sec",     "S" = "sec",
-          stop("Period specified incorrectly.", call. = FALSE)
+          glue_stop("Period '{period}' specified incorrectly.")
   )
 }
 
-# Check that the LHS `period` number is correct
-assert_freq_is_numeric <- function(freq) {
+# Check that the freq can be coerced to numeric
+assert_freq_coerce_to_numeric <- function(freq) {
   assertthat::assert_that(
-    is.numeric(freq),
-    msg = "LHS of `period` formula must be numeric."
+    # Coercing to numeric should give a number, not NA
+    suppressWarnings(!is.na(as.numeric(freq))),
+    msg = "Frequency must be coercible to numeric."
   )
 }

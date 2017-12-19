@@ -23,6 +23,17 @@ NULL
 
 # Global util ------------------------------------------------------------------
 
+# A glue version of stop()
+glue_stop <- function(..., .sep = "") {
+  stop(glue::glue(..., .sep, .envir = parent.frame()), call. = FALSE)
+}
+
+# Cheaply get the length of a string
+string_length <- function(x) {
+  split <- unlist(strsplit(x, ""))
+  length(split)
+}
+
 index_attributes <- function() {
   c("index_quo", "index_time_zone")
 }
@@ -36,10 +47,4 @@ remove_time_group <- function(x) {
     x[[".time_group"]] <- NULL
   }
   x
-}
-
-make_time_formula <- function(lhs = NULL, rhs) {
-  lhs <- validate_side(lhs)
-  rhs <- validate_side(rhs)
-  formula(paste0(lhs, "~", rhs))
 }

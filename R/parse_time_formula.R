@@ -73,11 +73,10 @@ split_to_list.hms <- function(x) {
 #' @export
 split_to_list.character <- function(x) {
   # Split on - / , : * + space (notably not .)
-  split_str <- stringr::str_split(x, "-|/|:|[*]|[+]|[,]|[[:space:]]", simplify = F) %>%
-    unlist()
+  split_str <- unlist(strsplit(x, "-|/|:|[*]|[+]|[,]|[[:space:]]"))
 
   # Remove the "" that get left
-  split_str <- split_str[stringr::str_length(split_str) >= 1]
+  split_str <- split_str[string_length(split_str) >= 1]
 
   split_list <- as.list(split_str)
 

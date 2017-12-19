@@ -1,10 +1,6 @@
 
 #### General -------------------------------------------------------------------
 
-# hms is in the correct form already when converted to character
-validate_side.hms <- function(x) {
-  x
-}
 
 #### create_series -------------------------------------------------------------
 

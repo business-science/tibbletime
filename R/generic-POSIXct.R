@@ -1,10 +1,6 @@
 
 #### General -------------------------------------------------------------------
 
-validate_side.POSIXct <- function(x) {
-  # Add a + between day and hour
-  gsub(" ", "+", as.character(x))
-}
 
 #### create_series -------------------------------------------------------------
 

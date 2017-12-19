@@ -1,10 +1,6 @@
 
 #### General -------------------------------------------------------------------
 
-# A date object will be in the correct form for making a time_formula
-validate_side.Date <- function(x) {
-  x
-}
 
 #### create_series -------------------------------------------------------------
 

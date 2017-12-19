@@ -1,32 +1,6 @@
 
 #### General -------------------------------------------------------------------
 
-# yearmon is more complicated. Need to switch the position of month/year
-# and convert the month to a numeric
-validate_side.yearmon <- function(x) {
-
-  x <- as.character(x)
-  x_list <- stringr::str_split(
-    string = x,
-    pattern = " ",
-    simplify = TRUE
-  )
-
-  replace_char_month <- function(x) {
-    switch(x,
-           "Jan" = 1,  "Feb" = 2,  "Mar" = 3,
-           "Apr" = 4,  "May" = 5,  "Jun" = 6,
-           "Jul" = 7,  "Aug" = 8,  "Sep" = 9,
-           "Oct" = 10, "Nov" = 11, "Dec" = 12)
-  }
-
-  month <- x_list[1, 1]
-  month <- replace_char_month(month)
-  year  <- x_list[1, 2]
-
-  paste0(year, "-", month)
-}
-
 
 #### create_series -------------------------------------------------------------
 

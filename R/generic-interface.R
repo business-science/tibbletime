@@ -7,11 +7,6 @@ is_allowed_datetime <- function(x) {
 
 #### General -------------------------------------------------------------------
 
-# Validate that the side of a time formula is correct in make_time_formula()
-# It may also alter the formula (A POSIXct needs a + between day / hour)
-validate_side <- function(x) {
-  UseMethod("validate_side")
-}
 
 #### create_series -------------------------------------------------------------
 
