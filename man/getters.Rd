@@ -19,6 +19,9 @@ get_index_time_zone(x)
 
 get_index_class(x)
 }
+\arguments{
+\item{x}{A \code{tbl_time} object.}
+}
 \description{
 Accessors to attributes of \code{tbl_time} objects.
 }
