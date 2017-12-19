@@ -1,36 +1,22 @@
-#' Add time-based groupings to a tibble
+#' Partition an index vector into an integer vector representing groups
 #'
-#' [partition_index()] accepts a date index vector and returns an integer vector that
-#'  can be used for grouping by periods.
+#' [partition_index()] takes an index vector and returns an integer vector that
+#' can be used for grouping by periods. This is the workhorse for many other
+#' `tibbletime` functions.
 #'
 #' @param index A vector of date indices to create groups for.
-#' @param period A formula or character specification used for time-based grouping.
+#' @param period A character specification used for time-based grouping. The
+#' general format to use is `"frequency period"` where frequency is a number
+#' like 1 or 2, and period is an interval like weekly or yearly. There must be
+#' a space between the two.
 #'
-#'   If a formula, e.g. `1~year`, the formula is split and parsed to form the
-#'   grouping period. The `period` argument accepts a formula of the form
-#'   `multiple ~ period` allowing for flexible period grouping.
-#'   The following are examples:
+#'   Note that you can pass the specification in a flexible way:
 #'
-#'   * 1 Year: `1~y`
-#'   * 3 Months: `3~m`
-#'   * 90 Days: `90~d`
+#'   * 1 Year: `'1 year'` / `'1 Y'` / `'1 yearly'` / `'yearly'`
 #'
-#'   Note that while shorthand is used above, an attempt is made to recognize
-#'   more explicit period names such as:
-#'
-#'   * 2 Year: `2~year` / `2~years` / `2~yearly`
-#'
-#'   The `period` argument also accepts characters that are converted to their
-#'   corresponding periods. The following are accepted:
-#'
-#'   * `"yearly"` or `"y"`
-#'   * `"quarterly"` or `"q"`
-#'   * `"monthly"` or `"m"`
-#'   * `"weekly"` or `"w"`
-#'   * `"daily"` or `"d"`
-#'   * `"hour"` or `"h"`
-#'   * `"minute"` or `"M"`
-#'   * `"second"` or `"s"`
+#'   This shorthand is available for year, quarter, month, day, hour, minute,
+#'   and second periodicities. Note that "m" is the 1 letter specification used
+#'   for "month" and "M" is used for "minute". Otherwise case does not matter.
 #'
 #' @param start_date Optional argument used to specify the start date for the
 #' first group. The default is to start at the closest period boundary
@@ -40,27 +26,22 @@
 #' @details
 #'
 #' This function is used internally, but may provide the user extra flexibility
-#' when they need to perform a grouped operation not supported by `tibbletime`.
+#' in some cases.
 #'
 #' Grouping can only be done on the minimum periodicity of the index and above.
 #' This means that a daily series cannot be grouped by minute. An hourly series
 #' cannot be grouped by 5 seconds, and so on. If the user attempts this,
-#' groups will be returned at the minimum periodicity (a daily series will
-#' return 1 group per day).
+#' an error will be thrown.
 #'
-#' The `start_date` argument allows the user to control where the periods begin.
-#'
-#' This function respects [dplyr::group_by()] groups.
-#'
-#' @seealso [as_period()], [create_series()]
+#' @seealso [as_period()], [collapse_index()]
 #'
 #' @examples
 #'
 #' data(FB)
 #'
-#' partition_index(FB$date, 2~y)
+#' partition_index(FB$date, '2 year')
 #'
-#' dplyr::mutate(FB, partition_index = partition_index(date, 2~d))
+#' dplyr::mutate(FB, partition_index = partition_index(date, '2 day'))
 #'
 #' @export
 #' @rdname partition_index
@@ -98,7 +79,7 @@ partition_index <- function(index, period = "yearly", start_date = NULL, ...) {
 
   endpoints <- to_posixct_numeric(endpoints)
 
-  make_partition_index(.index, endpoints)
+  make_partitioned_index(.index, endpoints)
 }
 
 #### Utils ---------------------------------------------------------------------
@@ -109,8 +90,7 @@ make_endpoint_formula <- function(index, rounding_period, start_date = NULL) {
     start_date <- dplyr::first(index)
 
     # Auto start_date get's floored
-    start_date <- start_date %>%
-      floor_index(rounding_period)
+    start_date <- floor_index(start_date, rounding_period)
 
   } else {
     # Coerce the user specified start_date
@@ -119,8 +99,7 @@ make_endpoint_formula <- function(index, rounding_period, start_date = NULL) {
   }
 
   # Get end_date
-  end_date <- dplyr::last(index) %>%
-    ceiling_index(rounding_period)
+  end_date <- ceiling_index(dplyr::last(index), rounding_period)
 
   # As formula
   start_date ~ end_date
@@ -134,7 +113,7 @@ assert_start_date_before_index_min <- function(index, start_date) {
   )
 }
 
-make_partition_index <- function(index, endpoints) {
+make_partitioned_index <- function(index, endpoints) {
   # Combine the two and obtain the correct order
   combined_dates <- c(endpoints, index)
   sorted_order   <- order(combined_dates)
@@ -156,6 +135,8 @@ make_partition_index <- function(index, endpoints) {
 
   # Subtract off min-1 (takes care of starting the groups too early)
   .partition_index <- .partition_index - (.partition_index[1] - 1L)
+
+  .partition_index
 }
 
 # Check if index in in ascending order, warn user if not.
