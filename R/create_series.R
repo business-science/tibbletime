@@ -10,34 +10,40 @@
 #' @param include_end Whether to always include the RHS of the `time_formula`
 #' even if it does not match the regularly spaced index.
 #' @param tz Time zone of the new series.
-#' @param force_class Either `"Date"` or `"POSIXct"`. The default is to infer
-#' the simplest class required from the `period` specified, but this will
-#' override that.
-#' @param as_date_vector Should the series be returned as a vector instead of
+#' @param class One of `"Date"`, `"POSIXct"`, `"hms"`, `"yearmon"`, `"yearqtr"`.
+#' The default is `"POSIXct"`.
+#' @param as_vector Should the series be returned as a vector instead of
 #' a tibble?
 #'
 #' @examples
 #'
 #' # Every day in 2013
-#' create_series(~2013, "daily")
+#' create_series(~'2013', 'daily')
 #'
 #' # Every other day in 2013
-#' create_series(~2013, 2~d)
+#' create_series(~'2013', '2 d')
 #'
 #' # Every quarter in 2013
-#' create_series(~2013, 1~q)
+#' create_series(~'2013', '1 q')
 #'
-#' # Daily series for 2 years
-#' create_series(2013~2015, 1~d)
+#' # Daily series for 2013-2015
+#' create_series('2013' ~ '2015', '1 d')
 #'
 #' # Minute series for 2 months
-#' create_series(2012-01~2012-02, 1~M)
+#' create_series('2012-01' ~ '2012-02', 'M')
 #'
 #' # Second series for 2 minutes
-#' create_series(2011-01-01 + 12:10:00 ~ 2011-01-01 + 12:12:00, 1~s)
+#' create_series('2011-01-01 12:10:00' ~ '2011-01-01 12:12:00', 's')
 #'
-#' # Force POSIXct class
-#' create_series(~2013, 1~d, force_class = "POSIXct")
+#' # Date class
+#' create_series(~'2013', 'day', class = "Date")
+#'
+#' # yearmon class
+#' create_series(~'2013', 'month', class = "yearmon")
+#'
+#' # hms class. time_formula specified as HH:MM:SS here
+#' create_series('00:00:00' ~ '12:00:00', 'second' , class = "hms")
+#'
 #'
 #' @export
 create_series <- function(time_formula, period = "daily",
@@ -51,13 +57,13 @@ create_series <- function(time_formula, period = "daily",
   assert_allowed_datetime(dummy_index)
   assert_period_matches_index_class(dummy_index, period_list$period)
 
-  # Get seq.* functions
+  # Get seq_* functions
   seq_fun <- lookup_seq_fun(dummy_index)
 
   # Parse the time_formula, don't convert to dates yet
   tf_list <- parse_time_formula(dummy_index, time_formula)
 
-  # Could allow for multifilter idea here, but instead applied to series
+  #### Could allow for multifilter idea here, but instead applied to series
 
   # Then convert to datetime
   from_to <- purrr::map(tf_list, ~list_to_datetime(dummy_index, .x, tz = tz))
@@ -93,18 +99,20 @@ create_series <- function(time_formula, period = "daily",
 
 assert_allowed_datetime <- function(x) {
   assertthat::assert_that(
-    is_allowed_datetime(x),
-    msg = "Specified `class` is not one of the allowed time-based classes"
+    inherits_allowed_datetime(x),
+    msg = glue::glue("Specified class, '{class(x)}', ",
+                     "is not one of the allowed time-based classes")
   )
 }
 
 assert_from_before_to <- function(from, to) {
-  from <- to_posixct_numeric(from)
-  to   <- to_posixct_numeric(to)
+  from_num <- to_posixct_numeric(from)
+  to_num   <- to_posixct_numeric(to)
 
   assertthat::assert_that(
-    from <= to,
-    msg = "`from` must be before `to`"
+    from_num <= to_num,
+    msg = glue::glue("Incorrect expanded time_formula. ",
+                     "`from`, {from}, must be before `to`, {to}")
   )
 }
 

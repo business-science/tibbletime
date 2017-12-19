@@ -1,7 +1,7 @@
 # Generic functions that define the differences between date/time classes
 
 # Checks if the input is a supported date/time class
-is_allowed_datetime <- function(x) {
+inherits_allowed_datetime <- function(x) {
   inherits(x, c("Date", "POSIXct", "POSIXt", "yearmon", "yearqtr", "hms"))
 }
 
@@ -33,7 +33,7 @@ assert_period_matches_index_class <- function(x, period) {
 }
 
 assert_period_matches_index_class.default <- function(x, period) {
-  stop("Unknown index type", call. = FALSE)
+  glue_stop("Class '{class(x)}' is not a known index class.")
 }
 
 

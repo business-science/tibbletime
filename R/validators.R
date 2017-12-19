@@ -17,7 +17,7 @@ assert_index_class_is_allowed <- function(x) {
   index_char <- get_index_char(x)
   index_col <- x[[index_char]]
   assertthat::assert_that(
-    is_allowed_datetime(index_col),
+    inherits_allowed_datetime(index_col),
     msg = "Specified `index` is not time based"
   )
 }
