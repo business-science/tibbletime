@@ -6,19 +6,20 @@
 #'
 #' @details
 #'
-#' The information stored about `tbl_time` objects are the `index` and the
-#' `time_zone`. These are stored as attributes, with the `index` as a
+#' The information stored about `tbl_time` objects are the `index_quo` and the
+#' `index_time_zone`. These are stored as attributes, with the `index_quo` as a
 #' [rlang::quosure()] and the `time_zone` as a string.
 #'
-#' Currently, only the `Date` and `POSIXct` classes are supported to be
-#' time indices.
+#' Currently, `Date` and `POSIXct` classes are fully supported. `yearmon`,
+#' `yearqtr`, and `hms` have experimental support. Due to dplyr's
+#' handling of S3 classes like these 3, the classes are lost when you
+#' manipulate the index columns directly.
 #'
 #' @param x An object to be converted to `tbl_time`. This is generally
 #' a [tibble::tibble()], or an object that can first be coerced to a `tibble`.
 #' @param index The bare column name of the column to be used as the index.
 #' @param ... Arguments passed to [tibble::as_tibble()] if coercion is
 #' necessary first.
-#'
 #'
 #' @export
 #'
@@ -57,16 +58,10 @@ as_tbl_time.default <- function(x, index = NULL, ...) {
 #' @export
 as_tbl_time.tbl_df <- function(x, index = NULL, ...) {
   index_quo <- rlang::enquo(index)
+
+  # Pass off to helper
   tbl_time(x, !! index_quo)
 }
-
-#' @export
-# as_tbl_time.grouped_df <- function(x, index = NULL, ...) {
-#   index_quo <- rlang::enquo(index)
-#   #grouped_tbl_time(x, !! index_quo)
-#   tbl_time(x, !! index_quo)
-# }
-
 
 # Parent coercion --------------------------------------------------------------
 
@@ -85,12 +80,12 @@ as_tibble.tbl_time <- function(x, ...) {
 #' @export
 #' @importFrom tibble as_tibble
 as_tibble.grouped_tbl_time <- function(x, ...) {
-  
+
   # Remove index_* attributes
   for(attrib in index_attributes()) {
     attr(x, attrib) <- NULL
   }
-  
+
   tibble::new_tibble(x, ..., subclass = "grouped_df")
 }
 

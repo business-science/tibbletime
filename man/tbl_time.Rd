@@ -24,12 +24,14 @@ which column should be used for time-based subsetting and other time-based
 manipulation. Otherwise, they function as normal tibbles.
 }
 \details{
-The information stored about \code{tbl_time} objects are the \code{index} and the
-\code{time_zone}. These are stored as attributes, with the \code{index} as a
+The information stored about \code{tbl_time} objects are the \code{index_quo} and the
+\code{index_time_zone}. These are stored as attributes, with the \code{index_quo} as a
 \code{\link[rlang:quosure]{rlang::quosure()}} and the \code{time_zone} as a string.
 
-Currently, only the \code{Date} and \code{POSIXct} classes are supported to be
-time indices.
+Currently, \code{Date} and \code{POSIXct} classes are fully supported. \code{yearmon},
+\code{yearqtr}, and \code{hms} have experimental support. Due to dplyr's
+handling of S3 classes like these 3, the classes are lost when you
+manipulate the index columns directly.
 }
 \examples{
 
