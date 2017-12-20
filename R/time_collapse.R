@@ -83,6 +83,9 @@ time_collapse.tbl_time <- function(.data, period = "yearly", start_date = NULL,
 
   .data %>%
 
+    # Ensure data is arranged by index
+    arrange(!!index_sym) %>%
+
     # Add time groups
     mutate(.time_group = time_group(!! index_sym,
                                     period = period,
