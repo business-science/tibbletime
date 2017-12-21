@@ -47,9 +47,10 @@ The intended use of \code{rollify} is to turn a function into a rolling version
 of itself for use inside of a call to \code{\link[dplyr:mutate]{dplyr::mutate()}}, however it works
 equally as well when called from \code{\link[purrr:map]{purrr::map()}}.
 
-Because of it's intended use with \code{\link[dplyr:mutate]{dplyr::mutate()}}, \code{rollify} always
-returns output with the same length of the input, aligned right, and filled
-with \code{NA} unless otherwise specified by \code{na_value}.
+Because of it's intended use with \code{\link[dplyr:mutate]{dplyr::mutate()}}, \code{rollify}
+creates a function that always returns output with the same length of the
+input, aligned right, and filled with \code{NA} unless otherwise specified
+by \code{na_value}.
 
 The form of the \code{.f} argument is the same as the form that can be passed
 to \code{\link[purrr:map]{purrr::map()}}. Use \code{.x} or \code{.} to refer to the first object to roll over,
