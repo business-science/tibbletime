@@ -23,6 +23,16 @@ to_posixct_numeric.yearmon <- function(x) {
   )
 }
 
+# Same as yearmon, represented as a numeric internally, same as yearmon
+to_posixct_numeric.yearqtr <- to_posixct_numeric.yearmon
+
+to_posixct_numeric.hms <- function(x) {
+  # No need to convert to POSIXct then numeric, this is just number of
+  # seconds since epoch
+  as.numeric(x)
+}
+
+
 # This is much faster than using as.POSIXct.yearmon which calls
 # as.POSIXct.Date, it converts a character to a Date, very slow!
 yearmon_to_POSIXct <- function(x) {
@@ -36,19 +46,16 @@ yearmon_to_POSIXct <- function(x) {
   lubridate::make_datetime(year, month, 1, tz = get_default_time_zone())
 }
 
-# Same as yearmon, represented as a numeric internally, same as yearmon
-to_posixct_numeric.yearqtr <- to_posixct_numeric.yearmon
-
-to_posixct_numeric.hms <- function(x) {
-  # No need to convert to POSIXct then numeric, this is just number of
-  # seconds since epoch
-  as.numeric(x)
-}
-
 
 #### FROM POSIXct NUMERIC
 
-# Converting a posixct numeric time back to a classed datetime
+#' Converting a posixct numeric time back to a classed datetime
+#'
+#' @param x A posixct numeric vector
+#' @param class The class to convert to
+#' @param ... Extra arguments passed on the the specific coercion function
+#' @param tz The time zone to convert to. The default UTC is used if none is
+#' supplied
 posixct_numeric_to_datetime <- function(x, class = "POSIXct", ..., tz = NULL) {
   dispatch_obj <- make_dummy_dispatch_obj(class)
   dispatch_to_datetime(dispatch_obj, x, ..., tz = tz)
