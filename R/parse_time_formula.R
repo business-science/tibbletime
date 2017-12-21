@@ -147,9 +147,9 @@ keyword_parse <- function(index, side) {
     return(side)
   }
 
-  if(side == "start") {
+  if(as.character(side) == "start") {
     dplyr::first(index)
-  } else if (side == "end") {
+  } else if (as.character(side) == "end") {
     dplyr::last(index)
   } else {
     side
