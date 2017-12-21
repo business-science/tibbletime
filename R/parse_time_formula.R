@@ -82,7 +82,7 @@ split_to_list.character <- function(x) {
   split_str <- unlist(strsplit(x, "-|/|:|[*]|[+]|[,]|[[:space:]]"))
 
   # Remove the "" that get left
-  split_str <- split_str[string_length(split_str) >= 1]
+  split_str <- split_str[split_str != ""]
 
   split_list <- as.list(split_str)
 
