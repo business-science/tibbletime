@@ -21,6 +21,8 @@ parse_time_formula <- function(index, time_formula) {
     tf$lhs <- tf$rhs
   }
 
+  tf <- lapply(tf, FUN = function(x) keyword_parse(index, x))
+
   # Split the input
   tf <- lapply(tf, split_to_list)
 
@@ -59,11 +61,15 @@ split_to_list.POSIXct <- function(x) {
 }
 
 #' @export
-split_to_list.yearmon <- split_to_list.Date
-
+split_to_list.yearmon <- function(x) {
+  x_lt <- as.POSIXlt(x, tz = get_default_time_zone())
+  list(x_lt$year + 1900, x_lt$mon + 1, x_lt$mday)
+}
 #' @export
-split_to_list.yearqtr <- split_to_list.Date
-
+split_to_list.yearqtr <- function(x) {
+  x_lt <- as.POSIXlt(x, tz = get_default_time_zone())
+  list(x_lt$year + 1900, x_lt$mon + 1, x_lt$mday)
+}
 #' @export
 split_to_list.hms <- function(x) {
   x_lt <- as.POSIXlt(x, tz = get_default_time_zone())
@@ -132,3 +138,21 @@ add_time_defaults <- function(index, tf_side, side = "lhs") {
   defaults
 }
 
+## Functions for keyword parsing ------------------------------------------
+
+keyword_parse <- function(index, side) {
+
+  # Dummy index
+  if(length(index) == 0) {
+    return(side)
+  }
+
+  if(side == "start") {
+    dplyr::first(index)
+  } else if (side == "end") {
+    dplyr::last(index)
+  } else {
+    side
+  }
+
+}
