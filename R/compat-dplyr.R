@@ -62,6 +62,20 @@ right_join.tbl_time <- function(x, y, by = NULL, copy = FALSE, suffix = c(".x", 
   sloop::reconstruct(NextMethod(), x)
 }
 
+#' @export
+#' @importFrom dplyr anti_join
+#'
+anti_join.tbl_time <- function(x, y, by = NULL, copy = FALSE, ...) {
+  sloop::reconstruct(NextMethod(), x)
+}
+
+#' @export
+#' @importFrom dplyr semi_join
+#'
+semi_join.tbl_time <- function(x, y, by = NULL, copy = FALSE, ...) {
+  sloop::reconstruct(NextMethod(), x)
+}
+
 #' @importFrom dplyr select
 #'
 select.tbl_time <- function(.data, ...) {
