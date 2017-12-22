@@ -10,7 +10,16 @@
 #' @export
 get_index_quo <- function(x) {
   if(!inherits(x, "tbl_time")) glue_stop("Object is not of class `tbl_time`.")
-  attr(x, "index_quo")
+
+  index_quo <- attr(x, "index_quo")
+
+  if(is.null(index_quo)) {
+    glue_stop("Attribute, `index_quo`, has been lost, ",
+              "but class is still `tbl_time`. This should not happen unless ",
+              "something has gone horribly wrong.")
+  }
+
+  index_quo
 }
 
 #' @rdname getters
@@ -29,7 +38,16 @@ get_index_col <- function(x) {
 #' @export
 get_index_time_zone <- function(x) {
   if(!inherits(x, "tbl_time")) glue_stop("Object is not of class `tbl_time`.")
-  attr(x, "index_time_zone")
+
+  index_time_zone <- attr(x, "index_time_zone")
+
+  if(is.null(index_time_zone)) {
+    glue_stop("Attribute, `index_time_zone`, has been lost, ",
+              "but class is still `tbl_time`. This should not happen unless ",
+              "something has gone horribly wrong.")
+  }
+
+  index_time_zone
 }
 
 #' @rdname getters
