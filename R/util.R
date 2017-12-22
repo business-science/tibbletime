@@ -1,9 +1,9 @@
 # Reexports --------------------------------------------------------------------
 
-#' @importFrom magrittr %>%
+#' @importFrom dplyr %>%
 #' @export
 #'
-magrittr::`%>%`
+dplyr::`%>%`
 
 #' @importFrom rlang :=
 #'

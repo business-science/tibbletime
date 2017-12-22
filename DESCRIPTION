@@ -10,10 +10,9 @@ Authors@R: c(
 Maintainer: Davis Vaughan <dvaughan@business-science.io>
 Description: Built on top of the 'tibble' package, 'tibbletime' is an extension
   that allows for the creation of time aware tibbles. Some immediate
-  advantages of this include: the ability to perform time based subsetting
+  advantages of this include: the ability to perform time-based subsetting
   on tibbles, quickly summarising and aggregating results by time periods,
-  and calling functions similar in spirit to the map family from 'purrr'
-  on time based tibbles.
+  and creating columns that can be used as 'dplyr' time-based groups.
 URL: https://github.com/business-science/tibbletime
 BugReports: https://github.com/business-science/tibbletime/issues
 License: MIT + file LICENSE
@@ -27,14 +26,13 @@ Suggests:
 RoxygenNote: 6.0.1
 Roxygen: list(markdown = TRUE)
 Depends:
-    R (>= 3.3.0)
+    R (>= 3.2.0)
 Imports:
     assertthat (>= 0.2.0),
     dplyr (>= 0.7),
     glue,
     hms,
     lubridate (>= 1.6.0),
-    magrittr (>= 1.5),
     purrr (>= 0.2.3),
     rlang (>= 0.1.2),
     tibble (>= 1.3.3),
