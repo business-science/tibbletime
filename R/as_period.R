@@ -2,7 +2,8 @@
 #'
 #' Convert a `tbl_time` object from daily to monthly,
 #' from minute data to hourly, and more. This allows the user to easily
-#' aggregate data to a less granular level.
+#' aggregate data to a less granular level by taking the value from either
+#' the beginning or end of the period.
 #'
 #' @inheritParams partition_index
 #' @param .tbl_time A `tbl_time` object.
