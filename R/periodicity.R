@@ -2,11 +2,13 @@
 #'
 #' Convert a `tbl_time` object from daily to monthly,
 #' from minute data to hourly, and more. This allows the user to easily
-#' aggregate data to a less granular level.
+#' aggregate data by taking the value from either the beginning or  
+#' the end of the period.  Use `time_summarise` to apply function
+#' to time period's values.
 #'
 #' @inheritParams time_group
 #' @param x A `tbl_time` object.
-#' @param side Whether to return the date at the beginning or the end of the
+#' @param side Whether to return the value for the date at the beginning or the end of the
 #' new period. By default, the `"start"` of the period. Use `"end"` to change
 #' to the end of the period.
 #'
