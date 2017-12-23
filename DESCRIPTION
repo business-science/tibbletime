@@ -38,7 +38,8 @@ Imports:
     tibble (>= 1.3.3),
     tidyr (>= 0.7.1),
     tidyselect,
-    Rcpp
+    Rcpp,
+    zoo
 Remotes:
     tidyverse/tibble,
     hadley/sloop

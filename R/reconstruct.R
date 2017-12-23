@@ -11,7 +11,7 @@ reconstruct.tbl_time <- function(new, old) {
   if(index_still_exists(new, old)) {
     new_tbl_time(
       new,
-      index = get_index_quo(old),
+      index_quo = get_index_quo(old),
       index_time_zone = get_index_time_zone(old),
       subclass = subclass
     )

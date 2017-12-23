@@ -132,8 +132,9 @@ as_period.tbl_time <- function(.tbl_time, period = "yearly",
     .tbl_time_tg <- dplyr::filter(
       .tbl_time_tg,
       {
-        criteria <- vector(length = length(.time_group))
-        criteria[match(unique(.time_group), .time_group)] <- TRUE
+        .tg <- .data$.time_group
+        criteria <- vector(length = length(.tg))
+        criteria[match(unique(.tg), .tg)] <- TRUE
 
         # Include last end point
         if(include_endpoints) {
@@ -147,8 +148,9 @@ as_period.tbl_time <- function(.tbl_time, period = "yearly",
     .tbl_time_tg <- dplyr::filter(
       .tbl_time_tg,
       {
-        criteria <- vector(length = length(.time_group))
-        criteria[length(.time_group) - match(unique(.time_group), rev(.time_group)) + 1] <- TRUE
+        .tg <- .data$.time_group
+        criteria <- vector(length = length(.tg))
+        criteria[length(.tg) - match(unique(.tg), rev(.tg)) + 1] <- TRUE
 
         # Include first end point
         if(include_endpoints) {

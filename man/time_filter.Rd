@@ -15,6 +15,8 @@ time_filter(.tbl_time, time_formula)
 \item{time_formula}{A period to filter over.
 This is specified as a \code{formula}. See \code{Details}.}
 
+\item{x}{Same as \code{.tbl_time} but consistent naming with base R.}
+
 \item{i}{A period to filter over. This is specified the same as
 \code{time_formula} or can use the traditional row extraction method.}
 

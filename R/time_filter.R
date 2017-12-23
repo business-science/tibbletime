@@ -130,6 +130,7 @@ time_filter.tbl_time <- function(.tbl_time, time_formula) {
 
 #' @export
 #'
+#' @param x Same as `.tbl_time` but consistent naming with base R.
 #' @param i A period to filter over. This is specified the same as
 #' `time_formula` or can use the traditional row extraction method.
 #' @param j Optional argument to also specify column index to subset. Works
