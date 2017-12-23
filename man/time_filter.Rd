@@ -5,12 +5,12 @@
 \alias{[.tbl_time}
 \title{Succinctly filter a \code{tbl_time} object by its index}
 \usage{
-time_filter(x, time_formula)
+time_filter(.tbl_time, time_formula)
 
 \method{[}{tbl_time}(x, i, j, drop = FALSE)
 }
 \arguments{
-\item{x}{A \code{tbl_time} object.}
+\item{.tbl_time}{A \code{tbl_time} object.}
 
 \item{time_formula}{A period to filter over.
 This is specified as a \code{formula}. See \code{Details}.}

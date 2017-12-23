@@ -4,11 +4,11 @@
 \alias{as_period}
 \title{Change \code{tbl_time} periodicity}
 \usage{
-as_period(x, period = "yearly", start_date = NULL, side = "start",
+as_period(.tbl_time, period = "yearly", start_date = NULL, side = "start",
   include_endpoints = FALSE, ...)
 }
 \arguments{
-\item{x}{A \code{tbl_time} object.}
+\item{.tbl_time}{A \code{tbl_time} object.}
 
 \item{period}{A character specification used for time-based grouping. The
 general format to use is \code{"frequency period"} where frequency is a number
@@ -116,5 +116,17 @@ as_period(FB, "2 day")
 # Specifying the `start_date = "2013-01-01"` might be preferable.
 # Groups become (2013-01-01, 2013-01-02), (2013-01-03, 2013-01-04) and so on.
 as_period(FB, "2 day", start_date = "2013-01-01")
+
+# Manually calculating returns at different periods -------------------------
+
+data(FB)
+
+# Annual Returns
+# Convert to end of year periodicity, but include the endpoints to use as
+# a reference for the first return calculation. Then calculate returns.
+FB \%>\%
+  as_tbl_time(date) \%>\%
+  as_period("1 y", side = "end", include_endpoints = TRUE) \%>\%
+  dplyr::mutate(yearly_return = adjusted / dplyr::lag(adjusted) - 1)
 
 }

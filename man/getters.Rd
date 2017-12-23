@@ -9,18 +9,18 @@
 \alias{get_index_class}
 \title{Getters}
 \usage{
-get_index_quo(x)
+get_index_quo(.tbl_time)
 
-get_index_char(x)
+get_index_char(.tbl_time)
 
-get_index_col(x)
+get_index_col(.tbl_time)
 
-get_index_time_zone(x)
+get_index_time_zone(.tbl_time)
 
-get_index_class(x)
+get_index_class(.tbl_time)
 }
 \arguments{
-\item{x}{A \code{tbl_time} object.}
+\item{.tbl_time}{A \code{tbl_time} object.}
 }
 \description{
 Accessors to attributes of \code{tbl_time} objects.

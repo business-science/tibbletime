@@ -5,7 +5,7 @@
 #' aggregate data to a less granular level.
 #'
 #' @inheritParams partition_index
-#' @param x A `tbl_time` object.
+#' @param .tbl_time A `tbl_time` object.
 #' @param side Whether to return the date at the beginning or the end of the
 #' new period. By default, the `"start"` of the period. Use `"end"` to change
 #' to the end of the period.
@@ -89,36 +89,48 @@
 #' # Groups become (2013-01-01, 2013-01-02), (2013-01-03, 2013-01-04) and so on.
 #' as_period(FB, "2 day", start_date = "2013-01-01")
 #'
+#' # Manually calculating returns at different periods -------------------------
+#'
+#' data(FB)
+#'
+#' # Annual Returns
+#' # Convert to end of year periodicity, but include the endpoints to use as
+#' # a reference for the first return calculation. Then calculate returns.
+#' FB %>%
+#'   as_tbl_time(date) %>%
+#'   as_period("1 y", side = "end", include_endpoints = TRUE) %>%
+#'   dplyr::mutate(yearly_return = adjusted / dplyr::lag(adjusted) - 1)
+#'
 #' @export
 #'
-as_period <- function(x, period = "yearly",
+as_period <- function(.tbl_time, period = "yearly",
                       start_date = NULL, side = "start",
                       include_endpoints = FALSE, ...) {
   UseMethod("as_period")
 }
 
 #' @export
-as_period.default <- function(x, period = "yearly",
+as_period.default <- function(.tbl_time, period = "yearly",
                               start_date = NULL, side = "start",
                               include_endpoints = FALSE, ...) {
   stop("Object is not of class `tbl_time`.", call. = FALSE)
 }
 
 #' @export
-as_period.tbl_time <- function(x, period = "yearly",
+as_period.tbl_time <- function(.tbl_time, period = "yearly",
                                start_date = NULL, side = "start",
                                include_endpoints = FALSE, ...) {
 
   # Add time groups
-  x_tg <- dplyr::mutate(
-    x,
-    .time_group = partition_index(!! get_index_quo(x), period, start_date)
+  .tbl_time_tg <- dplyr::mutate(
+    .tbl_time,
+    .time_group = partition_index(!! get_index_quo(.tbl_time), period, start_date)
   )
 
   # Filter
   if(side == "start")
-    x_tg <- dplyr::filter(
-      x_tg,
+    .tbl_time_tg <- dplyr::filter(
+      .tbl_time_tg,
       {
         criteria <- vector(length = length(.time_group))
         criteria[match(unique(.time_group), .time_group)] <- TRUE
@@ -132,8 +144,8 @@ as_period.tbl_time <- function(x, period = "yearly",
       }
     )
   else if(side == "end") {
-    x_tg <- dplyr::filter(
-      x_tg,
+    .tbl_time_tg <- dplyr::filter(
+      .tbl_time_tg,
       {
         criteria <- vector(length = length(.time_group))
         criteria[length(.time_group) - match(unique(.time_group), rev(.time_group)) + 1] <- TRUE
@@ -149,9 +161,9 @@ as_period.tbl_time <- function(x, period = "yearly",
   }
 
   # Remove time group column
-  x_tg <- remove_time_group(x_tg)
+  .tbl_time_tg <- remove_time_group(.tbl_time_tg)
 
-  sloop::reconstruct(x_tg, x)
+  sloop::reconstruct(.tbl_time_tg, .tbl_time)
 }
 
 

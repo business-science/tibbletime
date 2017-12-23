@@ -2,7 +2,7 @@
 #'
 #' Use a concise filtering method to filter a `tbl_time` object by its `index`.
 #'
-#' @param x A `tbl_time` object.
+#' @param .tbl_time A `tbl_time` object.
 #' @param time_formula A period to filter over.
 #' This is specified as a `formula`. See `Details`.
 #'
@@ -74,24 +74,24 @@
 #' time_filter(FANG, 'start' ~ '2014')
 #'
 #'
-time_filter <- function(x, time_formula) {
+time_filter <- function(.tbl_time, time_formula) {
   UseMethod("time_filter")
 }
 
 #' @export
-time_filter.default <- function(x, time_formula) {
+time_filter.default <- function(.tbl_time, time_formula) {
   stop("Object is not of class `tbl_time`.", call. = FALSE)
 }
 
 #' @export
-time_filter.tbl_time <- function(x, time_formula) {
+time_filter.tbl_time <- function(.tbl_time, time_formula) {
 
-  index_quo  <- get_index_quo(x)
-  tz <- get_index_time_zone(x)
+  index_quo  <- get_index_quo(.tbl_time)
+  tz <- get_index_time_zone(.tbl_time)
 
   # from/to setup is done inside the call to filter so it is unique to
   # each group
-  x_filtered <- dplyr::filter(x, {
+  .tbl_time_filtered <- dplyr::filter(.tbl_time, {
 
     # Parse the time_formula, don't convert to dates yet
     tf_list <- parse_time_formula(!! index_quo, time_formula)
@@ -114,7 +114,7 @@ time_filter.tbl_time <- function(x, time_formula) {
     sorted_range_search(!! index_quo, from, to)
   })
 
-  sloop::reconstruct(x_filtered, x)
+  sloop::reconstruct(.tbl_time_filtered, .tbl_time)
 }
 
 # Subset operator --------------------------------------------------------------

@@ -4,14 +4,14 @@
 #'
 #' Accessors to attributes of `tbl_time` objects.
 #'
-#' @param x A `tbl_time` object.
+#' @param .tbl_time A `tbl_time` object.
 #'
 #' @name getters
 #' @export
-get_index_quo <- function(x) {
-  if(!inherits(x, "tbl_time")) glue_stop("Object is not of class `tbl_time`.")
+get_index_quo <- function(.tbl_time) {
+  if(!inherits(.tbl_time, "tbl_time")) glue_stop("Object is not of class `tbl_time`.")
 
-  index_quo <- attr(x, "index_quo")
+  index_quo <- attr(.tbl_time, "index_quo")
 
   if(is.null(index_quo)) {
     glue_stop("Attribute, `index_quo`, has been lost, ",
@@ -24,22 +24,22 @@ get_index_quo <- function(x) {
 
 #' @rdname getters
 #' @export
-get_index_char <- function(x) {
-  rlang::quo_name(get_index_quo(x))
+get_index_char <- function(.tbl_time) {
+  rlang::quo_name(get_index_quo(.tbl_time))
 }
 
 #' @rdname getters
 #' @export
-get_index_col <- function(x) {
-  x[[get_index_char(x)]]
+get_index_col <- function(.tbl_time) {
+  .tbl_time[[get_index_char(.tbl_time)]]
 }
 
 #' @rdname getters
 #' @export
-get_index_time_zone <- function(x) {
-  if(!inherits(x, "tbl_time")) glue_stop("Object is not of class `tbl_time`.")
+get_index_time_zone <- function(.tbl_time) {
+  if(!inherits(.tbl_time, "tbl_time")) glue_stop("Object is not of class `tbl_time`.")
 
-  index_time_zone <- attr(x, "index_time_zone")
+  index_time_zone <- attr(.tbl_time, "index_time_zone")
 
   if(is.null(index_time_zone)) {
     glue_stop("Attribute, `index_time_zone`, has been lost, ",
@@ -52,16 +52,16 @@ get_index_time_zone <- function(x) {
 
 #' @rdname getters
 #' @export
-get_index_class <- function(x) {
-  class(get_index_col(x))[[1]]
+get_index_class <- function(.tbl_time) {
+  class(get_index_col(.tbl_time))[[1]]
 }
 
-get_.index_col <- function(x) {
-  to_posixct_numeric(get_index_col(x))
+get_.index_col <- function(.tbl_time) {
+  to_posixct_numeric(get_index_col(.tbl_time))
 }
 
-get_index_dispatcher <- function(x) {
-  make_dummy_dispatch_obj(get_index_class(x))
+get_index_dispatcher <- function(.tbl_time) {
+  make_dummy_dispatch_obj(get_index_class(.tbl_time))
 }
 
 # Getters in tbl_time object creation ------------------------------------------
@@ -72,10 +72,10 @@ get_default_time_zone <- function() {
   "UTC"
 }
 
-get_index_col_time_zone <- function(x) {
-  attr(x, "tzone") %||% get_default_time_zone()
+get_index_col_time_zone <- function(.tbl_time) {
+  attr(.tbl_time, "tzone") %||% get_default_time_zone()
 }
 
-get_index_col_class <- function(x) {
-  class(x)[[1]]
+get_index_col_class <- function(.tbl_time) {
+  class(.tbl_time)[[1]]
 }

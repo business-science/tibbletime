@@ -1,35 +1,35 @@
 #### TO POSIXct NUMERIC
 
-to_posixct_numeric <- function(x) {
+to_posixct_numeric <- function(index) {
   UseMethod("to_posixct_numeric")
 }
 
-to_posixct_numeric.default <- function(x) {
-  as.numeric(x)
+to_posixct_numeric.default <- function(index) {
+  as.numeric(index)
 }
 
-to_posixct_numeric.Date <- function(x) {
+to_posixct_numeric.Date <- function(index) {
   secs_in_day <- 86400
-  as.numeric(.POSIXct(unclass(x) * secs_in_day, tz = get_default_time_zone()))
+  as.numeric(.POSIXct(unclass(index) * secs_in_day, tz = get_default_time_zone()))
 }
 
-to_posixct_numeric.POSIXct <- function(x) {
-  as.numeric(x)
+to_posixct_numeric.POSIXct <- function(index) {
+  as.numeric(index)
 }
 
-to_posixct_numeric.yearmon <- function(x) {
+to_posixct_numeric.yearmon <- function(index) {
   to_posixct_numeric(
-    yearmon_to_POSIXct(x)
+    yearmon_to_POSIXct(index)
   )
 }
 
 # Same as yearmon, represented as a numeric internally, same as yearmon
 to_posixct_numeric.yearqtr <- to_posixct_numeric.yearmon
 
-to_posixct_numeric.hms <- function(x) {
+to_posixct_numeric.hms <- function(index) {
   # No need to convert to POSIXct then numeric, this is just number of
   # seconds since epoch
-  as.numeric(x)
+  as.numeric(index)
 }
 
 
