@@ -66,6 +66,13 @@ index is a POSIXct):
 \item \code{2015-01-04 + 10:12 ~ 2015-01-05 == 2015-01-04 + 10:12:00 ~ 2015-01-05 + 23:59:59}
 }
 
+Special parsing is done for indices of class \code{hms}. The \code{from ~ to} time
+formula is specified as only \code{HH:MM:SS}.
+\itemize{
+\item \strong{Start to 5th second of the 12th hour:} \code{'start' ~ '12:00:05'}
+\item \strong{Every second in the 12th hour:} \code{~'12'}
+}
+
 This function respects \code{\link[dplyr:group_by]{dplyr::group_by()}} groups.
 }
 \examples{
@@ -97,6 +104,10 @@ time_filter(FANG, lhs_date ~ rhs_date)
 
 # Use the keywords 'start' and 'end' to conveniently access ends
 time_filter(FANG, 'start' ~ '2014')
+
+# hms (hour, minute, second) classes have special parsing
+hms_example <- create_series(~'12:01', 'second', class = 'hms')
+time_filter(hms_example, 'start' ~ '12:01:30')
 
 
 }

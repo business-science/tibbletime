@@ -37,6 +37,11 @@
 #' * `~2015 == 2015-01-01 + 00:00:00 ~ 2015-12-31 + 23:59:59`
 #' * `2015-01-04 + 10:12 ~ 2015-01-05 == 2015-01-04 + 10:12:00 ~ 2015-01-05 + 23:59:59`
 #'
+#' Special parsing is done for indices of class `hms`. The `from ~ to` time
+#' formula is specified as only `HH:MM:SS`.
+#' * __Start to 5th second of the 12th hour:__ `'start' ~ '12:00:05'`
+#' * __Every second in the 12th hour:__ `~'12'`
+#'
 #' This function respects [dplyr::group_by()] groups.
 #'
 #' @rdname time_filter
@@ -72,6 +77,10 @@
 #'
 #' # Use the keywords 'start' and 'end' to conveniently access ends
 #' time_filter(FANG, 'start' ~ '2014')
+#'
+#' # hms (hour, minute, second) classes have special parsing
+#' hms_example <- create_series(~'12:01', 'second', class = 'hms')
+#' time_filter(hms_example, 'start' ~ '12:01:30')
 #'
 #'
 time_filter <- function(.tbl_time, time_formula) {
