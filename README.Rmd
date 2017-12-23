@@ -64,7 +64,7 @@ install.packages("tibbletime")
 
 ## Major update warning
 
-If you have been using `0.0.2`, the update to `0.0.3` has introduced 
+If you have been using `0.0.2`, the update to `0.1.0` has introduced 
 major breaking changes. This was necessary for long term stability of the package,
 and no attempt to support backwards compatability was made at this early 
 stage in development. We apologize for any issues this causes.
