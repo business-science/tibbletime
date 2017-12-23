@@ -2,6 +2,10 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 is_ordered_numeric <- function(x) {
-    .Call('_tibbletime_is_ordered_numeric', PACKAGE = 'tibbletime', x)
+    .Call(`_tibbletime_is_ordered_numeric`, x)
+}
+
+sorted_range_search <- function(x, lower, upper) {
+    .Call(`_tibbletime_sorted_range_search`, x, lower, upper)
 }
 

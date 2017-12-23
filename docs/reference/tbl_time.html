@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create <code>tbl_time</code> objects — tbl_time • tibbletime</title>
+<title>Create <code>tbl_time</code> objects — as_tbl_time • tibbletime</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -77,9 +77,6 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/TT-00-intro-to-tibbletime.html">Introduction to tibbletime</a>
-    </li>
-    <li>
       <a href="../articles/TT-01-time-based-filtering.html">Time-based filtering</a>
     </li>
     <li>
@@ -87,6 +84,9 @@
     </li>
     <li>
       <a href="../articles/TT-03-rollify-for-rolling-analysis.html">Rolling calculations in tibbletime</a>
+    </li>
+    <li>
+      <a href="../articles/TT-04-use-with-dplyr.html">Using tibbletime with dplyr</a>
     </li>
   </ul>
 </li>
@@ -122,9 +122,9 @@ which column should be used for time-based subsetting and other time-based
 manipulation. Otherwise, they function as normal tibbles.</p>
     
 
-    <pre class="usage"><span class='fu'>tbl_time</span>(<span class='no'>x</span>, <span class='no'>index</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>as_tbl_time</span>(<span class='no'>x</span>, <span class='kw'>index</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
 
-<span class='fu'>as_tbl_time</span>(<span class='no'>x</span>, <span class='no'>index</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>tbl_time</span>(<span class='no'>x</span>, <span class='kw'>index</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -147,11 +147,13 @@ necessary first.</p></td>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The information stored about <code>tbl_time</code> objects are the <code>index</code> and the
-<code>time_zone</code>. These are stored as attributes, with the <code>index</code> as a
+    <p>The information stored about <code>tbl_time</code> objects are the <code>index_quo</code> and the
+<code>index_time_zone</code>. These are stored as attributes, with the <code>index_quo</code> as a
 <code><a href='http://www.rdocumentation.org/packages/rlang/topics/quosure'>rlang::quosure()</a></code> and the <code>time_zone</code> as a string.</p>
-<p>Currently, only the <code>Date</code> and <code>POSIXct</code> classes are supported to be
-time indices.</p>
+<p>Currently, <code>Date</code> and <code>POSIXct</code> classes are fully supported. <code>yearmon</code>,
+<code>yearqtr</code>, and <code>hms</code> have experimental support. Due to dplyr's
+handling of S3 classes like these 3, the classes are lost when you
+manipulate the index columns directly.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -169,12 +171,12 @@ time indices.</p>
 #&gt; $class
 #&gt; [1] "tbl_time"   "tbl_df"     "tbl"        "data.frame"
 #&gt; 
-#&gt; $index
+#&gt; $index_quo
 #&gt; &lt;quosure: local&gt;
 #&gt; ~date
 #&gt; 
-#&gt; $time_zone
-#&gt; [1] "America/New_York"
+#&gt; $index_time_zone
+#&gt; [1] "UTC"
 #&gt; </div><div class='input'>
 <span class='co'># Converting a tibble to a `tbl_time`</span>
 <span class='co'># Using POSIXct index</span>
@@ -184,10 +186,10 @@ time indices.</p>
 )
 <span class='fu'>as_tbl_time</span>(<span class='no'>ex2</span>, <span class='no'>time</span>)</div><div class='output co'>#&gt; # A time tibble: 2 x 2
 #&gt; # Index: time
-#&gt;                  time value
-#&gt;                &lt;dttm&gt; &lt;dbl&gt;
-#&gt; 1 2017-01-01 10:12:01     1
-#&gt; 2 2017-01-02 12:12:01     2</div><div class='input'>
+#&gt;   time                value
+#&gt;   &lt;dttm&gt;              &lt;dbl&gt;
+#&gt; 1 2017-01-01 10:12:01  1.00
+#&gt; 2 2017-01-02 12:12:01  2.00</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

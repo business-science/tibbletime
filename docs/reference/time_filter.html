@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Succinctly filter a <code>tbl_time</code> object by date — time_filter • tibbletime</title>
+<title>Succinctly filter a <code>tbl_time</code> object by its index — time_filter • tibbletime</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -77,9 +77,6 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/TT-00-intro-to-tibbletime.html">Introduction to tibbletime</a>
-    </li>
-    <li>
       <a href="../articles/TT-01-time-based-filtering.html">Time-based filtering</a>
     </li>
     <li>
@@ -87,6 +84,9 @@
     </li>
     <li>
       <a href="../articles/TT-03-rollify-for-rolling-analysis.html">Rolling calculations in tibbletime</a>
+    </li>
+    <li>
+      <a href="../articles/TT-04-use-with-dplyr.html">Using tibbletime with dplyr</a>
     </li>
   </ul>
 </li>
@@ -113,14 +113,14 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Succinctly filter a <code>tbl_time</code> object by date</h1>
+    <h1>Succinctly filter a <code>tbl_time</code> object by its index</h1>
     </div>
 
     
-    <p>Use a concise filtering method to filter a <code>tbl_time</code> object by it's <code>index</code>.</p>
+    <p>Use a concise filtering method to filter a <code>tbl_time</code> object by its <code>index</code>.</p>
     
 
-    <pre class="usage">time_filter(x, time_formula)
+    <pre class="usage">time_filter(.tbl_time, time_formula)
 
 # S3 method for tbl_time
 [(x, i, j, drop = FALSE)</pre>
@@ -129,13 +129,17 @@
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
+      <th>.tbl_time</th>
       <td><p>A <code>tbl_time</code> object.</p></td>
     </tr>
     <tr>
       <th>time_formula</th>
       <td><p>A period to filter over.
 This is specified as a <code>formula</code>. See <code>Details</code>.</p></td>
+    </tr>
+    <tr>
+      <th>x</th>
+      <td><p>Same as <code>.tbl_time</code> but consistent naming with base R.</p></td>
     </tr>
     <tr>
       <th>i</th>
@@ -156,26 +160,38 @@ exactly like the normal extraction operator.</p></td>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The <code>time_formula</code> is specified using the format <code>from ~ to</code>.
-Each side of the <code>time_formula</code> is specified as <code>YYYY-MM-DD + HH:MM:SS</code>,
-but powerful shorthand is available. Some examples are:</p><ul>
-<li><p><strong>Year:</strong> <code>2013 ~ 2015</code></p></li>
-<li><p><strong>Month:</strong> <code>2013-01 ~ 2016-06</code></p></li>
-<li><p><strong>Day:</strong> <code>2013-01-05 ~ 2016-06-04</code></p></li>
-<li><p><strong>Second:</strong> <code>2013-01-05 + 10:22:15 ~ 2018-06-03 + 12:14:22</code></p></li>
-<li><p><strong>Variations:</strong> <code>2013 ~ 2016-06</code></p></li>
+Each side of the <code>time_formula</code> is specified as the character
+<code>'YYYY-MM-DD HH:MM:SS'</code>, but powerful shorthand is available.
+Some examples are:</p><ul>
+<li><p><strong>Year:</strong> <code>'2013' ~ '2015'</code></p></li>
+<li><p><strong>Month:</strong> <code>'2013-01' ~ '2016-06'</code></p></li>
+<li><p><strong>Day:</strong> <code>'2013-01-05' ~ '2016-06-04'</code></p></li>
+<li><p><strong>Second:</strong> <code>'2013-01-05 10:22:15' ~ '2018-06-03 12:14:22'</code></p></li>
+<li><p><strong>Variations:</strong> <code>'2013' ~ '2016-06'</code></p></li>
 </ul>
     <p>The <code>time_formula</code> can also use a one sided formula.</p><ul>
-<li><p><strong>Only dates in 2015:</strong> <code>~2015</code></p></li>
-<li><p><strong>Only dates March 2015:</strong> <code>~2015-03</code></p></li>
+<li><p><strong>Only dates in 2015:</strong> <code>~'2015'</code></p></li>
+<li><p><strong>Only dates March 2015:</strong> <code>~'2015-03'</code></p></li>
 </ul>
-    <p>All shorthand dates are expanded to be valid POSIXct dates.</p><ul>
+    <p>The <code>time_formula</code> can also use <code>'start'</code> and <code>'end'</code> as keywords for
+your filter.</p><ul>
+<li><p><strong>Start of the series to end of 2015:</strong> <code>'start' ~ '2015'</code></p></li>
+<li><p><strong>Start of 2014 to end of series:</strong> <code>'2014' ~ 'end'</code></p></li>
+</ul>
+    <p>All shorthand dates are expanded:</p><ul>
 <li><p>The <code>from</code> side is expanded to be the first date in that period</p></li>
 <li><p>The <code>to</code> side is expanded to be the last date in that period</p></li>
 </ul>
-    <p>This means that the following examples are equivalent:</p><ul>
+    <p>This means that the following examples are equivalent (assuming your
+index is a POSIXct):</p><ul>
 <li><p><code>2015 ~ 2016 == 2015-01-01 + 00:00:00 ~ 2016-12-31 + 23:59:59</code></p></li>
 <li><p><code>~2015 == 2015-01-01 + 00:00:00 ~ 2015-12-31 + 23:59:59</code></p></li>
 <li><p><code>2015-01-04 + 10:12 ~ 2015-01-05 == 2015-01-04 + 10:12:00 ~ 2015-01-05 + 23:59:59</code></p></li>
+</ul>
+    <p>Special parsing is done for indices of class <code>hms</code>. The <code>from ~ to</code> time
+formula is specified as only <code>HH:MM:SS</code>.</p><ul>
+<li><p><strong>Start to 5th second of the 12th hour:</strong> <code>'start' ~ '12:00:05'</code></p></li>
+<li><p><strong>Every second in the 12th hour:</strong> <code>~'12'</code></p></li>
 </ul>
     <p>This function respects <code><a href='http://dplyr.tidyverse.org/reference/group_by.html'>dplyr::group_by()</a></code> groups.</p>
     
@@ -188,93 +204,142 @@ but powerful shorthand is available. Some examples are:</p><ul>
   <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>symbol</span>)
 
 <span class='co'># 2013-01-01 to 2014-12-31</span>
-<span class='fu'>time_filter</span>(<span class='no'>FANG</span>, <span class='fl'>2013</span> ~ <span class='fl'>2014</span>)</div><div class='output co'>#&gt; # A time tibble: 2,016 x 8
-#&gt; # Index:  date
+<span class='fu'>time_filter</span>(<span class='no'>FANG</span>, <span class='st'>'2013'</span> ~ <span class='st'>'2014'</span>)</div><div class='output co'>#&gt; # A time tibble: 2,016 x 8
+#&gt; # Index: date
 #&gt; # Groups: symbol [4]
-#&gt;    symbol       date  open  high   low close    volume adjusted
-#&gt;  *  &lt;chr&gt;     &lt;date&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-#&gt;  1     FB 2013-01-02 27.44 28.18 27.42 28.00  69846400    28.00
-#&gt;  2     FB 2013-01-03 27.88 28.47 27.59 27.77  63140600    27.77
-#&gt;  3     FB 2013-01-04 28.01 28.93 27.83 28.76  72715400    28.76
-#&gt;  4     FB 2013-01-07 28.69 29.79 28.65 29.42  83781800    29.42
-#&gt;  5     FB 2013-01-08 29.51 29.60 28.86 29.06  45871300    29.06
-#&gt;  6     FB 2013-01-09 29.67 30.60 29.49 30.59 104787700    30.59
-#&gt;  7     FB 2013-01-10 30.60 31.45 30.28 31.30  95316400    31.30
-#&gt;  8     FB 2013-01-11 31.28 31.96 31.10 31.72  89598000    31.72
-#&gt;  9     FB 2013-01-14 32.08 32.21 30.62 30.95  98892800    30.95
-#&gt; 10     FB 2013-01-15 30.64 31.71 29.88 30.10 173242600    30.10
+#&gt;    symbol date        open  high   low close    volume adjusted
+#&gt;    &lt;chr&gt;  &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+#&gt;  1 FB     2013-01-02  27.4  28.2  27.4  28.0  69846400     28.0
+#&gt;  2 FB     2013-01-03  27.9  28.5  27.6  27.8  63140600     27.8
+#&gt;  3 FB     2013-01-04  28.0  28.9  27.8  28.8  72715400     28.8
+#&gt;  4 FB     2013-01-07  28.7  29.8  28.6  29.4  83781800     29.4
+#&gt;  5 FB     2013-01-08  29.5  29.6  28.9  29.1  45871300     29.1
+#&gt;  6 FB     2013-01-09  29.7  30.6  29.5  30.6 104787700     30.6
+#&gt;  7 FB     2013-01-10  30.6  31.5  30.3  31.3  95316400     31.3
+#&gt;  8 FB     2013-01-11  31.3  32.0  31.1  31.7  89598000     31.7
+#&gt;  9 FB     2013-01-14  32.1  32.2  30.6  31.0  98892800     31.0
+#&gt; 10 FB     2013-01-15  30.6  31.7  29.9  30.1 173242600     30.1
 #&gt; # ... with 2,006 more rows</div><div class='input'>
 <span class='co'># 2013-05-25 to 2014-06-04</span>
-<span class='fu'>time_filter</span>(<span class='no'>FANG</span>, <span class='fl'>2013</span>-<span class='fl'>05</span>-<span class='fl'>25</span> ~ <span class='fl'>2014</span>-<span class='fl'>06</span>-<span class='fl'>04</span>)</div><div class='output co'>#&gt; # A time tibble: 1,032 x 8
-#&gt; # Index:  date
+<span class='fu'>time_filter</span>(<span class='no'>FANG</span>, <span class='st'>'2013-05-25'</span> ~ <span class='st'>'2014-06-04'</span>)</div><div class='output co'>#&gt; # A time tibble: 1,032 x 8
+#&gt; # Index: date
 #&gt; # Groups: symbol [4]
-#&gt;    symbol       date  open  high   low close   volume adjusted
-#&gt;  *  &lt;chr&gt;     &lt;date&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
-#&gt;  1     FB 2013-05-28 24.54 24.54 23.92 24.10 50079700    24.10
-#&gt;  2     FB 2013-05-29 23.79 23.81 23.26 23.32 64237800    23.32
-#&gt;  3     FB 2013-05-30 24.13 24.78 23.93 24.55 60733200    24.55
-#&gt;  4     FB 2013-05-31 24.63 24.95 24.27 24.35 35925000    24.35
-#&gt;  5     FB 2013-06-03 24.27 24.32 23.71 23.85 35733800    23.85
-#&gt;  6     FB 2013-06-04 23.89 23.93 23.32 23.52 34760800    23.52
-#&gt;  7     FB 2013-06-05 23.35 23.71 22.79 22.90 53819700    22.90
-#&gt;  8     FB 2013-06-06 22.99 23.09 22.67 22.97 31260700    22.97
-#&gt;  9     FB 2013-06-07 23.03 23.40 22.86 23.29 38699200    23.29
-#&gt; 10     FB 2013-06-10 24.06 24.60 23.99 24.33 58393000    24.33
+#&gt;    symbol date        open  high   low close   volume adjusted
+#&gt;    &lt;chr&gt;  &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+#&gt;  1 FB     2013-05-28  24.5  24.5  23.9  24.1 50079700     24.1
+#&gt;  2 FB     2013-05-29  23.8  23.8  23.3  23.3 64237800     23.3
+#&gt;  3 FB     2013-05-30  24.1  24.8  23.9  24.5 60733200     24.5
+#&gt;  4 FB     2013-05-31  24.6  25.0  24.3  24.4 35925000     24.4
+#&gt;  5 FB     2013-06-03  24.3  24.3  23.7  23.8 35733800     23.8
+#&gt;  6 FB     2013-06-04  23.9  23.9  23.3  23.5 34760800     23.5
+#&gt;  7 FB     2013-06-05  23.4  23.7  22.8  22.9 53819700     22.9
+#&gt;  8 FB     2013-06-06  23.0  23.1  22.7  23.0 31260700     23.0
+#&gt;  9 FB     2013-06-07  23.0  23.4  22.9  23.3 38699200     23.3
+#&gt; 10 FB     2013-06-10  24.1  24.6  24.0  24.3 58393000     24.3
 #&gt; # ... with 1,022 more rows</div><div class='input'>
 <span class='co'># Using the `[` subset operator</span>
-<span class='no'>FANG</span>[<span class='fl'>2014</span>~<span class='fl'>2015</span>]</div><div class='output co'>#&gt; # A time tibble: 2,016 x 8
-#&gt; # Index:  date
+<span class='no'>FANG</span>[<span class='st'>'2014'</span>~<span class='st'>'2015'</span>]</div><div class='output co'>#&gt; # A time tibble: 2,016 x 8
+#&gt; # Index: date
 #&gt; # Groups: symbol [4]
-#&gt;    symbol       date  open  high   low close   volume adjusted
-#&gt;  *  &lt;chr&gt;     &lt;date&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
-#&gt;  1     FB 2014-01-02 54.83 55.22 54.19 54.71 43195500    54.71
-#&gt;  2     FB 2014-01-03 55.02 55.65 54.53 54.56 38246200    54.56
-#&gt;  3     FB 2014-01-06 54.42 57.26 54.05 57.20 68852600    57.20
-#&gt;  4     FB 2014-01-07 57.70 58.55 57.22 57.92 77207400    57.92
-#&gt;  5     FB 2014-01-08 57.60 58.41 57.23 58.23 56682400    58.23
-#&gt;  6     FB 2014-01-09 58.65 58.96 56.65 57.22 92253300    57.22
-#&gt;  7     FB 2014-01-10 57.13 58.30 57.06 57.94 42449500    57.94
-#&gt;  8     FB 2014-01-13 57.91 58.25 55.38 55.91 63010900    55.91
-#&gt;  9     FB 2014-01-14 56.46 57.78 56.10 57.74 37503600    57.74
-#&gt; 10     FB 2014-01-15 57.98 58.57 57.27 57.60 33663400    57.60
+#&gt;    symbol date        open  high   low close   volume adjusted
+#&gt;    &lt;chr&gt;  &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+#&gt;  1 FB     2014-01-02  54.8  55.2  54.2  54.7 43195500     54.7
+#&gt;  2 FB     2014-01-03  55.0  55.7  54.5  54.6 38246200     54.6
+#&gt;  3 FB     2014-01-06  54.4  57.3  54.0  57.2 68852600     57.2
+#&gt;  4 FB     2014-01-07  57.7  58.5  57.2  57.9 77207400     57.9
+#&gt;  5 FB     2014-01-08  57.6  58.4  57.2  58.2 56682400     58.2
+#&gt;  6 FB     2014-01-09  58.7  59.0  56.7  57.2 92253300     57.2
+#&gt;  7 FB     2014-01-10  57.1  58.3  57.1  57.9 42449500     57.9
+#&gt;  8 FB     2014-01-13  57.9  58.2  55.4  55.9 63010900     55.9
+#&gt;  9 FB     2014-01-14  56.5  57.8  56.1  57.7 37503600     57.7
+#&gt; 10 FB     2014-01-15  58.0  58.6  57.3  57.6 33663400     57.6
 #&gt; # ... with 2,006 more rows</div><div class='input'>
 <span class='co'># Using `[` and one sided formula for only dates in 2014</span>
-<span class='no'>FANG</span>[~<span class='fl'>2014</span>]</div><div class='output co'>#&gt; # A time tibble: 1,008 x 8
-#&gt; # Index:  date
+<span class='no'>FANG</span>[~<span class='st'>'2014'</span>]</div><div class='output co'>#&gt; # A time tibble: 1,008 x 8
+#&gt; # Index: date
 #&gt; # Groups: symbol [4]
-#&gt;    symbol       date  open  high   low close   volume adjusted
-#&gt;  *  &lt;chr&gt;     &lt;date&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
-#&gt;  1     FB 2014-01-02 54.83 55.22 54.19 54.71 43195500    54.71
-#&gt;  2     FB 2014-01-03 55.02 55.65 54.53 54.56 38246200    54.56
-#&gt;  3     FB 2014-01-06 54.42 57.26 54.05 57.20 68852600    57.20
-#&gt;  4     FB 2014-01-07 57.70 58.55 57.22 57.92 77207400    57.92
-#&gt;  5     FB 2014-01-08 57.60 58.41 57.23 58.23 56682400    58.23
-#&gt;  6     FB 2014-01-09 58.65 58.96 56.65 57.22 92253300    57.22
-#&gt;  7     FB 2014-01-10 57.13 58.30 57.06 57.94 42449500    57.94
-#&gt;  8     FB 2014-01-13 57.91 58.25 55.38 55.91 63010900    55.91
-#&gt;  9     FB 2014-01-14 56.46 57.78 56.10 57.74 37503600    57.74
-#&gt; 10     FB 2014-01-15 57.98 58.57 57.27 57.60 33663400    57.60
+#&gt;    symbol date        open  high   low close   volume adjusted
+#&gt;    &lt;chr&gt;  &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+#&gt;  1 FB     2014-01-02  54.8  55.2  54.2  54.7 43195500     54.7
+#&gt;  2 FB     2014-01-03  55.0  55.7  54.5  54.6 38246200     54.6
+#&gt;  3 FB     2014-01-06  54.4  57.3  54.0  57.2 68852600     57.2
+#&gt;  4 FB     2014-01-07  57.7  58.5  57.2  57.9 77207400     57.9
+#&gt;  5 FB     2014-01-08  57.6  58.4  57.2  58.2 56682400     58.2
+#&gt;  6 FB     2014-01-09  58.7  59.0  56.7  57.2 92253300     57.2
+#&gt;  7 FB     2014-01-10  57.1  58.3  57.1  57.9 42449500     57.9
+#&gt;  8 FB     2014-01-13  57.9  58.2  55.4  55.9 63010900     55.9
+#&gt;  9 FB     2014-01-14  56.5  57.8  56.1  57.7 37503600     57.7
+#&gt; 10 FB     2014-01-15  58.0  58.6  57.3  57.6 33663400     57.6
 #&gt; # ... with 998 more rows</div><div class='input'>
 <span class='co'># Using `[` and column selection</span>
-<span class='no'>FANG</span>[<span class='fl'>2013</span>~<span class='fl'>2016</span>, <span class='fu'>c</span>(<span class='st'>"date"</span>, <span class='st'>"adjusted"</span>)]</div><div class='output co'>#&gt; # A time tibble: 4,032 x 2
+<span class='no'>FANG</span>[<span class='st'>'2013'</span>~<span class='st'>'2016'</span>, <span class='fu'>c</span>(<span class='st'>"date"</span>, <span class='st'>"adjusted"</span>)]</div><div class='output co'>#&gt; # A time tibble: 4,032 x 2
 #&gt; # Index: date
-#&gt;          date adjusted
-#&gt;  *     &lt;date&gt;    &lt;dbl&gt;
-#&gt;  1 2013-01-02    28.00
-#&gt;  2 2013-01-03    27.77
-#&gt;  3 2013-01-04    28.76
-#&gt;  4 2013-01-07    29.42
-#&gt;  5 2013-01-08    29.06
-#&gt;  6 2013-01-09    30.59
-#&gt;  7 2013-01-10    31.30
-#&gt;  8 2013-01-11    31.72
-#&gt;  9 2013-01-14    30.95
-#&gt; 10 2013-01-15    30.10
+#&gt;    date       adjusted
+#&gt;    &lt;date&gt;        &lt;dbl&gt;
+#&gt;  1 2013-01-02     28.0
+#&gt;  2 2013-01-03     27.8
+#&gt;  3 2013-01-04     28.8
+#&gt;  4 2013-01-07     29.4
+#&gt;  5 2013-01-08     29.1
+#&gt;  6 2013-01-09     30.6
+#&gt;  7 2013-01-10     31.3
+#&gt;  8 2013-01-11     31.7
+#&gt;  9 2013-01-14     31.0
+#&gt; 10 2013-01-15     30.1
 #&gt; # ... with 4,022 more rows</div><div class='input'>
-<span class='co'># You can filter with variables</span>
+<span class='co'># Variables are unquoted using rlang</span>
 <span class='no'>lhs_date</span> <span class='kw'>&lt;-</span> <span class='st'>"2013"</span>
 <span class='no'>rhs_date</span> <span class='kw'>&lt;-</span> <span class='fu'>as.Date</span>(<span class='st'>"2014-01-01"</span>)
-<span class='fu'>time_filter</span>(<span class='no'>FANG</span>, <span class='no'>lhs_date</span> ~ <span class='no'>rhs_date</span>)</div><div class='output co'>#&gt; <span class='error'>Error in overscope_eval_next(overscope, expr): object 'lhs_date' not found</span></div><div class='input'>
+<span class='fu'>time_filter</span>(<span class='no'>FANG</span>, <span class='no'>lhs_date</span> ~ <span class='no'>rhs_date</span>)</div><div class='output co'>#&gt; # A time tibble: 1,008 x 8
+#&gt; # Index: date
+#&gt; # Groups: symbol [4]
+#&gt;    symbol date        open  high   low close    volume adjusted
+#&gt;    &lt;chr&gt;  &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+#&gt;  1 FB     2013-01-02  27.4  28.2  27.4  28.0  69846400     28.0
+#&gt;  2 FB     2013-01-03  27.9  28.5  27.6  27.8  63140600     27.8
+#&gt;  3 FB     2013-01-04  28.0  28.9  27.8  28.8  72715400     28.8
+#&gt;  4 FB     2013-01-07  28.7  29.8  28.6  29.4  83781800     29.4
+#&gt;  5 FB     2013-01-08  29.5  29.6  28.9  29.1  45871300     29.1
+#&gt;  6 FB     2013-01-09  29.7  30.6  29.5  30.6 104787700     30.6
+#&gt;  7 FB     2013-01-10  30.6  31.5  30.3  31.3  95316400     31.3
+#&gt;  8 FB     2013-01-11  31.3  32.0  31.1  31.7  89598000     31.7
+#&gt;  9 FB     2013-01-14  32.1  32.2  30.6  31.0  98892800     31.0
+#&gt; 10 FB     2013-01-15  30.6  31.7  29.9  30.1 173242600     30.1
+#&gt; # ... with 998 more rows</div><div class='input'>
+<span class='co'># Use the keywords 'start' and 'end' to conveniently access ends</span>
+<span class='fu'>time_filter</span>(<span class='no'>FANG</span>, <span class='st'>'start'</span> ~ <span class='st'>'2014'</span>)</div><div class='output co'>#&gt; # A time tibble: 2,016 x 8
+#&gt; # Index: date
+#&gt; # Groups: symbol [4]
+#&gt;    symbol date        open  high   low close    volume adjusted
+#&gt;    &lt;chr&gt;  &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+#&gt;  1 FB     2013-01-02  27.4  28.2  27.4  28.0  69846400     28.0
+#&gt;  2 FB     2013-01-03  27.9  28.5  27.6  27.8  63140600     27.8
+#&gt;  3 FB     2013-01-04  28.0  28.9  27.8  28.8  72715400     28.8
+#&gt;  4 FB     2013-01-07  28.7  29.8  28.6  29.4  83781800     29.4
+#&gt;  5 FB     2013-01-08  29.5  29.6  28.9  29.1  45871300     29.1
+#&gt;  6 FB     2013-01-09  29.7  30.6  29.5  30.6 104787700     30.6
+#&gt;  7 FB     2013-01-10  30.6  31.5  30.3  31.3  95316400     31.3
+#&gt;  8 FB     2013-01-11  31.3  32.0  31.1  31.7  89598000     31.7
+#&gt;  9 FB     2013-01-14  32.1  32.2  30.6  31.0  98892800     31.0
+#&gt; 10 FB     2013-01-15  30.6  31.7  29.9  30.1 173242600     30.1
+#&gt; # ... with 2,006 more rows</div><div class='input'>
+<span class='co'># hms (hour, minute, second) classes have special parsing</span>
+<span class='no'>hms_example</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='create_series.html'>create_series</a></span>(~<span class='st'>'12:01'</span>, <span class='st'>'second'</span>, <span class='kw'>class</span> <span class='kw'>=</span> <span class='st'>'hms'</span>)
+<span class='fu'>time_filter</span>(<span class='no'>hms_example</span>, <span class='st'>'start'</span> ~ <span class='st'>'12:01:30'</span>)</div><div class='output co'>#&gt; # A time tibble: 31 x 1
+#&gt; # Index: date
+#&gt;    date    
+#&gt;    &lt;time&gt;  
+#&gt;  1 12:01:00
+#&gt;  2 12:01:01
+#&gt;  3 12:01:02
+#&gt;  4 12:01:03
+#&gt;  5 12:01:04
+#&gt;  6 12:01:05
+#&gt;  7 12:01:06
+#&gt;  8 12:01:07
+#&gt;  9 12:01:08
+#&gt; 10 12:01:09
+#&gt; # ... with 21 more rows</div><div class='input'>
 
 </div></pre>
   </div>

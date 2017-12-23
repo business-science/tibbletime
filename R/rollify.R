@@ -18,9 +18,10 @@
 #' of itself for use inside of a call to [dplyr::mutate()], however it works
 #' equally as well when called from [purrr::map()].
 #'
-#' Because of it's intended use with [dplyr::mutate()], `rollify` always
-#' returns output with the same length of the input, aligned right, and filled
-#' with `NA` unless otherwise specified by `na_value`.
+#' Because of it's intended use with [dplyr::mutate()], `rollify`
+#' creates a function that always returns output with the same length of the
+#' input, aligned right, and filled with `NA` unless otherwise specified
+#' by `na_value`.
 #'
 #' The form of the `.f` argument is the same as the form that can be passed
 #' to [purrr::map()]. Use `.x` or `.` to refer to the first object to roll over,

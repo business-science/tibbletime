@@ -13,14 +13,14 @@ navbar:
     - text: "Vignettes"
       href: articles/index.html
       menu:
-        - text: "Introduction to tibbletime"
-          href: articles/TT-00-intro-to-tibbletime.html
         - text: "Time-based filtering"
           href: articles/TT-01-time-based-filtering.html
         - text: "Changing periodicity"
           href: articles/TT-02-changing-time-periods.html
         - text: "Rolling calculations in tibbletime"
           href: articles/TT-03-rollify-for-rolling-analysis.html
+        - text: "Using tibbletime with dplyr"
+          href: articles/TT-04-use-with-dplyr.html
     - text: "News"
       href: news/index.html
 

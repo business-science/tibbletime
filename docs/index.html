@@ -51,9 +51,6 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="articles/TT-00-intro-to-tibbletime.html">Introduction to tibbletime</a>
-    </li>
-    <li>
       <a href="articles/TT-01-time-based-filtering.html">Time-based filtering</a>
     </li>
     <li>
@@ -61,6 +58,9 @@
     </li>
     <li>
       <a href="articles/TT-03-rollify-for-rolling-analysis.html">Rolling calculations in tibbletime</a>
+    </li>
+    <li>
+      <a href="articles/TT-04-use-with-dplyr.html">Using tibbletime with dplyr</a>
     </li>
   </ul>
 </li>
@@ -104,12 +104,12 @@
 <p>Some immediate advantages of this include:</p>
 <ol style="list-style-type: decimal">
 <li><p>The ability to perform compact time-based subsetting on tibbles.</p></li>
-<li><p>Quickly summarising and aggregating results by time period (yearly, monthly, every 2 weeks, etc).</p></li>
-<li><p>Changing the periodicity of a time-based tibble. This means changing from a daily dataset to a monthly or yearly dataset.</p></li>
-<li><p>Calling functions similar in spirit to the <code><a href="http://www.rdocumentation.org/packages/purrr/topics/map">purrr::map()</a></code> family on time-based tibbles.</p></li>
+<li><p>Partitioning an index column by time (like yearly, monthly, every 2 weeks, etc.) so that you can use <code>dplyr</code>’s grouped functionality to summarise and aggregate by time period.</p></li>
+<li><p>Changing the periodicity of a time-based tibble. This allows easily changing from a daily dataset to a monthly or yearly dataset.</p></li>
 <li><p>All functions were designed to support the pipe and to work with packages like <code>dplyr</code> and <code>tidyr</code>. Each function has also been designed to work with <code><a href="http://dplyr.tidyverse.org/reference/group_by.html">dplyr::group_by()</a></code> allowing for powerful data manipulation.</p></li>
 <li><p>Modifying functions for rolling analysis.</p></li>
 <li><p>Quickly creating <code>tbl_time</code> time series objects.</p></li>
+<li><p>Full support for <code>Date</code> and <code>POSIXct</code> index columns, and experimental support for <code>yearmon</code>, <code>yearqtr</code> and <code>hms</code> which should become more stable as some issues in <code>dplyr</code> are worked out.</p></li>
 </ol>
 </div>
 <div id="installation" class="section level2">
@@ -120,6 +120,11 @@
 devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"business-science/tibbletime"</span>)</code></pre></div>
 <p>CRAN Version:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">"tibbletime"</span>)</code></pre></div>
+</div>
+<div id="major-update-warning" class="section level2">
+<h2 class="hasAnchor">
+<a href="#major-update-warning" class="anchor"></a>Major update warning</h2>
+<p>If you have been using <code>0.0.2</code>, the update to <code>0.1.0</code> has introduced major breaking changes. This was necessary for long term stability of the package, and no attempt to support backwards compatability was made at this early stage in development. We apologize for any issues this causes. See NEWS for complete details.</p>
 </div>
 <div id="getting-started" class="section level2">
 <h2 class="hasAnchor">
@@ -132,130 +137,138 @@ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocument
 <span class="kw">data</span>(FB)
 
 <span class="co"># Convert FB to tbl_time</span>
-FB &lt;-<span class="st"> </span>FB <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/tbl_time.html">as_tbl_time</a></span>(<span class="dt">index =</span> date)
+FB &lt;-<span class="st"> </span><span class="kw"><a href="reference/tbl_time.html">as_tbl_time</a></span>(FB, <span class="dt">index =</span> date)
 
 FB
 <span class="co">#&gt; # A time tibble: 1,008 x 8</span>
 <span class="co">#&gt; # Index: date</span>
-<span class="co">#&gt;    symbol       date  open  high   low close    volume adjusted</span>
-<span class="co">#&gt;     &lt;chr&gt;     &lt;date&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;</span>
-<span class="co">#&gt;  1     FB 2013-01-02 27.44 28.18 27.42 28.00  69846400    28.00</span>
-<span class="co">#&gt;  2     FB 2013-01-03 27.88 28.47 27.59 27.77  63140600    27.77</span>
-<span class="co">#&gt;  3     FB 2013-01-04 28.01 28.93 27.83 28.76  72715400    28.76</span>
-<span class="co">#&gt;  4     FB 2013-01-07 28.69 29.79 28.65 29.42  83781800    29.42</span>
-<span class="co">#&gt;  5     FB 2013-01-08 29.51 29.60 28.86 29.06  45871300    29.06</span>
-<span class="co">#&gt;  6     FB 2013-01-09 29.67 30.60 29.49 30.59 104787700    30.59</span>
-<span class="co">#&gt;  7     FB 2013-01-10 30.60 31.45 30.28 31.30  95316400    31.30</span>
-<span class="co">#&gt;  8     FB 2013-01-11 31.28 31.96 31.10 31.72  89598000    31.72</span>
-<span class="co">#&gt;  9     FB 2013-01-14 32.08 32.21 30.62 30.95  98892800    30.95</span>
-<span class="co">#&gt; 10     FB 2013-01-15 30.64 31.71 29.88 30.10 173242600    30.10</span>
+<span class="co">#&gt;    symbol date        open  high   low close    volume adjusted</span>
+<span class="co">#&gt;    &lt;chr&gt;  &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;</span>
+<span class="co">#&gt;  1 FB     2013-01-02  27.4  28.2  27.4  28.0  69846400     28.0</span>
+<span class="co">#&gt;  2 FB     2013-01-03  27.9  28.5  27.6  27.8  63140600     27.8</span>
+<span class="co">#&gt;  3 FB     2013-01-04  28.0  28.9  27.8  28.8  72715400     28.8</span>
+<span class="co">#&gt;  4 FB     2013-01-07  28.7  29.8  28.6  29.4  83781800     29.4</span>
+<span class="co">#&gt;  5 FB     2013-01-08  29.5  29.6  28.9  29.1  45871300     29.1</span>
+<span class="co">#&gt;  6 FB     2013-01-09  29.7  30.6  29.5  30.6 104787700     30.6</span>
+<span class="co">#&gt;  7 FB     2013-01-10  30.6  31.5  30.3  31.3  95316400     31.3</span>
+<span class="co">#&gt;  8 FB     2013-01-11  31.3  32.0  31.1  31.7  89598000     31.7</span>
+<span class="co">#&gt;  9 FB     2013-01-14  32.1  32.2  30.6  31.0  98892800     31.0</span>
+<span class="co">#&gt; 10 FB     2013-01-15  30.6  31.7  29.9  30.1 173242600     30.1</span>
 <span class="co">#&gt; # ... with 998 more rows</span></code></pre></div>
 <p>There are a number of functions that were designed specifically for <code>tbl_time</code> objects. Some of them are:</p>
 <ol style="list-style-type: decimal">
 <li><p><code><a href="reference/time_filter.html">time_filter()</a></code> - Succinctly filter a tbl_time object by date.</p></li>
-<li><p><code><a href="reference/time_summarise.html">time_summarise()</a></code> - Similar to dplyr::summarise but with the added benefit of being able to summarise by a time period such as “yearly” or “monthly”.</p></li>
-<li><p><code><a href="reference/tmap.html">tmap()</a></code> - The family of tmap functions transform a tbl_time input by applying a function to each column at a specified time interval.</p></li>
 <li><p><code><a href="reference/as_period.html">as_period()</a></code> - Convert a tbl_time object from daily to monthly, from minute data to hourly, and more. This allows the user to easily aggregate data to a less granular level.</p></li>
-<li><p><code><a href="reference/time_collapse.html">time_collapse()</a></code> - When time_collapse is used, the index of a tbl_time object is altered so that all dates that fall in a period share a common date.</p></li>
+<li><p><code><a href="reference/collapse_index.html">collapse_index()</a></code> - Take an index column, and collapse it so that all observations in an interval share the same date. The most common use of this is to then group on this column with <code><a href="http://dplyr.tidyverse.org/reference/group_by.html">dplyr::group_by()</a></code> and perform time-based calculations with <code><a href="http://dplyr.tidyverse.org/reference/summarise.html">summarise()</a></code>, <code><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> or any other <code>dplyr</code> function.</p></li>
+<li><p><code><a href="reference/partition_index.html">partition_index()</a></code> - A lower level version of <code><a href="reference/collapse_index.html">collapse_index()</a></code>. Rather than collapse the index directly, this returns a column of integers that correspond to the groups.</p></li>
 <li><p><code><a href="reference/rollify.html">rollify()</a></code> - Modify a function so that it calculates a value (or a set of values) at specific time intervals. This can be used for rolling averages and other rolling calculations inside the <code>tidyverse</code> framework.</p></li>
 <li><p><code><a href="reference/create_series.html">create_series()</a></code> - Use shorthand notation to quickly initialize a <code>tbl_time</code> object containing a <code>date</code> column with a regularly spaced time series.</p></li>
 </ol>
 <p>To look at just a few:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Filter for dates from March 2013 to December 2015</span>
 FB <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="reference/time_filter.html">time_filter</a></span>(<span class="dv">2013</span><span class="op">-</span><span class="dv">03</span> <span class="op">~</span><span class="st"> </span><span class="dv">2015</span>)
+<span class="st">  </span><span class="kw"><a href="reference/time_filter.html">time_filter</a></span>(<span class="st">'2013-03'</span> <span class="op">~</span><span class="st"> '2015'</span>)
 <span class="co">#&gt; # A time tibble: 716 x 8</span>
 <span class="co">#&gt; # Index: date</span>
-<span class="co">#&gt;    symbol       date  open  high   low close   volume adjusted</span>
-<span class="co">#&gt;  *  &lt;chr&gt;     &lt;date&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;</span>
-<span class="co">#&gt;  1     FB 2013-03-01 27.05 28.12 26.81 27.78 54064800    27.78</span>
-<span class="co">#&gt;  2     FB 2013-03-04 27.76 28.06 27.44 27.72 32400700    27.72</span>
-<span class="co">#&gt;  3     FB 2013-03-05 27.88 28.18 27.21 27.52 40622200    27.52</span>
-<span class="co">#&gt;  4     FB 2013-03-06 28.10 28.13 27.35 27.45 33532600    27.45</span>
-<span class="co">#&gt;  5     FB 2013-03-07 27.57 28.68 27.47 28.58 74540200    28.58</span>
-<span class="co">#&gt;  6     FB 2013-03-08 28.43 28.47 27.73 27.96 44198900    27.96</span>
-<span class="co">#&gt;  7     FB 2013-03-11 28.01 28.64 27.83 28.14 35642100    28.14</span>
-<span class="co">#&gt;  8     FB 2013-03-12 28.10 28.32 27.60 27.83 27569600    27.83</span>
-<span class="co">#&gt;  9     FB 2013-03-13 27.62 27.65 26.92 27.08 39619500    27.08</span>
-<span class="co">#&gt; 10     FB 2013-03-14 27.10 27.43 26.83 27.04 27646400    27.04</span>
+<span class="co">#&gt;    symbol date        open  high   low close   volume adjusted</span>
+<span class="co">#&gt;    &lt;chr&gt;  &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;</span>
+<span class="co">#&gt;  1 FB     2013-03-01  27.0  28.1  26.8  27.8 54064800     27.8</span>
+<span class="co">#&gt;  2 FB     2013-03-04  27.8  28.1  27.4  27.7 32400700     27.7</span>
+<span class="co">#&gt;  3 FB     2013-03-05  27.9  28.2  27.2  27.5 40622200     27.5</span>
+<span class="co">#&gt;  4 FB     2013-03-06  28.1  28.1  27.4  27.5 33532600     27.5</span>
+<span class="co">#&gt;  5 FB     2013-03-07  27.6  28.7  27.5  28.6 74540200     28.6</span>
+<span class="co">#&gt;  6 FB     2013-03-08  28.4  28.5  27.7  28.0 44198900     28.0</span>
+<span class="co">#&gt;  7 FB     2013-03-11  28.0  28.6  27.8  28.1 35642100     28.1</span>
+<span class="co">#&gt;  8 FB     2013-03-12  28.1  28.3  27.6  27.8 27569600     27.8</span>
+<span class="co">#&gt;  9 FB     2013-03-13  27.6  27.6  26.9  27.1 39619500     27.1</span>
+<span class="co">#&gt; 10 FB     2013-03-14  27.1  27.4  26.8  27.0 27646400     27.0</span>
 <span class="co">#&gt; # ... with 706 more rows</span>
 
 <span class="co"># Change from daily to monthly periodicity</span>
+<span class="co"># This just reduces the tibble to the last row in each month</span>
 FB <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="reference/as_period.html">as_period</a></span>(<span class="st">"monthly"</span>)
+<span class="st">  </span><span class="kw"><a href="reference/as_period.html">as_period</a></span>(<span class="st">"monthly"</span>, <span class="dt">side =</span> <span class="st">"end"</span>)
 <span class="co">#&gt; # A time tibble: 48 x 8</span>
 <span class="co">#&gt; # Index: date</span>
-<span class="co">#&gt;    symbol       date  open  high   low close    volume adjusted</span>
-<span class="co">#&gt;  *  &lt;chr&gt;     &lt;date&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;</span>
-<span class="co">#&gt;  1     FB 2013-01-02 27.44 28.18 27.42 28.00  69846400    28.00</span>
-<span class="co">#&gt;  2     FB 2013-02-01 31.01 31.02 29.63 29.73  85856700    29.73</span>
-<span class="co">#&gt;  3     FB 2013-03-01 27.05 28.12 26.81 27.78  54064800    27.78</span>
-<span class="co">#&gt;  4     FB 2013-04-01 25.63 25.89 25.28 25.53  22249300    25.53</span>
-<span class="co">#&gt;  5     FB 2013-05-01 27.85 27.92 27.31 27.43  64567600    27.43</span>
-<span class="co">#&gt;  6     FB 2013-06-03 24.27 24.32 23.71 23.85  35733800    23.85</span>
-<span class="co">#&gt;  7     FB 2013-07-01 24.97 25.06 24.62 24.81  20582200    24.81</span>
-<span class="co">#&gt;  8     FB 2013-08-01 37.30 38.29 36.92 37.49 106066500    37.49</span>
-<span class="co">#&gt;  9     FB 2013-09-03 41.84 42.16 41.51 41.87  48774900    41.87</span>
-<span class="co">#&gt; 10     FB 2013-10-01 49.97 51.03 49.45 50.42  98114000    50.42</span>
+<span class="co">#&gt;    symbol date        open  high   low close    volume adjusted</span>
+<span class="co">#&gt;    &lt;chr&gt;  &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;</span>
+<span class="co">#&gt;  1 FB     2013-01-31  29.2  31.5  28.7  31.0 190744900     31.0</span>
+<span class="co">#&gt;  2 FB     2013-02-28  26.8  27.3  26.3  27.2  83027800     27.2</span>
+<span class="co">#&gt;  3 FB     2013-03-28  26.1  26.2  25.5  25.6  28585700     25.6</span>
+<span class="co">#&gt;  4 FB     2013-04-30  27.1  27.8  27.0  27.8  36245700     27.8</span>
+<span class="co">#&gt;  5 FB     2013-05-31  24.6  25.0  24.3  24.4  35925000     24.4</span>
+<span class="co">#&gt;  6 FB     2013-06-28  24.7  25.0  24.4  24.9  96778900     24.9</span>
+<span class="co">#&gt;  7 FB     2013-07-31  38.0  38.3  36.3  36.8 154828700     36.8</span>
+<span class="co">#&gt;  8 FB     2013-08-30  42.0  42.3  41.1  41.3  67735100     41.3</span>
+<span class="co">#&gt;  9 FB     2013-09-30  50.1  51.6  49.8  50.2 100095000     50.2</span>
+<span class="co">#&gt; 10 FB     2013-10-31  47.2  52.0  46.5  50.2 248809000     50.2</span>
 <span class="co">#&gt; # ... with 38 more rows</span>
 
-<span class="co"># Get the average mean and standard deviation for each year</span>
+<span class="co"># Maybe you don't want to lose the rest of the month's information,</span>
+<span class="co"># and instead you'd like to take the average of every column for each month</span>
 FB <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw"><a href="reference/time_summarise.html">time_summarise</a></span>(<span class="dt">period =</span> <span class="dv">1</span><span class="op">~</span>y,
-        <span class="dt">adj_mean =</span> <span class="kw">mean</span>(adjusted),
-        <span class="dt">adj_sd   =</span> <span class="kw">sd</span>(adjusted))
-<span class="co">#&gt; # A time tibble: 4 x 3</span>
+<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="op">-</span>symbol) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">date =</span> <span class="kw"><a href="reference/collapse_index.html">collapse_index</a></span>(date, <span class="st">"monthly"</span>, <span class="dt">side =</span> <span class="st">"end"</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(date) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/summarise_all.html">summarise_all</a></span>(mean)
+<span class="co">#&gt; # A time tibble: 48 x 7</span>
 <span class="co">#&gt; # Index: date</span>
-<span class="co">#&gt;         date  adj_mean    adj_sd</span>
-<span class="co">#&gt; *     &lt;date&gt;     &lt;dbl&gt;     &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 2013-12-31  35.48115 10.621172</span>
-<span class="co">#&gt; 2 2014-12-31  68.76234  7.502259</span>
-<span class="co">#&gt; 3 2015-12-31  88.77286 10.211442</span>
-<span class="co">#&gt; 4 2016-12-30 117.03587  8.899858</span>
+<span class="co">#&gt;    date        open  high   low close   volume adjusted</span>
+<span class="co">#&gt;    &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;</span>
+<span class="co">#&gt;  1 2013-01-31  30.2  30.8  29.8  30.3 79802462     30.3</span>
+<span class="co">#&gt;  2 2013-02-28  28.3  28.6  27.7  28.1 50402095     28.1</span>
+<span class="co">#&gt;  3 2013-03-28  26.9  27.2  26.5  26.8 36359025     26.8</span>
+<span class="co">#&gt;  4 2013-04-30  26.6  27.0  26.2  26.6 33568600     26.6</span>
+<span class="co">#&gt;  5 2013-05-31  26.4  26.6  25.9  26.1 44640673     26.1</span>
+<span class="co">#&gt;  6 2013-06-28  24.0  24.3  23.7  23.9 39416575     23.9</span>
+<span class="co">#&gt;  7 2013-07-31  27.7  28.2  27.4  27.9 65364414     27.9</span>
+<span class="co">#&gt;  8 2013-08-30  38.7  39.3  38.2  38.7 61136095     38.7</span>
+<span class="co">#&gt;  9 2013-09-30  45.5  46.3  44.9  45.8 79154190     45.8</span>
+<span class="co">#&gt; 10 2013-10-31  50.7  51.5  49.7  50.5 88375435     50.5</span>
+<span class="co">#&gt; # ... with 38 more rows</span>
 
 <span class="co"># Perform a 5 period rolling average</span>
 mean_<span class="dv">5</span> &lt;-<span class="st"> </span><span class="kw"><a href="reference/rollify.html">rollify</a></span>(mean, <span class="dt">window =</span> <span class="dv">5</span>)
-FB <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">roll_mean =</span> <span class="kw">mean_5</span>(adjusted))
+<span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(FB, <span class="dt">roll_mean =</span> <span class="kw">mean_5</span>(adjusted))
 <span class="co">#&gt; # A time tibble: 1,008 x 9</span>
 <span class="co">#&gt; # Index: date</span>
-<span class="co">#&gt;    symbol       date  open  high   low close    volume adjusted roll_mean</span>
-<span class="co">#&gt;  *  &lt;chr&gt;     &lt;date&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;</span>
-<span class="co">#&gt;  1     FB 2013-01-02 27.44 28.18 27.42 28.00  69846400    28.00        NA</span>
-<span class="co">#&gt;  2     FB 2013-01-03 27.88 28.47 27.59 27.77  63140600    27.77        NA</span>
-<span class="co">#&gt;  3     FB 2013-01-04 28.01 28.93 27.83 28.76  72715400    28.76        NA</span>
-<span class="co">#&gt;  4     FB 2013-01-07 28.69 29.79 28.65 29.42  83781800    29.42        NA</span>
-<span class="co">#&gt;  5     FB 2013-01-08 29.51 29.60 28.86 29.06  45871300    29.06    28.602</span>
-<span class="co">#&gt;  6     FB 2013-01-09 29.67 30.60 29.49 30.59 104787700    30.59    29.120</span>
-<span class="co">#&gt;  7     FB 2013-01-10 30.60 31.45 30.28 31.30  95316400    31.30    29.826</span>
-<span class="co">#&gt;  8     FB 2013-01-11 31.28 31.96 31.10 31.72  89598000    31.72    30.418</span>
-<span class="co">#&gt;  9     FB 2013-01-14 32.08 32.21 30.62 30.95  98892800    30.95    30.724</span>
-<span class="co">#&gt; 10     FB 2013-01-15 30.64 31.71 29.88 30.10 173242600    30.10    30.932</span>
+<span class="co">#&gt;    symbol date        open  high   low close    volume adjusted roll_mean</span>
+<span class="co">#&gt;    &lt;chr&gt;  &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;</span>
+<span class="co">#&gt;  1 FB     2013-01-02  27.4  28.2  27.4  28.0  69846400     28.0      NA  </span>
+<span class="co">#&gt;  2 FB     2013-01-03  27.9  28.5  27.6  27.8  63140600     27.8      NA  </span>
+<span class="co">#&gt;  3 FB     2013-01-04  28.0  28.9  27.8  28.8  72715400     28.8      NA  </span>
+<span class="co">#&gt;  4 FB     2013-01-07  28.7  29.8  28.6  29.4  83781800     29.4      NA  </span>
+<span class="co">#&gt;  5 FB     2013-01-08  29.5  29.6  28.9  29.1  45871300     29.1      28.6</span>
+<span class="co">#&gt;  6 FB     2013-01-09  29.7  30.6  29.5  30.6 104787700     30.6      29.1</span>
+<span class="co">#&gt;  7 FB     2013-01-10  30.6  31.5  30.3  31.3  95316400     31.3      29.8</span>
+<span class="co">#&gt;  8 FB     2013-01-11  31.3  32.0  31.1  31.7  89598000     31.7      30.4</span>
+<span class="co">#&gt;  9 FB     2013-01-14  32.1  32.2  30.6  31.0  98892800     31.0      30.7</span>
+<span class="co">#&gt; 10 FB     2013-01-15  30.6  31.7  29.9  30.1 173242600     30.1      30.9</span>
 <span class="co">#&gt; # ... with 998 more rows</span>
 
 <span class="co"># Create a time series</span>
 <span class="co"># Every other day in 2013</span>
-<span class="kw"><a href="reference/create_series.html">create_series</a></span>(<span class="op">~</span><span class="dv">2013</span>, <span class="dv">2</span><span class="op">~</span>d)
+<span class="kw"><a href="reference/create_series.html">create_series</a></span>(<span class="op">~</span><span class="st">'2013'</span>, <span class="st">'2 day'</span>)
 <span class="co">#&gt; # A time tibble: 183 x 1</span>
 <span class="co">#&gt; # Index: date</span>
-<span class="co">#&gt;          date</span>
-<span class="co">#&gt;        &lt;date&gt;</span>
-<span class="co">#&gt;  1 2013-01-01</span>
-<span class="co">#&gt;  2 2013-01-03</span>
-<span class="co">#&gt;  3 2013-01-05</span>
-<span class="co">#&gt;  4 2013-01-07</span>
-<span class="co">#&gt;  5 2013-01-09</span>
-<span class="co">#&gt;  6 2013-01-11</span>
-<span class="co">#&gt;  7 2013-01-13</span>
-<span class="co">#&gt;  8 2013-01-15</span>
-<span class="co">#&gt;  9 2013-01-17</span>
-<span class="co">#&gt; 10 2013-01-19</span>
+<span class="co">#&gt;    date               </span>
+<span class="co">#&gt;    &lt;dttm&gt;             </span>
+<span class="co">#&gt;  1 2013-01-01 00:00:00</span>
+<span class="co">#&gt;  2 2013-01-03 00:00:00</span>
+<span class="co">#&gt;  3 2013-01-05 00:00:00</span>
+<span class="co">#&gt;  4 2013-01-07 00:00:00</span>
+<span class="co">#&gt;  5 2013-01-09 00:00:00</span>
+<span class="co">#&gt;  6 2013-01-11 00:00:00</span>
+<span class="co">#&gt;  7 2013-01-13 00:00:00</span>
+<span class="co">#&gt;  8 2013-01-15 00:00:00</span>
+<span class="co">#&gt;  9 2013-01-17 00:00:00</span>
+<span class="co">#&gt; 10 2013-01-19 00:00:00</span>
 <span class="co">#&gt; # ... with 173 more rows</span></code></pre></div>
 </div>
 <div id="grouping" class="section level2">
 <h2 class="hasAnchor">
 <a href="#grouping" class="anchor"></a>Grouping</h2>
-<p>Groups created through <code><a href="http://dplyr.tidyverse.org/reference/group_by.html">dplyr::group_by()</a></code> are supported throughout the package.</p>
+<p>Groups created through <code><a href="http://dplyr.tidyverse.org/reference/group_by.html">dplyr::group_by()</a></code> are supported throughout the package. Because <code><a href="reference/collapse_index.html">collapse_index()</a></code> is just adding a column you can group on, all dplyr functions are supported.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Facebook, Amazon, Netflix and Google stocks</span>
 <span class="kw">data</span>(FANG)
 
@@ -263,47 +276,56 @@ FB <span class="op">%&gt;%</span>
 FANG <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="reference/tbl_time.html">as_tbl_time</a></span>(date) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(symbol) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw"><a href="reference/time_summarise.html">time_summarise</a></span>(<span class="dt">period =</span> <span class="st">"yearly"</span>,
-        <span class="dt">adj_min   =</span> <span class="kw">min</span>(adjusted),
-        <span class="dt">adj_max   =</span> <span class="kw">max</span>(adjusted),
-        <span class="dt">adj_range =</span> adj_max <span class="op">-</span><span class="st"> </span>adj_min)
+<span class="st">  </span>
+<span class="st">  </span><span class="co"># Collapse to yearly</span>
+<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">date =</span> <span class="kw"><a href="reference/collapse_index.html">collapse_index</a></span>(date, <span class="st">"yearly"</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span>
+<span class="st">  </span><span class="co"># Additionally group by date (yearly)</span>
+<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(date, <span class="dt">add =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span>
+<span class="st">  </span><span class="co"># Perform a yearly summary for each symbol</span>
+<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span>(
+    <span class="dt">adj_min   =</span> <span class="kw">min</span>(adjusted),
+    <span class="dt">adj_max   =</span> <span class="kw">max</span>(adjusted),
+    <span class="dt">adj_range =</span> adj_max <span class="op">-</span><span class="st"> </span>adj_min
+  )
 <span class="co">#&gt; # A time tibble: 16 x 5</span>
-<span class="co">#&gt; # Index:  date</span>
-<span class="co">#&gt; # Groups: symbol [4]</span>
-<span class="co">#&gt;    symbol       date   adj_min   adj_max adj_range</span>
-<span class="co">#&gt;  *  &lt;chr&gt;     &lt;date&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;</span>
-<span class="co">#&gt;  1   AMZN 2013-12-31 248.23000 404.39002 156.16002</span>
-<span class="co">#&gt;  2   AMZN 2014-12-31 287.06000 407.04999 119.98999</span>
-<span class="co">#&gt;  3   AMZN 2015-12-31 286.95001 693.96997 407.01996</span>
-<span class="co">#&gt;  4   AMZN 2016-12-30 482.07001 844.35999 362.28998</span>
-<span class="co">#&gt;  5     FB 2013-12-31  22.90000  57.96000  35.06000</span>
-<span class="co">#&gt;  6     FB 2014-12-31  53.53000  81.45000  27.92000</span>
-<span class="co">#&gt;  7     FB 2015-12-31  74.05000 109.01000  34.96000</span>
-<span class="co">#&gt;  8     FB 2016-12-30  94.16000 133.28000  39.12000</span>
-<span class="co">#&gt;  9   GOOG 2013-12-31 351.08451 559.79618 208.71167</span>
-<span class="co">#&gt; 10   GOOG 2014-12-31 495.39224 609.47654 114.08430</span>
-<span class="co">#&gt; 11   GOOG 2015-12-31 492.55224 776.59998 284.04774</span>
-<span class="co">#&gt; 12   GOOG 2016-12-30 668.26001 813.10999 144.84998</span>
-<span class="co">#&gt; 13   NFLX 2013-12-31  13.14429  54.36857  41.22429</span>
-<span class="co">#&gt; 14   NFLX 2014-12-31  44.88714  69.19857  24.31143</span>
-<span class="co">#&gt; 15   NFLX 2015-12-31  45.54714 130.92999  85.38285</span>
-<span class="co">#&gt; 16   NFLX 2016-12-30  82.79000 128.35001  45.56001</span></code></pre></div>
+<span class="co">#&gt; # Index: date</span>
+<span class="co">#&gt; # Groups: symbol [?]</span>
+<span class="co">#&gt;    symbol date       adj_min adj_max adj_range</span>
+<span class="co">#&gt;    &lt;chr&gt;  &lt;date&gt;       &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;</span>
+<span class="co">#&gt;  1 AMZN   2013-12-31   248     404       156  </span>
+<span class="co">#&gt;  2 AMZN   2014-12-31   287     407       120  </span>
+<span class="co">#&gt;  3 AMZN   2015-12-31   287     694       407  </span>
+<span class="co">#&gt;  4 AMZN   2016-12-30   482     844       362  </span>
+<span class="co">#&gt;  5 FB     2013-12-31    22.9    58.0      35.1</span>
+<span class="co">#&gt;  6 FB     2014-12-31    53.5    81.4      27.9</span>
+<span class="co">#&gt;  7 FB     2015-12-31    74.1   109        35.0</span>
+<span class="co">#&gt;  8 FB     2016-12-30    94.2   133        39.1</span>
+<span class="co">#&gt;  9 GOOG   2013-12-31   351     560       209  </span>
+<span class="co">#&gt; 10 GOOG   2014-12-31   495     609       114  </span>
+<span class="co">#&gt; 11 GOOG   2015-12-31   493     777       284  </span>
+<span class="co">#&gt; 12 GOOG   2016-12-30   668     813       145  </span>
+<span class="co">#&gt; 13 NFLX   2013-12-31    13.1    54.4      41.2</span>
+<span class="co">#&gt; 14 NFLX   2014-12-31    44.9    69.2      24.3</span>
+<span class="co">#&gt; 15 NFLX   2015-12-31    45.5   131        85.4</span>
+<span class="co">#&gt; 16 NFLX   2016-12-30    82.8   128        45.6</span></code></pre></div>
+</div>
+<div id="index-order" class="section level2">
+<h2 class="hasAnchor">
+<a href="#index-order" class="anchor"></a>Index order</h2>
+<p><code>tibbletime</code> assumes that your dates are in <em>ascending order</em>. A warning will be generated if they are not when you use a function where order is relevant. We do this for speed purposes and to not force a change on the user’s dataset by sorting for them.</p>
 </div>
 <div id="vignettes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#vignettes" class="anchor"></a>Vignettes</h2>
-<p>There are currently 4 vignettes for <code>tibbletime</code>.</p>
+<p>There are currently 3 vignettes for <code>tibbletime</code>.</p>
 <ol style="list-style-type: decimal">
-<li><p><a href="https://business-science.github.io/tibbletime/articles/TT-00-intro-to-tibbletime.html">Introduction to tibbletime</a></p></li>
-<li><p><a href="https://business-science.github.io/tibbletime/articles/TT-01-time-based-filtering.html">Time-based filtering</a></p></li>
-<li><p><a href="https://business-science.github.io/tibbletime/articles/TT-02-changing-time-periods.html">Changing periodicity</a></p></li>
-<li><p><a href="https://business-science.github.io/tibbletime/articles/TT-03-rollify-for-rolling-analysis.html">Rolling calculations</a></p></li>
+<li><p><a href="./articles/TT-01-time-based-filtering.html">Time-based filtering</a></p></li>
+<li><p><a href="./articles/TT-02-changing-time-periods.html">Changing periodicity</a></p></li>
+<li><p><a href="./articles/TT-03-rollify-for-rolling-analysis.html">Rolling calculations</a></p></li>
+<li><p><a href="./articles/TT-04-use-with-dplyr.html">Use with dplyr</a></p></li>
 </ol>
-</div>
-<div id="warning" class="section level2">
-<h2 class="hasAnchor">
-<a href="#warning" class="anchor"></a>Warning</h2>
-<p>This package is still going through active development and is subject to change. Use at your own risk. Reproducible bug reports and suggestions for new features are welcome!</p>
 </div>
 </div>
 </div>

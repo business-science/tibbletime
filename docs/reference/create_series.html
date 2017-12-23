@@ -77,9 +77,6 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/TT-00-intro-to-tibbletime.html">Introduction to tibbletime</a>
-    </li>
-    <li>
       <a href="../articles/TT-01-time-based-filtering.html">Time-based filtering</a>
     </li>
     <li>
@@ -87,6 +84,9 @@
     </li>
     <li>
       <a href="../articles/TT-03-rollify-for-rolling-analysis.html">Rolling calculations in tibbletime</a>
+    </li>
+    <li>
+      <a href="../articles/TT-04-use-with-dplyr.html">Using tibbletime with dplyr</a>
     </li>
   </ul>
 </li>
@@ -121,8 +121,8 @@
 a <code>date</code> column populated with a sequence of dates.</p>
     
 
-    <pre class="usage"><span class='fu'>create_series</span>(<span class='no'>time_formula</span>, <span class='kw'>period</span> <span class='kw'>=</span> <span class='st'>"daily"</span>, <span class='kw'>include_end</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>tz</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>force_class</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>as_date_vector</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>create_series</span>(<span class='no'>time_formula</span>, <span class='kw'>period</span> <span class='kw'>=</span> <span class='st'>"daily"</span>, <span class='kw'>class</span> <span class='kw'>=</span> <span class='st'>"POSIXct"</span>,
+  <span class='kw'>include_end</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>tz</span> <span class='kw'>=</span> <span class='st'>"UTC"</span>, <span class='kw'>as_vector</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -135,32 +135,22 @@ See the <code>Details</code> section of <code><a href='time_filter.html'>time_fi
     </tr>
     <tr>
       <th>period</th>
-      <td><p>A formula or character specification used for time-based grouping.</p>
-<p>If a formula, e.g. <code>1~year</code>, the formula is split and parsed to form the
-grouping period. The <code>period</code> argument accepts a formula of the form
-<code>multiple ~ period</code> allowing for flexible period grouping.
-The following are examples:</p><ul>
-<li><p>1 Year: <code>1~y</code></p></li>
-<li><p>3 Months: <code>3~m</code></p></li>
-<li><p>90 Days: <code>90~d</code></p></li>
+      <td><p>A character specification used for time-based grouping. The
+general format to use is <code>"frequency period"</code> where frequency is a number
+like 1 or 2, and period is an interval like weekly or yearly. There must be
+a space between the two.</p>
+<p>Note that you can pass the specification in a flexible way:</p><ul>
+<li><p>1 Year: <code>'1 year'</code> / <code>'1 Y'</code> / <code>'1 yearly'</code> / <code>'yearly'</code></p></li>
 </ul>
 
-<p>Note that while shorthand is used above, an attempt is made to recognize
-more explicit period names such as:</p><ul>
-<li><p>2 Year: <code>2~year</code> / <code>2~years</code> / <code>2~yearly</code></p></li>
-</ul>
-
-<p>The <code>period</code> argument also accepts characters that are converted to their
-corresponding periods. The following are accepted:</p><ul>
-<li><p><code>"yearly"</code> or <code>"y"</code></p></li>
-<li><p><code>"quarterly"</code> or <code>"q"</code></p></li>
-<li><p><code>"monthly"</code> or <code>"m"</code></p></li>
-<li><p><code>"weekly"</code> or <code>"w"</code></p></li>
-<li><p><code>"daily"</code> or <code>"d"</code></p></li>
-<li><p><code>"hour"</code> or <code>"h"</code></p></li>
-<li><p><code>"minute"</code> or <code>"M"</code></p></li>
-<li><p><code>"second"</code> or <code>"s"</code></p></li>
-</ul></td>
+<p>This shorthand is available for year, quarter, month, day, hour, minute,
+and second periodicities. Note that "m" is the 1 letter specification used
+for "month" and "M" is used for "minute". Otherwise case does not matter.</p></td>
+    </tr>
+    <tr>
+      <th>class</th>
+      <td><p>One of <code>"Date"</code>, <code>"POSIXct"</code>, <code>"hms"</code>, <code>"yearmon"</code>, <code>"yearqtr"</code>.
+The default is <code>"POSIXct"</code>.</p></td>
     </tr>
     <tr>
       <th>include_end</th>
@@ -172,13 +162,7 @@ even if it does not match the regularly spaced index.</p></td>
       <td><p>Time zone of the new series.</p></td>
     </tr>
     <tr>
-      <th>force_class</th>
-      <td><p>Either <code>"Date"</code> or <code>"POSIXct"</code>. The default is to infer
-the simplest class required from the <code>period</code> specified, but this will
-override that.</p></td>
-    </tr>
-    <tr>
-      <th>as_date_vector</th>
+      <th>as_vector</th>
       <td><p>Should the series be returned as a vector instead of
 a tibble?</p></td>
     </tr>
@@ -188,67 +172,67 @@ a tibble?</p></td>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='co'># Every day in 2013</span>
-<span class='fu'>create_series</span>(~<span class='fl'>2013</span>, <span class='st'>"daily"</span>)</div><div class='output co'>#&gt; # A time tibble: 365 x 1
+<span class='fu'>create_series</span>(~<span class='st'>'2013'</span>, <span class='st'>'daily'</span>)</div><div class='output co'>#&gt; # A time tibble: 365 x 1
 #&gt; # Index: date
-#&gt;          date
-#&gt;        &lt;date&gt;
-#&gt;  1 2013-01-01
-#&gt;  2 2013-01-02
-#&gt;  3 2013-01-03
-#&gt;  4 2013-01-04
-#&gt;  5 2013-01-05
-#&gt;  6 2013-01-06
-#&gt;  7 2013-01-07
-#&gt;  8 2013-01-08
-#&gt;  9 2013-01-09
-#&gt; 10 2013-01-10
+#&gt;    date               
+#&gt;    &lt;dttm&gt;             
+#&gt;  1 2013-01-01 00:00:00
+#&gt;  2 2013-01-02 00:00:00
+#&gt;  3 2013-01-03 00:00:00
+#&gt;  4 2013-01-04 00:00:00
+#&gt;  5 2013-01-05 00:00:00
+#&gt;  6 2013-01-06 00:00:00
+#&gt;  7 2013-01-07 00:00:00
+#&gt;  8 2013-01-08 00:00:00
+#&gt;  9 2013-01-09 00:00:00
+#&gt; 10 2013-01-10 00:00:00
 #&gt; # ... with 355 more rows</div><div class='input'>
 <span class='co'># Every other day in 2013</span>
-<span class='fu'>create_series</span>(~<span class='fl'>2013</span>, <span class='fl'>2</span>~<span class='no'>d</span>)</div><div class='output co'>#&gt; # A time tibble: 183 x 1
+<span class='fu'>create_series</span>(~<span class='st'>'2013'</span>, <span class='st'>'2 d'</span>)</div><div class='output co'>#&gt; # A time tibble: 183 x 1
 #&gt; # Index: date
-#&gt;          date
-#&gt;        &lt;date&gt;
-#&gt;  1 2013-01-01
-#&gt;  2 2013-01-03
-#&gt;  3 2013-01-05
-#&gt;  4 2013-01-07
-#&gt;  5 2013-01-09
-#&gt;  6 2013-01-11
-#&gt;  7 2013-01-13
-#&gt;  8 2013-01-15
-#&gt;  9 2013-01-17
-#&gt; 10 2013-01-19
+#&gt;    date               
+#&gt;    &lt;dttm&gt;             
+#&gt;  1 2013-01-01 00:00:00
+#&gt;  2 2013-01-03 00:00:00
+#&gt;  3 2013-01-05 00:00:00
+#&gt;  4 2013-01-07 00:00:00
+#&gt;  5 2013-01-09 00:00:00
+#&gt;  6 2013-01-11 00:00:00
+#&gt;  7 2013-01-13 00:00:00
+#&gt;  8 2013-01-15 00:00:00
+#&gt;  9 2013-01-17 00:00:00
+#&gt; 10 2013-01-19 00:00:00
 #&gt; # ... with 173 more rows</div><div class='input'>
 <span class='co'># Every quarter in 2013</span>
-<span class='fu'>create_series</span>(~<span class='fl'>2013</span>, <span class='fl'>1</span>~<span class='no'>q</span>)</div><div class='output co'>#&gt; # A time tibble: 4 x 1
+<span class='fu'>create_series</span>(~<span class='st'>'2013'</span>, <span class='st'>'1 q'</span>)</div><div class='output co'>#&gt; # A time tibble: 4 x 1
 #&gt; # Index: date
-#&gt;         date
-#&gt;       &lt;date&gt;
-#&gt; 1 2013-01-01
-#&gt; 2 2013-04-01
-#&gt; 3 2013-07-01
-#&gt; 4 2013-10-01</div><div class='input'>
-<span class='co'># Daily series for 2 years</span>
-<span class='fu'>create_series</span>(<span class='fl'>2013</span>~<span class='fl'>2015</span>, <span class='fl'>1</span>~<span class='no'>d</span>)</div><div class='output co'>#&gt; # A time tibble: 1,095 x 1
+#&gt;   date               
+#&gt;   &lt;dttm&gt;             
+#&gt; 1 2013-01-01 00:00:00
+#&gt; 2 2013-04-01 00:00:00
+#&gt; 3 2013-07-01 00:00:00
+#&gt; 4 2013-10-01 00:00:00</div><div class='input'>
+<span class='co'># Daily series for 2013-2015</span>
+<span class='fu'>create_series</span>(<span class='st'>'2013'</span> ~ <span class='st'>'2015'</span>, <span class='st'>'1 d'</span>)</div><div class='output co'>#&gt; # A time tibble: 1,095 x 1
 #&gt; # Index: date
-#&gt;          date
-#&gt;        &lt;date&gt;
-#&gt;  1 2013-01-01
-#&gt;  2 2013-01-02
-#&gt;  3 2013-01-03
-#&gt;  4 2013-01-04
-#&gt;  5 2013-01-05
-#&gt;  6 2013-01-06
-#&gt;  7 2013-01-07
-#&gt;  8 2013-01-08
-#&gt;  9 2013-01-09
-#&gt; 10 2013-01-10
+#&gt;    date               
+#&gt;    &lt;dttm&gt;             
+#&gt;  1 2013-01-01 00:00:00
+#&gt;  2 2013-01-02 00:00:00
+#&gt;  3 2013-01-03 00:00:00
+#&gt;  4 2013-01-04 00:00:00
+#&gt;  5 2013-01-05 00:00:00
+#&gt;  6 2013-01-06 00:00:00
+#&gt;  7 2013-01-07 00:00:00
+#&gt;  8 2013-01-08 00:00:00
+#&gt;  9 2013-01-09 00:00:00
+#&gt; 10 2013-01-10 00:00:00
 #&gt; # ... with 1,085 more rows</div><div class='input'>
 <span class='co'># Minute series for 2 months</span>
-<span class='fu'>create_series</span>(<span class='fl'>2012</span>-<span class='fl'>01</span>~<span class='fl'>2012</span>-<span class='fl'>02</span>, <span class='fl'>1</span>~<span class='no'>M</span>)</div><div class='output co'>#&gt; # A time tibble: 86,400 x 1
+<span class='fu'>create_series</span>(<span class='st'>'2012-01'</span> ~ <span class='st'>'2012-02'</span>, <span class='st'>'M'</span>)</div><div class='output co'>#&gt; # A time tibble: 86,400 x 1
 #&gt; # Index: date
-#&gt;                   date
-#&gt;                 &lt;dttm&gt;
+#&gt;    date               
+#&gt;    &lt;dttm&gt;             
 #&gt;  1 2012-01-01 00:00:00
 #&gt;  2 2012-01-01 00:01:00
 #&gt;  3 2012-01-01 00:02:00
@@ -261,10 +245,10 @@ a tibble?</p></td>
 #&gt; 10 2012-01-01 00:09:00
 #&gt; # ... with 86,390 more rows</div><div class='input'>
 <span class='co'># Second series for 2 minutes</span>
-<span class='fu'>create_series</span>(<span class='fl'>2011</span>-<span class='fl'>01</span>-<span class='fl'>01</span> + <span class='fl'>12</span>:<span class='fl'>10</span>:<span class='fl'>00</span> ~ <span class='fl'>2011</span>-<span class='fl'>01</span>-<span class='fl'>01</span> + <span class='fl'>12</span>:<span class='fl'>12</span>:<span class='fl'>00</span>, <span class='fl'>1</span>~<span class='no'>s</span>)</div><div class='output co'>#&gt; # A time tibble: 121 x 1
+<span class='fu'>create_series</span>(<span class='st'>'2011-01-01 12:10:00'</span> ~ <span class='st'>'2011-01-01 12:12:00'</span>, <span class='st'>'s'</span>)</div><div class='output co'>#&gt; # A time tibble: 121 x 1
 #&gt; # Index: date
-#&gt;                   date
-#&gt;                 &lt;dttm&gt;
+#&gt;    date               
+#&gt;    &lt;dttm&gt;             
 #&gt;  1 2011-01-01 12:10:00
 #&gt;  2 2011-01-01 12:10:01
 #&gt;  3 2011-01-01 12:10:02
@@ -276,11 +260,11 @@ a tibble?</p></td>
 #&gt;  9 2011-01-01 12:10:08
 #&gt; 10 2011-01-01 12:10:09
 #&gt; # ... with 111 more rows</div><div class='input'>
-<span class='co'># Force POSIXct class</span>
-<span class='fu'>create_series</span>(~<span class='fl'>2013</span>, <span class='fl'>1</span>~<span class='no'>d</span>, <span class='kw'>force_class</span> <span class='kw'>=</span> <span class='st'>"POSIXct"</span>)</div><div class='output co'>#&gt; # A time tibble: 365 x 1
+<span class='co'># Date class</span>
+<span class='fu'>create_series</span>(~<span class='st'>'2013'</span>, <span class='st'>'day'</span>, <span class='kw'>class</span> <span class='kw'>=</span> <span class='st'>"Date"</span>)</div><div class='output co'>#&gt; # A time tibble: 365 x 1
 #&gt; # Index: date
-#&gt;          date
-#&gt;        &lt;dttm&gt;
+#&gt;    date      
+#&gt;    &lt;date&gt;    
 #&gt;  1 2013-01-01
 #&gt;  2 2013-01-02
 #&gt;  3 2013-01-03
@@ -292,6 +276,40 @@ a tibble?</p></td>
 #&gt;  9 2013-01-09
 #&gt; 10 2013-01-10
 #&gt; # ... with 355 more rows</div><div class='input'>
+<span class='co'># yearmon class</span>
+<span class='fu'>create_series</span>(~<span class='st'>'2013'</span>, <span class='st'>'month'</span>, <span class='kw'>class</span> <span class='kw'>=</span> <span class='st'>"yearmon"</span>)</div><div class='output co'>#&gt; # A time tibble: 12 x 1
+#&gt; # Index: date
+#&gt;    date         
+#&gt;    &lt;S3: yearmon&gt;
+#&gt;  1 Jan 2013     
+#&gt;  2 Feb 2013     
+#&gt;  3 Mar 2013     
+#&gt;  4 Apr 2013     
+#&gt;  5 May 2013     
+#&gt;  6 Jun 2013     
+#&gt;  7 Jul 2013     
+#&gt;  8 Aug 2013     
+#&gt;  9 Sep 2013     
+#&gt; 10 Oct 2013     
+#&gt; 11 Nov 2013     
+#&gt; 12 Dec 2013     </div><div class='input'>
+<span class='co'># hms class. time_formula specified as HH:MM:SS here</span>
+<span class='fu'>create_series</span>(<span class='st'>'00:00:00'</span> ~ <span class='st'>'12:00:00'</span>, <span class='st'>'second'</span> , <span class='kw'>class</span> <span class='kw'>=</span> <span class='st'>"hms"</span>)</div><div class='output co'>#&gt; # A time tibble: 43,201 x 1
+#&gt; # Index: date
+#&gt;    date    
+#&gt;    &lt;time&gt;  
+#&gt;  1 00:00:00
+#&gt;  2 00:00:01
+#&gt;  3 00:00:02
+#&gt;  4 00:00:03
+#&gt;  5 00:00:04
+#&gt;  6 00:00:05
+#&gt;  7 00:00:06
+#&gt;  8 00:00:07
+#&gt;  9 00:00:08
+#&gt; 10 00:00:09
+#&gt; # ... with 43,191 more rows</div><div class='input'>
+
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

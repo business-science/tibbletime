@@ -3,17 +3,19 @@
 \name{time_filter}
 \alias{time_filter}
 \alias{[.tbl_time}
-\title{Succinctly filter a \code{tbl_time} object by date}
+\title{Succinctly filter a \code{tbl_time} object by its index}
 \usage{
-time_filter(x, time_formula)
+time_filter(.tbl_time, time_formula)
 
 \method{[}{tbl_time}(x, i, j, drop = FALSE)
 }
 \arguments{
-\item{x}{A \code{tbl_time} object.}
+\item{.tbl_time}{A \code{tbl_time} object.}
 
 \item{time_formula}{A period to filter over.
 This is specified as a \code{formula}. See \code{Details}.}
+
+\item{x}{Same as \code{.tbl_time} but consistent naming with base R.}
 
 \item{i}{A period to filter over. This is specified the same as
 \code{time_formula} or can use the traditional row extraction method.}
@@ -24,37 +26,53 @@ exactly like the normal extraction operator.}
 \item{drop}{Will always be coerced to \code{FALSE} by \code{tibble}.}
 }
 \description{
-Use a concise filtering method to filter a \code{tbl_time} object by it's \code{index}.
+Use a concise filtering method to filter a \code{tbl_time} object by its \code{index}.
 }
 \details{
 The \code{time_formula} is specified using the format \code{from ~ to}.
-Each side of the \code{time_formula} is specified as \code{YYYY-MM-DD + HH:MM:SS},
-but powerful shorthand is available. Some examples are:
+Each side of the \code{time_formula} is specified as the character
+\code{'YYYY-MM-DD HH:MM:SS'}, but powerful shorthand is available.
+Some examples are:
 \itemize{
-\item \strong{Year:} \code{2013 ~ 2015}
-\item \strong{Month:} \code{2013-01 ~ 2016-06}
-\item \strong{Day:} \code{2013-01-05 ~ 2016-06-04}
-\item \strong{Second:} \code{2013-01-05 + 10:22:15 ~ 2018-06-03 + 12:14:22}
-\item \strong{Variations:} \code{2013 ~ 2016-06}
+\item \strong{Year:} \code{'2013' ~ '2015'}
+\item \strong{Month:} \code{'2013-01' ~ '2016-06'}
+\item \strong{Day:} \code{'2013-01-05' ~ '2016-06-04'}
+\item \strong{Second:} \code{'2013-01-05 10:22:15' ~ '2018-06-03 12:14:22'}
+\item \strong{Variations:} \code{'2013' ~ '2016-06'}
 }
 
 The \code{time_formula} can also use a one sided formula.
 \itemize{
-\item \strong{Only dates in 2015:} \code{~2015}
-\item \strong{Only dates March 2015:} \code{~2015-03}
+\item \strong{Only dates in 2015:} \code{~'2015'}
+\item \strong{Only dates March 2015:} \code{~'2015-03'}
 }
 
-All shorthand dates are expanded to be valid POSIXct dates.
+The \code{time_formula} can also use \code{'start'} and \code{'end'} as keywords for
+your filter.
+\itemize{
+\item \strong{Start of the series to end of 2015:} \code{'start' ~ '2015'}
+\item \strong{Start of 2014 to end of series:} \code{'2014' ~ 'end'}
+}
+
+All shorthand dates are expanded:
 \itemize{
 \item The \code{from} side is expanded to be the first date in that period
 \item The \code{to} side is expanded to be the last date in that period
 }
 
-This means that the following examples are equivalent:
+This means that the following examples are equivalent (assuming your
+index is a POSIXct):
 \itemize{
 \item \code{2015 ~ 2016 == 2015-01-01 + 00:00:00 ~ 2016-12-31 + 23:59:59}
 \item \code{~2015 == 2015-01-01 + 00:00:00 ~ 2015-12-31 + 23:59:59}
 \item \code{2015-01-04 + 10:12 ~ 2015-01-05 == 2015-01-04 + 10:12:00 ~ 2015-01-05 + 23:59:59}
+}
+
+Special parsing is done for indices of class \code{hms}. The \code{from ~ to} time
+formula is specified as only \code{HH:MM:SS}.
+\itemize{
+\item \strong{Start to 5th second of the 12th hour:} \code{'start' ~ '12:00:05'}
+\item \strong{Every second in the 12th hour:} \code{~'12'}
 }
 
 This function respects \code{\link[dplyr:group_by]{dplyr::group_by()}} groups.
@@ -67,24 +85,31 @@ FANG <- as_tbl_time(FANG, date) \%>\%
   dplyr::group_by(symbol)
 
 # 2013-01-01 to 2014-12-31
-time_filter(FANG, 2013 ~ 2014)
+time_filter(FANG, '2013' ~ '2014')
 
 # 2013-05-25 to 2014-06-04
-time_filter(FANG, 2013-05-25 ~ 2014-06-04)
+time_filter(FANG, '2013-05-25' ~ '2014-06-04')
 
 # Using the `[` subset operator
-FANG[2014~2015]
+FANG['2014'~'2015']
 
 # Using `[` and one sided formula for only dates in 2014
-FANG[~2014]
+FANG[~'2014']
 
 # Using `[` and column selection
-FANG[2013~2016, c("date", "adjusted")]
+FANG['2013'~'2016', c("date", "adjusted")]
 
-# You can filter with variables
+# Variables are unquoted using rlang
 lhs_date <- "2013"
 rhs_date <- as.Date("2014-01-01")
 time_filter(FANG, lhs_date ~ rhs_date)
+
+# Use the keywords 'start' and 'end' to conveniently access ends
+time_filter(FANG, 'start' ~ '2014')
+
+# hms (hour, minute, second) classes have special parsing
+hms_example <- create_series(~'12:01', 'second', class = 'hms')
+time_filter(hms_example, 'start' ~ '12:01:30')
 
 
 }

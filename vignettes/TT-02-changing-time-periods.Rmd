@@ -20,26 +20,21 @@ library(tidyr)
 
 # Introducing as_period()
 
-Often with time series you want to aggregate your dataset to a more 
+Often with time series you want to aggregate your dataset to a less 
 granular period. An example of this might be moving from a daily series to 
 a monthly series to look at broader trends in your data. `as_period()` allows
 you to do exactly this. 
 
-`as_period()` accepts two types of input:
-
-  * A formula specified as `multiple ~ period` that defines the period that
-  you want to aggregate to. An example would be `1 ~ year` for aggregating to 
-  yearly data.
-
-  * A character for a few common transforms. Some of these are `"yearly"`, 
-  `"monthly"`, etc. Shorthand is available, such that
-  `"y"` is accepted as `"yearly"`. See the documentation for more detail, 
-  `?as_period()`.
+The `period` argument in `as_period()` for specifying the transformation you
+want is a character with a general format of `"frequency period"` where frequency 
+is a number like 1 or 2, and period is an interval like `weekly` or `yearly`. 
+There must be a space between the two.
 
 ## Datasets required
 
 ```{r, message=FALSE, warning=FALSE}
 library(tibbletime)
+library(dplyr)
 
 # Facebook stock prices.
 data(FB)
@@ -61,12 +56,12 @@ FANG <- as_tbl_time(FANG, index = date) %>%
 To see this in action, transform the daily `FB` data set to monthly data.
 
 ```{r}
-as_period(FB, 1~month)
+as_period(FB, '1 month')
 
 # Additionally, the following are equivalent
-# as_period(FB, 1~m)
-# as_period(FB, "monthly")
-# as_period(FB, "m")
+# as_period(FB, 'monthly')
+# as_period(FB, 'm')
+# as_period(FB, '1 m')
 ```
 
 ## Generic periods
@@ -74,7 +69,7 @@ as_period(FB, 1~month)
 You aren't restricted to only 1 month periods. Maybe you wanted every 2 months?
 
 ```{r}
-as_period(FB, 2~m)
+as_period(FB, '2 m')
 ```
 
 Or maybe every 25 days? Note that the dates do not line up exactly with a 
@@ -83,7 +78,7 @@ difference of 25 days. This is due to the data set not being completely regular
 `as_period()` chooses the first date it can find in the period specified.
 
 ```{r}
-as_period(FB, 25~d)
+as_period(FB, '25 d')
 ```
 
 
@@ -108,12 +103,12 @@ the `start_date` argument.
 
 ```{r}
 # Without start_date
-as_period(FB, 2~d)
+as_period(FB, '2 d')
 ```
 
 ```{r}
 # With start_date
-as_period(FB, 2~d, start_date = "2013-01-01")
+as_period(FB, '2 d', start_date = "2013-01-01")
 ```
 
 
@@ -123,7 +118,7 @@ By default, the first date per period is returned. If you want the end of each
 period instead, specify the `side = "end"` argument.
 
 ```{r}
-as_period(FB, 1~y, side = "end")
+as_period(FB, 'y', side = "end")
 ```
 
 ## Grouped datasets
@@ -134,5 +129,5 @@ can also work with grouped datasets. Here we transform the daily series of the
 
 ```{r}
 FANG %>%
-  as_period(2~y)
+  as_period('2 y')
 ```

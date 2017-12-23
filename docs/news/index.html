@@ -77,9 +77,6 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/TT-00-intro-to-tibbletime.html">Introduction to tibbletime</a>
-    </li>
-    <li>
       <a href="../articles/TT-01-time-based-filtering.html">Time-based filtering</a>
     </li>
     <li>
@@ -87,6 +84,9 @@
     </li>
     <li>
       <a href="../articles/TT-03-rollify-for-rolling-analysis.html">Rolling calculations in tibbletime</a>
+    </li>
+    <li>
+      <a href="../articles/TT-04-use-with-dplyr.html">Using tibbletime with dplyr</a>
     </li>
   </ul>
 </li>
@@ -118,20 +118,34 @@
     </div>
 
     <div class="contents">
-    <div id="tibbletime-0-0-2-9001" class="section level2">
+    <div id="tibbletime-0-1-0" class="section level2">
 <h2 class="hasAnchor">
-<a href="#tibbletime-0-0-2-9001" class="anchor"></a>tibbletime 0.0.2.9001</h2>
+<a href="#tibbletime-0-1-0" class="anchor"></a>tibbletime 0.1.0</h2>
+<p>This is a major update. It introduces a huge number of breaking changes as we heavily reworked the internals of the package. This should ensure the longevity of the package and provide maximum flexibility for its use with <code>dplyr</code>. As this was still early in package development with minimal usage, and because we had issued a Warning in the README of the last update that we may change things, we have not made any attempt to support backwards compatability. From this point forward, however, we will support backwards compatability as we feel that we have reached a more stable implementation.</p>
+<p>With that out of the way, here is a complete list of changes.</p>
 <ul>
 <li>
 <p>General</p>
 <ul>
-<li>Even faster <code><a href="../reference/time_group.html">time_group()</a></code>. This speeds up all time functions, especially on large datasets.</li>
+<li><p>The <code>period</code> argument no longer supports the ‘period formula’ (e.g. <code>1~year</code>). It added unnecessary complication with little benefit. Rather, a character should be used like <code>'1 year'</code>. See the documentation of <code><a href="../reference/partition_index.html">partition_index()</a></code> for full details.</p></li>
+<li><p><code>time_formula</code> arguments still support the <code>from ~ to</code> style syntax, but the left and right hand sides must now be characters, rather than bare date specifications. In English, rather than <code>2013 ~ 2014</code>, you must use <code>'2013' ~ '2014'</code>. This is easier to program with and also allows you to pass in variables to the time formula, which previously did not work well.</p></li>
+<li><p><code>time_group()</code> and <code>time_collapse()</code> have become <code><a href="../reference/partition_index.html">partition_index()</a></code> and <code><a href="../reference/collapse_index.html">collapse_index()</a></code>. Both functions accept <code>index</code> vectors and are commonly used inside <code><a href="http://dplyr.tidyverse.org/reference/mutate.html">dplyr::mutate()</a></code>.</p></li>
+<li><p><code><a href="../reference/partition_index.html">partition_index()</a></code> splits an index by period and returns an integer vector corresponding to the groups.</p></li>
+<li><p><code><a href="../reference/collapse_index.html">collapse_index()</a></code> collapses an index by period so that all observations falling in that interval share the same date. This is most useful when used to then group on the index column.</p></li>
+<li><p>There is full support for <code>Date</code> and <code>POSIXct</code> classes as the index, and there is experimental support for <code>yearmon</code>, <code>yearqtr</code>, and <code>hms</code> classes.</p></li>
+<li><p><code><a href="../reference/ceiling_index.html">ceiling_index()</a></code> and <code><a href="../reference/floor_index.html">floor_index()</a></code> are thin wrappers around <code>lubridate</code> functions of similar names, but they also work for <code>yearmon</code>, <code>yearqtr</code> and <code>hms</code>.</p></li>
+<li><p><code><a href="../reference/create_series.html">create_series()</a></code> now has an explicit <code>class</code> argument.</p></li>
+<li><p><code><a href="../reference/as_period.html">as_period()</a></code> gains an <code>include_endpoints</code> argument for including the last data point if <code>side = "start"</code> is specified or the first data point if <code>side = "end"</code> is used.</p></li>
+<li><p>There are a number of new “getter” functions for accessing the index and time zone of <code>tbl_time</code> objects. These are useful for package development.</p></li>
+<li><p><code><a href="../reference/time_filter.html">time_filter()</a></code>, <code><a href="../reference/as_period.html">as_period()</a></code> and other “getter” functions now use <code>.tbl_time</code> as a consistent first argument rather than <code>x</code>. <code><a href="../reference/collapse_index.html">collapse_index()</a></code> and <code><a href="../reference/partition_index.html">partition_index()</a></code> use <code>index</code> as their first arguments.</p></li>
+<li><p>Warnings are now generated if the user is not using a sorted index.</p></li>
 </ul>
 </li>
 <li>
 <p>Bug Fixes</p>
 <ul>
-<li>Ensure that <code><a href="http://www.rdocumentation.org/packages/tidyr/topics/spread">tidyr::spread()</a></code> passes the <code>fill</code> argument through.</li>
+<li><p>Ensure that <code><a href="http://www.rdocumentation.org/packages/tidyr/topics/spread">tidyr::spread()</a></code> passes the <code>fill</code> argument through.</p></li>
+<li><p>Default time zone is now <code>UTC</code> rather than <code>Sys.timezone()</code> to handle a daylight savings issue.</p></li>
 </ul>
 </li>
 </ul>
@@ -143,11 +157,11 @@
 <li>
 <p>New functionality</p>
 <ul>
-<li><p><code><a href="../reference/time_floor.html">time_floor()</a></code> and <code><a href="../reference/time_ceiling.html">time_ceiling()</a></code> are convenient wrappers to <code>lubridate</code> functions for altering dates to period boundaries.</p></li>
-<li><p><code><a href="../reference/time_unnest.html">time_unnest()</a></code> is used to specifically unnest a <code>tibble</code> object with a list-column of <code>tbl_time</code> objects.</p></li>
+<li><p><code>time_floor()</code> and <code>time_ceiling()</code> are convenient wrappers to <code>lubridate</code> functions for altering dates to period boundaries.</p></li>
+<li><p><code>time_unnest()</code> is used to specifically unnest a <code>tibble</code> object with a list-column of <code>tbl_time</code> objects.</p></li>
 <li><p><code><a href="../reference/create_series.html">create_series()</a></code> allows the user to create a <code>tbl_time</code> object with a regularly spaced sequence of dates.</p></li>
-<li><p><code><a href="../reference/time_group.html">time_group()</a></code> has become the workhorse function for creating time based groups used in changing periodicity and other grouped time based calculations.</p></li>
-<li><p><code><a href="../reference/time_summarise.html">time_summarise()</a></code> and <code><a href="../reference/tmap.html">tmap()</a></code> now also accept a formula-based <code>period</code>.</p></li>
+<li><p><code>time_group()</code> has become the workhorse function for creating time based groups used in changing periodicity and other grouped time based calculations.</p></li>
+<li><p><code>time_summarise()</code> and <code>tmap()</code> now also accept a formula-based <code>period</code>.</p></li>
 <li><p><code><a href="../reference/as_period.html">as_period()</a></code> now accepts a formula-based <code>period</code> that provides an incredible amount of flexibility in creating groups. (#9, #14, #15)</p></li>
 <li><p><code><a href="../reference/rollify.html">rollify()</a></code> creates a rolling version of any function for use in <code><a href="http://dplyr.tidyverse.org/reference/mutate.html">dplyr::mutate()</a></code>. (#7)</p></li>
 </ul>
@@ -190,7 +204,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#tibbletime-0-0-2-9001">0.0.2.9001</a></li>
+        <li><a href="#tibbletime-0-1-0">0.1.0</a></li>
         <li><a href="#tibbletime-0-0-2">0.0.2</a></li>
         <li><a href="#tibbletime-0-0-1">0.0.1</a></li>
       </ul>

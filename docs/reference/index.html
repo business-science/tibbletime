@@ -77,9 +77,6 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/TT-00-intro-to-tibbletime.html">Introduction to tibbletime</a>
-    </li>
-    <li>
       <a href="../articles/TT-01-time-based-filtering.html">Time-based filtering</a>
     </li>
     <li>
@@ -87,6 +84,9 @@
     </li>
     <li>
       <a href="../articles/TT-03-rollify-for-rolling-analysis.html">Rolling calculations in tibbletime</a>
+    </li>
+    <li>
+      <a href="../articles/TT-04-use-with-dplyr.html">Using tibbletime with dplyr</a>
     </li>
   </ul>
 </li>
@@ -115,7 +115,7 @@
     <div class="page-header">
       <h1>
         Reference
-        <small>version&nbsp;0.0.2.9001</small>
+        <small>version&nbsp;0.0.2.9002</small>
       </h1>
     </div>
 
@@ -143,15 +143,22 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="create_series.html">create_series</a></code> </p>
+            <p><code><a href="ceiling_index.html">ceiling_index</a></code> </p>
           </td>
-          <td><p>Create a <code>tbl_time</code> object with a sequence of regularly spaced dates</p></td>
+          <td><p>A simple wrapper of <code><a href='http://www.rdocumentation.org/packages/lubridate/topics/round_date'>lubridate::ceiling_date()</a></code></p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="expand_index.html">expand_index</a></code> </p>
+            <p><code><a href="collapse_index.html">collapse_index</a></code> </p>
           </td>
-          <td><p>Expand a <code>tbl_time</code> index</p></td>
+          <td><p>Collapse an index vector so that all observations in an interval share the
+same date</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="create_series.html">create_series</a></code> </p>
+          </td>
+          <td><p>Create a <code>tbl_time</code> object with a sequence of regularly spaced dates</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -167,15 +174,27 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="retrieve_index.html">retrieve_index</a></code> </p>
+            <p><code><a href="floor_index.html">floor_index</a></code> </p>
           </td>
-          <td><p>Retrieve a <code>tbl_time</code> index</p></td>
+          <td><p>A simple wrapper of <code><a href='http://www.rdocumentation.org/packages/lubridate/topics/round_date'>lubridate::floor_date()</a></code></p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="retrieve_time_zone.html">retrieve_time_zone</a></code> </p>
+            <p><code><a href="getters.html">get_index_quo</a></code> <code><a href="getters.html">get_index_char</a></code> <code><a href="getters.html">get_index_col</a></code> <code><a href="getters.html">get_index_time_zone</a></code> <code><a href="getters.html">get_index_class</a></code> </p>
           </td>
-          <td><p>Retrieve a <code>tbl_time</code> time zone</p></td>
+          <td><p>Getters</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="partition_index.html">partition_index</a></code> </p>
+          </td>
+          <td><p>Partition an index vector into an integer vector representing groups</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="posixct_numeric_to_datetime.html">posixct_numeric_to_datetime</a></code> </p>
+          </td>
+          <td><p>Converting a posixct numeric time back to a classed datetime</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -185,7 +204,7 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="tbl_time.html">tbl_time</a></code> <code><a href="tbl_time.html">as_tbl_time</a></code> </p>
+            <p><code><a href="tbl_time.html">as_tbl_time</a></code> <code><a href="tbl_time.html">tbl_time</a></code> </p>
           </td>
           <td><p>Create <code>tbl_time</code> objects</p></td>
         </tr><tr>
@@ -197,58 +216,9 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="time_ceiling.html">time_ceiling</a></code> </p>
-          </td>
-          <td><p>Ceiling a <code>tbl_time</code> object</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="time_collapse.html">time_collapse</a></code> </p>
-          </td>
-          <td><p>Collapse a <code>tbl_time</code> object so that all observations in a period share the
-same date</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
             <p></p>
           </td>
-          <td><p>Succinctly filter a <code>tbl_time</code> object by date</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="time_floor.html">time_floor</a></code> </p>
-          </td>
-          <td><p>Floor a <code>tbl_time</code> object</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="time_group.html">time_group</a></code> </p>
-          </td>
-          <td><p>Generate a vector of time-based groupings</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="time_nest.html">time_nest</a></code> </p>
-          </td>
-          <td><p>Nest a <code>tbl_time</code> to a specified time period</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="time_summarise.html">time_summarise</a></code> <code><a href="time_summarise.html">time_summarize</a></code> </p>
-          </td>
-          <td><p>Summarise a <code>tbl_time</code> by period</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="time_unnest.html">time_unnest</a></code> </p>
-          </td>
-          <td><p>Unnest a <code>tibble</code> containing a list-column of <code>tbl_time</code> objects</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="tmap.html">tmap</a></code> <code><a href="tmap.html">tmap_chr</a></code> <code><a href="tmap.html">tmap_int</a></code> <code><a href="tmap.html">tmap_lgl</a></code> <code><a href="tmap.html">tmap_dbl</a></code> <code><a href="tmap.html">tmap_dfc</a></code> <code><a href="tmap.html">tmap_dfr</a></code> <code><a href="tmap.html">tmap_df</a></code> </p>
-          </td>
-          <td><p>Apply a function to each element of a <code>tbl_time</code> object.</p></td>
+          <td><p>Succinctly filter a <code>tbl_time</code> object by its index</p></td>
         </tr>
       </tbody>
       </table>

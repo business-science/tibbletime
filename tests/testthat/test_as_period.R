@@ -12,11 +12,9 @@ test_tbl_time_g <- as_tbl_time(FANG, date) %>%
 
 # Tests
 
-test_that("Converting to more granular does nothing", {
-  expect_equal(as_period(test_tbl_time, "daily"),  test_tbl_time)
-  expect_equal(as_period(test_tbl_time, "hourly"), test_tbl_time)
-  expect_equal(as_period(test_tbl_time, "minute"), test_tbl_time)
-  expect_equal(as_period(test_tbl_time, "second"), test_tbl_time)
+test_that("Converting to more granular throws error", {
+  expect_error(as_period(test_tbl_time, "hourly"),
+               regexp = "Only year, quarter, month, week, and day periods are allowed for an index of class Date.")
 })
 
 test_that("Can convert to monthly", {
@@ -45,6 +43,23 @@ test_that("Can convert to yearly - end", {
   expect_equal(nrow(test_period), 4L)
   expect_equal(ncol(test_period), 8L)
   expect_equal(test_period$date[2], as.Date("2014-12-31"))
+})
+
+test_that("Include endpoints with side = 'start' includes last point", {
+  start <- as_period(test_tbl_time, "yearly", include_endpoints = TRUE)
+
+  expect_equal(
+    object = start$date[length(start$date)],
+    expected = as.Date("2016-12-30"))
+})
+
+test_that("Include endpoints with side = 'start' includes last point", {
+  end <- as_period(test_tbl_time, "yearly",
+                     side = "end", include_endpoints = TRUE)
+
+  expect_equal(
+    object = end$date[1],
+    expected = as.Date("2013-01-02"))
 })
 
 test_that("Error with non tbl_time object", {

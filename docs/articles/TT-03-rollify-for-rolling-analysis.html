@@ -51,9 +51,6 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/TT-00-intro-to-tibbletime.html">Introduction to tibbletime</a>
-    </li>
-    <li>
       <a href="../articles/TT-01-time-based-filtering.html">Time-based filtering</a>
     </li>
     <li>
@@ -61,6 +58,9 @@
     </li>
     <li>
       <a href="../articles/TT-03-rollify-for-rolling-analysis.html">Rolling calculations in tibbletime</a>
+    </li>
+    <li>
+      <a href="../articles/TT-04-use-with-dplyr.html">Using tibbletime with dplyr</a>
     </li>
   </ul>
 </li>
@@ -90,7 +90,7 @@
       <h1>Rolling calculations in tibbletime</h1>
                         <h4 class="author">Davis Vaughan</h4>
             
-            <h4 class="date">2017-10-23</h4>
+            <h4 class="date">2017-12-23</h4>
           </div>
 
     
@@ -124,26 +124,25 @@ FB &lt;-<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyvers
 rolling_mean &lt;-<span class="st"> </span><span class="kw"><a href="../reference/rollify.html">rollify</a></span>(mean, <span class="dt">window =</span> <span class="dv">5</span>)
 
 rolling_mean</code></pre></div>
-<pre><code>## function (...) 
-## {
+<pre><code>## function(...) {
 ##     roller(..., .f = .f, window = window, unlist = unlist, na_value = na_value)
-## }
-## &lt;environment: 0x7fea9dcdcb80&gt;</code></pre>
+##   }
+## &lt;environment: 0x7f964e801740&gt;</code></pre>
 <p>We now have a rolling version of the function, <code>mean()</code>. You use it in a similar way to how you might use <code>mean()</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(FB, <span class="dt">mean_5 =</span> <span class="kw">rolling_mean</span>(adjusted))</code></pre></div>
 <pre><code>## # A tibble: 1,008 x 6
-##    symbol       date  open close adjusted mean_5
-##     &lt;chr&gt;     &lt;date&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;
-##  1     FB 2013-01-02 27.44 28.00    28.00     NA
-##  2     FB 2013-01-03 27.88 27.77    27.77     NA
-##  3     FB 2013-01-04 28.01 28.76    28.76     NA
-##  4     FB 2013-01-07 28.69 29.42    29.42     NA
-##  5     FB 2013-01-08 29.51 29.06    29.06 28.602
-##  6     FB 2013-01-09 29.67 30.59    30.59 29.120
-##  7     FB 2013-01-10 30.60 31.30    31.30 29.826
-##  8     FB 2013-01-11 31.28 31.72    31.72 30.418
-##  9     FB 2013-01-14 32.08 30.95    30.95 30.724
-## 10     FB 2013-01-15 30.64 30.10    30.10 30.932
+##    symbol date        open close adjusted mean_5
+##    &lt;chr&gt;  &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;
+##  1 FB     2013-01-02  27.4  28.0     28.0   NA  
+##  2 FB     2013-01-03  27.9  27.8     27.8   NA  
+##  3 FB     2013-01-04  28.0  28.8     28.8   NA  
+##  4 FB     2013-01-07  28.7  29.4     29.4   NA  
+##  5 FB     2013-01-08  29.5  29.1     29.1   28.6
+##  6 FB     2013-01-09  29.7  30.6     30.6   29.1
+##  7 FB     2013-01-10  30.6  31.3     31.3   29.8
+##  8 FB     2013-01-11  31.3  31.7     31.7   30.4
+##  9 FB     2013-01-14  32.1  31.0     31.0   30.7
+## 10 FB     2013-01-15  30.6  30.1     30.1   30.9
 ## # ... with 998 more rows</code></pre>
 <p>You can create multiple versions of the rolling function if you need to calculate the mean at multiple window lengths.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rolling_mean_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw"><a href="../reference/rollify.html">rollify</a></span>(mean, <span class="dt">window =</span> <span class="dv">2</span>)
@@ -156,18 +155,18 @@ FB <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a hr
   <span class="dt">rm30 =</span> <span class="kw">rolling_mean_4</span>(adjusted)
 )</code></pre></div>
 <pre><code>## # A tibble: 1,008 x 8
-##    symbol       date  open close adjusted   rm10     rm20    rm30
-##     &lt;chr&gt;     &lt;date&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;
-##  1     FB 2013-01-02 27.44 28.00    28.00     NA       NA      NA
-##  2     FB 2013-01-03 27.88 27.77    27.77 27.885       NA      NA
-##  3     FB 2013-01-04 28.01 28.76    28.76 28.265 28.17667      NA
-##  4     FB 2013-01-07 28.69 29.42    29.42 29.090 28.65000 28.4875
-##  5     FB 2013-01-08 29.51 29.06    29.06 29.240 29.08000 28.7525
-##  6     FB 2013-01-09 29.67 30.59    30.59 29.825 29.69000 29.4575
-##  7     FB 2013-01-10 30.60 31.30    31.30 30.945 30.31667 30.0925
-##  8     FB 2013-01-11 31.28 31.72    31.72 31.510 31.20333 30.6675
-##  9     FB 2013-01-14 32.08 30.95    30.95 31.335 31.32333 31.1400
-## 10     FB 2013-01-15 30.64 30.10    30.10 30.525 30.92333 31.0175
+##    symbol date        open close adjusted  rm10  rm20  rm30
+##    &lt;chr&gt;  &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 FB     2013-01-02  27.4  28.0     28.0  NA    NA    NA  
+##  2 FB     2013-01-03  27.9  27.8     27.8  27.9  NA    NA  
+##  3 FB     2013-01-04  28.0  28.8     28.8  28.3  28.2  NA  
+##  4 FB     2013-01-07  28.7  29.4     29.4  29.1  28.6  28.5
+##  5 FB     2013-01-08  29.5  29.1     29.1  29.2  29.1  28.8
+##  6 FB     2013-01-09  29.7  30.6     30.6  29.8  29.7  29.5
+##  7 FB     2013-01-10  30.6  31.3     31.3  30.9  30.3  30.1
+##  8 FB     2013-01-11  31.3  31.7     31.7  31.5  31.2  30.7
+##  9 FB     2013-01-14  32.1  31.0     31.0  31.3  31.3  31.1
+## 10 FB     2013-01-15  30.6  30.1     30.1  30.5  30.9  31.0
 ## # ... with 998 more rows</code></pre>
 </div>
 <div id="purrr-functional-syntax" class="section level2">
@@ -180,18 +179,18 @@ rolling_mean &lt;-<span class="st"> </span><span class="kw"><a href="../referenc
 
 <span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(FB, <span class="dt">mean_5 =</span> <span class="kw">rolling_mean</span>(adjusted))</code></pre></div>
 <pre><code>## # A tibble: 1,008 x 6
-##    symbol       date  open close adjusted mean_5
-##     &lt;chr&gt;     &lt;date&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;
-##  1     FB 2013-01-02 27.44 28.00    28.00     NA
-##  2     FB 2013-01-03 27.88 27.77    27.77     NA
-##  3     FB 2013-01-04 28.01 28.76    28.76     NA
-##  4     FB 2013-01-07 28.69 29.42    29.42     NA
-##  5     FB 2013-01-08 29.51 29.06    29.06 28.602
-##  6     FB 2013-01-09 29.67 30.59    30.59 29.120
-##  7     FB 2013-01-10 30.60 31.30    31.30 29.826
-##  8     FB 2013-01-11 31.28 31.72    31.72 30.418
-##  9     FB 2013-01-14 32.08 30.95    30.95 30.724
-## 10     FB 2013-01-15 30.64 30.10    30.10 30.932
+##    symbol date        open close adjusted mean_5
+##    &lt;chr&gt;  &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;
+##  1 FB     2013-01-02  27.4  28.0     28.0   NA  
+##  2 FB     2013-01-03  27.9  27.8     27.8   NA  
+##  3 FB     2013-01-04  28.0  28.8     28.8   NA  
+##  4 FB     2013-01-07  28.7  29.4     29.4   NA  
+##  5 FB     2013-01-08  29.5  29.1     29.1   28.6
+##  6 FB     2013-01-09  29.7  30.6     30.6   29.1
+##  7 FB     2013-01-10  30.6  31.3     31.3   29.8
+##  8 FB     2013-01-11  31.3  31.7     31.7   30.4
+##  9 FB     2013-01-14  32.1  31.0     31.0   30.7
+## 10 FB     2013-01-15  30.6  30.1     30.1   30.9
 ## # ... with 998 more rows</code></pre>
 <p>You can create anonymous functions (functions without a name) on the fly.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 5 period average of 2 columns (open and close)</span>
@@ -199,18 +198,18 @@ rolling_avg_sum &lt;-<span class="st"> </span><span class="kw"><a href="../refer
 
 <span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(FB, <span class="dt">avg_sum =</span> <span class="kw">rolling_avg_sum</span>(open, close))</code></pre></div>
 <pre><code>## # A tibble: 1,008 x 6
-##    symbol       date  open close adjusted avg_sum
-##     &lt;chr&gt;     &lt;date&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;
-##  1     FB 2013-01-02 27.44 28.00    28.00      NA
-##  2     FB 2013-01-03 27.88 27.77    27.77      NA
-##  3     FB 2013-01-04 28.01 28.76    28.76      NA
-##  4     FB 2013-01-07 28.69 29.42    29.42      NA
-##  5     FB 2013-01-08 29.51 29.06    29.06  56.908
-##  6     FB 2013-01-09 29.67 30.59    30.59  57.872
-##  7     FB 2013-01-10 30.60 31.30    31.30  59.122
-##  8     FB 2013-01-11 31.28 31.72    31.72  60.368
-##  9     FB 2013-01-14 32.08 30.95    30.95  61.352
-## 10     FB 2013-01-15 30.64 30.10    30.10  61.786
+##    symbol date        open close adjusted avg_sum
+##    &lt;chr&gt;  &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;
+##  1 FB     2013-01-02  27.4  28.0     28.0    NA  
+##  2 FB     2013-01-03  27.9  27.8     27.8    NA  
+##  3 FB     2013-01-04  28.0  28.8     28.8    NA  
+##  4 FB     2013-01-07  28.7  29.4     29.4    NA  
+##  5 FB     2013-01-08  29.5  29.1     29.1    56.9
+##  6 FB     2013-01-09  29.7  30.6     30.6    57.9
+##  7 FB     2013-01-10  30.6  31.3     31.3    59.1
+##  8 FB     2013-01-11  31.3  31.7     31.7    60.4
+##  9 FB     2013-01-14  32.1  31.0     31.0    61.4
+## 10 FB     2013-01-15  30.6  30.1     30.1    61.8
 ## # ... with 998 more rows</code></pre>
 </div>
 <div id="optional-arguments" class="section level2">
@@ -225,18 +224,18 @@ rolling_mean_na &lt;-<span class="st"> </span><span class="kw"><a href="../refer
 
 FB <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">mean_na =</span> <span class="kw">rolling_mean_na</span>(adjusted))</code></pre></div>
 <pre><code>## # A tibble: 1,008 x 6
-##    symbol       date  open close adjusted mean_na
-##     &lt;chr&gt;     &lt;date&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;
-##  1     FB 2013-01-02 27.44 28.00       NA      NA
-##  2     FB 2013-01-03 27.88 27.77    27.77      NA
-##  3     FB 2013-01-04 28.01 28.76    28.76      NA
-##  4     FB 2013-01-07 28.69 29.42    29.42      NA
-##  5     FB 2013-01-08 29.51 29.06    29.06 28.7525
-##  6     FB 2013-01-09 29.67 30.59    30.59 29.1200
-##  7     FB 2013-01-10 30.60 31.30    31.30 29.8260
-##  8     FB 2013-01-11 31.28 31.72    31.72 30.4180
-##  9     FB 2013-01-14 32.08 30.95    30.95 30.7240
-## 10     FB 2013-01-15 30.64 30.10    30.10 30.9320
+##    symbol date        open close adjusted mean_na
+##    &lt;chr&gt;  &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;
+##  1 FB     2013-01-02  27.4  28.0     NA      NA  
+##  2 FB     2013-01-03  27.9  27.8     27.8    NA  
+##  3 FB     2013-01-04  28.0  28.8     28.8    NA  
+##  4 FB     2013-01-07  28.7  29.4     29.4    NA  
+##  5 FB     2013-01-08  29.5  29.1     29.1    28.8
+##  6 FB     2013-01-09  29.7  30.6     30.6    29.1
+##  7 FB     2013-01-10  30.6  31.3     31.3    29.8
+##  8 FB     2013-01-11  31.3  31.7     31.7    30.4
+##  9 FB     2013-01-14  32.1  31.0     31.0    30.7
+## 10 FB     2013-01-15  30.6  30.1     30.1    30.9
 ## # ... with 998 more rows</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Don't try this!</span>
 <span class="co"># rolling_mean_na &lt;- rollify(~mean(.x), window = 5)</span>
@@ -266,36 +265,36 @@ rolling_summary &lt;-<span class="st"> </span><span class="kw"><a href="../refer
 FB_summarised &lt;-<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(FB, <span class="dt">summary_list_col =</span> <span class="kw">rolling_summary</span>(adjusted))
 FB_summarised</code></pre></div>
 <pre><code>## # A tibble: 1,008 x 4
-##    symbol       date adjusted     summary_list_col
-##     &lt;chr&gt;     &lt;date&gt;    &lt;dbl&gt;               &lt;list&gt;
-##  1     FB 2013-01-02    28.00            &lt;lgl [1]&gt;
-##  2     FB 2013-01-03    27.77            &lt;lgl [1]&gt;
-##  3     FB 2013-01-04    28.76            &lt;lgl [1]&gt;
-##  4     FB 2013-01-07    29.42            &lt;lgl [1]&gt;
-##  5     FB 2013-01-08    29.06 &lt;data.frame [5 x 2]&gt;
-##  6     FB 2013-01-09    30.59 &lt;data.frame [5 x 2]&gt;
-##  7     FB 2013-01-10    31.30 &lt;data.frame [5 x 2]&gt;
-##  8     FB 2013-01-11    31.72 &lt;data.frame [5 x 2]&gt;
-##  9     FB 2013-01-14    30.95 &lt;data.frame [5 x 2]&gt;
-## 10     FB 2013-01-15    30.10 &lt;data.frame [5 x 2]&gt;
+##    symbol date       adjusted summary_list_col    
+##    &lt;chr&gt;  &lt;date&gt;        &lt;dbl&gt; &lt;list&gt;              
+##  1 FB     2013-01-02     28.0 &lt;lgl [1]&gt;           
+##  2 FB     2013-01-03     27.8 &lt;lgl [1]&gt;           
+##  3 FB     2013-01-04     28.8 &lt;lgl [1]&gt;           
+##  4 FB     2013-01-07     29.4 &lt;lgl [1]&gt;           
+##  5 FB     2013-01-08     29.1 &lt;data.frame [5 × 2]&gt;
+##  6 FB     2013-01-09     30.6 &lt;data.frame [5 × 2]&gt;
+##  7 FB     2013-01-10     31.3 &lt;data.frame [5 × 2]&gt;
+##  8 FB     2013-01-11     31.7 &lt;data.frame [5 × 2]&gt;
+##  9 FB     2013-01-14     31.0 &lt;data.frame [5 × 2]&gt;
+## 10 FB     2013-01-15     30.1 &lt;data.frame [5 × 2]&gt;
 ## # ... with 998 more rows</code></pre>
 <p>The neat thing is that after removing the <code>NA</code> values at the beginning, the list-column can be unnested using <code><a href="http://www.rdocumentation.org/packages/tidyr/topics/unnest">tidyr::unnest()</a></code> giving us a nice tidy 5-period rolling summary.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">FB_summarised <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="op">!</span><span class="kw">is.na</span>(summary_list_col)) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/tidyr/topics/unnest">unnest</a></span>()</code></pre></div>
 <pre><code>## # A tibble: 5,020 x 5
-##    symbol       date adjusted rolled_summary_type rolled_summary_val
-##     &lt;chr&gt;     &lt;date&gt;    &lt;dbl&gt;              &lt;fctr&gt;              &lt;dbl&gt;
-##  1     FB 2013-01-08    29.06                mean         28.6019998
-##  2     FB 2013-01-08    29.06                  sd          0.6997284
-##  3     FB 2013-01-08    29.06                 min         27.7700000
-##  4     FB 2013-01-08    29.06                 max         29.4200000
-##  5     FB 2013-01-08    29.06              median         28.7600000
-##  6     FB 2013-01-09    30.59                mean         29.1199998
-##  7     FB 2013-01-09    30.59                  sd          1.0254999
-##  8     FB 2013-01-09    30.59                 min         27.7700000
-##  9     FB 2013-01-09    30.59                 max         30.5900000
-## 10     FB 2013-01-09    30.59              median         29.0599990
+##    symbol date       adjusted rolled_summary_type rolled_summary_val
+##    &lt;chr&gt;  &lt;date&gt;        &lt;dbl&gt; &lt;fctr&gt;                           &lt;dbl&gt;
+##  1 FB     2013-01-08     29.1 mean                            28.6  
+##  2 FB     2013-01-08     29.1 sd                               0.700
+##  3 FB     2013-01-08     29.1 min                             27.8  
+##  4 FB     2013-01-08     29.1 max                             29.4  
+##  5 FB     2013-01-08     29.1 median                          28.8  
+##  6 FB     2013-01-09     30.6 mean                            29.1  
+##  7 FB     2013-01-09     30.6 sd                               1.03 
+##  8 FB     2013-01-09     30.6 min                             27.8  
+##  9 FB     2013-01-09     30.6 max                             30.6  
+## 10 FB     2013-01-09     30.6 median                          29.1  
 ## # ... with 5,010 more rows</code></pre>
 </div>
 <div id="custom-missing-values" class="section level2">
@@ -308,35 +307,35 @@ FB_summarised</code></pre></div>
 FB_summarised &lt;-<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(FB, <span class="dt">summary_list_col =</span> <span class="kw">rolling_summary</span>(adjusted))
 FB_summarised</code></pre></div>
 <pre><code>## # A tibble: 1,008 x 4
-##    symbol       date adjusted     summary_list_col
-##     &lt;chr&gt;     &lt;date&gt;    &lt;dbl&gt;               &lt;list&gt;
-##  1     FB 2013-01-02    28.00 &lt;data.frame [0 x 0]&gt;
-##  2     FB 2013-01-03    27.77 &lt;data.frame [0 x 0]&gt;
-##  3     FB 2013-01-04    28.76 &lt;data.frame [0 x 0]&gt;
-##  4     FB 2013-01-07    29.42 &lt;data.frame [0 x 0]&gt;
-##  5     FB 2013-01-08    29.06 &lt;data.frame [5 x 2]&gt;
-##  6     FB 2013-01-09    30.59 &lt;data.frame [5 x 2]&gt;
-##  7     FB 2013-01-10    31.30 &lt;data.frame [5 x 2]&gt;
-##  8     FB 2013-01-11    31.72 &lt;data.frame [5 x 2]&gt;
-##  9     FB 2013-01-14    30.95 &lt;data.frame [5 x 2]&gt;
-## 10     FB 2013-01-15    30.10 &lt;data.frame [5 x 2]&gt;
+##    symbol date       adjusted summary_list_col    
+##    &lt;chr&gt;  &lt;date&gt;        &lt;dbl&gt; &lt;list&gt;              
+##  1 FB     2013-01-02     28.0 &lt;data.frame [0 × 0]&gt;
+##  2 FB     2013-01-03     27.8 &lt;data.frame [0 × 0]&gt;
+##  3 FB     2013-01-04     28.8 &lt;data.frame [0 × 0]&gt;
+##  4 FB     2013-01-07     29.4 &lt;data.frame [0 × 0]&gt;
+##  5 FB     2013-01-08     29.1 &lt;data.frame [5 × 2]&gt;
+##  6 FB     2013-01-09     30.6 &lt;data.frame [5 × 2]&gt;
+##  7 FB     2013-01-10     31.3 &lt;data.frame [5 × 2]&gt;
+##  8 FB     2013-01-11     31.7 &lt;data.frame [5 × 2]&gt;
+##  9 FB     2013-01-14     31.0 &lt;data.frame [5 × 2]&gt;
+## 10 FB     2013-01-15     30.1 &lt;data.frame [5 × 2]&gt;
 ## # ... with 998 more rows</code></pre>
 <p>Now unnesting directly:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">FB_summarised <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/tidyr/topics/unnest">unnest</a></span>()</code></pre></div>
 <pre><code>## # A tibble: 5,020 x 5
-##    symbol       date adjusted rolled_summary_type rolled_summary_val
-##     &lt;chr&gt;     &lt;date&gt;    &lt;dbl&gt;              &lt;fctr&gt;              &lt;dbl&gt;
-##  1     FB 2013-01-08    29.06                mean         28.6019998
-##  2     FB 2013-01-08    29.06                  sd          0.6997284
-##  3     FB 2013-01-08    29.06                 min         27.7700000
-##  4     FB 2013-01-08    29.06                 max         29.4200000
-##  5     FB 2013-01-08    29.06              median         28.7600000
-##  6     FB 2013-01-09    30.59                mean         29.1199998
-##  7     FB 2013-01-09    30.59                  sd          1.0254999
-##  8     FB 2013-01-09    30.59                 min         27.7700000
-##  9     FB 2013-01-09    30.59                 max         30.5900000
-## 10     FB 2013-01-09    30.59              median         29.0599990
+##    symbol date       adjusted rolled_summary_type rolled_summary_val
+##    &lt;chr&gt;  &lt;date&gt;        &lt;dbl&gt; &lt;fctr&gt;                           &lt;dbl&gt;
+##  1 FB     2013-01-08     29.1 mean                            28.6  
+##  2 FB     2013-01-08     29.1 sd                               0.700
+##  3 FB     2013-01-08     29.1 min                             27.8  
+##  4 FB     2013-01-08     29.1 max                             29.4  
+##  5 FB     2013-01-08     29.1 median                          28.8  
+##  6 FB     2013-01-09     30.6 mean                            29.1  
+##  7 FB     2013-01-09     30.6 sd                               1.03 
+##  8 FB     2013-01-09     30.6 min                             27.8  
+##  9 FB     2013-01-09     30.6 max                             30.6  
+## 10 FB     2013-01-09     30.6 median                          29.1  
 ## # ... with 5,010 more rows</code></pre>
 <p>Finally, if you want to actually keep those first few NA rows in the unnest, you can pass a data frame that is initialized with the same column names as the rest of the values.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rolling_summary &lt;-<span class="st"> </span><span class="kw"><a href="../reference/rollify.html">rollify</a></span>(<span class="op">~</span><span class="kw">summary_df</span>(.x), <span class="dt">window =</span> <span class="dv">5</span>, 
@@ -347,18 +346,18 @@ FB_summarised</code></pre></div>
 FB_summarised &lt;-<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(FB, <span class="dt">summary_list_col =</span> <span class="kw">rolling_summary</span>(adjusted))
 FB_summarised <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/tidyr/topics/unnest">unnest</a></span>()</code></pre></div>
 <pre><code>## # A tibble: 5,024 x 5
-##    symbol       date adjusted rolled_summary_type rolled_summary_val
-##     &lt;chr&gt;     &lt;date&gt;    &lt;dbl&gt;              &lt;fctr&gt;              &lt;dbl&gt;
-##  1     FB 2013-01-02    28.00                &lt;NA&gt;                 NA
-##  2     FB 2013-01-03    27.77                &lt;NA&gt;                 NA
-##  3     FB 2013-01-04    28.76                &lt;NA&gt;                 NA
-##  4     FB 2013-01-07    29.42                &lt;NA&gt;                 NA
-##  5     FB 2013-01-08    29.06                mean         28.6019998
-##  6     FB 2013-01-08    29.06                  sd          0.6997284
-##  7     FB 2013-01-08    29.06                 min         27.7700000
-##  8     FB 2013-01-08    29.06                 max         29.4200000
-##  9     FB 2013-01-08    29.06              median         28.7600000
-## 10     FB 2013-01-09    30.59                mean         29.1199998
+##    symbol date       adjusted rolled_summary_type rolled_summary_val
+##    &lt;chr&gt;  &lt;date&gt;        &lt;dbl&gt; &lt;fctr&gt;                           &lt;dbl&gt;
+##  1 FB     2013-01-02     28.0 &lt;NA&gt;                            NA    
+##  2 FB     2013-01-03     27.8 &lt;NA&gt;                            NA    
+##  3 FB     2013-01-04     28.8 &lt;NA&gt;                            NA    
+##  4 FB     2013-01-07     29.4 &lt;NA&gt;                            NA    
+##  5 FB     2013-01-08     29.1 mean                            28.6  
+##  6 FB     2013-01-08     29.1 sd                               0.700
+##  7 FB     2013-01-08     29.1 min                             27.8  
+##  8 FB     2013-01-08     29.1 max                             29.4  
+##  9 FB     2013-01-08     29.1 median                          28.8  
+## 10 FB     2013-01-09     30.6 mean                            29.1  
 ## # ... with 5,014 more rows</code></pre>
 </div>
 <div id="rolling-regressions" class="section level2">
@@ -379,18 +378,18 @@ rolling_lm &lt;-<span class="st"> </span><span class="kw"><a href="../reference/
 FB_reg &lt;-<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(FB, <span class="dt">roll_lm =</span> <span class="kw">rolling_lm</span>(close, high, low, volume))
 FB_reg</code></pre></div>
 <pre><code>## # A tibble: 1,008 x 9
-##    symbol       date  open  high   low close    volume adjusted   roll_lm
-##     &lt;chr&gt;     &lt;date&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;    &lt;list&gt;
-##  1     FB 2013-01-02 27.44 28.18 27.42 28.00  69846400    28.00 &lt;lgl [1]&gt;
-##  2     FB 2013-01-03 27.88 28.47 27.59 27.77  63140600    27.77 &lt;lgl [1]&gt;
-##  3     FB 2013-01-04 28.01 28.93 27.83 28.76  72715400    28.76 &lt;lgl [1]&gt;
-##  4     FB 2013-01-07 28.69 29.79 28.65 29.42  83781800    29.42 &lt;lgl [1]&gt;
-##  5     FB 2013-01-08 29.51 29.60 28.86 29.06  45871300    29.06  &lt;S3: lm&gt;
-##  6     FB 2013-01-09 29.67 30.60 29.49 30.59 104787700    30.59  &lt;S3: lm&gt;
-##  7     FB 2013-01-10 30.60 31.45 30.28 31.30  95316400    31.30  &lt;S3: lm&gt;
-##  8     FB 2013-01-11 31.28 31.96 31.10 31.72  89598000    31.72  &lt;S3: lm&gt;
-##  9     FB 2013-01-14 32.08 32.21 30.62 30.95  98892800    30.95  &lt;S3: lm&gt;
-## 10     FB 2013-01-15 30.64 31.71 29.88 30.10 173242600    30.10  &lt;S3: lm&gt;
+##    symbol date        open  high   low close    volume adjusted roll_lm  
+##    &lt;chr&gt;  &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt; &lt;list&gt;   
+##  1 FB     2013-01-02  27.4  28.2  27.4  28.0  69846400     28.0 &lt;lgl [1]&gt;
+##  2 FB     2013-01-03  27.9  28.5  27.6  27.8  63140600     27.8 &lt;lgl [1]&gt;
+##  3 FB     2013-01-04  28.0  28.9  27.8  28.8  72715400     28.8 &lt;lgl [1]&gt;
+##  4 FB     2013-01-07  28.7  29.8  28.6  29.4  83781800     29.4 &lt;lgl [1]&gt;
+##  5 FB     2013-01-08  29.5  29.6  28.9  29.1  45871300     29.1 &lt;S3: lm&gt; 
+##  6 FB     2013-01-09  29.7  30.6  29.5  30.6 104787700     30.6 &lt;S3: lm&gt; 
+##  7 FB     2013-01-10  30.6  31.5  30.3  31.3  95316400     31.3 &lt;S3: lm&gt; 
+##  8 FB     2013-01-11  31.3  32.0  31.1  31.7  89598000     31.7 &lt;S3: lm&gt; 
+##  9 FB     2013-01-14  32.1  32.2  30.6  31.0  98892800     31.0 &lt;S3: lm&gt; 
+## 10 FB     2013-01-15  30.6  31.7  29.9  30.1 173242600     30.1 &lt;S3: lm&gt; 
 ## # ... with 998 more rows</code></pre>
 <p>To get some useful information about the regressions, we will use <code><a href="http://www.rdocumentation.org/packages/broom/topics/tidy">broom::tidy()</a></code> and apply it to each regression using a <code>mutate() + map()</code> combination.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">FB_reg <span class="op">%&gt;%</span>
@@ -399,19 +398,19 @@ FB_reg</code></pre></div>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/tidyr/topics/unnest">unnest</a></span>(tidied) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(symbol, date, term, estimate, std.error, statistic, p.value)</code></pre></div>
 <pre><code>## # A tibble: 4,016 x 7
-##    symbol       date        term      estimate    std.error    statistic
-##     &lt;chr&gt;     &lt;date&gt;       &lt;chr&gt;         &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;
-##  1     FB 2013-01-08 (Intercept) -2.841750e-01 1.019828e+01 -0.027865000
-##  2     FB 2013-01-08        high  7.089105e-01 1.949575e+00  0.363623083
-##  3     FB 2013-01-08         low  2.700745e-01 2.159749e+00  0.125049045
-##  4     FB 2013-01-08      volume  1.119755e-08 2.656115e-08  0.421576293
-##  5     FB 2013-01-09 (Intercept) -5.950325e+00 7.478017e+00 -0.795709000
-##  6     FB 2013-01-09        high  2.078924e+00 1.881536e+00  1.104907791
-##  7     FB 2013-01-09         low -9.198664e-01 1.749988e+00 -0.525641586
-##  8     FB 2013-01-09      volume -1.448797e-10 1.682099e-08 -0.008613033
-##  9     FB 2013-01-10 (Intercept)  9.547323e-01 4.458054e+00  0.214158976
-## 10     FB 2013-01-10        high  7.165645e-01 1.296827e+00  0.552552059
-## # ... with 4,006 more rows, and 1 more variables: p.value &lt;dbl&gt;</code></pre>
+##    symbol date       term               estimate std.error statistic p.va…
+##    &lt;chr&gt;  &lt;date&gt;     &lt;chr&gt;                 &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;
+##  1 FB     2013-01-08 (Intercept) -0.284            1.02e⁺¹  -0.0279  0.982
+##  2 FB     2013-01-08 high         0.709            1.95e⁺⁰   0.364   0.778
+##  3 FB     2013-01-08 low          0.270            2.16e⁺⁰   0.125   0.921
+##  4 FB     2013-01-08 volume       0.0000000112     2.66e⁻⁸   0.422   0.746
+##  5 FB     2013-01-09 (Intercept) -5.95             7.48e⁺⁰  -0.796   0.572
+##  6 FB     2013-01-09 high         2.08             1.88e⁺⁰   1.10    0.468
+##  7 FB     2013-01-09 low         -0.920            1.75e⁺⁰  -0.526   0.692
+##  8 FB     2013-01-09 volume      -0.000000000145   1.68e⁻⁸  -0.00861 0.995
+##  9 FB     2013-01-10 (Intercept)  0.955            4.46e⁺⁰   0.214   0.866
+## 10 FB     2013-01-10 high         0.717            1.30e⁺⁰   0.553   0.679
+## # ... with 4,006 more rows</code></pre>
 </div>
 </div>
 </div>
