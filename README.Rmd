@@ -28,22 +28,24 @@ Some immediate advantages of this include:
 
 1) The ability to perform compact time-based subsetting on tibbles.
 
-2) Quickly summarising and aggregating results by time period
-(yearly, monthly, every 2 weeks, etc).
+2) Partitioning an index column by time (like
+yearly, monthly, every 2 weeks, etc.) so that you can use `dplyr`'s grouped
+functionality to summarise and aggregate by time period.
 
-3) Changing the periodicity of a time-based tibble. This means changing 
+3) Changing the periodicity of a time-based tibble. This allows easily changing 
 from a daily dataset to a monthly or yearly dataset.
 
-4) Calling functions similar in spirit to the `purrr::map()` family 
-on time-based tibbles.
-
-5) All functions were designed to support the pipe and to work with packages
+4) All functions were designed to support the pipe and to work with packages
 like `dplyr` and `tidyr`. Each function has also been designed to work with
 `dplyr::group_by()` allowing for powerful data manipulation.
 
-6) Modifying functions for rolling analysis.
+5) Modifying functions for rolling analysis.
 
-7) Quickly creating `tbl_time` time series objects.
+6) Quickly creating `tbl_time` time series objects.
+
+7) Full support for `Date` and `POSIXct` index columns, and experimental 
+support for `yearmon`, `yearqtr` and `hms` which should become more stable
+as some issues in `dplyr` are worked out.
 
 ## Installation
 
@@ -60,6 +62,14 @@ CRAN Version:
 install.packages("tibbletime")
 ```
 
+## Major update warning
+
+If you have been using `0.0.2`, the update to `0.0.3` has introduced 
+major breaking changes. This was necessary for long term stability of the package,
+and no attempt to support backwards compatability was made at this early 
+stage in development. We apologize for any issues this causes.
+See NEWS for complete details.
+
 ## Getting started
 
 The first thing to do is to turn your `tibble` into a `tbl_time` object.
@@ -73,7 +83,7 @@ library(dplyr)
 data(FB)
 
 # Convert FB to tbl_time
-FB <- FB %>% as_tbl_time(index = date)
+FB <- as_tbl_time(FB, index = date)
 
 FB
 ```
@@ -83,18 +93,19 @@ objects. Some of them are:
 
 1) `time_filter()` - Succinctly filter a tbl_time object by date.
 
-2) `time_summarise()` - Similar to dplyr::summarise but with the added benefit 
-of being able to summarise by a time period such as "yearly" or "monthly".
-
-3) `tmap()` - The family of tmap functions transform a tbl_time input by applying a 
-function to each column at a specified time interval.
-
 4) `as_period()` - Convert a tbl_time object from daily to monthly, 
 from minute data to hourly, and more. This allows the user to easily 
 aggregate data to a less granular level.
 
-5) `time_collapse()` - When time_collapse is used, the index of a tbl_time object 
-is altered so that all dates that fall in a period share a common date.
+2) `collapse_index()` - Take an index column, and collapse it so that all
+observations in an interval share the same date. The most common use of this
+is to then group on this column with `dplyr::group_by()` and perform 
+time-based calculations with `summarise()`, `mutate()` or any other `dplyr`
+function.
+
+5) `partition_index()` - A lower level version of `collapse_index()`. Rather
+than collapse the index directly, this returns a column of integers that 
+correspond to the groups.
 
 6) `rollify()` - Modify a function so that it calculates a value 
 (or a set of values) at specific time intervals. This can be used for rolling
@@ -109,31 +120,35 @@ To look at just a few:
 ```{r}
 # Filter for dates from March 2013 to December 2015
 FB %>% 
-  time_filter(2013-03 ~ 2015)
+  time_filter('2013-03' ~ '2015')
 
 # Change from daily to monthly periodicity
+# This just reduces the tibble to the last row in each month
 FB %>% 
-  as_period("monthly")
+  as_period("monthly", side = "end")
 
-# Get the average mean and standard deviation for each year
+# Maybe you don't want to lose the rest of the month's information,
+# and instead you'd like to take the average of every column for each month
 FB %>%
-  time_summarise(period = 1~y,
-        adj_mean = mean(adjusted),
-        adj_sd   = sd(adjusted))
+  select(-symbol) %>%
+  mutate(date = collapse_index(date, "monthly", side = "end")) %>%
+  group_by(date) %>%
+  summarise_all(mean)
 
 # Perform a 5 period rolling average
 mean_5 <- rollify(mean, window = 5)
-FB %>%
-  mutate(roll_mean = mean_5(adjusted))
+mutate(FB, roll_mean = mean_5(adjusted))
 
 # Create a time series
 # Every other day in 2013
-create_series(~2013, 2~d)
+create_series(~'2013', '2 day')
 ```
 
 ## Grouping
 
 Groups created through `dplyr::group_by()` are supported throughout the package.
+Because `collapse_index()` is just adding a column you can group on, all
+dplyr functions are supported.
 
 ```{r}
 # Facebook, Amazon, Netflix and Google stocks
@@ -143,31 +158,36 @@ data(FANG)
 FANG %>% 
   as_tbl_time(date) %>%
   group_by(symbol) %>%
-  time_summarise(period = "yearly",
-        adj_min   = min(adjusted),
-        adj_max   = max(adjusted),
-        adj_range = adj_max - adj_min)
+  
+  # Collapse to yearly
+  mutate(date = collapse_index(date, "yearly")) %>%
+  
+  # Additionally group by date (yearly)
+  group_by(date, add = TRUE) %>%
+  
+  # Perform a yearly summary for each symbol
+  summarise(
+    adj_min   = min(adjusted),
+    adj_max   = max(adjusted),
+    adj_range = adj_max - adj_min
+  )
 ```
 
 ## Index order
 
 `tibbletime` assumes that your dates are in _ascending order_. A warning will
-be generated if they are not when you try and use any `time_*()` function. We do
+be generated if they are not when you use a function where order is relevant. We do
 this for speed purposes and to not force a change on the user's dataset by sorting
 for them.
 
 ## Vignettes
 
-There are currently 4 vignettes for `tibbletime`.
+There are currently 3 vignettes for `tibbletime`.
 
-1) [Introduction to tibbletime](https://business-science.github.io/tibbletime/articles/TT-00-intro-to-tibbletime.html)
+1) [Time-based filtering](https://business-science.github.io/tibbletime/articles/TT-01-time-based-filtering.html)
 
-2) [Time-based filtering](https://business-science.github.io/tibbletime/articles/TT-01-time-based-filtering.html)
+2) [Changing periodicity](https://business-science.github.io/tibbletime/articles/TT-02-changing-time-periods.html)
 
-3) [Changing periodicity](https://business-science.github.io/tibbletime/articles/TT-02-changing-time-periods.html)
+3) [Rolling calculations](https://business-science.github.io/tibbletime/articles/TT-03-rollify-for-rolling-analysis.html)
 
-4) [Rolling calculations](https://business-science.github.io/tibbletime/articles/TT-03-rollify-for-rolling-analysis.html)
-
-## Warning
-
-This package is still going through active development and is subject to change. Use at your own risk. Reproducible bug reports and suggestions for new features are welcome!
+4) [Use with dplyr](https://business-science.github.io/tibbletime/articles/TT-04-use-with-dplyr.html)
