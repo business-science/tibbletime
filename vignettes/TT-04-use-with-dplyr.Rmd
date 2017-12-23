@@ -1,0 +1,118 @@
+---
+title: "Use with dplyr"
+author: "Davis Vaughan"
+date: "`r Sys.Date()`"
+output: 
+  rmarkdown::html_vignette:
+    toc: true
+    toc_depth: 3
+vignette: >
+  %\VignetteIndexEntry{Use with dplyr}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Package motivation
+
+`tibbletime` on its own has useful functions for manipulating time-based 
+tibbles, but one of its most useful features is how nicely it plays with 
+`dplyr`. Traditionally, performing grouped analysis over a time period with
+`dplyr` (like quarterly / monthly summaries) is doable, but it could be easier
+and typically requires use of the `lubridate` package. Below is an example of
+a monthly summary from a daily dataset.
+
+```{r, warning=FALSE, message=FALSE}
+library(tibbletime)
+library(dplyr)
+library(lubridate)
+
+series <- create_series('2013' ~ '2017', 'daily', class = "Date") %>%
+  mutate(var = rnorm(1826))
+
+series
+
+series %>%
+  mutate(year = year(date), month = month(date)) %>%
+  group_by(year, month) %>%
+  summarise(mean_var = mean(var))
+```
+
+This get's more difficult the more granular you go. Getting 5-minute summaries
+from minute or second data requires grouping on year, month, day, hour and minute 
+columns.
+
+## `collapse_index()`
+
+With `tibbletime`, rather than creating new columns to group on, you 
+manipulate your original date column into something that corresponds to 
+the period you are summarising at. The `tibbletime` way to do this is with 
+`collapse_index()`.
+
+```{r}
+series %>%
+  mutate(date = collapse_index(date, "monthly")) %>%
+  group_by(date) %>%
+  summarise(mean_var = mean(var))
+```
+
+Implementing `collapse_index()` to work on just an index column rather than
+the entire `tbl_time` object means that you don't have to override the original
+date column and can keep them as a separate column if required.
+
+This works for more granular series too. Below we aggregate 5 second level data
+up to hourly. This is working with a faily sizable ~19 million row data set.
+
+```{r}
+second_series <- create_series('2013' ~ '2015', '5 second')
+
+second_series %>%
+  mutate(var = rnorm(nrow(second_series))) %>%
+  mutate(date = collapse_index(date, "hourly")) %>%
+  group_by(date) %>%
+  summarise(mean_var = mean(var))
+```
+
+## Multiple series
+
+One really powerful benefit of working in the `tidyverse` is being able to 
+manipulate multiple series at once. Essentially we can create multiple layers
+of groupings, one for the stocks we are working with (like Facebook and Apple), 
+and one for the period you want to summarise your data at (daily, yearly, etc).
+
+Below we use `create_series()` to create two dummy hourly price series, combine them,
+and calculate the OHLC (Open, High, Low, Close) prices per day by first collapsing
+to daily with `collapse_index()` to have something to group on.
+
+```{r}
+set.seed(123)
+
+# Create price series of hourly movements for apple and facebook stock.
+apple <- create_series('2014' ~ '2016', period = '1 hour') %>%
+  mutate(price = 100 + cumsum(rnorm(26304, mean = 0, sd = .5)))
+
+facebook <- create_series('2014' ~ '2016', period = '1 hour') %>%
+  mutate(price = 150 + cumsum(rnorm(26304, mean = 0, sd = .5)))
+
+# Bind them together and create a symbol column to group on
+price_series <- bind_rows(list(apple = apple, facebook = facebook), .id = "symbol") %>%
+  as_tbl_time(date) %>%
+  group_by(symbol)
+
+# Collapse to daily and transform to OHLC (Open, High, Low, Close), a 
+# common financial transformation
+price_series %>%
+  mutate(date = collapse_index(date, "yearly")) %>%
+  group_by(date, add = TRUE) %>%
+  summarise(
+    open  = first(price),
+    high  = max(price),
+    low   = min(price),
+    close = last(price)
+  )
+```
+
+
