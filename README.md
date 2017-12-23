@@ -16,7 +16,7 @@ Some immediate advantages of this include:
 
 2.  Partitioning an index column by time (like yearly, monthly, every 2 weeks, etc.) so that you can use `dplyr`'s grouped functionality to summarise and aggregate by time period.
 
-3.  Changing the periodicity of a time-based tibble. This means changing from a daily dataset to a monthly or yearly dataset.
+3.  Changing the periodicity of a time-based tibble. This allows easily changing from a daily dataset to a monthly or yearly dataset.
 
 4.  All functions were designed to support the pipe and to work with packages like `dplyr` and `tidyr`. Each function has also been designed to work with `dplyr::group_by()` allowing for powerful data manipulation.
 
@@ -45,7 +45,7 @@ install.packages("tibbletime")
 Major update warning
 --------------------
 
-If you have been using `0.0.2`, the update to `0.0.3` has introduced major breaking changes. This was necessary for long term stability of the package, and no attempt to support backwards compatability was made at this early stage in development. We apologize for any issues this causes. See NEWS for complete details.
+If you have been using `0.0.2`, the update to `0.1.0` has introduced major breaking changes. This was necessary for long term stability of the package, and no attempt to support backwards compatability was made at this early stage in development. We apologize for any issues this causes. See NEWS for complete details.
 
 Getting started
 ---------------
@@ -255,12 +255,12 @@ Index order
 Vignettes
 ---------
 
-There are currently 4 vignettes for `tibbletime`.
+There are currently 3 vignettes for `tibbletime`.
 
-1.  [Introduction to tibbletime](https://business-science.github.io/tibbletime/articles/TT-00-intro-to-tibbletime.html)
+1.  [Time-based filtering](./articles/TT-01-time-based-filtering.html)
 
-2.  [Time-based filtering](https://business-science.github.io/tibbletime/articles/TT-01-time-based-filtering.html)
+2.  [Changing periodicity](./articles/TT-02-changing-time-periods.html)
 
-3.  [Changing periodicity](https://business-science.github.io/tibbletime/articles/TT-02-changing-time-periods.html)
+3.  [Rolling calculations](./articles/TT-03-rollify-for-rolling-analysis.html)
 
-4.  [Rolling calculations](https://business-science.github.io/tibbletime/articles/TT-03-rollify-for-rolling-analysis.html)
+4.  [Use with dplyr](./articles/TT-04-use-with-dplyr.html)
