@@ -105,14 +105,15 @@ price_series <- bind_rows(list(apple = apple, facebook = facebook), .id = "symbo
 # Collapse to daily and transform to OHLC (Open, High, Low, Close), a 
 # common financial transformation
 price_series %>%
-  mutate(date = collapse_index(date, "yearly")) %>%
+  mutate(date = collapse_index(date, "daily")) %>%
   group_by(date, add = TRUE) %>%
   summarise(
     open  = first(price),
     high  = max(price),
     low   = min(price),
     close = last(price)
-  )
+  ) %>%
+  slice(1:5)
 ```
 
 

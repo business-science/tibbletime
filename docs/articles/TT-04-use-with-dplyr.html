@@ -112,16 +112,16 @@ series</code></pre></div>
 ## # Index: date
 ##    date          var
 ##    &lt;date&gt;      &lt;dbl&gt;
-##  1 2013-01-01  0.251
-##  2 2013-01-02 -0.236
-##  3 2013-01-03  0.988
-##  4 2013-01-04  0.850
-##  5 2013-01-05  0.680
-##  6 2013-01-06  0.259
-##  7 2013-01-07  0.891
-##  8 2013-01-08 -0.466
-##  9 2013-01-09 -0.172
-## 10 2013-01-10  1.19 
+##  1 2013-01-01 -0.891
+##  2 2013-01-02  0.621
+##  3 2013-01-03 -0.895
+##  4 2013-01-04  0.787
+##  5 2013-01-05  0.629
+##  6 2013-01-06  2.00 
+##  7 2013-01-07  0.489
+##  8 2013-01-08  1.36 
+##  9 2013-01-09  0.459
+## 10 2013-01-10  0.697
 ## # ... with 1,816 more rows</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">series <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">year =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/lubridate/topics/year">year</a></span>(date), <span class="dt">month =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/lubridate/topics/month">month</a></span>(date)) <span class="op">%&gt;%</span>
@@ -130,16 +130,16 @@ series</code></pre></div>
 <pre><code>## # A tibble: 60 x 3
 ##     year month mean_var
 ##    &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;
-##  1  2013  1.00  0.292  
-##  2  2013  2.00  0.116  
-##  3  2013  3.00  0.0561 
-##  4  2013  4.00 -0.210  
-##  5  2013  5.00  0.271  
-##  6  2013  6.00 -0.00444
-##  7  2013  7.00 -0.310  
-##  8  2013  8.00 -0.195  
-##  9  2013  9.00  0.220  
-## 10  2013 10.0  -0.200  
+##  1  2013  1.00   0.0575
+##  2  2013  2.00   0.0625
+##  3  2013  3.00   0.101 
+##  4  2013  4.00   0.0184
+##  5  2013  5.00   0.234 
+##  6  2013  6.00   0.0441
+##  7  2013  7.00   0.0459
+##  8  2013  8.00  -0.139 
+##  9  2013  9.00  -0.0259
+## 10  2013 10.0    0.0616
 ## # ... with 50 more rows</code></pre>
 <p>This get’s more difficult the more granular you go. Getting 5-minute summaries from minute or second data requires grouping on year, month, day, hour and minute columns.</p>
 </div>
@@ -155,16 +155,16 @@ series</code></pre></div>
 ## # Index: date
 ##    date       mean_var
 ##    &lt;date&gt;        &lt;dbl&gt;
-##  1 2013-01-31  0.292  
-##  2 2013-02-28  0.116  
-##  3 2013-03-31  0.0561 
-##  4 2013-04-30 -0.210  
-##  5 2013-05-31  0.271  
-##  6 2013-06-30 -0.00444
-##  7 2013-07-31 -0.310  
-##  8 2013-08-31 -0.195  
-##  9 2013-09-30  0.220  
-## 10 2013-10-31 -0.200  
+##  1 2013-01-31   0.0575
+##  2 2013-02-28   0.0625
+##  3 2013-03-31   0.101 
+##  4 2013-04-30   0.0184
+##  5 2013-05-31   0.234 
+##  6 2013-06-30   0.0441
+##  7 2013-07-31   0.0459
+##  8 2013-08-31  -0.139 
+##  9 2013-09-30  -0.0259
+## 10 2013-10-31   0.0616
 ## # ... with 50 more rows</code></pre>
 <p>Implementing <code><a href="../reference/collapse_index.html">collapse_index()</a></code> to work on just an index column rather than the entire <code>tbl_time</code> object means that you don’t have to override the original date column and can keep them as a separate column if required.</p>
 <p>This works for more granular series too. Below we aggregate 5 second level data up to hourly. This is working with a faily sizable ~19 million row data set.</p>
@@ -177,18 +177,18 @@ second_series <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span>(<span class="dt">mean_var =</span> <span class="kw">mean</span>(var))</code></pre></div>
 <pre><code>## # A time tibble: 26,280 x 2
 ## # Index: date
-##    date                 mean_var
-##    &lt;dttm&gt;                  &lt;dbl&gt;
-##  1 2013-01-01 00:59:55  0.0286  
-##  2 2013-01-01 01:59:55  0.0896  
-##  3 2013-01-01 02:59:55  0.0431  
-##  4 2013-01-01 03:59:55 -0.000622
-##  5 2013-01-01 04:59:55  0.0408  
-##  6 2013-01-01 05:59:55 -0.0142  
-##  7 2013-01-01 06:59:55  0.00853 
-##  8 2013-01-01 07:59:55  0.0345  
-##  9 2013-01-01 08:59:55  0.0109  
-## 10 2013-01-01 09:59:55 -0.00111 
+##    date                mean_var
+##    &lt;dttm&gt;                 &lt;dbl&gt;
+##  1 2013-01-01 00:59:55 -0.00139
+##  2 2013-01-01 01:59:55  0.00698
+##  3 2013-01-01 02:59:55 -0.00948
+##  4 2013-01-01 03:59:55 -0.0443 
+##  5 2013-01-01 04:59:55  0.0116 
+##  6 2013-01-01 05:59:55  0.0186 
+##  7 2013-01-01 06:59:55 -0.00973
+##  8 2013-01-01 07:59:55  0.0137 
+##  9 2013-01-01 08:59:55  0.0350 
+## 10 2013-01-01 09:59:55  0.0463 
 ## # ... with 26,270 more rows</code></pre>
 </div>
 <div id="multiple-series" class="section level2">
@@ -213,25 +213,29 @@ price_series &lt;-<span class="st"> </span><span class="kw"><a href="http://dply
 <span class="co"># Collapse to daily and transform to OHLC (Open, High, Low, Close), a </span>
 <span class="co"># common financial transformation</span>
 price_series <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">date =</span> <span class="kw"><a href="../reference/collapse_index.html">collapse_index</a></span>(date, <span class="st">"yearly"</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">date =</span> <span class="kw"><a href="../reference/collapse_index.html">collapse_index</a></span>(date, <span class="st">"daily"</span>)) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(date, <span class="dt">add =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span>(
     <span class="dt">open  =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/nth.html">first</a></span>(price),
     <span class="dt">high  =</span> <span class="kw">max</span>(price),
     <span class="dt">low   =</span> <span class="kw">min</span>(price),
     <span class="dt">close =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/nth.html">last</a></span>(price)
-  )</code></pre></div>
-<pre><code>## # A time tibble: 6 x 6
-## # Index: date
-## # Groups: symbol [?]
-##   symbol   date                 open  high     low   close
-##   &lt;chr&gt;    &lt;dttm&gt;              &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
-## 1 apple    2014-12-31 23:00:00  99.7 132     95.9   117   
-## 2 apple    2015-12-31 23:00:00 118   128     71.3    74.6 
-## 3 apple    2016-12-31 23:00:00  74.3  83.8 -  7.82 -  2.14
-## 4 facebook 2014-12-31 23:00:00 150   183    130     172   
-## 5 facebook 2015-12-31 23:00:00 173   177    126     144   
-## 6 facebook 2016-12-31 23:00:00 143   238    123     236</code></pre>
+  ) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/slice.html">slice</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>)</code></pre></div>
+<pre><code>## # A tibble: 10 x 6
+## # Groups: symbol [2]
+##    symbol   date                 open  high   low close
+##    &lt;chr&gt;    &lt;dttm&gt;              &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 apple    2014-01-01 23:00:00  99.7   102  99.6  99.9
+##  2 apple    2014-01-02 23:00:00  99.6   102  98.7 101  
+##  3 apple    2014-01-03 23:00:00 101     103 101   101  
+##  4 apple    2014-01-04 23:00:00 102     104 101   103  
+##  5 apple    2014-01-05 23:00:00 104     105 101   101  
+##  6 facebook 2014-01-01 23:00:00 150     152 149   149  
+##  7 facebook 2014-01-02 23:00:00 149     151 148   149  
+##  8 facebook 2014-01-03 23:00:00 150     150 147   148  
+##  9 facebook 2014-01-04 23:00:00 148     150 144   145  
+## 10 facebook 2014-01-05 23:00:00 145     146 144   146</code></pre>
 </div>
 </div>
   </div>
