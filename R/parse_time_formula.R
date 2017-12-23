@@ -63,12 +63,12 @@ split_to_list.POSIXct <- function(x) {
 #' @export
 split_to_list.yearmon <- function(x) {
   x_lt <- as.POSIXlt(x, tz = get_default_time_zone())
-  list(x_lt$year + 1900, x_lt$mon + 1, x_lt$mday)
+  list(x_lt$year + 1900, x_lt$mon + 1)
 }
 #' @export
 split_to_list.yearqtr <- function(x) {
   x_lt <- as.POSIXlt(x, tz = get_default_time_zone())
-  list(x_lt$year + 1900, x_lt$mon + 1, x_lt$mday)
+  list(x_lt$year + 1900, x_lt$mon + 1)
 }
 #' @export
 split_to_list.hms <- function(x) {
