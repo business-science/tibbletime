@@ -29,7 +29,8 @@ floor_index.default <- function(x, unit = "seconds") {
 
 #' @export
 floor_index.hms <- function(x, unit = "seconds") {
-  hms::as.hms(floor_index(as.POSIXct(x), unit))
+  floored <- floor_index(as.POSIXct(x), unit)
+  hms::as.hms(floored, attr(floored, "tzone"))
 }
 
 #' @export

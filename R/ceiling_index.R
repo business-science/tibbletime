@@ -29,7 +29,8 @@ ceiling_index.default <- function(x, unit = "seconds") {
 
 #' @export
 ceiling_index.hms <- function(x, unit = "seconds") {
-  hms::as.hms(ceiling_index(as.POSIXct(x), unit))
+  ceilinged <- ceiling_index(as.POSIXct(x), unit)
+  hms::as.hms(ceilinged, get_index_col_time_zone(ceilinged))
 }
 
 #' @export

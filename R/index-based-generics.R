@@ -273,5 +273,5 @@ coerce_start_date.yearqtr <- function(x, start_date) {
 }
 
 coerce_start_date.hms <- function(x, start_date) {
-  hms::as.hms(start_date)
+  hms::as.hms(start_date, tz = get_index_col_time_zone(start_date))
 }

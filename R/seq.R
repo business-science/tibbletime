@@ -26,5 +26,5 @@ seq.hms <- function(from, to, by, ...) {
     as.POSIXct(to),
     by
   )
-  hms::as.hms(.seq)
+  hms::as.hms(.seq, tz = attr(.seq, "tzone"))
 }

@@ -31,7 +31,7 @@ Imports:
     assertthat (>= 0.2.0),
     dplyr (>= 0.7),
     glue,
-    hms,
+    hms (>= 0.4),
     lubridate (>= 1.6.0),
     purrr (>= 0.2.3),
     rlang (>= 0.1.2),
