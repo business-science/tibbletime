@@ -112,16 +112,16 @@ series</code></pre></div>
 ## # Index: date
 ##    date          var
 ##    &lt;date&gt;      &lt;dbl&gt;
-##  1 2013-01-01 -2.15 
-##  2 2013-01-02 -0.698
-##  3 2013-01-03 -0.295
-##  4 2013-01-04  1.44 
-##  5 2013-01-05 -0.520
-##  6 2013-01-06 -0.839
-##  7 2013-01-07 -0.896
-##  8 2013-01-08  1.73 
-##  9 2013-01-09 -0.171
-## 10 2013-01-10  3.07 
+##  1 2013-01-01  0.251
+##  2 2013-01-02 -0.236
+##  3 2013-01-03  0.988
+##  4 2013-01-04  0.850
+##  5 2013-01-05  0.680
+##  6 2013-01-06  0.259
+##  7 2013-01-07  0.891
+##  8 2013-01-08 -0.466
+##  9 2013-01-09 -0.172
+## 10 2013-01-10  1.19 
 ## # ... with 1,816 more rows</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">series <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">year =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/lubridate/topics/year">year</a></span>(date), <span class="dt">month =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/lubridate/topics/month">month</a></span>(date)) <span class="op">%&gt;%</span>
@@ -130,23 +130,22 @@ series</code></pre></div>
 <pre><code>## # A tibble: 60 x 3
 ##     year month mean_var
 ##    &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;
-##  1  2013  1.00   0.221 
-##  2  2013  2.00  -0.0941
-##  3  2013  3.00  -0.301 
-##  4  2013  4.00   0.154 
-##  5  2013  5.00   0.352 
-##  6  2013  6.00  -0.218 
-##  7  2013  7.00  -0.0956
-##  8  2013  8.00   0.0858
-##  9  2013  9.00   0.258 
-## 10  2013 10.0   -0.0200
+##  1  2013  1.00  0.292  
+##  2  2013  2.00  0.116  
+##  3  2013  3.00  0.0561 
+##  4  2013  4.00 -0.210  
+##  5  2013  5.00  0.271  
+##  6  2013  6.00 -0.00444
+##  7  2013  7.00 -0.310  
+##  8  2013  8.00 -0.195  
+##  9  2013  9.00  0.220  
+## 10  2013 10.0  -0.200  
 ## # ... with 50 more rows</code></pre>
 <p>This get’s more difficult the more granular you go. Getting 5-minute summaries from minute or second data requires grouping on year, month, day, hour and minute columns.</p>
 </div>
-<div id="collapse_index" class="section level2">
+<div id="index-manipulation" class="section level2">
 <h2 class="hasAnchor">
-<a href="#collapse_index" class="anchor"></a><code><a href="../reference/collapse_index.html">collapse_index()</a></code>
-</h2>
+<a href="#index-manipulation" class="anchor"></a>Index manipulation</h2>
 <p>With <code>tibbletime</code>, rather than creating new columns to group on, you manipulate your original date column into something that corresponds to the period you are summarising at. The <code>tibbletime</code> way to do this is with <code><a href="../reference/collapse_index.html">collapse_index()</a></code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">series <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">date =</span> <span class="kw"><a href="../reference/collapse_index.html">collapse_index</a></span>(date, <span class="st">"monthly"</span>)) <span class="op">%&gt;%</span>
@@ -156,16 +155,16 @@ series</code></pre></div>
 ## # Index: date
 ##    date       mean_var
 ##    &lt;date&gt;        &lt;dbl&gt;
-##  1 2013-01-31   0.221 
-##  2 2013-02-28  -0.0941
-##  3 2013-03-31  -0.301 
-##  4 2013-04-30   0.154 
-##  5 2013-05-31   0.352 
-##  6 2013-06-30  -0.218 
-##  7 2013-07-31  -0.0956
-##  8 2013-08-31   0.0858
-##  9 2013-09-30   0.258 
-## 10 2013-10-31  -0.0200
+##  1 2013-01-31  0.292  
+##  2 2013-02-28  0.116  
+##  3 2013-03-31  0.0561 
+##  4 2013-04-30 -0.210  
+##  5 2013-05-31  0.271  
+##  6 2013-06-30 -0.00444
+##  7 2013-07-31 -0.310  
+##  8 2013-08-31 -0.195  
+##  9 2013-09-30  0.220  
+## 10 2013-10-31 -0.200  
 ## # ... with 50 more rows</code></pre>
 <p>Implementing <code><a href="../reference/collapse_index.html">collapse_index()</a></code> to work on just an index column rather than the entire <code>tbl_time</code> object means that you don’t have to override the original date column and can keep them as a separate column if required.</p>
 <p>This works for more granular series too. Below we aggregate 5 second level data up to hourly. This is working with a faily sizable ~19 million row data set.</p>
@@ -178,18 +177,18 @@ second_series <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span>(<span class="dt">mean_var =</span> <span class="kw">mean</span>(var))</code></pre></div>
 <pre><code>## # A time tibble: 26,280 x 2
 ## # Index: date
-##    date                mean_var
-##    &lt;dttm&gt;                 &lt;dbl&gt;
-##  1 2013-01-01 00:59:55 -0.0365 
-##  2 2013-01-01 01:59:55 -0.0210 
-##  3 2013-01-01 02:59:55  0.00909
-##  4 2013-01-01 03:59:55  0.00466
-##  5 2013-01-01 04:59:55  0.0232 
-##  6 2013-01-01 05:59:55  0.0222 
-##  7 2013-01-01 06:59:55 -0.00630
-##  8 2013-01-01 07:59:55  0.0591 
-##  9 2013-01-01 08:59:55  0.00194
-## 10 2013-01-01 09:59:55  0.00118
+##    date                 mean_var
+##    &lt;dttm&gt;                  &lt;dbl&gt;
+##  1 2013-01-01 00:59:55  0.0286  
+##  2 2013-01-01 01:59:55  0.0896  
+##  3 2013-01-01 02:59:55  0.0431  
+##  4 2013-01-01 03:59:55 -0.000622
+##  5 2013-01-01 04:59:55  0.0408  
+##  6 2013-01-01 05:59:55 -0.0142  
+##  7 2013-01-01 06:59:55  0.00853 
+##  8 2013-01-01 07:59:55  0.0345  
+##  9 2013-01-01 08:59:55  0.0109  
+## 10 2013-01-01 09:59:55 -0.00111 
 ## # ... with 26,270 more rows</code></pre>
 </div>
 <div id="multiple-series" class="section level2">
@@ -243,7 +242,7 @@ price_series <span class="op">%&gt;%</span>
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
 <li><a href="#package-motivation">Package motivation</a></li>
-      <li><a href="#collapse_index"><code><a href="--/reference/collapse_index-html">collapse_index()</a></code></a></li>
+      <li><a href="#index-manipulation">Index manipulation</a></li>
       <li><a href="#multiple-series">Multiple series</a></li>
       </ul>
 </div>
