@@ -29,13 +29,20 @@
 #' # Collapse to weekly dates
 #' dplyr::mutate(FB, date = collapse_index(date, "weekly"))
 #'
-#' # A common workflow is the group on the new date column
+#' # A common workflow is to group on the new date column
 #' # to perform a time based summary
 #' FB %>%
-#'  dplyr::mutate(date = collapse_index(date, "yearly")) %>%
-#'  dplyr::group_by(date) %>%
-#'  dplyr::summarise_if(is.numeric, mean)
+#'   dplyr::mutate(date = collapse_index(date, "yearly")) %>%
+#'   dplyr::group_by(date) %>%
+#'   dplyr::summarise_if(is.numeric, mean)
 #'
+#' # You can also assign the result to a separate column and use that
+#' # to nest on, allowing for 'period nests' that keep the
+#' # original dates in the nested tibbles.
+#' FB %>%
+#'   dplyr::mutate(nest_date = collapse_index(date, "2 year")) %>%
+#'   dplyr::group_by(nest_date) %>%
+#'   tidyr::nest()
 #'
 #' # Grouped functionality -----------------------------------------------------
 #'
