@@ -40,7 +40,8 @@ addition to the transformed data.}
 \description{
 Convert a \code{tbl_time} object from daily to monthly,
 from minute data to hourly, and more. This allows the user to easily
-aggregate data to a less granular level.
+aggregate data to a less granular level by taking the value from either
+the beginning or end of the period.
 }
 \details{
 This function respects \code{\link[dplyr:group_by]{dplyr::group_by()}} groups.
