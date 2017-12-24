@@ -18,28 +18,28 @@ BugReports: https://github.com/business-science/tibbletime/issues
 License: MIT + file LICENSE
 Encoding: UTF-8
 Suggests: 
-    testthat,
+    broom,
+    covr,
     gapminder,
     knitr,
-    broom,
-    covr
+    testthat,
+    tidyr
 RoxygenNote: 6.0.1
 Roxygen: list(markdown = TRUE)
 Depends:
     R (>= 3.2.0)
 Imports:
     assertthat (>= 0.2.0),
-    dplyr (>= 0.7),
-    glue,
+    dplyr (>= 0.7.4),
+    glue (>= 1.1.1),
     hms (>= 0.4),
     lubridate (>= 1.6.0),
     purrr (>= 0.2.3),
-    rlang (>= 0.1.2),
+    rlang (>= 0.1.6),
     tibble (>= 1.3.3),
-    tidyr (>= 0.7.1),
-    tidyselect,
-    Rcpp,
-    zoo
+    tidyselect (>= 0.2.3),
+    Rcpp (>= 0.12.7),
+    zoo (>= 1.8-0)
 Remotes:
     tidyverse/tibble,
     hadley/sloop

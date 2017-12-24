@@ -12,10 +12,6 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
 ## Package motivation
 
 `tibbletime` on its own has useful functions for manipulating time-based 

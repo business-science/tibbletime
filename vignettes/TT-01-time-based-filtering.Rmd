@@ -12,12 +12,6 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, echo = FALSE, message = FALSE, warning = FALSE}
-library(tibbletime)
-library(dplyr)
-library(tidyr)
-```
-
 # Introducing filter_time()
 
 `filter_time()` attempts to make filtering data frames by date much easier 
@@ -33,6 +27,7 @@ the character `'YYYY-MM-DD HH:MM:SS'`.
 
 ```{r, message=FALSE, warning=FALSE}
 library(tibbletime)
+library(dplyr)
 
 # Facebook stock prices.
 data(FB)

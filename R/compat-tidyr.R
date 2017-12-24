@@ -1,5 +1,3 @@
-#' @export
-#' @importFrom tidyr nest
 nest.tbl_time <- function(data, ..., .key = "data") {
   .key       <- rlang::enexpr(.key)
   .key_sym   <- rlang::sym(.key)
@@ -30,15 +28,11 @@ nest.tbl_time <- function(data, ..., .key = "data") {
   }
 }
 
-#' @export
-#' @importFrom tidyr unnest
 unnest.tbl_time <- function(data, ..., .drop = NA, .id = NULL, .sep = NULL) {
   # This is called after nesting but excluding the index in the nest
   sloop::reconstruct(NextMethod(), data)
 }
 
-#' @export
-#' @importFrom tidyr unnest
 unnest.tbl_df <- function(data, ..., .drop = NA, .id = NULL, .sep = NULL) {
   # Called after nesting a tbl_time, index is in the nest, then unnesting
   quos <- rlang::quos(...)
@@ -114,3 +108,32 @@ unnest.tbl_df <- function(data, ..., .drop = NA, .id = NULL, .sep = NULL) {
 #   sloop::reconstruct(spread_data, data)
 # }
 
+# ------------------------------------------------------------------------------
+# Registration function
+# Copied from googledrive r package, dplyr-compat.R
+
+## function is called in .onLoad()
+
+register_s3_method <- function(pkg, generic, class, fun = NULL) { # nocov start
+  stopifnot(is.character(pkg))
+  envir <- asNamespace(pkg)
+
+  stopifnot(is.character(generic))
+  stopifnot(is.character(class))
+  if (is.null(fun)) {
+    fun <- get(paste0(generic, ".", class), envir = parent.frame())
+  }
+  stopifnot(is.function(fun))
+
+  if (pkg %in% loadedNamespaces()) {
+    registerS3method(generic, class, fun, envir = envir)
+  }
+
+  # Always register hook in case package is later unloaded & reloaded
+  setHook(
+    packageEvent(pkg, "onLoad"),
+    function(...) {
+      registerS3method(generic, class, fun, envir = envir)
+    }
+  )
+}
