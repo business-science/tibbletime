@@ -44,7 +44,7 @@
 #'
 #' This function respects [dplyr::group_by()] groups.
 #'
-#' @rdname time_filter
+#' @rdname filter_time
 #'
 #' @export
 #'
@@ -56,10 +56,10 @@
 #'   dplyr::group_by(symbol)
 #'
 #' # 2013-01-01 to 2014-12-31
-#' time_filter(FANG, '2013' ~ '2014')
+#' filter_time(FANG, '2013' ~ '2014')
 #'
 #' # 2013-05-25 to 2014-06-04
-#' time_filter(FANG, '2013-05-25' ~ '2014-06-04')
+#' filter_time(FANG, '2013-05-25' ~ '2014-06-04')
 #'
 #' # Using the `[` subset operator
 #' FANG['2014'~'2015']
@@ -73,34 +73,34 @@
 #' # Variables are unquoted using rlang
 #' lhs_date <- "2013"
 #' rhs_date <- as.Date("2014-01-01")
-#' time_filter(FANG, lhs_date ~ rhs_date)
+#' filter_time(FANG, lhs_date ~ rhs_date)
 #'
 #' # Use the keywords 'start' and 'end' to conveniently access ends
-#' time_filter(FANG, 'start' ~ '2014')
+#' filter_time(FANG, 'start' ~ '2014')
 #'
 #' # hms (hour, minute, second) classes have special parsing
 #' hms_example <- create_series(~'12:01', 'second', class = 'hms')
-#' time_filter(hms_example, 'start' ~ '12:01:30')
+#' filter_time(hms_example, 'start' ~ '12:01:30')
 #'
 #'
-time_filter <- function(.tbl_time, time_formula) {
-  UseMethod("time_filter")
+filter_time <- function(.tbl_time, time_formula) {
+  UseMethod("filter_time")
 }
 
 #' @export
-time_filter.default <- function(.tbl_time, time_formula) {
+filter_time.default <- function(.tbl_time, time_formula) {
   stop("Object is not of class `tbl_time`.", call. = FALSE)
 }
 
 #' @export
-time_filter.tbl_time <- function(.tbl_time, time_formula) {
+filter_time.tbl_time <- function(.tbl_time, time_formula) {
 
   index_quo  <- get_index_quo(.tbl_time)
   tz <- get_index_time_zone(.tbl_time)
 
   # from/to setup is done inside the call to filter so it is unique to
   # each group
-  .tbl_time_filtered <- dplyr::filter(.tbl_time, {
+  .tbl_filtered <- dplyr::filter(.tbl_time, {
 
     # Parse the time_formula, don't convert to dates yet
     tf_list <- parse_time_formula(!! index_quo, time_formula)
@@ -123,7 +123,7 @@ time_filter.tbl_time <- function(.tbl_time, time_formula) {
     sorted_range_search(!! index_quo, from, to)
   })
 
-  sloop::reconstruct(.tbl_time_filtered, .tbl_time)
+  sloop::reconstruct(.tbl_filtered, .tbl_time)
 }
 
 # Subset operator --------------------------------------------------------------
@@ -137,17 +137,17 @@ time_filter.tbl_time <- function(.tbl_time, time_formula) {
 #' exactly like the normal extraction operator.
 #' @param drop Will always be coerced to `FALSE` by `tibble`.
 #'
-#' @rdname time_filter
+#' @rdname filter_time
 #'
 `[.tbl_time` <- function(x, i, j, drop = FALSE) {
 
   # This helps decide whether i is used for column subset or row subset
   .nargs <- nargs() - !missing(drop)
 
-  # time_filter if required
+  # filter_time if required
   if(!missing(i)) {
     if(rlang::is_formula(i)) {
-      x <- time_filter(x, i)
+      x <- filter_time(x, i)
     }
   }
 

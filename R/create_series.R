@@ -6,7 +6,7 @@
 #' @inheritParams partition_index
 #' @param time_formula A period to create the series over.
 #' This is specified as a formula.
-#' See the `Details` section of [time_filter()] for more information.
+#' See the `Details` section of [filter_time()] for more information.
 #' @param include_end Whether to always include the RHS of the `time_formula`
 #' even if it does not match the regularly spaced index.
 #' @param tz Time zone of the new series.

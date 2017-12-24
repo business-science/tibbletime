@@ -10,7 +10,7 @@ create_series(time_formula, period = "daily", class = "POSIXct",
 \arguments{
 \item{time_formula}{A period to create the series over.
 This is specified as a formula.
-See the \code{Details} section of \code{\link[=time_filter]{time_filter()}} for more information.}
+See the \code{Details} section of \code{\link[=filter_time]{filter_time()}} for more information.}
 
 \item{period}{A character specification used for time-based grouping. The
 general format to use is \code{"frequency period"} where frequency is a number

@@ -82,7 +82,7 @@ FB
 
 There are a number of functions that were designed specifically for `tbl_time` objects. Some of them are:
 
-1.  `time_filter()` - Succinctly filter a tbl\_time object by date.
+1.  `filter_time()` - Succinctly filter a tbl\_time object by date.
 
 2.  `as_period()` - Convert a tbl\_time object from daily to monthly, from minute data to hourly, and more. This allows the user to easily aggregate data to a less granular level.
 
@@ -99,7 +99,7 @@ To look at just a few:
 ``` r
 # Filter for dates from March 2013 to December 2015
 FB %>% 
-  time_filter('2013-03' ~ '2015')
+  filter_time('2013-03' ~ '2015')
 #> # A time tibble: 716 x 8
 #> # Index: date
 #>    symbol date        open  high   low close   volume adjusted

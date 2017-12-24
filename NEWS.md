@@ -26,6 +26,10 @@ With that out of the way, here is a complete list of changes.
     also allows you to pass in variables to the time formula, which
     previously did not work well.
     
+    * `time_filter()` has become `filter_time()`. This naming is easier to 
+    remember now that a suite of `time_*()` functions is not being developed
+    and is easier to find with autocompletion.
+    
     * `time_group()` and `time_collapse()` have become `partition_index()`
     and `collapse_index()`. Both functions accept `index` vectors and
     are commonly used inside `dplyr::mutate()`.
@@ -55,7 +59,7 @@ With that out of the way, here is a complete list of changes.
     index and time zone of `tbl_time` objects. These are useful for 
     package development.
     
-    * `time_filter()`, `as_period()` and other "getter" functions 
+    * `filter_time()`, `as_period()` and other "getter" functions 
     now use `.tbl_time` as a consistent first argument rather than
     `x`. `collapse_index()` and `partition_index()` use `index` as
     their first arguments.
@@ -122,11 +126,11 @@ With that out of the way, here is a complete list of changes.
     * Fixed a bug where using `tidyr::nest()` would cause the nested tibbles
     to lose their time attributes.
 
-    * Fix a bug where time_filter(data, ~yyyy-mm-dd) would be parsed as
+    * Fix a bug where filter_time(data, ~yyyy-mm-dd) would be parsed as
     `yyyy-mm-dd 00:00:00 ~ yyyy-mm-dd 00:00:00` instead of 
     `yyyy-mm-dd 00:00:00 ~ yyyy-mm-dd 23:59:59`.
 
-    * Fix a bug with as.Date / as.POSIXct operator collision in `time_filter()`.
+    * Fix a bug with as.Date / as.POSIXct operator collision in `filter_time()`.
 
 ## tibbletime 0.0.1 
 
