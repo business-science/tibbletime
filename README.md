@@ -255,8 +255,6 @@ Index order
 Vignettes
 ---------
 
-There are currently 3 vignettes for `tibbletime`.
-
 1.  [Time-based filtering](./articles/TT-01-time-based-filtering.html)
 
 2.  [Changing periodicity](./articles/TT-02-changing-time-periods.html)

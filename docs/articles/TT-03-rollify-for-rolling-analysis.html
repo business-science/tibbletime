@@ -127,7 +127,7 @@ rolling_mean</code></pre></div>
 <pre><code>## function(...) {
 ##     roller(..., .f = .f, window = window, unlist = unlist, na_value = na_value)
 ##   }
-## &lt;environment: 0x7ff3e40b1778&gt;</code></pre>
+## &lt;environment: 0x7f9e58b17358&gt;</code></pre>
 <p>We now have a rolling version of the function, <code>mean()</code>. You use it in a similar way to how you might use <code>mean()</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(FB, <span class="dt">mean_5 =</span> <span class="kw">rolling_mean</span>(adjusted))</code></pre></div>
 <pre><code>## # A tibble: 1,008 x 6

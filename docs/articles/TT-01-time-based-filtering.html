@@ -104,6 +104,7 @@
 <h2 class="hasAnchor">
 <a href="#datasets-required" class="anchor"></a>Datasets required</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tibbletime)
+<span class="kw">library</span>(dplyr)
 
 <span class="co"># Facebook stock prices.</span>
 <span class="kw">data</span>(FB)
@@ -116,7 +117,7 @@ FB &lt;-<span class="st"> </span><span class="kw"><a href="../reference/tbl_time
 
 <span class="co"># Convert FANG to tbl_time and group</span>
 FANG &lt;-<span class="st"> </span><span class="kw"><a href="../reference/tbl_time.html">as_tbl_time</a></span>(FANG, <span class="dt">index =</span> date) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">group_by</span>(symbol)</code></pre></div>
+<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(symbol)</code></pre></div>
 </div>
 <div id="year-filtering-example" class="section level2">
 <h2 class="hasAnchor">
