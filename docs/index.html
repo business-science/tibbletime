@@ -157,7 +157,7 @@ FB
 <span class="co">#&gt; # ... with 998 more rows</span></code></pre></div>
 <p>There are a number of functions that were designed specifically for <code>tbl_time</code> objects. Some of them are:</p>
 <ol style="list-style-type: decimal">
-<li><p><code><a href="reference/time_filter.html">time_filter()</a></code> - Succinctly filter a tbl_time object by date.</p></li>
+<li><p><code><a href="reference/filter_time.html">filter_time()</a></code> - Succinctly filter a tbl_time object by date.</p></li>
 <li><p><code><a href="reference/as_period.html">as_period()</a></code> - Convert a tbl_time object from daily to monthly, from minute data to hourly, and more. This allows the user to easily aggregate data to a less granular level.</p></li>
 <li><p><code><a href="reference/collapse_index.html">collapse_index()</a></code> - Take an index column, and collapse it so that all observations in an interval share the same date. The most common use of this is to then group on this column with <code><a href="http://dplyr.tidyverse.org/reference/group_by.html">dplyr::group_by()</a></code> and perform time-based calculations with <code><a href="http://dplyr.tidyverse.org/reference/summarise.html">summarise()</a></code>, <code><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> or any other <code>dplyr</code> function.</p></li>
 <li><p><code><a href="reference/partition_index.html">partition_index()</a></code> - A lower level version of <code><a href="reference/collapse_index.html">collapse_index()</a></code>. Rather than collapse the index directly, this returns a column of integers that correspond to the groups.</p></li>
@@ -167,7 +167,7 @@ FB
 <p>To look at just a few:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Filter for dates from March 2013 to December 2015</span>
 FB <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="reference/time_filter.html">time_filter</a></span>(<span class="st">'2013-03'</span> <span class="op">~</span><span class="st"> '2015'</span>)
+<span class="st">  </span><span class="kw"><a href="reference/filter_time.html">filter_time</a></span>(<span class="st">'2013-03'</span> <span class="op">~</span><span class="st"> '2015'</span>)
 <span class="co">#&gt; # A time tibble: 716 x 8</span>
 <span class="co">#&gt; # Index: date</span>
 <span class="co">#&gt;    symbol date        open  high   low close   volume adjusted</span>

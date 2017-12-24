@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Succinctly filter a <code>tbl_time</code> object by its index — time_filter • tibbletime</title>
+<title>Succinctly filter a <code>tbl_time</code> object by its index — filter_time • tibbletime</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -120,7 +120,7 @@
     <p>Use a concise filtering method to filter a <code>tbl_time</code> object by its <code>index</code>.</p>
     
 
-    <pre class="usage">time_filter(.tbl_time, time_formula)
+    <pre class="usage">filter_time(.tbl_time, time_formula)
 
 # S3 method for tbl_time
 [(x, i, j, drop = FALSE)</pre>
@@ -204,7 +204,7 @@ formula is specified as only <code>HH:MM:SS</code>.</p><ul>
   <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>symbol</span>)
 
 <span class='co'># 2013-01-01 to 2014-12-31</span>
-<span class='fu'>time_filter</span>(<span class='no'>FANG</span>, <span class='st'>'2013'</span> ~ <span class='st'>'2014'</span>)</div><div class='output co'>#&gt; # A time tibble: 2,016 x 8
+<span class='fu'>filter_time</span>(<span class='no'>FANG</span>, <span class='st'>'2013'</span> ~ <span class='st'>'2014'</span>)</div><div class='output co'>#&gt; # A time tibble: 2,016 x 8
 #&gt; # Index: date
 #&gt; # Groups: symbol [4]
 #&gt;    symbol date        open  high   low close    volume adjusted
@@ -221,7 +221,7 @@ formula is specified as only <code>HH:MM:SS</code>.</p><ul>
 #&gt; 10 FB     2013-01-15  30.6  31.7  29.9  30.1 173242600     30.1
 #&gt; # ... with 2,006 more rows</div><div class='input'>
 <span class='co'># 2013-05-25 to 2014-06-04</span>
-<span class='fu'>time_filter</span>(<span class='no'>FANG</span>, <span class='st'>'2013-05-25'</span> ~ <span class='st'>'2014-06-04'</span>)</div><div class='output co'>#&gt; # A time tibble: 1,032 x 8
+<span class='fu'>filter_time</span>(<span class='no'>FANG</span>, <span class='st'>'2013-05-25'</span> ~ <span class='st'>'2014-06-04'</span>)</div><div class='output co'>#&gt; # A time tibble: 1,032 x 8
 #&gt; # Index: date
 #&gt; # Groups: symbol [4]
 #&gt;    symbol date        open  high   low close   volume adjusted
@@ -290,7 +290,7 @@ formula is specified as only <code>HH:MM:SS</code>.</p><ul>
 <span class='co'># Variables are unquoted using rlang</span>
 <span class='no'>lhs_date</span> <span class='kw'>&lt;-</span> <span class='st'>"2013"</span>
 <span class='no'>rhs_date</span> <span class='kw'>&lt;-</span> <span class='fu'>as.Date</span>(<span class='st'>"2014-01-01"</span>)
-<span class='fu'>time_filter</span>(<span class='no'>FANG</span>, <span class='no'>lhs_date</span> ~ <span class='no'>rhs_date</span>)</div><div class='output co'>#&gt; # A time tibble: 1,008 x 8
+<span class='fu'>filter_time</span>(<span class='no'>FANG</span>, <span class='no'>lhs_date</span> ~ <span class='no'>rhs_date</span>)</div><div class='output co'>#&gt; # A time tibble: 1,008 x 8
 #&gt; # Index: date
 #&gt; # Groups: symbol [4]
 #&gt;    symbol date        open  high   low close    volume adjusted
@@ -307,7 +307,7 @@ formula is specified as only <code>HH:MM:SS</code>.</p><ul>
 #&gt; 10 FB     2013-01-15  30.6  31.7  29.9  30.1 173242600     30.1
 #&gt; # ... with 998 more rows</div><div class='input'>
 <span class='co'># Use the keywords 'start' and 'end' to conveniently access ends</span>
-<span class='fu'>time_filter</span>(<span class='no'>FANG</span>, <span class='st'>'start'</span> ~ <span class='st'>'2014'</span>)</div><div class='output co'>#&gt; # A time tibble: 2,016 x 8
+<span class='fu'>filter_time</span>(<span class='no'>FANG</span>, <span class='st'>'start'</span> ~ <span class='st'>'2014'</span>)</div><div class='output co'>#&gt; # A time tibble: 2,016 x 8
 #&gt; # Index: date
 #&gt; # Groups: symbol [4]
 #&gt;    symbol date        open  high   low close    volume adjusted
@@ -325,7 +325,7 @@ formula is specified as only <code>HH:MM:SS</code>.</p><ul>
 #&gt; # ... with 2,006 more rows</div><div class='input'>
 <span class='co'># hms (hour, minute, second) classes have special parsing</span>
 <span class='no'>hms_example</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='create_series.html'>create_series</a></span>(~<span class='st'>'12:01'</span>, <span class='st'>'second'</span>, <span class='kw'>class</span> <span class='kw'>=</span> <span class='st'>'hms'</span>)
-<span class='fu'>time_filter</span>(<span class='no'>hms_example</span>, <span class='st'>'start'</span> ~ <span class='st'>'12:01:30'</span>)</div><div class='output co'>#&gt; # A time tibble: 31 x 1
+<span class='fu'>filter_time</span>(<span class='no'>hms_example</span>, <span class='st'>'start'</span> ~ <span class='st'>'12:01:30'</span>)</div><div class='output co'>#&gt; # A time tibble: 31 x 1
 #&gt; # Index: date
 #&gt;    date  
 #&gt;    &lt;time&gt;

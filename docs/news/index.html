@@ -129,6 +129,7 @@
 <ul>
 <li><p>The <code>period</code> argument no longer supports the ‘period formula’ (e.g. <code>1~year</code>). It added unnecessary complication with little benefit. Rather, a character should be used like <code>'1 year'</code>. See the documentation of <code><a href="../reference/partition_index.html">partition_index()</a></code> for full details.</p></li>
 <li><p><code>time_formula</code> arguments still support the <code>from ~ to</code> style syntax, but the left and right hand sides must now be characters, rather than bare date specifications. In English, rather than <code>2013 ~ 2014</code>, you must use <code>'2013' ~ '2014'</code>. This is easier to program with and also allows you to pass in variables to the time formula, which previously did not work well.</p></li>
+<li><p><code>time_filter()</code> has become <code><a href="../reference/filter_time.html">filter_time()</a></code>. This naming is easier to remember now that a suite of <code>time_*()</code> functions is not being developed and is easier to find with autocompletion.</p></li>
 <li><p><code>time_group()</code> and <code>time_collapse()</code> have become <code><a href="../reference/partition_index.html">partition_index()</a></code> and <code><a href="../reference/collapse_index.html">collapse_index()</a></code>. Both functions accept <code>index</code> vectors and are commonly used inside <code><a href="http://dplyr.tidyverse.org/reference/mutate.html">dplyr::mutate()</a></code>.</p></li>
 <li><p><code><a href="../reference/partition_index.html">partition_index()</a></code> splits an index by period and returns an integer vector corresponding to the groups.</p></li>
 <li><p><code><a href="../reference/collapse_index.html">collapse_index()</a></code> collapses an index by period so that all observations falling in that interval share the same date. This is most useful when used to then group on the index column.</p></li>
@@ -137,7 +138,7 @@
 <li><p><code><a href="../reference/create_series.html">create_series()</a></code> now has an explicit <code>class</code> argument.</p></li>
 <li><p><code><a href="../reference/as_period.html">as_period()</a></code> gains an <code>include_endpoints</code> argument for including the last data point if <code>side = "start"</code> is specified or the first data point if <code>side = "end"</code> is used.</p></li>
 <li><p>There are a number of new “getter” functions for accessing the index and time zone of <code>tbl_time</code> objects. These are useful for package development.</p></li>
-<li><p><code><a href="../reference/time_filter.html">time_filter()</a></code>, <code><a href="../reference/as_period.html">as_period()</a></code> and other “getter” functions now use <code>.tbl_time</code> as a consistent first argument rather than <code>x</code>. <code><a href="../reference/collapse_index.html">collapse_index()</a></code> and <code><a href="../reference/partition_index.html">partition_index()</a></code> use <code>index</code> as their first arguments.</p></li>
+<li><p><code><a href="../reference/filter_time.html">filter_time()</a></code>, <code><a href="../reference/as_period.html">as_period()</a></code> and other “getter” functions now use <code>.tbl_time</code> as a consistent first argument rather than <code>x</code>. <code><a href="../reference/collapse_index.html">collapse_index()</a></code> and <code><a href="../reference/partition_index.html">partition_index()</a></code> use <code>index</code> as their first arguments.</p></li>
 <li><p>Warnings are now generated if the user is not using a sorted index.</p></li>
 </ul>
 </li>
@@ -184,8 +185,8 @@
 <ul>
 <li><p>Fixed an issue with <code>[</code> in combination with <code><a href="http://www.rdocumentation.org/packages/tibble/topics/add_column">tibble::add_column()</a></code>. Use <code>tibble (&gt;= 1.3.4.9001)</code> for correct behavior.</p></li>
 <li><p>Fixed a bug where using <code><a href="http://www.rdocumentation.org/packages/tidyr/topics/nest">tidyr::nest()</a></code> would cause the nested tibbles to lose their time attributes.</p></li>
-<li><p>Fix a bug where time_filter(data, ~yyyy-mm-dd) would be parsed as <code>yyyy-mm-dd 00:00:00 ~ yyyy-mm-dd 00:00:00</code> instead of <code>yyyy-mm-dd 00:00:00 ~ yyyy-mm-dd 23:59:59</code>.</p></li>
-<li><p>Fix a bug with as.Date / as.POSIXct operator collision in <code><a href="../reference/time_filter.html">time_filter()</a></code>.</p></li>
+<li><p>Fix a bug where filter_time(data, ~yyyy-mm-dd) would be parsed as <code>yyyy-mm-dd 00:00:00 ~ yyyy-mm-dd 00:00:00</code> instead of <code>yyyy-mm-dd 00:00:00 ~ yyyy-mm-dd 23:59:59</code>.</p></li>
+<li><p>Fix a bug with as.Date / as.POSIXct operator collision in <code><a href="../reference/filter_time.html">filter_time()</a></code>.</p></li>
 </ul>
 </li>
 </ul>
