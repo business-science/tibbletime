@@ -123,7 +123,7 @@ filter_time.tbl_time <- function(.tbl_time, time_formula) {
     sorted_range_search(!! index_quo, from, to)
   })
 
-  sloop::reconstruct(.tbl_filtered, .tbl_time)
+  reconstruct(.tbl_filtered, .tbl_time)
 }
 
 # Subset operator --------------------------------------------------------------

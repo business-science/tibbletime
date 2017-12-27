@@ -1,3 +1,8 @@
+# Implement generic reconstruct() until sloop is on CRAN
+reconstruct <- function (new, old) {
+  UseMethod("reconstruct", old)
+}
+
 reconstruct.tbl_time <- function(new, old) {
 
   # Check subclass, if it was/is a grouped_df,

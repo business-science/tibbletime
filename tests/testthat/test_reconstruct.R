@@ -16,7 +16,7 @@ test_tbl_time <- as_tbl_time(test_time, date)
 test_that("Remove index then reconstruct results in tibble", {
 
   no_index <- select(test_tbl_time, -date)
-  no_index <- sloop::reconstruct(no_index, test_tbl_time)
+  no_index <- reconstruct(no_index, test_tbl_time)
 
   expect_equal(length(class(no_index)), 3)
 })
@@ -24,7 +24,7 @@ test_that("Remove index then reconstruct results in tibble", {
 test_that("Not removing index then reconstruct results in tbl_time", {
 
   with_index <- select(test_tbl_time, date)
-  with_index <- sloop::reconstruct(with_index, test_tbl_time)
+  with_index <- reconstruct(with_index, test_tbl_time)
 
   expect_is(with_index, "tbl_time")
 })

@@ -20,17 +20,17 @@ nest.tbl_time <- function(data, ..., .key = "data") {
       .data_nested,
       !! .key_sym := purrr::map(
         .x = !! .key_sym,
-        .f = ~sloop::reconstruct(.x, ..original_data))
+        .f = ~reconstruct(.x, ..original_data))
     )
   } else {
     # The index is in the outer df
-    sloop::reconstruct(.data_nested, ..original_data)
+    reconstruct(.data_nested, ..original_data)
   }
 }
 
 unnest.tbl_time <- function(data, ..., .drop = NA, .id = NULL, .sep = NULL) {
   # This is called after nesting but excluding the index in the nest
-  sloop::reconstruct(NextMethod(), data)
+  reconstruct(NextMethod(), data)
 }
 
 unnest.tbl_df <- function(data, ..., .drop = NA, .id = NULL, .sep = NULL) {
@@ -64,7 +64,7 @@ unnest.tbl_df <- function(data, ..., .drop = NA, .id = NULL, .sep = NULL) {
 
     unnested_data <- NextMethod()
 
-    sloop::reconstruct(unnested_data, nested_time)
+    reconstruct(unnested_data, nested_time)
 
   } else (
     # No special handling, pass on to unnest()
@@ -89,7 +89,7 @@ unnest.tbl_df <- function(data, ..., .drop = NA, .id = NULL, .sep = NULL) {
 #   gathered_data <- gather(as_tibble(data), key = !! key, value = !! value, !!! quos,
 #                           na.rm = na.rm, convert = convert, factor_key = factor_key)
 #
-#   sloop::reconstruct(gathered_data, data)
+#   reconstruct(gathered_data, data)
 # }
 
 # #' @export
@@ -105,7 +105,7 @@ unnest.tbl_df <- function(data, ..., .drop = NA, .id = NULL, .sep = NULL) {
 #                         fill = fill, convert = convert, drop = drop,
 #                         sep = sep)
 #
-#   sloop::reconstruct(spread_data, data)
+#   reconstruct(spread_data, data)
 # }
 
 # ------------------------------------------------------------------------------

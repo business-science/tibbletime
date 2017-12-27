@@ -166,7 +166,7 @@ as_period.tbl_time <- function(.tbl_time, period = "yearly",
   # Remove time group column
   .tbl_time_tg <- remove_time_group(.tbl_time_tg)
 
-  sloop::reconstruct(.tbl_time_tg, .tbl_time)
+  reconstruct(.tbl_time_tg, .tbl_time)
 }
 
 
