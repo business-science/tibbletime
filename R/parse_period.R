@@ -1,12 +1,25 @@
-# Split a full period spec into its frequency and periodicity
+#' Parse a character period specification
+#'
+#' The period is parsed into frequency and period and returned as a named list.
+#'
+#' @inheritParams partition_index
+#'
+#' @export
+#'
+#' @examples
+#'
+#' parse_period('2 day')
+#'
 parse_period <- function(period) {
   UseMethod("parse_period")
 }
 
+#' @export
 parse_period.default <- function(period) {
   glue_stop("Unsupported period specification. Only characters are allowed.")
 }
 
+#' @export
 parse_period.character <- function(period) {
 
   # Cannot supply vector of periods. 1 character only

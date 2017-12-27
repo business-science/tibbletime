@@ -64,6 +64,8 @@ With that out of the way, here is a complete list of changes.
     `x`. `collapse_index()` and `partition_index()` use `index` as
     their first arguments.
     
+    * Exported `parse_period()` for general use in other related packages.
+    
     * Warnings are now generated if the user is not using a sorted index.
 
 * Bug Fixes
