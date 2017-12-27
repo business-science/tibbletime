@@ -90,7 +90,7 @@
       <h1>Use with dplyr</h1>
                         <h4 class="author">Davis Vaughan</h4>
             
-            <h4 class="date">2017-12-26</h4>
+            <h4 class="date">2017-12-27</h4>
           </div>
 
     
@@ -110,18 +110,18 @@ series &lt;-<span class="st"> </span><span class="kw"><a href="../reference/crea
 series</code></pre></div>
 <pre><code>## # A time tibble: 1,826 x 2
 ## # Index: date
-##    date            var
-##    &lt;date&gt;        &lt;dbl&gt;
-##  1 2013-01-01  0.138  
-##  2 2013-01-02  1.36   
-##  3 2013-01-03  0.0208 
-##  4 2013-01-04 -0.0657 
-##  5 2013-01-05 -0.564  
-##  6 2013-01-06  0.490  
-##  7 2013-01-07  0.347  
-##  8 2013-01-08  0.00844
-##  9 2013-01-09 -1.99   
-## 10 2013-01-10 -1.38   
+##    date           var
+##    &lt;date&gt;       &lt;dbl&gt;
+##  1 2013-01-01 -0.876 
+##  2 2013-01-02  1.49  
+##  3 2013-01-03  0.547 
+##  4 2013-01-04  0.343 
+##  5 2013-01-05 -0.247 
+##  6 2013-01-06  0.0694
+##  7 2013-01-07 -1.54  
+##  8 2013-01-08  0.217 
+##  9 2013-01-09 -1.80  
+## 10 2013-01-10  1.07  
 ## # ... with 1,816 more rows</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">series <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">year =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/lubridate/topics/year">year</a></span>(date), <span class="dt">month =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/lubridate/topics/month">month</a></span>(date)) <span class="op">%&gt;%</span>
@@ -130,16 +130,16 @@ series</code></pre></div>
 <pre><code>## # A tibble: 60 x 3
 ##     year month mean_var
 ##    &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;
-##  1  2013  1.00  -0.0815
-##  2  2013  2.00   0.260 
-##  3  2013  3.00  -0.0567
-##  4  2013  4.00  -0.376 
-##  5  2013  5.00  -0.180 
-##  6  2013  6.00   0.179 
-##  7  2013  7.00   0.205 
-##  8  2013  8.00   0.197 
-##  9  2013  9.00  -0.125 
-## 10  2013 10.0    0.0170
+##  1  2013  1.00 -0.0812 
+##  2  2013  2.00  0.0625 
+##  3  2013  3.00  0.104  
+##  4  2013  4.00  0.00861
+##  5  2013  5.00 -0.256  
+##  6  2013  6.00  0.265  
+##  7  2013  7.00 -0.0982 
+##  8  2013  8.00  0.0775 
+##  9  2013  9.00 -0.0348 
+## 10  2013 10.0  -0.333  
 ## # ... with 50 more rows</code></pre>
 <p>This get’s more difficult the more granular you go. Getting 5-minute summaries from minute or second data requires grouping on year, month, day, hour and minute columns.</p>
 </div>
@@ -155,16 +155,16 @@ series</code></pre></div>
 ## # Index: date
 ##    date       mean_var
 ##    &lt;date&gt;        &lt;dbl&gt;
-##  1 2013-01-31  -0.0815
-##  2 2013-02-28   0.260 
-##  3 2013-03-31  -0.0567
-##  4 2013-04-30  -0.376 
-##  5 2013-05-31  -0.180 
-##  6 2013-06-30   0.179 
-##  7 2013-07-31   0.205 
-##  8 2013-08-31   0.197 
-##  9 2013-09-30  -0.125 
-## 10 2013-10-31   0.0170
+##  1 2013-01-31 -0.0812 
+##  2 2013-02-28  0.0625 
+##  3 2013-03-31  0.104  
+##  4 2013-04-30  0.00861
+##  5 2013-05-31 -0.256  
+##  6 2013-06-30  0.265  
+##  7 2013-07-31 -0.0982 
+##  8 2013-08-31  0.0775 
+##  9 2013-09-30 -0.0348 
+## 10 2013-10-31 -0.333  
 ## # ... with 50 more rows</code></pre>
 <p>Implementing <code><a href="../reference/collapse_index.html">collapse_index()</a></code> to work on just an index column rather than the entire <code>tbl_time</code> object means that you don’t have to override the original date column and can keep them as a separate column if required.</p>
 <p>This works for more granular series too. Below we aggregate 5 second level data up to hourly. This is working with a faily sizable ~19 million row data set.</p>
@@ -179,16 +179,16 @@ second_series <span class="op">%&gt;%</span>
 ## # Index: date
 ##    date                mean_var
 ##    &lt;dttm&gt;                 &lt;dbl&gt;
-##  1 2013-01-01 00:59:55 -0.0505 
-##  2 2013-01-01 01:59:55  0.0389 
-##  3 2013-01-01 02:59:55 -0.0117 
-##  4 2013-01-01 03:59:55  0.00277
-##  5 2013-01-01 04:59:55 -0.00472
-##  6 2013-01-01 05:59:55  0.0386 
-##  7 2013-01-01 06:59:55  0.0400 
-##  8 2013-01-01 07:59:55  0.0271 
-##  9 2013-01-01 08:59:55 -0.0534 
-## 10 2013-01-01 09:59:55  0.00855
+##  1 2013-01-01 00:59:55  0.00814
+##  2 2013-01-01 01:59:55  0.0341 
+##  3 2013-01-01 02:59:55  0.0601 
+##  4 2013-01-01 03:59:55  0.0437 
+##  5 2013-01-01 04:59:55 -0.0548 
+##  6 2013-01-01 05:59:55  0.00260
+##  7 2013-01-01 06:59:55  0.0372 
+##  8 2013-01-01 07:59:55 -0.00174
+##  9 2013-01-01 08:59:55 -0.0146 
+## 10 2013-01-01 09:59:55  0.0146 
 ## # ... with 26,270 more rows</code></pre>
 </div>
 <div id="multiple-series" class="section level2">
