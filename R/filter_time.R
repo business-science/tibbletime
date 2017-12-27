@@ -182,39 +182,3 @@ filter_time.tbl_time <- function(.tbl_time, time_formula) {
 
   x_tbl
 }
-
-#' @export
-# `[.grouped_tbl_time` <- function(x, i, j, drop = FALSE) {
-#   x_tbl <- NextMethod()
-#
-#   group_names <- dplyr::group_vars(x)
-#
-#   # If the groups have been removed
-#   if(!all(group_names %in% colnames(x_tbl))) {
-#
-#     if(inherits(x_tbl, "tbl_time")) {
-#
-#       as_tbl_time(x_tbl, !! get_index_quo(x_tbl))
-#
-#     } else {
-#
-#       as_tibble(x_tbl)
-#
-#     }
-#
-#     # If all the groups are still there
-#   } else {
-#
-#     if(inherits(x_tbl, "tbl_time")) {
-#
-#       grouped_tbl_time(dplyr::grouped_df(x_tbl, group_names), !! get_index_quo(x_tbl))
-#
-#     } else {
-#
-#       dplyr::grouped_df(x_tbl, group_names)
-#
-#     }
-#
-#   }
-# }
-
