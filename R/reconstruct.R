@@ -2,7 +2,7 @@
 
 #' Reconstruct an S3 class from a template
 #'
-#' This is an implementation of [sloop::reconstruct()] that users can
+#' This is an implementation of `sloop::reconstruct()` that users can
 #' ignore. Once `sloop` is on CRAN, this function will be removed and that
 #' version will be used. It currently must be exported for use in `tidyquant`.
 #'
