@@ -6,6 +6,11 @@
 \usage{
 reconstruct(new, old)
 }
+\arguments{
+\item{new}{Freshly created object}
+
+\item{old}{Existing object to use as template}
+}
 \description{
 This is an implementation of \code{\link[sloop:reconstruct]{sloop::reconstruct()}} that users can
 ignore. Once \code{sloop} is on CRAN, this function will be removed and that

@@ -6,6 +6,9 @@
 #' ignore. Once `sloop` is on CRAN, this function will be removed and that
 #' version will be used. It currently must be exported for use in `tidyquant`.
 #'
+#' @param new Freshly created object
+#' @param old Existing object to use as template
+#'
 #' @export
 reconstruct <- function (new, old) {
   UseMethod("reconstruct", old)
