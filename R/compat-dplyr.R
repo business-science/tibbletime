@@ -84,12 +84,14 @@ semi_join.tbl_time <- function(x, y, by = NULL, copy = FALSE, ...) {
   reconstruct(NextMethod(), x)
 }
 
+#' @export
 #' @importFrom dplyr select
 #'
 select.tbl_time <- function(.data, ...) {
   reconstruct(NextMethod(), .data)
 }
 
+#' @export
 #' @importFrom dplyr slice
 #'
 slice.tbl_time <- function(.data, ...) {
@@ -102,9 +104,50 @@ group_by.tbl_time <- function(.data, ..., add = FALSE) {
   reconstruct(NextMethod(), .data)
 }
 
+#' @export
 #' @importFrom dplyr ungroup
 #'
 ungroup.tbl_time <- function(x, ...) {
   reconstruct(NextMethod(), x)
 }
 
+
+### Backwards compat support for deprecated standard eval dplyr
+
+# Only a few of them need it. arrange_.tbl_df() directly calls arrange_impl()
+# causing a problem.
+
+#' @export
+#' @importFrom dplyr arrange_
+#'
+arrange_.tbl_time <- function(.data, ..., .dots = list()) {
+  reconstruct(NextMethod(), .data)
+}
+
+#' @export
+#' @importFrom dplyr mutate_
+#'
+mutate_.tbl_time <- function(.data, ..., .dots = list()) {
+  reconstruct(NextMethod(), .data)
+}
+
+#' @export
+#' @importFrom dplyr summarise_
+#'
+summarise_.tbl_time <- function(.data, ..., .dots = list()) {
+  reconstruct(NextMethod(), .data)
+}
+
+#' @export
+#' @importFrom dplyr summarize_
+#'
+summarize_.tbl_time <- function(.data, ..., .dots = list()) {
+  reconstruct(NextMethod(), .data)
+}
+
+#' @export
+#' @importFrom dplyr slice_
+#'
+slice_.tbl_time <- function(.data, ..., .dots = list()) {
+  reconstruct(NextMethod(), .data)
+}

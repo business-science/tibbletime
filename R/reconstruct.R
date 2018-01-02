@@ -1,8 +1,17 @@
 # Implement generic reconstruct() until sloop is on CRAN
+
+#' Reconstruct an S3 class from a template
+#'
+#' This is an implementation of [sloop::reconstruct()] that users can
+#' ignore. Once `sloop` is on CRAN, this function will be removed and that
+#' version will be used. It currently must be exported for use in `tidyquant`.
+#'
+#' @export
 reconstruct <- function (new, old) {
   UseMethod("reconstruct", old)
 }
 
+#' @export
 reconstruct.tbl_time <- function(new, old) {
 
   # Check subclass, if it was/is a grouped_df,
