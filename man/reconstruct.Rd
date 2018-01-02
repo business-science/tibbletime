@@ -12,7 +12,7 @@ reconstruct(new, old)
 \item{old}{Existing object to use as template}
 }
 \description{
-This is an implementation of \code{\link[sloop:reconstruct]{sloop::reconstruct()}} that users can
+This is an implementation of \code{sloop::reconstruct()} that users can
 ignore. Once \code{sloop} is on CRAN, this function will be removed and that
 version will be used. It currently must be exported for use in \code{tidyquant}.
 }
