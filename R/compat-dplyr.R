@@ -95,7 +95,11 @@ select.tbl_time <- function(.data, ...) {
 #' @importFrom dplyr slice
 #'
 slice.tbl_time <- function(.data, ...) {
-  reconstruct(NextMethod(), .data)
+  # Odd behavior with slice(). Seems to not make a full copy of .data
+  # before performing the slice. class of .data is lost and can't reconstruct,
+  # must make a copy first.
+  copy_.data <- new_tbl_time(.data, get_index_quo(.data), get_index_time_zone(.data))
+  reconstruct(NextMethod(), copy_.data)
 }
 
 #' @export
