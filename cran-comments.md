@@ -1,17 +1,18 @@
 ## Release Summary
-This is the second release of tibbletime. This release introduces new functionality for changing periodicity, creating series, creating rolling functions and a number of other things. It also fixes a few bugs present in the initial release, and adds vignettes.
+This is the third release of tibbletime. This is a major release for the package
+and includes a number of breaking changes that have been well documented in the
+NEWS file. The changes promote a more flexible use with the dplyr package, and
+at this early stage in the package lifecycle no attempt at backwards compat was
+made. Users have been warned of this already, and initial feedback of the 
+github development version has been positive.
 
 ## Test environments
 * local Windows install, R 3.4.1
-* local Mac install, R 3.4.1
-* ubuntu 12.04 (on travis-ci), R 3.4.1
+* local Mac install, R 3.4.3
+* ubuntu 12.04 (on travis-ci), R 3.4.3
 * win-builder (devel and release)
 
 ## R CMD check results
-
-On win-builder there were 2 errors and 1 warning, all related to a timezone
-error, "Evaluation error: Unrecognized timezone: "Europe/Berlin"." I do not
-think that this is caused by tibbletime.
 
 Otherwise there were no ERRORs, WARNINGs or NOTEs.
 

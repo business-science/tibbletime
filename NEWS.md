@@ -70,6 +70,9 @@ With that out of the way, here is a complete list of changes.
 
 * Bug Fixes
 
+    * All `dplyr` functions should now retain the `tbl_time` class and 
+    relevant attributes.
+
     * Ensure that `tidyr::spread()` passes the `fill` argument through.
     
     * Default time zone is now `UTC` rather than `Sys.timezone()` to handle
