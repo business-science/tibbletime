@@ -12,19 +12,19 @@ Built on top of the `tidyverse`, `tibbletime` is an extension that allows for th
 
 Some immediate advantages of this include:
 
-1.  The ability to perform compact time-based subsetting on tibbles.
+1.  Performing compact time-based subsetting on tibbles.
 
 2.  Partitioning an index column by time (like yearly, monthly, every 2 weeks, etc.) so that you can use `dplyr`'s grouped functionality to summarise and aggregate by time period.
 
 3.  Changing the periodicity of a time-based tibble. This allows easily changing from a daily dataset to a monthly or yearly dataset.
 
-4.  All functions were designed to support the pipe and to work with packages like `dplyr` and `tidyr`. Each function has also been designed to work with `dplyr::group_by()` allowing for powerful data manipulation.
+4.  Easily working with the pipe and packages like `dplyr` and `tidyr` to make for a seamless experience with time series and the tidyverse. Each function has also been designed to work with `dplyr::group_by()` allowing for powerful data manipulation.
 
 5.  Modifying functions for rolling analysis.
 
-6.  Quickly creating `tbl_time` time series objects.
+6.  Creating `tbl_time` time series objects quickly.
 
-7.  Full support for `Date` and `POSIXct` index columns, and experimental support for `yearmon`, `yearqtr` and `hms` which should become more stable as some issues in `dplyr` are worked out.
+7.  Using fully supported `Date` and `POSIXct` index columns, along with experimental support for `yearmon`, `yearqtr` and `hms` which should become more stable as some issues in `dplyr` are worked out.
 
 Installation
 ------------
@@ -92,7 +92,7 @@ There are a number of functions that were designed specifically for `tbl_time` o
 
 5.  `rollify()` - Modify a function so that it calculates a value (or a set of values) at specific time intervals. This can be used for rolling averages and other rolling calculations inside the `tidyverse` framework.
 
-6.  `create_series()` - Use shorthand notation to quickly initialize a `tbl_time` object containing a `date` column with a regularly spaced time series.
+6.  `create_series()` - Use shorthand notation to quickly initialize a `tbl_time` object containing a regularly spaced index column of class `Date`, `POSIXct`, `yearmon`, `yearqtr` or `hms`.
 
 To look at just a few:
 
@@ -201,7 +201,7 @@ create_series(~'2013', '2 day')
 Grouping
 --------
 
-Groups created through `dplyr::group_by()` are supported throughout the package. Because `collapse_index()` is just adding a column you can group on, all dplyr functions are supported.
+Groups created through `dplyr::group_by()` are supported throughout the package. Because `collapse_index()` is just adding a column you can group on, all `dplyr` functions are supported.
 
 ``` r
 # Facebook, Amazon, Netflix and Google stocks

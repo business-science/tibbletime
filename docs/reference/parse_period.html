@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Articles • tibbletime</title>
+<title>Parse a character period specification — parse_period • tibbletime</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -49,7 +49,7 @@
   </head>
 
   <body>
-    <div class="container template-vignette-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -110,23 +110,56 @@
       
       </header>
 
-      <div class="page-header">
-  <h1>Articles <small>version&nbsp;0.1.0</small></h1>
-</div>
-
-<div class="row">
-  <div class="col-md-9">
-    <div class="section ">
-      <h3>All vignettes</h3>
-      <p class="section-desc"></p>
-
-      <ul>
-        <li><a href="TT-01-time-based-filtering.html">Time-based filtering</a></li>
-        <li><a href="TT-02-changing-time-periods.html">Changing periodicity</a></li>
-        <li><a href="TT-03-rollify-for-rolling-analysis.html">Rolling calculations in tibbletime</a></li>
-        <li><a href="TT-04-use-with-dplyr.html">Use with dplyr</a></li>
-      </ul>
+      <div class="row">
+  <div class="col-md-9 contents">
+    <div class="page-header">
+    <h1>Parse a character period specification</h1>
     </div>
+
+    
+    <p>The period is parsed into frequency and period and returned as a named list.</p>
+    
+
+    <pre class="usage"><span class='fu'>parse_period</span>(<span class='no'>period</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>period</th>
+      <td><p>A character specification used for time-based grouping. The
+general format to use is <code>"frequency period"</code> where frequency is a number
+like 1 or 2, and period is an interval like weekly or yearly. There must be
+a space between the two.</p>
+<p>Note that you can pass the specification in a flexible way:</p><ul>
+<li><p>1 Year: <code>'1 year'</code> / <code>'1 Y'</code> / <code>'1 yearly'</code> / <code>'yearly'</code></p></li>
+</ul>
+
+<p>This shorthand is available for year, quarter, month, day, hour, minute,
+and second periodicities. Note that "m" is the 1 letter specification used
+for "month" and "M" is used for "minute". Otherwise case does not matter.</p></td>
+    </tr>
+    </table>
+    
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'>
+<span class='fu'>parse_period</span>(<span class='st'>'2 day'</span>)</div><div class='output co'>#&gt; $freq
+#&gt; [1] 2
+#&gt; 
+#&gt; $period
+#&gt; [1] "day"
+#&gt; </div><div class='input'>
+</div></pre>
+  </div>
+  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+    <h2>Contents</h2>
+    <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
+            
+      <li><a href="#examples">Examples</a></li>
+    </ul>
+
   </div>
 </div>
 

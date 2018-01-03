@@ -139,12 +139,14 @@
 <li><p><code><a href="../reference/as_period.html">as_period()</a></code> gains an <code>include_endpoints</code> argument for including the last data point if <code>side = "start"</code> is specified or the first data point if <code>side = "end"</code> is used.</p></li>
 <li><p>There are a number of new “getter” functions for accessing the index and time zone of <code>tbl_time</code> objects. These are useful for package development.</p></li>
 <li><p><code><a href="../reference/filter_time.html">filter_time()</a></code>, <code><a href="../reference/as_period.html">as_period()</a></code> and other “getter” functions now use <code>.tbl_time</code> as a consistent first argument rather than <code>x</code>. <code><a href="../reference/collapse_index.html">collapse_index()</a></code> and <code><a href="../reference/partition_index.html">partition_index()</a></code> use <code>index</code> as their first arguments.</p></li>
+<li><p>Exported <code><a href="../reference/parse_period.html">parse_period()</a></code> for general use in other related packages.</p></li>
 <li><p>Warnings are now generated if the user is not using a sorted index.</p></li>
 </ul>
 </li>
 <li>
 <p>Bug Fixes</p>
 <ul>
+<li><p>All <code>dplyr</code> functions should now retain the <code>tbl_time</code> class and relevant attributes.</p></li>
 <li><p>Ensure that <code><a href="http://www.rdocumentation.org/packages/tidyr/topics/spread">tidyr::spread()</a></code> passes the <code>fill</code> argument through.</p></li>
 <li><p>Default time zone is now <code>UTC</code> rather than <code>Sys.timezone()</code> to handle a daylight savings issue.</p></li>
 </ul>

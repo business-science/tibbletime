@@ -103,13 +103,13 @@
 <p>Built on top of the <code>tidyverse</code>, <code>tibbletime</code> is an extension that allows for the creation of <em>time aware tibbles</em> through the setting of a time index.</p>
 <p>Some immediate advantages of this include:</p>
 <ol style="list-style-type: decimal">
-<li><p>The ability to perform compact time-based subsetting on tibbles.</p></li>
+<li><p>Performing compact time-based subsetting on tibbles.</p></li>
 <li><p>Partitioning an index column by time (like yearly, monthly, every 2 weeks, etc.) so that you can use <code>dplyr</code>’s grouped functionality to summarise and aggregate by time period.</p></li>
 <li><p>Changing the periodicity of a time-based tibble. This allows easily changing from a daily dataset to a monthly or yearly dataset.</p></li>
-<li><p>All functions were designed to support the pipe and to work with packages like <code>dplyr</code> and <code>tidyr</code>. Each function has also been designed to work with <code><a href="http://dplyr.tidyverse.org/reference/group_by.html">dplyr::group_by()</a></code> allowing for powerful data manipulation.</p></li>
+<li><p>Easily working with the pipe and packages like <code>dplyr</code> and <code>tidyr</code> to make for a seamless experience with time series and the tidyverse. Each function has also been designed to work with <code><a href="http://dplyr.tidyverse.org/reference/group_by.html">dplyr::group_by()</a></code> allowing for powerful data manipulation.</p></li>
 <li><p>Modifying functions for rolling analysis.</p></li>
-<li><p>Quickly creating <code>tbl_time</code> time series objects.</p></li>
-<li><p>Full support for <code>Date</code> and <code>POSIXct</code> index columns, and experimental support for <code>yearmon</code>, <code>yearqtr</code> and <code>hms</code> which should become more stable as some issues in <code>dplyr</code> are worked out.</p></li>
+<li><p>Creating <code>tbl_time</code> time series objects quickly.</p></li>
+<li><p>Using fully supported <code>Date</code> and <code>POSIXct</code> index columns, along with experimental support for <code>yearmon</code>, <code>yearqtr</code> and <code>hms</code> which should become more stable as some issues in <code>dplyr</code> are worked out.</p></li>
 </ol>
 </div>
 <div id="installation" class="section level2">
@@ -162,7 +162,7 @@ FB
 <li><p><code><a href="reference/collapse_index.html">collapse_index()</a></code> - Take an index column, and collapse it so that all observations in an interval share the same date. The most common use of this is to then group on this column with <code><a href="http://dplyr.tidyverse.org/reference/group_by.html">dplyr::group_by()</a></code> and perform time-based calculations with <code><a href="http://dplyr.tidyverse.org/reference/summarise.html">summarise()</a></code>, <code><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> or any other <code>dplyr</code> function.</p></li>
 <li><p><code><a href="reference/partition_index.html">partition_index()</a></code> - A lower level version of <code><a href="reference/collapse_index.html">collapse_index()</a></code>. Rather than collapse the index directly, this returns a column of integers that correspond to the groups.</p></li>
 <li><p><code><a href="reference/rollify.html">rollify()</a></code> - Modify a function so that it calculates a value (or a set of values) at specific time intervals. This can be used for rolling averages and other rolling calculations inside the <code>tidyverse</code> framework.</p></li>
-<li><p><code><a href="reference/create_series.html">create_series()</a></code> - Use shorthand notation to quickly initialize a <code>tbl_time</code> object containing a <code>date</code> column with a regularly spaced time series.</p></li>
+<li><p><code><a href="reference/create_series.html">create_series()</a></code> - Use shorthand notation to quickly initialize a <code>tbl_time</code> object containing a regularly spaced index column of class <code>Date</code>, <code>POSIXct</code>, <code>yearmon</code>, <code>yearqtr</code> or <code>hms</code>.</p></li>
 </ol>
 <p>To look at just a few:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Filter for dates from March 2013 to December 2015</span>
@@ -268,7 +268,7 @@ mean_<span class="dv">5</span> &lt;-<span class="st"> </span><span class="kw"><a
 <div id="grouping" class="section level2">
 <h2 class="hasAnchor">
 <a href="#grouping" class="anchor"></a>Grouping</h2>
-<p>Groups created through <code><a href="http://dplyr.tidyverse.org/reference/group_by.html">dplyr::group_by()</a></code> are supported throughout the package. Because <code><a href="reference/collapse_index.html">collapse_index()</a></code> is just adding a column you can group on, all dplyr functions are supported.</p>
+<p>Groups created through <code><a href="http://dplyr.tidyverse.org/reference/group_by.html">dplyr::group_by()</a></code> are supported throughout the package. Because <code><a href="reference/collapse_index.html">collapse_index()</a></code> is just adding a column you can group on, all <code>dplyr</code> functions are supported.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Facebook, Amazon, Netflix and Google stocks</span>
 <span class="kw">data</span>(FANG)
 
