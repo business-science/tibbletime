@@ -18,7 +18,8 @@ vignette: >
 tibbles, but one of its most useful features is how nicely it plays with 
 `dplyr`. Traditionally, performing grouped analysis over a time period with
 `dplyr` (like quarterly / monthly summaries) is doable, but it could be easier
-and typically requires use of the `lubridate` package. Below is an example of
+and typically requires use of the `lubridate` package along with the 
+creation of multiple columns to group on. Below is an example of
 a monthly summary from a daily dataset.
 
 ```{r, warning=FALSE, message=FALSE}
