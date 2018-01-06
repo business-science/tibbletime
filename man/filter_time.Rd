@@ -63,9 +63,9 @@ All shorthand dates are expanded:
 This means that the following examples are equivalent (assuming your
 index is a POSIXct):
 \itemize{
-\item \code{2015 ~ 2016 == 2015-01-01 + 00:00:00 ~ 2016-12-31 + 23:59:59}
-\item \code{~2015 == 2015-01-01 + 00:00:00 ~ 2015-12-31 + 23:59:59}
-\item \code{2015-01-04 + 10:12 ~ 2015-01-05 == 2015-01-04 + 10:12:00 ~ 2015-01-05 + 23:59:59}
+\item \code{'2015' ~ '2016' == '2015-01-01 + 00:00:00' ~ '2016-12-31 + 23:59:59'}
+\item \code{~'2015' == '2015-01-01 + 00:00:00' ~ '2015-12-31 + 23:59:59'}
+\item \code{'2015-01-04 + 10:12' ~ '2015-01-05' == '2015-01-04 + 10:12:00' ~ '2015-01-05 + 23:59:59'}
 }
 
 Special parsing is done for indices of class \code{hms}. The \code{from ~ to} time
@@ -74,6 +74,15 @@ formula is specified as only \code{HH:MM:SS}.
 \item \strong{Start to 5th second of the 12th hour:} \code{'start' ~ '12:00:05'}
 \item \strong{Every second in the 12th hour:} \code{~'12'}
 }
+
+Subsecond resolution is also supported, however, R has a unique way of
+handling and printing subsecond dates and the user should be comfortable with
+this already. Specify subsecond resolution like so:
+\code{'2013-01-01 00:00:00.1' ~ '2013-01-01 00:00:00.2'}. Note that one sided
+expansion does not work with subsecond resolution due to seconds and subseconds
+being grouped together into 1 number (i.e. 1.2 seconds). This means \code{~'2013-01-01 00:00:00'} does
+not expand to something like \code{'2013-01-01 00:00:00.00' ~ '2013-01-01 00:00:00.99'},
+but only expands to include whole seconds.
 
 This function respects \code{\link[dplyr:group_by]{dplyr::group_by()}} groups.
 }

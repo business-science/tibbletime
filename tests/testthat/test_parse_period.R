@@ -18,3 +18,14 @@ test_that("Errors are thrown with incorrect specification", {
   expect_error(parse_period('hi q'), "Frequency must be coercible to numeric.")
   expect_error(parse_period('2 test'), "Period 'test' specified incorrectly.")
 })
+
+test_that("Specialized subsecond parsing", {
+  expect_lte(abs(parse_period('.1 sec')$freq - .1), 1e-9)
+  expect_equal(parse_period('.1 sec')$period, "sec")
+
+  expect_lte(abs(parse_period('1 millisec')$freq - .001), 1e-9)
+  expect_equal(parse_period('1 millisec')$period, "sec")
+
+  expect_lte(abs(parse_period('1 microsec')$freq - .000001), 1e-9)
+  expect_equal(parse_period('1 microsec')$period, "sec")
+})

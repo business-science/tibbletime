@@ -23,8 +23,8 @@ Note that you can pass the specification in a flexible way:
 }
 
 This shorthand is available for year, quarter, month, day, hour, minute,
-and second periodicities. Note that "m" is the 1 letter specification used
-for "month" and "M" is used for "minute". Otherwise case does not matter.}
+second, millisecond and microsecond periodicities. Note that "m" = "month",
+"M" = "minute", "L" = "millisecond", "U" = "microsecond".}
 
 \item{class}{One of \code{"Date"}, \code{"POSIXct"}, \code{"hms"}, \code{"yearmon"}, \code{"yearqtr"}.
 The default is \code{"POSIXct"}.}
@@ -69,6 +69,15 @@ create_series(~'2013', 'month', class = "yearmon")
 
 # hms class. time_formula specified as HH:MM:SS here
 create_series('00:00:00' ~ '12:00:00', 'second' , class = "hms")
+
+# Subsecond series
+create_series('2013' ~ '2013-01-01 00:00:01', period = "10 millisec")
+milli <- create_series('2013' ~ '2013-01-01 00:00:01', period = ".1 sec")
+# Check that 'milli' is correct by running:
+# options("digits.secs" = 4)
+# options("digits" = 18)
+# milli$date
+# as.numeric(milli$date)
 
 
 }

@@ -1,3 +1,11 @@
+## tibbletime 0.1.0.9000
+
+* General
+
+    * Added support for `millisecond` and `microsecond` grouping. 
+    See `?create_series` for examples and `?filter_time` Details 
+    for more information.
+
 ## tibbletime 0.1.0
 
 This is a major update. It introduces a huge number of breaking changes as

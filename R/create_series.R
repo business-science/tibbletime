@@ -44,6 +44,15 @@
 #' # hms class. time_formula specified as HH:MM:SS here
 #' create_series('00:00:00' ~ '12:00:00', 'second' , class = "hms")
 #'
+#' # Subsecond series
+#' create_series('2013' ~ '2013-01-01 00:00:01', period = "10 millisec")
+#' milli <- create_series('2013' ~ '2013-01-01 00:00:01', period = ".1 sec")
+#' # Check that 'milli' is correct by running:
+#' # options("digits.secs" = 4)
+#' # options("digits" = 18)
+#' # milli$date
+#' # as.numeric(milli$date)
+#'
 #'
 #' @export
 create_series <- function(time_formula, period = "daily",
@@ -71,7 +80,7 @@ create_series <- function(time_formula, period = "daily",
   # Get sequence creation pieces ready
   from <- from_to[[1]]
   to   <- from_to[[2]]
-  by   <- paste(period_list$freq, period_list$period)
+  by   <- create_by(period_list)
 
   # Final assertion of order
   assert_from_before_to(from, to)
@@ -116,4 +125,16 @@ assert_from_before_to <- function(from, to) {
   )
 }
 
+create_by <- function(period_list) {
+  by <- paste(period_list$freq, period_list$period)
+  by <- check_fractional_seconds(by, period_list)
+  by
+}
 
+check_fractional_seconds <- function(by, period_list) {
+  # For fractional seconds, the `by` argument must be numeric, not character
+  if(period_list$freq < 1 && period_list$period == "sec") {
+    by <- period_list$freq
+  }
+  by
+}

@@ -48,7 +48,11 @@ parse_period.character <- function(period) {
 
   period_char <- parse_period_char(period_char)
 
-  list(freq = period_freq, period = period_char)
+  period_list <- list(freq = period_freq, period = period_char)
+
+  period_list <- check_subsecond_period(period_list)
+
+  period_list
 }
 
 
@@ -84,6 +88,10 @@ parse_word_period <- function(period) {
     partial_detect(period, "hour")    ~ "hour",
     partial_detect(period, "min")     ~ "min",
     partial_detect(period, "sec")     ~ "sec",
+    partial_detect(period, "ms")      ~ "millisec",
+    partial_detect(period, "mil")     ~ "millisec",
+    partial_detect(period, "us")      ~ "microsec",
+    partial_detect(period, "mic")     ~ "microsec",
    TRUE                               ~ "NULL"
   )
 
@@ -97,14 +105,16 @@ parse_word_period <- function(period) {
 # 1 letter parsing, case sensitive
 parse_letter_period <- function(period) {
   switch (period,
-          "y" = "year",    "Y" = "year",
-          "q" = "quarter", "Q" = "quarter",
-          "m" = "month",    # Case sensitive
-          "w" = "week",    "W" = "week",
-          "d" = "day",     "D" = "day",
-          "h" = "hour",    "H" = "hour",
-          "M" = "min",      # Case sensitive
-          "s" = "sec",     "S" = "sec",
+          "y" = "year",     "Y" = "year",
+          "q" = "quarter",  "Q" = "quarter",
+          "m" = "month",     # Case sensitive
+          "w" = "week",     "W" = "week",
+          "d" = "day",      "D" = "day",
+          "h" = "hour",     "H" = "hour",
+          "M" = "min",       # Case sensitive
+          "s" = "sec",      "S" = "sec",
+          "l" = "millisec", "L" = "millisec",
+          "u" = "microsec", "U" = "microsec",
           glue_stop("Period '{period}' specified incorrectly.")
   )
 }
@@ -116,4 +126,21 @@ assert_freq_coerce_to_numeric <- function(freq) {
     suppressWarnings(!is.na(as.numeric(freq))),
     msg = "Frequency must be coercible to numeric."
   )
+}
+
+# If subsecond resolution, change to correct second representation
+check_subsecond_period <- function(period_list) {
+
+  multiplier <- switch(period_list$period,
+         "millisec" = 1000,
+         "microsec" = 1000000,
+         0 # Default for >subsecond periods so it returns
+  )
+
+  if(!multiplier) return(period_list)
+
+  period_list$freq   <- period_list$freq / multiplier
+  period_list$period <- "sec"
+
+  period_list
 }

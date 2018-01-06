@@ -22,8 +22,8 @@ Note that you can pass the specification in a flexible way:
 }
 
 This shorthand is available for year, quarter, month, day, hour, minute,
-and second periodicities. Note that "m" is the 1 letter specification used
-for "month" and "M" is used for "minute". Otherwise case does not matter.}
+second, millisecond and microsecond periodicities. Note that "m" = "month",
+"M" = "minute", "L" = "millisecond", "U" = "microsecond".}
 
 \item{start_date}{Optional argument used to specify the start date for the
 first group. The default is to start at the closest period boundary
