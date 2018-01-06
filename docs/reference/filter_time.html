@@ -184,16 +184,24 @@ your filter.</p><ul>
 </ul>
     <p>This means that the following examples are equivalent (assuming your
 index is a POSIXct):</p><ul>
-<li><p><code>2015 ~ 2016 == 2015-01-01 + 00:00:00 ~ 2016-12-31 + 23:59:59</code></p></li>
-<li><p><code>~2015 == 2015-01-01 + 00:00:00 ~ 2015-12-31 + 23:59:59</code></p></li>
-<li><p><code>2015-01-04 + 10:12 ~ 2015-01-05 == 2015-01-04 + 10:12:00 ~ 2015-01-05 + 23:59:59</code></p></li>
+<li><p><code>'2015' ~ '2016' == '2015-01-01 + 00:00:00' ~ '2016-12-31 + 23:59:59'</code></p></li>
+<li><p><code>~'2015' == '2015-01-01 + 00:00:00' ~ '2015-12-31 + 23:59:59'</code></p></li>
+<li><p><code>'2015-01-04 + 10:12' ~ '2015-01-05' == '2015-01-04 + 10:12:00' ~ '2015-01-05 + 23:59:59'</code></p></li>
 </ul>
     <p>Special parsing is done for indices of class <code>hms</code>. The <code>from ~ to</code> time
 formula is specified as only <code>HH:MM:SS</code>.</p><ul>
 <li><p><strong>Start to 5th second of the 12th hour:</strong> <code>'start' ~ '12:00:05'</code></p></li>
 <li><p><strong>Every second in the 12th hour:</strong> <code>~'12'</code></p></li>
 </ul>
-    <p>This function respects <code><a href='http://dplyr.tidyverse.org/reference/group_by.html'>dplyr::group_by()</a></code> groups.</p>
+    <p>Subsecond resolution is also supported, however, R has a unique way of
+handling and printing subsecond dates and the user should be comfortable with
+this already. Specify subsecond resolution like so:
+<code>'2013-01-01 00:00:00.1' ~ '2013-01-01 00:00:00.2'</code>. Note that one sided
+expansion does not work with subsecond resolution due to seconds and subseconds
+being grouped together into 1 number (i.e. 1.2 seconds). This means <code>~'2013-01-01 00:00:00'</code> does
+not expand to something like <code>'2013-01-01 00:00:00.00' ~ '2013-01-01 00:00:00.99'</code>,
+but only expands to include whole seconds.</p>
+<p>This function respects <code><a href='http://dplyr.tidyverse.org/reference/group_by.html'>dplyr::group_by()</a></code> groups.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
