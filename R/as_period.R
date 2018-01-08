@@ -17,8 +17,6 @@
 #'
 #' This function respects [dplyr::group_by()] groups.
 #'
-#' Currently periods finer than second data are not supported.
-#'
 #' The `side` argument is useful when you want to return data at, say, the
 #' end of a quarter, or the end of a month.
 #'

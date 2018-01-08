@@ -46,8 +46,6 @@ the beginning or end of the period.
 \details{
 This function respects \code{\link[dplyr:group_by]{dplyr::group_by()}} groups.
 
-Currently periods finer than second data are not supported.
-
 The \code{side} argument is useful when you want to return data at, say, the
 end of a quarter, or the end of a month.
 
