@@ -11,9 +11,8 @@ parse_time_formula <- function(index, time_formula) {
 
   # Tidy evaluation
   tf <- lapply(tf, function(x) {
-    rlang::eval_tidy(x, env = tf_env)
-    }
-  )
+    eval(x, envir = tf_env)
+  })
 
   # Double up if 1 sided
   # length = 2 means that it has ~ and 1 side
