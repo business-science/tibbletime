@@ -107,9 +107,9 @@ as_period(FANG, "6 months")
 
 # Using start_date ----------------------------------------------------------
 
-WARNING: The start_date argument is being retired in 0.1.2 favor of the more
-flexible option of passing an index vector to the period argument. See
-below for a comparison of the two methods.
+# WARNING: The start_date argument is being retired in 0.1.2 favor of the more
+# flexible option of passing an index vector to the period argument. See
+# below for a comparison of the two methods.
 
 #### Old method using start_date
 
