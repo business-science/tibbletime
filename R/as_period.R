@@ -75,6 +75,12 @@
 #'
 #' # Using start_date ----------------------------------------------------------
 #'
+#' WARNING: The start_date argument is being retired in 0.1.2 favor of the more
+#' flexible option of passing an index vector to the period argument. See
+#' below for a comparison of the two methods.
+#'
+#' #### Old method using start_date
+#'
 #' # FB stock prices
 #' data(FB)
 #' FB <- as_tbl_time(FB, date)
@@ -87,6 +93,22 @@
 #' # Specifying the `start_date = "2013-01-01"` might be preferable.
 #' # Groups become (2013-01-01, 2013-01-02), (2013-01-03, 2013-01-04) and so on.
 #' as_period(FB, "2 day", start_date = "2013-01-01")
+#'
+#' #### New method using an index vector
+#'
+#' # FB stock prices
+#' data(FB)
+#' FB <- as_tbl_time(FB, date)
+#'
+#' custom_period <- create_series(
+#'   time_formula = dplyr::first(FB$date) - 1 ~ dplyr::last(FB$date),
+#'   period       = "2 day",
+#'   class        = "Date",
+#'   as_vector    = TRUE)
+#'
+#' FB %>%
+#'   as_tbl_time(date) %>%
+#'   as_period(period = custom_period)
 #'
 #' # Manually calculating returns at different periods -------------------------
 #'

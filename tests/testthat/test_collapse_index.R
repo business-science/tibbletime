@@ -23,10 +23,15 @@ test_that("side = 'start' returns start of period", {
                as.Date("2017-12-01"))
 })
 
-test_that("start_date can alter the collapsed index grouping", {
-  test <- collapse_index(test_time$date, "2 day")
+test_that("start_date throws a warning of deprecation", {
+  expect_warning(collapse_index(test_time$date, "2 day", start_date = "2017-11-30"))
+})
+
+test_that("Index vectors can be passed to the period argument", {
+  custom_period <- create_series("2017-11-30" ~ "2017-12-03", "2 day", "Date", as_vector = TRUE)
+  test <- collapse_index(test_time$date, custom_period)
   expect_equal(test,
-               as.Date(c("2017-12-02", "2017-12-02", "2017-12-03")))
+               as.Date(c("2017-12-01", "2017-12-03", "2017-12-03")))
 })
 
 test_that("Collapsing works on yearmon", {

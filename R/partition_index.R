@@ -15,10 +15,14 @@
 #'   * 1 Year: `'1 year'` / `'1 Y'` / `'1 yearly'` / `'yearly'`
 #'
 #'   This shorthand is available for year, quarter, month, day, hour, minute,
-#'   second, millisecond and microsecond periodicities. Note that "m" = "month",
-#'    "M" = "minute", "L" = "millisecond", "U" = "microsecond".
+#'   second, millisecond and microsecond periodicities.
 #'
-#' @param start_date Optional argument used to specify the start date for the
+#'   Additionally, you have the option of passing in a vector of dates to
+#'   use as custom and more flexible boundaries. This replaces the need for
+#'   `start_date`. See the start_date example in [as_period()] for details.
+#'
+#' @param start_date (Being deprecated in v0.1.2) Optional argument used to
+#' specify the start date for the
 #' first group. The default is to start at the closest period boundary
 #' below the minimum date in the supplied index.
 #' @param ... Not currently used.
@@ -48,41 +52,70 @@
 #'
 partition_index <- function(index, period = "yearly", start_date = NULL, ...) {
 
-  .index          <- to_posixct_numeric(index)
-  index_class     <- get_index_col_class(index)
-  index_time_zone <- get_index_col_time_zone(index)
+  if(!is.null(start_date)) {
+    warning(paste("The `start_date` argument is deprecated and will be removed in v0.1.2.",
+                  "Instead, use a custom period index vector. See the `period` argument documentation."),
+            call. = FALSE)
+  }
+
+  .index <- to_posixct_numeric(index)
 
   # Check ordering of numeric index
   check_index_order(.index)
 
-  # Parse the period
-  period_list <- parse_period(period)
+  # Find the correct boundaries for the partitioned index
+  endpoints <- make_endpoints(index, period, start_date)
 
-  # Generic validation of user defined period
-  assert_period_matches_index_class(index, period_list$period)
-
-  # Make endpoint time_formula
-  endpoint_time_formula <- make_endpoint_formula(
-    index = index,
-    rounding_period = period_list$period,
-    start_date = start_date
-  )
-
-  # Create series
-  endpoints <- create_series(
-    time_formula = endpoint_time_formula,
-    period = period,
-    class = index_class,
-    tz = index_time_zone,
-    as_vector = TRUE
-  )
-
-  endpoints <- to_posixct_numeric(endpoints)
-
+  # Use the boundaries to break up the index
   make_partitioned_index(.index, endpoints)
 }
 
 #### Utils ---------------------------------------------------------------------
+
+# Create the break points from the user's index and their specified period
+# to break on
+make_endpoints <- function(index, period, start_date) {
+
+  # Allow the user to pass in an index vector to be used as the period
+  if(inherits_allowed_datetime(period)) {
+
+    assert_custom_period_class_matches_index_class(index, period)
+    endpoints <- period
+
+  # Otherwise, parse the period and make an endpoint vector
+  } else {
+
+    index_class     <- get_index_col_class(index)
+    index_time_zone <- get_index_col_time_zone(index)
+
+    # Parse the period
+    period_list <- parse_period(period)
+
+    # Generic validation of user defined period
+    assert_period_matches_index_class(index, period_list$period)
+
+    # Make endpoint time_formula
+    endpoint_time_formula <- make_endpoint_formula(
+      index = index,
+      rounding_period = period_list$period,
+      start_date = start_date
+    )
+
+    # Create series
+    endpoints <- create_series(
+      time_formula = endpoint_time_formula,
+      period = period,
+      class = index_class,
+      tz = index_time_zone,
+      as_vector = TRUE
+    )
+
+  }
+
+  endpoints <- to_posixct_numeric(endpoints)
+
+  endpoints
+}
 
 make_endpoint_formula <- function(index, rounding_period, start_date = NULL) {
   # Get start_date
@@ -151,3 +184,9 @@ check_index_order <- function(index) {
   }
 }
 
+assert_custom_period_class_matches_index_class <- function(index, period) {
+  assertthat::assert_that(
+    get_index_col_class(index) == get_index_col_class(period),
+    msg = "The custom period vector class much match the class of the index"
+  )
+}

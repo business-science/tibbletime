@@ -18,8 +18,11 @@ Note that you can pass the specification in a flexible way:
 }
 
 This shorthand is available for year, quarter, month, day, hour, minute,
-second, millisecond and microsecond periodicities. Note that "m" = "month",
-"M" = "minute", "L" = "millisecond", "U" = "microsecond".}
+second, millisecond and microsecond periodicities.
+
+Additionally, you have the option of passing in a vector of dates to
+use as custom and more flexible boundaries. This replaces the need for
+\code{start_date}. See the start_date example in \code{\link[=as_period]{as_period()}} for details.}
 }
 \description{
 The period is parsed into frequency and period and returned as a named list.
