@@ -73,33 +73,22 @@ parse_period_char <- function(period) {
 # >1 letter character parsing
 parse_word_period <- function(period) {
 
-  partial_detect <- function(period, detect_pattern) {
-    # Partial match the detect_pattern in the period.
-    # Coerce to logical TRUE/FALSE for existance.
-    as.logical(pmatch(detect_pattern, period, nomatch = FALSE))
-  }
+  key <- c("year", "quarter", "month", "week",
+           "da",   "hour",    "min",   "sec",
+           "ms",   "mil",     "us",    "mic")
 
-  p <- dplyr::case_when(
-    partial_detect(period, "year")    ~ "year",
-    partial_detect(period, "quarter") ~ "quarter",
-    partial_detect(period, "month")   ~ "month",
-    partial_detect(period, "week")    ~ "week",
-    partial_detect(period, "da")      ~ "day",
-    partial_detect(period, "hour")    ~ "hour",
-    partial_detect(period, "min")     ~ "min",
-    partial_detect(period, "sec")     ~ "sec",
-    partial_detect(period, "ms")      ~ "millisec",
-    partial_detect(period, "mil")     ~ "millisec",
-    partial_detect(period, "us")      ~ "microsec",
-    partial_detect(period, "mic")     ~ "microsec",
-   TRUE                               ~ "NULL"
-  )
+  value <- c("year",     "quarter",  "month",    "week",
+             "day",      "hour",     "min",      "sec",
+             "millisec", "millisec", "microsec", "microsec")
 
-  if(p == "NULL") {
+  loc_vec <- pmatch(key, period)
+  parsed_period <- value[!is.na(loc_vec)]
+
+  if(length(parsed_period) == 0) {
     glue_stop("Period '{period}' specified incorrectly.")
   }
 
-  p
+  parsed_period
 }
 
 # 1 letter parsing, case sensitive
