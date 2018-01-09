@@ -36,6 +36,8 @@ register_s3_method <- function(pkg, generic, class, fun = NULL) { # nocov start
   # This is done because tidyr is not imported because it is not used
   # anywhere else in the package.
   if (requireNamespace("tidyr", quietly = TRUE)) {
+    register_s3_method("tidyr", "gather", "tbl_time")
+    register_s3_method("tidyr", "spread", "tbl_time")
     register_s3_method("tidyr", "nest",   "tbl_time")
     register_s3_method("tidyr", "unnest", "tbl_time")
     register_s3_method("tidyr", "unnest", "tbl_df")

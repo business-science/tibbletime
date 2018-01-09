@@ -74,36 +74,30 @@ unnest.tbl_df <- function(data, ..., .drop = NA, .id = NULL, .sep = NULL) {
 
 
 # ------------------------------------------------------------------------------
-# Unsure if gather / spread are needed, but these would do the trick
+# gather() and spread() seem to be needed as well
 
-# #' @export
-# #' @importFrom tidyr gather
-# #'
-# gather.tbl_time <- function(data, key = "key", value = "value", ..., na.rm = FALSE,
-#                             convert = FALSE, factor_key = FALSE)  {
-#
-#   key   <- rlang::enquo(key)
-#   value <- rlang::enquo(value)
-#   quos  <- rlang::quos(...)
-#
-#   gathered_data <- gather(as_tibble(data), key = !! key, value = !! value, !!! quos,
-#                           na.rm = na.rm, convert = convert, factor_key = factor_key)
-#
-#   reconstruct(gathered_data, data)
-# }
+gather.tbl_time <- function(data, key = "key", value = "value", ..., na.rm = FALSE,
+                            convert = FALSE, factor_key = FALSE)  {
 
-# #' @export
-# #' @importFrom tidyr spread
-# #'
-# spread.tbl_time <- function(data, key, value, fill = NA, convert = FALSE, drop = TRUE,
-#                             sep = NULL)  {
-#
-#   key   <- rlang::enquo(key)
-#   value <- rlang::enquo(value)
-#
-#   spread_data <- spread(as_tibble(data), key = !! key, value = !! value,
-#                         fill = fill, convert = convert, drop = drop,
-#                         sep = sep)
-#
-#   reconstruct(spread_data, data)
-# }
+  key   <- rlang::enquo(key)
+  value <- rlang::enquo(value)
+  quos  <- rlang::quos(...)
+
+  gathered_data <- gather(as_tibble(data), key = !! key, value = !! value, !!! quos,
+                          na.rm = na.rm, convert = convert, factor_key = factor_key)
+
+  reconstruct(gathered_data, data)
+}
+
+spread.tbl_time <- function(data, key, value, fill = NA, convert = FALSE, drop = TRUE,
+                            sep = NULL)  {
+
+  key   <- rlang::enquo(key)
+  value <- rlang::enquo(value)
+
+  spread_data <- spread(as_tibble(data), key = !! key, value = !! value,
+                        fill = fill, convert = convert, drop = drop,
+                        sep = sep)
+
+  reconstruct(spread_data, data)
+}
