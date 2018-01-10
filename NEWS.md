@@ -2,6 +2,9 @@
 
 * General
 
+    * A new helper function, `collapse_by()`, wraps the common idiom of 
+    `.tbl_time %>% mutate(date = collapse_index(date, "yearly")) %>% group_by(date)`.
+
     * You can now pass an index vector (easily created with `create_series()`) to
     the `period` argument of functions like `as_period()` or `collapse_index()`
     to specify custom periods to collapse at. This also takes the place of the
@@ -15,6 +18,10 @@
     * Added support for `millisecond` and `microsecond` grouping. 
     See `?create_series` for examples and `?filter_time` Details 
     for more information.
+    
+* Bug Fixes
+
+    * `tidyr::gather()` and `tidyr::spread()` now work appropriately.
 
 ## tibbletime 0.1.0
 

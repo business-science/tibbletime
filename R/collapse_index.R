@@ -97,3 +97,39 @@ collapse_index <- function(index, period = "yearly",
 
   new_index
 }
+
+
+#' Collapse a tbl_time object's index and subsequently group by it
+#'
+#' `collapse_by()` is a combination of the common idiom of `collapse_index()`
+#' followed by a `group_by()` to group on that collapsed index.
+#'
+#' @details
+#'
+#' `collapse_by()` always adds to the existing `dplyr` groups on your `tbl_time`
+#' object. Specifically it sets `add = TRUE` in [dplyr::group_by()].
+#'
+#' @examples
+#'
+#' data(FB)
+#' FB_time <- as_tbl_time(FB, date)
+#'
+#' collapse_by(FB_time, "month")
+#'
+#' @export
+collapse_by <- function(.tbl_time, period = "yearly", start_date = NULL, side = "end", ...) {
+
+  index_quo  <- get_index_quo(.tbl_time)
+  index_char <- get_index_char(.tbl_time)
+
+  .tbl_time_collapsed <- dplyr::mutate(
+    .data = .tbl_time,
+    !! index_char := collapse_index(!! index_quo, period = period, side = side)
+  )
+
+  dplyr::group_by(.tbl_time_collapsed, !! index_quo, add = TRUE)
+}
+
+
+
+
