@@ -123,6 +123,15 @@ summary_roll <- rollify(summary, window = 5, unlist = FALSE)
 FB_summarised <- dplyr::mutate(FB, summary_roll = summary_roll(adjusted))
 FB_summarised$summary_roll[[5]]
 
+# dplyr::bind_rows() is often helpful in these cases to get
+# meaningful output
+
+summary_roll <- rollify(~dplyr::bind_rows(summary(.)), window = 5, unlist = FALSE)
+FB_summarised <- dplyr::mutate(FB, summary_roll = summary_roll(adjusted))
+FB_summarised \%>\%
+  dplyr::filter(!is.na(summary_roll)) \%>\%
+  tidyr::unnest(summary_roll)
+
 # Rolling regressions -------------------------------------------------------
 
 # Extending an example from R 4 Data Science on "Many Models".
