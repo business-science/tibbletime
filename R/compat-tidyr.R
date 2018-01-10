@@ -83,7 +83,7 @@ gather.tbl_time <- function(data, key = "key", value = "value", ..., na.rm = FAL
   value <- rlang::enquo(value)
   quos  <- rlang::quos(...)
 
-  gathered_data <- gather(as_tibble(data), key = !! key, value = !! value, !!! quos,
+  gathered_data <- tidyr::gather(as_tibble(data), key = !! key, value = !! value, !!! quos,
                           na.rm = na.rm, convert = convert, factor_key = factor_key)
 
   reconstruct(gathered_data, data)
@@ -95,7 +95,7 @@ spread.tbl_time <- function(data, key, value, fill = NA, convert = FALSE, drop =
   key   <- rlang::enquo(key)
   value <- rlang::enquo(value)
 
-  spread_data <- spread(as_tibble(data), key = !! key, value = !! value,
+  spread_data <- tidyr::spread(as_tibble(data), key = !! key, value = !! value,
                         fill = fill, convert = convert, drop = drop,
                         sep = sep)
 
