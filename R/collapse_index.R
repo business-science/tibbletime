@@ -104,6 +104,9 @@ collapse_index <- function(index, period = "yearly",
 #' `collapse_by()` is a combination of the common idiom of `collapse_index()`
 #' followed by a `group_by()` to group on that collapsed index.
 #'
+#' @inheritParams partition_index
+#' @inheritParams as_period
+#'
 #' @details
 #'
 #' `collapse_by()` always adds to the existing `dplyr` groups on your `tbl_time`
@@ -115,6 +118,8 @@ collapse_index <- function(index, period = "yearly",
 #' FB_time <- as_tbl_time(FB, date)
 #'
 #' collapse_by(FB_time, "month")
+#'
+#' @seealso [dplyr::group_by()]
 #'
 #' @export
 collapse_by <- function(.tbl_time, period = "yearly", start_date = NULL, side = "end", ...) {

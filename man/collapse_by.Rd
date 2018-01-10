@@ -7,6 +7,37 @@
 collapse_by(.tbl_time, period = "yearly", start_date = NULL, side = "end",
   ...)
 }
+\arguments{
+\item{.tbl_time}{A \code{tbl_time} object.}
+
+\item{period}{A character specification used for time-based grouping. The
+general format to use is \code{"frequency period"} where frequency is a number
+like 1 or 2, and period is an interval like weekly or yearly. There must be
+a space between the two.
+
+Note that you can pass the specification in a flexible way:
+\itemize{
+\item 1 Year: \code{'1 year'} / \code{'1 Y'} / \code{'1 yearly'} / \code{'yearly'}
+}
+
+This shorthand is available for year, quarter, month, day, hour, minute,
+second, millisecond and microsecond periodicities.
+
+Additionally, you have the option of passing in a vector of dates to
+use as custom and more flexible boundaries. This replaces the need for
+\code{start_date}. See the start_date example in \code{\link[=as_period]{as_period()}} for details.}
+
+\item{start_date}{(Being deprecated in v0.1.2) Optional argument used to
+specify the start date for the
+first group. The default is to start at the closest period boundary
+below the minimum date in the supplied index.}
+
+\item{side}{Whether to return the date at the beginning or the end of the
+new period. By default, the \code{"start"} of the period. Use \code{"end"} to change
+to the end of the period.}
+
+\item{...}{Not currently used.}
+}
 \description{
 \code{collapse_by()} is a combination of the common idiom of \code{collapse_index()}
 followed by a \code{group_by()} to group on that collapsed index.
@@ -22,4 +53,7 @@ FB_time <- as_tbl_time(FB, date)
 
 collapse_by(FB_time, "month")
 
+}
+\seealso{
+\code{\link[dplyr:group_by]{dplyr::group_by()}}
 }
