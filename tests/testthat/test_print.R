@@ -11,7 +11,7 @@ test_time <- tibble::tibble(
 
 test_tbl_time   <- as_tbl_time(test_time, date)
 test_tbl_time_g <- as_tbl_time(test_time, date) %>%
-  group_by(group1)
+  dplyr::group_by(group1)
 
 # Tests
 
