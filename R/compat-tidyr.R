@@ -30,7 +30,9 @@ nest.tbl_time <- function(data, ..., .key = "data") {
 
 unnest.tbl_time <- function(data, ..., .drop = NA, .id = NULL, .sep = NULL) {
   # This is called after nesting but excluding the index in the nest
-  reconstruct(NextMethod(), data)
+  #reconstruct(NextMethod(), data)
+  copy_.data <- new_tbl_time(data, get_index_quo(data), get_index_time_zone(data))
+  reconstruct(NextMethod(), copy_.data)
 }
 
 unnest.tbl_df <- function(data, ..., .drop = NA, .id = NULL, .sep = NULL) {
