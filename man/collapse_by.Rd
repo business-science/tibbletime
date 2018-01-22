@@ -2,7 +2,7 @@
 % Please edit documentation in R/collapse_index.R
 \name{collapse_by}
 \alias{collapse_by}
-\title{Collapse a tbl_time object's index and subsequently group by it}
+\title{Collapse a tbl_time object by its index}
 \usage{
 collapse_by(.tbl_time, period = "yearly", start_date = NULL, side = "end",
   ...)
@@ -32,28 +32,51 @@ specify the start date for the
 first group. The default is to start at the closest period boundary
 below the minimum date in the supplied index.}
 
-\item{side}{Whether to return the date at the beginning or the end of the
-new period. By default, the \code{"start"} of the period. Use \code{"end"} to change
-to the end of the period.}
+\item{side}{Whether to return the date at the beginning or the end of
+the new period. By default, the "end" of the period.
+Use "start" to change to the start of the period.}
 
 \item{...}{Not currently used.}
 }
 \description{
-\code{collapse_by()} is a combination of the common idiom of \code{collapse_index()}
-followed by a \code{group_by()} to group on that collapsed index.
+Collapse the index of a \code{tbl_time} object by time period. The index column
+is altered so that all dates that fall in a specified interval share a
+common date.
 }
 \details{
-\code{collapse_by()} always adds to the existing \code{dplyr} groups on your \code{tbl_time}
-object. Specifically it sets \code{add = TRUE} in \code{\link[dplyr:group_by]{dplyr::group_by()}}.
+\code{collapse_by()} is a simplification of a call to \code{\link[dplyr:mutate]{dplyr::mutate()}} to collapse an
+index column using \code{\link[=collapse_index]{collapse_index()}}.
 }
 \examples{
 
+# Basic functionality -------------------------------------------------------
+
+# Facebook stock prices
 data(FB)
-FB_time <- as_tbl_time(FB, date)
+FB <- as_tbl_time(FB, date)
 
-collapse_by(FB_time, "month")
+# Collapse to weekly dates
+collapse_by(FB, "weekly")
 
-}
-\seealso{
-\code{\link[dplyr:group_by]{dplyr::group_by()}}
+# A common workflow is to group on the collapsed date column
+# to perform a time based summary
+FB \%>\%
+  collapse_by("yearly") \%>\%
+  dplyr::group_by(date) \%>\%
+  dplyr::summarise_if(is.numeric, mean)
+
+# Grouped functionality -----------------------------------------------------
+
+data(FANG)
+FANG <- FANG \%>\%
+  as_tbl_time(date) \%>\%
+  dplyr::group_by(symbol)
+
+# Collapse each group to monthly,
+# calculate monthly standard deviation for each column
+FANG \%>\%
+  collapse_by("monthly") \%>\%
+  dplyr::group_by(date, add = TRUE) \%>\%
+  dplyr::summarise_all(sd)
+
 }

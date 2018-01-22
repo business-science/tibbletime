@@ -45,6 +45,11 @@ so that all dates that fall in a specified interval share a common date.
 The most common use case for this is to then group on the collapsed index.
 }
 \details{
+The \code{\link[=collapse_by]{collapse_by()}} function provides a shortcut for the most common use
+of \code{collapse_index()}, calling the function inside a call to \code{mutate()} to
+modify the index directly. For more flexibility, like the nesting example
+below, use \code{collapse_index()}.
+
 Because this is often used for end of period summaries, the default is to
 use \code{side = "end"}. Note that this is the opposite of \code{\link[=as_period]{as_period()}} where
 the default is \code{side = "start"}.
