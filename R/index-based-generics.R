@@ -47,7 +47,17 @@ push_datetime <- function(x, push) {
 }
 
 push_datetime.default <- function(x, push) {
-  unique(c(x, push))
+
+  x_num    <- to_posixct_numeric(x)
+  push_num <- to_posixct_numeric(push)
+
+  pushed <- unique(c(x_num, push_num))
+
+  posixct_numeric_to_datetime(
+    pushed,
+    class = get_index_col_class(x_num),
+    tz = get_index_col_time_zone(x_num)
+  )
 }
 
 push_datetime.hms <- function(x, push) {
