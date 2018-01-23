@@ -11,13 +11,7 @@
 
     * You can now pass an index vector (easily created with `create_series()`) to
     the `period` argument of functions like `as_period()` or `collapse_index()`
-    to specify custom periods to collapse at. This also takes the place of the
-    `start_date` argument. See the "Using start_date" example in `?as_period`
-    for a full worked example.
-
-    * The `start_date` argument has been soft-deprecated in favor of the more
-    flexible approach of passing an index vector to the `period` argument. It
-    will be removed in v0.1.2.
+    to specify custom periods to collapse at.
 
     * Added support for `millisecond` and `microsecond` grouping. 
     See `?create_series` for examples and `?filter_time` Details 

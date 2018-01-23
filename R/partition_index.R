@@ -18,10 +18,9 @@
 #'   second, millisecond and microsecond periodicities.
 #'
 #'   Additionally, you have the option of passing in a vector of dates to
-#'   use as custom and more flexible boundaries. This replaces the need for
-#'   `start_date`. See the start_date example in [as_period()] for details.
+#'   use as custom and more flexible boundaries.
 #'
-#' @param start_date (Being deprecated in v0.1.2) Optional argument used to
+#' @param start_date Optional argument used to
 #' specify the start date for the
 #' first group. The default is to start at the closest period boundary
 #' below the minimum date in the supplied index.
@@ -51,12 +50,6 @@
 #' @rdname partition_index
 #'
 partition_index <- function(index, period = "yearly", start_date = NULL, ...) {
-
-  if(!is.null(start_date)) {
-    warning(paste("The `start_date` argument is deprecated and will be removed in v0.1.2.",
-                  "Instead, use a custom period index vector. See the `period` argument documentation."),
-            call. = FALSE)
-  }
 
   .index <- to_posixct_numeric(index)
 

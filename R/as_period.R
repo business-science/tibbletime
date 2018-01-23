@@ -75,11 +75,8 @@
 #'
 #' # Using start_date ----------------------------------------------------------
 #'
-#' # WARNING: The start_date argument is being retired in 0.1.2 favor of the more
-#' # flexible option of passing an index vector to the period argument. See
-#' # below for a comparison of the two methods.
 #'
-#' #### Old method using start_date
+#' #### One method using start_date
 #'
 #' # FB stock prices
 #' data(FB)
@@ -94,7 +91,7 @@
 #' # Groups become (2013-01-01, 2013-01-02), (2013-01-03, 2013-01-04) and so on.
 #' as_period(FB, "2 day", start_date = "2013-01-01")
 #'
-#' #### New method using an index vector
+#' #### Equivalent method using an index vector
 #'
 #' # FB stock prices
 #' data(FB)
