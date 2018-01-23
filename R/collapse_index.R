@@ -10,6 +10,9 @@
 #' @param side Whether to return the date at the beginning or the end of
 #' the new period. By default, the "end" of the period.
 #' Use "start" to change to the start of the period.
+#' @param clean Whether or not to round the collapsed index up / down to the next
+#' period boundary. The decision to round up / down is controlled by the side
+#' argument.
 #' @param ... Not currently used.
 #'
 #' @details
@@ -22,6 +25,9 @@
 #' Because this is often used for end of period summaries, the default is to
 #' use `side = "end"`. Note that this is the opposite of [as_period()] where
 #' the default is `side = "start"`.
+#'
+#' The `clean` argument is especially useful if you have an irregular series
+#' and want cleaner dates to report for summary values.
 #'
 #' @examples
 #'
@@ -67,41 +73,63 @@
 #' @export
 #'
 collapse_index <- function(index, period = "yearly",
-                           start_date = NULL, side = "end", ...) {
-
-  # Partition index
-  index_part <- partition_index(index, period, start_date)
-
-  # Index as numeric (unlist would remove attrs)
-  index_num <- to_posixct_numeric(index)
+                           start_date = NULL, side = "end", clean = FALSE, ...) {
 
   # Side either start or end
   assert_valid_side(side)
 
-  if(side == "start") {
-    # For each partition, find the first date position
-    pos <- match(unique(index_part), index_part)
-    index_at_pos <- index_num[pos]
+  # Index as numeric (unlist would remove attrs)
+  index_num <- to_posixct_numeric(index)
 
-    # Each date must be repeated this many times to rebuild the column
-    reps <- diff(c(pos, length(index_part) + 1))
+  # Very different approach with clean. Only returning the endpoints
+  # filled to the correct location, not using the user's indices.
+  if(clean) {
+
+    # Create datetime endpoints
+    endpoints <- make_endpoints(index, period, start_date)
+
+    # Create a numeric index containing the endpoints positioned in a way
+    # to replace the old index
+    new_numeric_index <- make_partitioned_endpoints(index_num, endpoints, side)
+
+    # Convert to datetime
+    new_index <- posixct_numeric_to_datetime(
+      x     = new_numeric_index,
+      class = get_index_col_class(index),
+      tz    = get_index_col_time_zone(index)
+    )
+
+  # Else do a standard partition using the user's indices as the endpoints
+  } else {
+
+    # Partition index
+    index_part <- partition_index(index, period, start_date)
+
+    if(side == "start") {
+      # For each partition, find the first date position
+      pos <- match(unique(index_part), index_part)
+      index_at_pos <- index_num[pos]
+
+      # Each date must be repeated this many times to rebuild the column
+      reps <- diff(c(pos, length(index_part) + 1))
+
+    } else if(side == "end") {
+      # For each partition, find the last date position
+      pos <- length(index_part) - match(unique(index_part), rev(index_part)) + 1
+      index_at_pos <- index_num[pos]
+
+      # Each date must be repeated this many times to rebuild the column
+      reps <- diff(c(0, pos))
+
+    }
+
+    new_index <- posixct_numeric_to_datetime(
+      x     = rep(index_at_pos, reps),
+      class = get_index_col_class(index),
+      tz    = get_index_col_time_zone(index)
+    )
 
   }
-  else if(side == "end") {
-    # For each partition, find the last date position
-    pos <- length(index_part) - match(unique(index_part), rev(index_part)) + 1
-    index_at_pos <- index_num[pos]
-
-    # Each date must be repeated this many times to rebuild the column
-    reps <- diff(c(0, pos))
-
-  }
-
-  new_index <- posixct_numeric_to_datetime(
-    x     = rep(index_at_pos, reps),
-    class = get_index_col_class(index),
-    tz    = get_index_col_time_zone(index)
-  )
 
   new_index
 }
@@ -154,7 +182,7 @@ collapse_index <- function(index, period = "yearly",
 #'   dplyr::summarise_all(sd)
 #'
 #' @export
-collapse_by <- function(.tbl_time, period = "yearly", start_date = NULL, side = "end", ...) {
+collapse_by <- function(.tbl_time, period = "yearly", start_date = NULL, side = "end", clean = FALSE, ...) {
 
   index_quo  <- get_index_quo(.tbl_time)
   index_char <- get_index_char(.tbl_time)
@@ -166,7 +194,7 @@ collapse_by <- function(.tbl_time, period = "yearly", start_date = NULL, side = 
       period     = period,
       start_date = start_date,
       side       = side,
-      clean      = FALSE,
+      clean      = clean,
       ...
     )
   )
@@ -180,4 +208,30 @@ assert_valid_side <- function(side) {
     side %in% c("start", "end"),
     msg = "`side` must be either 'start' or 'end'"
   )
+}
+
+# This is similar to make_partitioned_index but rather than returning
+# a vector of integers corresponding to groups it returns a vector
+# of endpoints corresponding to the groups. These endpoints are 'clean'
+# dates
+make_partitioned_endpoints <- function(index, endpoints, side = "end") {
+  # Combine the two and obtain the correct order
+  combined_dates <- c(endpoints, index)
+  sorted_order   <- order(combined_dates)
+
+  # Create the unfilled time group vector and put it in the correct order
+  endpoint_fillers <- rep(NA, times = length(index))
+  full_partition_index <- c(endpoints, endpoint_fillers)[sorted_order]
+
+  # Remember location of endpoint dates for removal later
+  endpoint_locations <- match(endpoints, full_partition_index)
+
+  # 'fill' the NA values forward/backward with the correct endpoint
+  from_last <- ifelse(side == "end", yes = TRUE, no = FALSE)
+  full_partition_index <- zoo::na.locf0(full_partition_index, fromLast = from_last)
+
+  # Pull the endpoints back out so we don't have duplicates
+  .partition_index <- full_partition_index[-endpoint_locations]
+
+  .partition_index
 }

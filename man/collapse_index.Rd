@@ -6,7 +6,7 @@
 same date}
 \usage{
 collapse_index(index, period = "yearly", start_date = NULL, side = "end",
-  ...)
+  clean = FALSE, ...)
 }
 \arguments{
 \item{index}{An index vector.}
@@ -37,6 +37,10 @@ below the minimum date in the supplied index.}
 the new period. By default, the "end" of the period.
 Use "start" to change to the start of the period.}
 
+\item{clean}{Whether or not to round the collapsed index up / down to the next
+period boundary. The decision to round up / down is controlled by the side
+argument.}
+
 \item{...}{Not currently used.}
 }
 \description{
@@ -53,6 +57,9 @@ below, use \code{collapse_index()}.
 Because this is often used for end of period summaries, the default is to
 use \code{side = "end"}. Note that this is the opposite of \code{\link[=as_period]{as_period()}} where
 the default is \code{side = "start"}.
+
+The \code{clean} argument is especially useful if you have an irregular series
+and want cleaner dates to report for summary values.
 }
 \examples{
 

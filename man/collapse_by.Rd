@@ -5,7 +5,7 @@
 \title{Collapse a tbl_time object by its index}
 \usage{
 collapse_by(.tbl_time, period = "yearly", start_date = NULL, side = "end",
-  ...)
+  clean = FALSE, ...)
 }
 \arguments{
 \item{.tbl_time}{A \code{tbl_time} object.}
@@ -35,6 +35,10 @@ below the minimum date in the supplied index.}
 \item{side}{Whether to return the date at the beginning or the end of
 the new period. By default, the "end" of the period.
 Use "start" to change to the start of the period.}
+
+\item{clean}{Whether or not to round the collapsed index up / down to the next
+period boundary. The decision to round up / down is controlled by the side
+argument.}
 
 \item{...}{Not currently used.}
 }
