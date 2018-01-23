@@ -95,9 +95,11 @@ make_endpoints <- function(index, period, start_date) {
     assert_period_matches_index_class(index, period_list$period)
 
     # Make endpoint time_formula
+    period_clean <- paste(period_list[["freq"]], period_list[["period"]])
+
     endpoint_time_formula <- make_endpoint_formula(
       index = index,
-      rounding_period = period_list$period,
+      period = period_clean,
       start_date = start_date
     )
 
@@ -107,6 +109,7 @@ make_endpoints <- function(index, period, start_date) {
       period = period,
       class = index_class,
       tz = index_time_zone,
+      include_end = TRUE,
       as_vector = TRUE
     )
 
@@ -117,13 +120,13 @@ make_endpoints <- function(index, period, start_date) {
   endpoints
 }
 
-make_endpoint_formula <- function(index, rounding_period, start_date = NULL) {
+make_endpoint_formula <- function(index, period, start_date = NULL) {
   # Get start_date
   if(is.null(start_date)) {
     start_date <- dplyr::first(index)
 
-    # Auto start_date get's floored
-    start_date <- floor_index(start_date, rounding_period)
+    # Auto start_date get's floored (only by the period)
+    start_date <- floor_index(start_date, period)
 
   } else {
     # Coerce the user specified start_date
@@ -131,8 +134,8 @@ make_endpoint_formula <- function(index, rounding_period, start_date = NULL) {
     assert_start_date_before_index_min(index, start_date)
   }
 
-  # Get end_date
-  end_date <- ceiling_index(dplyr::last(index), rounding_period)
+  # Get end_date (ceilinged by the full period to have the correct last grouping)
+  end_date <- ceiling_index(dplyr::last(index), period)
 
   # As formula
   start_date ~ end_date
