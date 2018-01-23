@@ -24,10 +24,9 @@ This shorthand is available for year, quarter, month, day, hour, minute,
 second, millisecond and microsecond periodicities.
 
 Additionally, you have the option of passing in a vector of dates to
-use as custom and more flexible boundaries. This replaces the need for
-\code{start_date}. See the start_date example in \code{\link[=as_period]{as_period()}} for details.}
+use as custom and more flexible boundaries.}
 
-\item{start_date}{(Being deprecated in v0.1.2) Optional argument used to
+\item{start_date}{Optional argument used to
 specify the start date for the
 first group. The default is to start at the closest period boundary
 below the minimum date in the supplied index.}
@@ -107,11 +106,8 @@ as_period(FANG, "6 months")
 
 # Using start_date ----------------------------------------------------------
 
-# WARNING: The start_date argument is being retired in 0.1.2 favor of the more
-# flexible option of passing an index vector to the period argument. See
-# below for a comparison of the two methods.
 
-#### Old method using start_date
+#### One method using start_date
 
 # FB stock prices
 data(FB)
@@ -126,7 +122,7 @@ as_period(FB, "2 day")
 # Groups become (2013-01-01, 2013-01-02), (2013-01-03, 2013-01-04) and so on.
 as_period(FB, "2 day", start_date = "2013-01-01")
 
-#### New method using an index vector
+#### Equivalent method using an index vector
 
 # FB stock prices
 data(FB)
