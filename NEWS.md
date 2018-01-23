@@ -2,6 +2,10 @@
 
 * General
 
+    * `collapse_index()` and `collapse_by()` support a `clean` argument. This
+    will round your index up/down to the next period boundary, allowing for
+    prettier dates that can be used in summaries.
+
     * A new helper function, `collapse_by()`, wraps the common idiom of 
     `.tbl_time %>% mutate(date = collapse_index(date, "yearly")) %>% group_by(date)`.
 
