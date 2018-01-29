@@ -93,25 +93,26 @@ objects. Some of them are:
 
 1) `filter_time()` - Succinctly filter a tbl_time object by date.
 
-4) `as_period()` - Convert a tbl_time object from daily to monthly, 
+2) `as_period()` - Convert a tbl_time object from daily to monthly, 
 from minute data to hourly, and more. This allows the user to easily 
 aggregate data to a less granular level.
 
-2) `collapse_index()` - Take an index column, and collapse it so that all
+3) `collapse_by()` - Take an `tbl_time` object, and collapse the index so that all
 observations in an interval share the same date. The most common use of this
 is to then group on this column with `dplyr::group_by()` and perform 
 time-based calculations with `summarise()`, `mutate()` or any other `dplyr`
 function.
 
-5) `partition_index()` - A lower level version of `collapse_index()`. Rather
-than collapse the index directly, this returns a column of integers that 
-correspond to the groups.
+3) `collapse_index()` - A lower level version of `collapse_by()` that directly
+modifies the `index` column and not the entire `tbl_time` object. It allows the
+user more flexibility when collapsing, like the ability to assign the resulting
+collapsed index to a new column.
 
-6) `rollify()` - Modify a function so that it calculates a value 
+5) `rollify()` - Modify a function so that it calculates a value 
 (or a set of values) at specific time intervals. This can be used for rolling
 averages and other rolling calculations inside the `tidyverse` framework.
 
-7) `create_series()` - Use shorthand notation to quickly 
+6) `create_series()` - Use shorthand notation to quickly 
 initialize a `tbl_time` object containing a regularly spaced index column 
 of class `Date`, `POSIXct`, `yearmon`, `yearqtr` or `hms`.
 
@@ -131,7 +132,7 @@ FB %>%
 # and instead you'd like to take the average of every column for each month
 FB %>%
   select(-symbol) %>%
-  mutate(date = collapse_index(date, "monthly", side = "end")) %>%
+  collapse_by("monthly") %>%
   group_by(date) %>%
   summarise_all(mean)
 
@@ -160,7 +161,7 @@ FANG %>%
   group_by(symbol) %>%
   
   # Collapse to yearly
-  mutate(date = collapse_index(date, "yearly")) %>%
+  collapse_by("year") %>%
   
   # Additionally group by date (yearly)
   group_by(date, add = TRUE) %>%

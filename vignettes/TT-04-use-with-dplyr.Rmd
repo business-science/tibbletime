@@ -47,18 +47,19 @@ columns.
 With `tibbletime`, rather than creating new columns to group on, you 
 manipulate your original date column into something that corresponds to 
 the period you are summarising at. The `tibbletime` way to do this is with 
-`collapse_index()`.
+`collapse_by()`.
 
 ```{r}
 series %>%
-  mutate(date = collapse_index(date, "monthly")) %>%
+  collapse_by("monthly") %>%
   group_by(date) %>%
   summarise(mean_var = mean(var))
 ```
 
-Implementing `collapse_index()` to work on just an index column rather than
-the entire `tbl_time` object means that you don't have to override the original
-date column and can keep them as a separate column if required.
+While `collapse_by()` directly manipulates the index column, the lower level `collapse_index()`
+function can be used inside of a call to `mutate()` to modify the index column
+and then save it as a new column. This can be useful if you don't want to lose
+the original index column.
 
 This works for more granular series too. Below we aggregate 5 second level data
 up to hourly. This is working with a faily sizable ~19 million row data set.
@@ -68,7 +69,7 @@ second_series <- create_series('2013' ~ '2015', '5 second')
 
 second_series %>%
   mutate(var = rnorm(nrow(second_series))) %>%
-  mutate(date = collapse_index(date, "hourly")) %>%
+  collapse_by("hourly") %>%
   group_by(date) %>%
   summarise(mean_var = mean(var))
 ```
@@ -82,7 +83,7 @@ and one for the period you want to summarise your data at (daily, yearly, etc).
 
 Below we use `create_series()` to create two dummy hourly price series, combine them,
 and calculate the OHLC (Open, High, Low, Close) prices per day by first collapsing
-to daily with `collapse_index()` to have something to group on.
+to daily with `collapse_by()` to have something to group on.
 
 ```{r}
 set.seed(123)
@@ -102,7 +103,7 @@ price_series <- bind_rows(list(apple = apple, facebook = facebook), .id = "symbo
 # Collapse to daily and transform to OHLC (Open, High, Low, Close), a 
 # common financial transformation
 price_series %>%
-  mutate(date = collapse_index(date, "daily")) %>%
+  collapse_by("daily") %>%
   group_by(date, add = TRUE) %>%
   summarise(
     open  = first(price),
