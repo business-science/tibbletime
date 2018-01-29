@@ -90,7 +90,7 @@
       <h1>Rolling calculations in tibbletime</h1>
                         <h4 class="author">Davis Vaughan</h4>
             
-            <h4 class="date">2018-01-06</h4>
+            <h4 class="date">2018-01-29</h4>
           </div>
 
     
@@ -127,7 +127,7 @@ rolling_mean</code></pre></div>
 <pre><code>## function(...) {
 ##     roller(..., .f = .f, window = window, unlist = unlist, na_value = na_value)
 ##   }
-## &lt;environment: 0x7fe54834cf48&gt;</code></pre>
+## &lt;environment: 0x7fe1d47edf58&gt;</code></pre>
 <p>We now have a rolling version of the function, <code>mean()</code>. You use it in a similar way to how you might use <code>mean()</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(FB, <span class="dt">mean_5 =</span> <span class="kw">rolling_mean</span>(adjusted))</code></pre></div>
 <pre><code>## # A tibble: 1,008 x 6
@@ -284,7 +284,7 @@ FB_summarised</code></pre></div>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/tidyr/topics/unnest">unnest</a></span>()</code></pre></div>
 <pre><code>## # A tibble: 5,020 x 5
 ##    symbol date       adjusted rolled_summary_type rolled_summary_val
-##    &lt;chr&gt;  &lt;date&gt;        &lt;dbl&gt; &lt;fctr&gt;                           &lt;dbl&gt;
+##    &lt;chr&gt;  &lt;date&gt;        &lt;dbl&gt; &lt;fct&gt;                            &lt;dbl&gt;
 ##  1 FB     2013-01-08     29.1 mean                            28.6  
 ##  2 FB     2013-01-08     29.1 sd                               0.700
 ##  3 FB     2013-01-08     29.1 min                             27.8  
@@ -325,7 +325,7 @@ FB_summarised</code></pre></div>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/tidyr/topics/unnest">unnest</a></span>()</code></pre></div>
 <pre><code>## # A tibble: 5,020 x 5
 ##    symbol date       adjusted rolled_summary_type rolled_summary_val
-##    &lt;chr&gt;  &lt;date&gt;        &lt;dbl&gt; &lt;fctr&gt;                           &lt;dbl&gt;
+##    &lt;chr&gt;  &lt;date&gt;        &lt;dbl&gt; &lt;fct&gt;                            &lt;dbl&gt;
 ##  1 FB     2013-01-08     29.1 mean                            28.6  
 ##  2 FB     2013-01-08     29.1 sd                               0.700
 ##  3 FB     2013-01-08     29.1 min                             27.8  
@@ -347,7 +347,7 @@ FB_summarised &lt;-<span class="st"> </span><span class="kw"><a href="http://dpl
 FB_summarised <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/tidyr/topics/unnest">unnest</a></span>()</code></pre></div>
 <pre><code>## # A tibble: 5,024 x 5
 ##    symbol date       adjusted rolled_summary_type rolled_summary_val
-##    &lt;chr&gt;  &lt;date&gt;        &lt;dbl&gt; &lt;fctr&gt;                           &lt;dbl&gt;
+##    &lt;chr&gt;  &lt;date&gt;        &lt;dbl&gt; &lt;fct&gt;                            &lt;dbl&gt;
 ##  1 FB     2013-01-02     28.0 &lt;NA&gt;                            NA    
 ##  2 FB     2013-01-03     27.8 &lt;NA&gt;                            NA    
 ##  3 FB     2013-01-04     28.8 &lt;NA&gt;                            NA    
@@ -398,18 +398,18 @@ FB_reg</code></pre></div>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/tidyr/topics/unnest">unnest</a></span>(tidied) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(symbol, date, term, estimate, std.error, statistic, p.value)</code></pre></div>
 <pre><code>## # A tibble: 4,016 x 7
-##    symbol date       term               estimate std.error statistic p.va…
-##    &lt;chr&gt;  &lt;date&gt;     &lt;chr&gt;                 &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;
-##  1 FB     2013-01-08 (Intercept) -0.284            1.02e⁺¹  -0.0279  0.982
-##  2 FB     2013-01-08 high         0.709            1.95e⁺⁰   0.364   0.778
-##  3 FB     2013-01-08 low          0.270            2.16e⁺⁰   0.125   0.921
-##  4 FB     2013-01-08 volume       0.0000000112     2.66e⁻⁸   0.422   0.746
-##  5 FB     2013-01-09 (Intercept) -5.95             7.48e⁺⁰  -0.796   0.572
-##  6 FB     2013-01-09 high         2.08             1.88e⁺⁰   1.10    0.468
-##  7 FB     2013-01-09 low         -0.920            1.75e⁺⁰  -0.526   0.692
-##  8 FB     2013-01-09 volume      -0.000000000145   1.68e⁻⁸  -0.00861 0.995
-##  9 FB     2013-01-10 (Intercept)  0.955            4.46e⁺⁰   0.214   0.866
-## 10 FB     2013-01-10 high         0.717            1.30e⁺⁰   0.553   0.679
+##    symbol date       term            estimate  std.error statistic p.value
+##    &lt;chr&gt;  &lt;date&gt;     &lt;chr&gt;              &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+##  1 FB     2013-01-08 (Intercept)    -2.84e⁻ ¹    1.02e⁺¹  -0.0279    0.982
+##  2 FB     2013-01-08 high            7.09e⁻ ¹    1.95e⁺⁰   0.364     0.778
+##  3 FB     2013-01-08 low             2.70e⁻ ¹    2.16e⁺⁰   0.125     0.921
+##  4 FB     2013-01-08 volume          1.12e⁻ ⁸    2.66e⁻⁸   0.422     0.746
+##  5 FB     2013-01-09 (Intercept)    -5.95e⁺ ⁰    7.48e⁺⁰  -0.796     0.572
+##  6 FB     2013-01-09 high            2.08e⁺ ⁰    1.88e⁺⁰   1.10      0.468
+##  7 FB     2013-01-09 low            -9.20e⁻ ¹    1.75e⁺⁰  -0.526     0.692
+##  8 FB     2013-01-09 volume         -1.45e⁻¹⁰    1.68e⁻⁸  -0.00861   0.995
+##  9 FB     2013-01-10 (Intercept)     9.55e⁻ ¹    4.46e⁺⁰   0.214     0.866
+## 10 FB     2013-01-10 high            7.17e⁻ ¹    1.30e⁺⁰   0.553     0.679
 ## # ... with 4,006 more rows</code></pre>
 </div>
 </div>

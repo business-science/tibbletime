@@ -86,9 +86,9 @@ There are a number of functions that were designed specifically for `tbl_time` o
 
 2.  `as_period()` - Convert a tbl\_time object from daily to monthly, from minute data to hourly, and more. This allows the user to easily aggregate data to a less granular level.
 
-3.  `collapse_index()` - Take an index column, and collapse it so that all observations in an interval share the same date. The most common use of this is to then group on this column with `dplyr::group_by()` and perform time-based calculations with `summarise()`, `mutate()` or any other `dplyr` function.
+3.  `collapse_by()` - Take an `tbl_time` object, and collapse the index so that all observations in an interval share the same date. The most common use of this is to then group on this column with `dplyr::group_by()` and perform time-based calculations with `summarise()`, `mutate()` or any other `dplyr` function.
 
-4.  `partition_index()` - A lower level version of `collapse_index()`. Rather than collapse the index directly, this returns a column of integers that correspond to the groups.
+4.  `collapse_index()` - A lower level version of `collapse_by()` that directly modifies the `index` column and not the entire `tbl_time` object. It allows the user more flexibility when collapsing, like the ability to assign the resulting collapsed index to a new column.
 
 5.  `rollify()` - Modify a function so that it calculates a value (or a set of values) at specific time intervals. This can be used for rolling averages and other rolling calculations inside the `tidyverse` framework.
 
@@ -140,7 +140,7 @@ FB %>%
 # and instead you'd like to take the average of every column for each month
 FB %>%
   select(-symbol) %>%
-  mutate(date = collapse_index(date, "monthly", side = "end")) %>%
+  collapse_by("monthly") %>%
   group_by(date) %>%
   summarise_all(mean)
 #> # A time tibble: 48 x 7
@@ -213,7 +213,7 @@ FANG %>%
   group_by(symbol) %>%
   
   # Collapse to yearly
-  mutate(date = collapse_index(date, "yearly")) %>%
+  collapse_by("year") %>%
   
   # Additionally group by date (yearly)
   group_by(date, add = TRUE) %>%
@@ -225,7 +225,7 @@ FANG %>%
     adj_range = adj_max - adj_min
   )
 #> # A time tibble: 16 x 5
-#> # Index: date
+#> # Index:  date
 #> # Groups: symbol [?]
 #>    symbol date       adj_min adj_max adj_range
 #>    <chr>  <date>       <dbl>   <dbl>     <dbl>

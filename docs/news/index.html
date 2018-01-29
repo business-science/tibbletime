@@ -118,14 +118,26 @@
     </div>
 
     <div class="contents">
-    <div id="tibbletime-0-1-0-9000" class="section level2">
+    <div id="tibbletime-0-1-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#tibbletime-0-1-0-9000" class="anchor"></a>tibbletime 0.1.0.9000</h2>
+<a href="#tibbletime-0-1-1" class="anchor"></a>tibbletime 0.1.1</h2>
 <ul>
 <li>
 <p>General</p>
 <ul>
-<li>Added support for <code>millisecond</code> and <code>microsecond</code> grouping. See <code><a href="../reference/create_series.html">?create_series</a></code> for examples and <code><a href="../reference/filter_time.html">?filter_time</a></code> Details for more information.</li>
+<li><p><code><a href="../reference/collapse_index.html">collapse_index()</a></code> and <code><a href="../reference/collapse_by.html">collapse_by()</a></code> support a <code>clean</code> argument. This will round your index up/down to the next period boundary, allowing for prettier dates that can be used in summaries.</p></li>
+<li><p>A new helper function, <code><a href="../reference/collapse_by.html">collapse_by()</a></code>, wraps the common idiom of <code>.tbl_time %&gt;% mutate(date = collapse_index(date, "yearly"))</code> and is the easiest way to use <code>tibbletime</code> with the rest of the tidyverse.</p></li>
+<li><p>You can now pass an index vector (easily created with <code><a href="../reference/create_series.html">create_series()</a></code>) to the <code>period</code> argument of functions like <code><a href="../reference/as_period.html">as_period()</a></code> or <code><a href="../reference/collapse_by.html">collapse_by()</a></code> to specify custom periods to collapse at.</p></li>
+<li><p>Added support for <code>millisecond</code> and <code>microsecond</code> grouping. See <code><a href="../reference/create_series.html">?create_series</a></code> for examples and <code><a href="../reference/filter_time.html">?filter_time</a></code> Details for more information.</p></li>
+<li><p><code><a href="../reference/partition_index.html">partition_index()</a></code> (and therefore higher level functions like <code><a href="../reference/collapse_by.html">collapse_by()</a></code>) now round using the entire <code>period</code> argument to figure out the default start date. Meaning if <code>2 years</code> is passed, it will round down the start of the series to the lower <code>2 year</code> boundary, rather than just <code>year</code>. This is a small change, but is technically breaking.</p></li>
+<li><p>More efficient parsing of periods. Only noticably faster with a large number of groups.</p></li>
+</ul>
+</li>
+<li>
+<p>Bug Fixes</p>
+<ul>
+<li>
+<code><a href="http://www.rdocumentation.org/packages/tidyr/topics/gather">tidyr::gather()</a></code> and <code><a href="http://www.rdocumentation.org/packages/tidyr/topics/spread">tidyr::spread()</a></code> now work appropriately.</li>
 </ul>
 </li>
 </ul>
@@ -219,7 +231,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#tibbletime-0-1-0-9000">0.1.0.9000</a></li>
+        <li><a href="#tibbletime-0-1-1">0.1.1</a></li>
         <li><a href="#tibbletime-0-1-0">0.1.0</a></li>
         <li><a href="#tibbletime-0-0-2">0.0.2</a></li>
         <li><a href="#tibbletime-0-0-1">0.0.1</a></li>

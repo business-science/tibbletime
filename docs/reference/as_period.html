@@ -144,12 +144,14 @@ a space between the two.</p>
 </ul>
 
 <p>This shorthand is available for year, quarter, month, day, hour, minute,
-second, millisecond and microsecond periodicities. Note that "m" = "month",
-"M" = "minute", "L" = "millisecond", "U" = "microsecond".</p></td>
+second, millisecond and microsecond periodicities.</p>
+<p>Additionally, you have the option of passing in a vector of dates to
+use as custom and more flexible boundaries.</p></td>
     </tr>
     <tr>
       <th>start_date</th>
-      <td><p>Optional argument used to specify the start date for the
+      <td><p>Optional argument used to
+specify the start date for the
 first group. The default is to start at the closest period boundary
 below the minimum date in the supplied index.</p></td>
     </tr>
@@ -173,7 +175,6 @@ addition to the transformed data.</p></td>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>This function respects <code><a href='http://dplyr.tidyverse.org/reference/group_by.html'>dplyr::group_by()</a></code> groups.</p>
-<p>Currently periods finer than second data are not supported.</p>
 <p>The <code>side</code> argument is useful when you want to return data at, say, the
 end of a quarter, or the end of a month.
     <code>include_endpoints</code> can be useful when calculating a change over time.
@@ -199,12 +200,13 @@ as a baseline for the first calculation.</p>
 #&gt; 3 FB     2015-01-02  78.6  78.9  77.7  78.4 18177500     78.4
 #&gt; 4 FB     2016-01-04 102   102    99.8 102   37912400    102  </div><div class='input'>
 <span class='co'># Aggregate FB to every 2 years</span>
-<span class='fu'>as_period</span>(<span class='no'>FB</span>, <span class='st'>"2 years"</span>)</div><div class='output co'>#&gt; # A time tibble: 2 x 8
+<span class='fu'>as_period</span>(<span class='no'>FB</span>, <span class='st'>"2 years"</span>)</div><div class='output co'>#&gt; # A time tibble: 3 x 8
 #&gt; # Index: date
 #&gt;   symbol date        open  high   low close   volume adjusted
 #&gt;   &lt;chr&gt;  &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
 #&gt; 1 FB     2013-01-02  27.4  28.2  27.4  28.0 69846400     28.0
-#&gt; 2 FB     2015-01-02  78.6  78.9  77.7  78.4 18177500     78.4</div><div class='input'>
+#&gt; 2 FB     2014-01-02  54.8  55.2  54.2  54.7 43195500     54.7
+#&gt; 3 FB     2016-01-04 102   102    99.8 102   37912400    102  </div><div class='input'>
 <span class='co'># Aggregate FB to yearly data, but use the last data point available</span>
 <span class='co'># in that period</span>
 <span class='fu'>as_period</span>(<span class='no'>FB</span>, <span class='st'>"yearly"</span>, <span class='kw'>side</span> <span class='kw'>=</span> <span class='st'>"end"</span>)</div><div class='output co'>#&gt; # A time tibble: 4 x 8
@@ -245,7 +247,7 @@ as a baseline for the first calculation.</p>
 #&gt; 10 FB     2013-03-04  27.8  28.1  27.4  27.7 32400700     27.7
 #&gt; # ... with 199 more rows</div><div class='input'>
 <span class='co'># Aggregate to every other week</span>
-<span class='fu'>as_period</span>(<span class='no'>FB</span>, <span class='st'>"2 weeks"</span>)</div><div class='output co'>#&gt; # A time tibble: 105 x 8
+<span class='fu'>as_period</span>(<span class='no'>FB</span>, <span class='st'>"2 weeks"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Multi-unit not supported for weeks. Ignoring.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Multi-unit not supported for weeks. Ignoring.</span></div><div class='output co'>#&gt; # A time tibble: 105 x 8
 #&gt; # Index: date
 #&gt;    symbol date        open  high   low close   volume adjusted
 #&gt;    &lt;chr&gt;  &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
@@ -274,7 +276,7 @@ as a baseline for the first calculation.</p>
 
 <span class='co'># Respects groups</span>
 <span class='fu'>as_period</span>(<span class='no'>FANG</span>, <span class='st'>"yearly"</span>)</div><div class='output co'>#&gt; # A time tibble: 16 x 8
-#&gt; # Index: date
+#&gt; # Index:  date
 #&gt; # Groups: symbol [4]
 #&gt;    symbol date         open   high    low  close   volume adjusted
 #&gt;    &lt;chr&gt;  &lt;date&gt;      &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
@@ -296,7 +298,7 @@ as a baseline for the first calculation.</p>
 #&gt; 16 GOOG   2016-01-04  743    744    731    742    3272800    742  </div><div class='input'>
 <span class='co'># Every 6 months, respecting groups</span>
 <span class='fu'>as_period</span>(<span class='no'>FANG</span>, <span class='st'>"6 months"</span>)</div><div class='output co'>#&gt; # A time tibble: 32 x 8
-#&gt; # Index: date
+#&gt; # Index:  date
 #&gt; # Groups: symbol [4]
 #&gt;    symbol date        open  high   low close   volume adjusted
 #&gt;    &lt;chr&gt;  &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
@@ -313,6 +315,9 @@ as a baseline for the first calculation.</p>
 #&gt; # ... with 22 more rows</div><div class='input'>
 <span class='co'># Using start_date ----------------------------------------------------------</span>
 
+
+<span class='co'>#### One method using start_date</span>
+
 <span class='co'># FB stock prices</span>
 <span class='fu'>data</span>(<span class='no'>FB</span>)
 <span class='no'>FB</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='tbl_time.html'>as_tbl_time</a></span>(<span class='no'>FB</span>, <span class='no'>date</span>)
@@ -320,24 +325,53 @@ as a baseline for the first calculation.</p>
 <span class='co'># The Facebook series starts at 2013-01-02 so the 'every 2 day' counter</span>
 <span class='co'># starts at that date as well. Groups become (2013-01-02, 2013-01-03),</span>
 <span class='co'># (2013-01-04, 2013-01-05) and so on.</span>
-<span class='fu'>as_period</span>(<span class='no'>FB</span>, <span class='st'>"2 day"</span>)</div><div class='output co'>#&gt; # A time tibble: 607 x 8
+<span class='fu'>as_period</span>(<span class='no'>FB</span>, <span class='st'>"2 day"</span>)</div><div class='output co'>#&gt; # A time tibble: 619 x 8
 #&gt; # Index: date
-#&gt;    symbol date        open  high   low close   volume adjusted
-#&gt;    &lt;chr&gt;  &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
-#&gt;  1 FB     2013-01-02  27.4  28.2  27.4  28.0 69846400     28.0
-#&gt;  2 FB     2013-01-04  28.0  28.9  27.8  28.8 72715400     28.8
-#&gt;  3 FB     2013-01-07  28.7  29.8  28.6  29.4 83781800     29.4
-#&gt;  4 FB     2013-01-08  29.5  29.6  28.9  29.1 45871300     29.1
-#&gt;  5 FB     2013-01-10  30.6  31.5  30.3  31.3 95316400     31.3
-#&gt;  6 FB     2013-01-14  32.1  32.2  30.6  31.0 98892800     31.0
-#&gt;  7 FB     2013-01-16  30.2  30.4  29.5  29.8 75332700     29.8
-#&gt;  8 FB     2013-01-18  30.3  30.4  29.3  29.7 49631500     29.7
-#&gt;  9 FB     2013-01-22  29.8  30.9  29.7  30.7 55243300     30.7
-#&gt; 10 FB     2013-01-24  31.3  31.5  30.8  31.1 43845100     31.1
-#&gt; # ... with 597 more rows</div><div class='input'>
+#&gt;    symbol date        open  high   low close    volume adjusted
+#&gt;    &lt;chr&gt;  &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+#&gt;  1 FB     2013-01-02  27.4  28.2  27.4  28.0  69846400     28.0
+#&gt;  2 FB     2013-01-03  27.9  28.5  27.6  27.8  63140600     27.8
+#&gt;  3 FB     2013-01-07  28.7  29.8  28.6  29.4  83781800     29.4
+#&gt;  4 FB     2013-01-09  29.7  30.6  29.5  30.6 104787700     30.6
+#&gt;  5 FB     2013-01-11  31.3  32.0  31.1  31.7  89598000     31.7
+#&gt;  6 FB     2013-01-14  32.1  32.2  30.6  31.0  98892800     31.0
+#&gt;  7 FB     2013-01-15  30.6  31.7  29.9  30.1 173242600     30.1
+#&gt;  8 FB     2013-01-17  30.1  30.4  30.0  30.1  40256700     30.1
+#&gt;  9 FB     2013-01-22  29.8  30.9  29.7  30.7  55243300     30.7
+#&gt; 10 FB     2013-01-23  31.1  31.5  30.8  30.8  48899800     30.8
+#&gt; # ... with 609 more rows</div><div class='input'>
 <span class='co'># Specifying the `start_date = "2013-01-01"` might be preferable.</span>
 <span class='co'># Groups become (2013-01-01, 2013-01-02), (2013-01-03, 2013-01-04) and so on.</span>
 <span class='fu'>as_period</span>(<span class='no'>FB</span>, <span class='st'>"2 day"</span>, <span class='kw'>start_date</span> <span class='kw'>=</span> <span class='st'>"2013-01-01"</span>)</div><div class='output co'>#&gt; # A time tibble: 619 x 8
+#&gt; # Index: date
+#&gt;    symbol date        open  high   low close    volume adjusted
+#&gt;    &lt;chr&gt;  &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+#&gt;  1 FB     2013-01-02  27.4  28.2  27.4  28.0  69846400     28.0
+#&gt;  2 FB     2013-01-03  27.9  28.5  27.6  27.8  63140600     27.8
+#&gt;  3 FB     2013-01-07  28.7  29.8  28.6  29.4  83781800     29.4
+#&gt;  4 FB     2013-01-09  29.7  30.6  29.5  30.6 104787700     30.6
+#&gt;  5 FB     2013-01-11  31.3  32.0  31.1  31.7  89598000     31.7
+#&gt;  6 FB     2013-01-14  32.1  32.2  30.6  31.0  98892800     31.0
+#&gt;  7 FB     2013-01-15  30.6  31.7  29.9  30.1 173242600     30.1
+#&gt;  8 FB     2013-01-17  30.1  30.4  30.0  30.1  40256700     30.1
+#&gt;  9 FB     2013-01-22  29.8  30.9  29.7  30.7  55243300     30.7
+#&gt; 10 FB     2013-01-23  31.1  31.5  30.8  30.8  48899800     30.8
+#&gt; # ... with 609 more rows</div><div class='input'>
+<span class='co'>#### Equivalent method using an index vector</span>
+
+<span class='co'># FB stock prices</span>
+<span class='fu'>data</span>(<span class='no'>FB</span>)
+<span class='no'>FB</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='tbl_time.html'>as_tbl_time</a></span>(<span class='no'>FB</span>, <span class='no'>date</span>)
+
+<span class='no'>custom_period</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='create_series.html'>create_series</a></span>(
+  <span class='kw'>time_formula</span> <span class='kw'>=</span> <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/nth.html'>first</a></span>(<span class='no'>FB</span>$<span class='no'>date</span>) - <span class='fl'>1</span> ~ <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/nth.html'>last</a></span>(<span class='no'>FB</span>$<span class='no'>date</span>),
+  <span class='kw'>period</span>       <span class='kw'>=</span> <span class='st'>"2 day"</span>,
+  <span class='kw'>class</span>        <span class='kw'>=</span> <span class='st'>"Date"</span>,
+  <span class='kw'>as_vector</span>    <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+
+<span class='no'>FB</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='tbl_time.html'>as_tbl_time</a></span>(<span class='no'>date</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'>as_period</span>(<span class='kw'>period</span> <span class='kw'>=</span> <span class='no'>custom_period</span>)</div><div class='output co'>#&gt; # A time tibble: 619 x 8
 #&gt; # Index: date
 #&gt;    symbol date        open  high   low close    volume adjusted
 #&gt;    &lt;chr&gt;  &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;

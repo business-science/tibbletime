@@ -159,8 +159,8 @@ FB
 <ol style="list-style-type: decimal">
 <li><p><code><a href="reference/filter_time.html">filter_time()</a></code> - Succinctly filter a tbl_time object by date.</p></li>
 <li><p><code><a href="reference/as_period.html">as_period()</a></code> - Convert a tbl_time object from daily to monthly, from minute data to hourly, and more. This allows the user to easily aggregate data to a less granular level.</p></li>
-<li><p><code><a href="reference/collapse_index.html">collapse_index()</a></code> - Take an index column, and collapse it so that all observations in an interval share the same date. The most common use of this is to then group on this column with <code><a href="http://dplyr.tidyverse.org/reference/group_by.html">dplyr::group_by()</a></code> and perform time-based calculations with <code><a href="http://dplyr.tidyverse.org/reference/summarise.html">summarise()</a></code>, <code><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> or any other <code>dplyr</code> function.</p></li>
-<li><p><code><a href="reference/partition_index.html">partition_index()</a></code> - A lower level version of <code><a href="reference/collapse_index.html">collapse_index()</a></code>. Rather than collapse the index directly, this returns a column of integers that correspond to the groups.</p></li>
+<li><p><code><a href="reference/collapse_by.html">collapse_by()</a></code> - Take an <code>tbl_time</code> object, and collapse the index so that all observations in an interval share the same date. The most common use of this is to then group on this column with <code><a href="http://dplyr.tidyverse.org/reference/group_by.html">dplyr::group_by()</a></code> and perform time-based calculations with <code><a href="http://dplyr.tidyverse.org/reference/summarise.html">summarise()</a></code>, <code><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> or any other <code>dplyr</code> function.</p></li>
+<li><p><code><a href="reference/collapse_index.html">collapse_index()</a></code> - A lower level version of <code><a href="reference/collapse_by.html">collapse_by()</a></code> that directly modifies the <code>index</code> column and not the entire <code>tbl_time</code> object. It allows the user more flexibility when collapsing, like the ability to assign the resulting collapsed index to a new column.</p></li>
 <li><p><code><a href="reference/rollify.html">rollify()</a></code> - Modify a function so that it calculates a value (or a set of values) at specific time intervals. This can be used for rolling averages and other rolling calculations inside the <code>tidyverse</code> framework.</p></li>
 <li><p><code><a href="reference/create_series.html">create_series()</a></code> - Use shorthand notation to quickly initialize a <code>tbl_time</code> object containing a regularly spaced index column of class <code>Date</code>, <code>POSIXct</code>, <code>yearmon</code>, <code>yearqtr</code> or <code>hms</code>.</p></li>
 </ol>
@@ -208,7 +208,7 @@ FB <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="co"># and instead you'd like to take the average of every column for each month</span>
 FB <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="op">-</span>symbol) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">date =</span> <span class="kw"><a href="reference/collapse_index.html">collapse_index</a></span>(date, <span class="st">"monthly"</span>, <span class="dt">side =</span> <span class="st">"end"</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw"><a href="reference/collapse_by.html">collapse_by</a></span>(<span class="st">"monthly"</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(date) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/summarise_all.html">summarise_all</a></span>(mean)
 <span class="co">#&gt; # A time tibble: 48 x 7</span>
@@ -278,7 +278,7 @@ FANG <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(symbol) <span class="op">%&gt;%</span>
 <span class="st">  </span>
 <span class="st">  </span><span class="co"># Collapse to yearly</span>
-<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">date =</span> <span class="kw"><a href="reference/collapse_index.html">collapse_index</a></span>(date, <span class="st">"yearly"</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw"><a href="reference/collapse_by.html">collapse_by</a></span>(<span class="st">"year"</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span>
 <span class="st">  </span><span class="co"># Additionally group by date (yearly)</span>
 <span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(date, <span class="dt">add =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span>
@@ -290,7 +290,7 @@ FANG <span class="op">%&gt;%</span><span class="st"> </span>
     <span class="dt">adj_range =</span> adj_max <span class="op">-</span><span class="st"> </span>adj_min
   )
 <span class="co">#&gt; # A time tibble: 16 x 5</span>
-<span class="co">#&gt; # Index: date</span>
+<span class="co">#&gt; # Index:  date</span>
 <span class="co">#&gt; # Groups: symbol [?]</span>
 <span class="co">#&gt;    symbol date       adj_min adj_max adj_range</span>
 <span class="co">#&gt;    &lt;chr&gt;  &lt;date&gt;       &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;</span>

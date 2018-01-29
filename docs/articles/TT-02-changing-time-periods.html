@@ -90,7 +90,7 @@
       <h1>Changing periodicity</h1>
                         <h4 class="author">Davis Vaughan</h4>
             
-            <h4 class="date">2018-01-06</h4>
+            <h4 class="date">2018-01-29</h4>
           </div>
 
     
@@ -173,14 +173,14 @@ FANG &lt;-<span class="st"> </span><span class="kw"><a href="../reference/tbl_ti
 ##    &lt;chr&gt;  &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
 ##  1 FB     2013-01-02  27.4  28.2  27.4  28.0 69846400     28.0
 ##  2 FB     2013-01-28  31.9  32.5  31.8  32.5 59682500     32.5
-##  3 FB     2013-02-21  28.3  28.5  27.2  27.3 49642300     27.3
+##  3 FB     2013-02-20  28.9  29.0  28.3  28.5 42098200     28.5
 ##  4 FB     2013-03-18  26.4  26.8  25.8  26.5 26653700     26.5
-##  5 FB     2013-04-12  28.0  28.0  27.2  27.4 28697400     27.4
-##  6 FB     2013-05-07  27.5  27.8  26.8  26.9 41259100     26.9
-##  7 FB     2013-06-03  24.3  24.3  23.7  23.8 35733800     23.8
-##  8 FB     2013-06-26  24.5  24.6  24.0  24.2 29890300     24.2
+##  5 FB     2013-04-11  27.5  28.1  27.2  28.0 33368500     28.0
+##  6 FB     2013-05-06  28.3  28.5  27.5  27.6 43939400     27.6
+##  7 FB     2013-05-31  24.6  25.0  24.3  24.4 35925000     24.4
+##  8 FB     2013-06-25  24.1  24.4  24.0  24.2 24713200     24.2
 ##  9 FB     2013-07-22  26.0  26.1  25.7  26.0 27526300     26.0
-## 10 FB     2013-08-15  36.4  37.1  36.0  36.6 56521100     36.6
+## 10 FB     2013-08-14  36.8  37.5  36.6  36.7 48423900     36.7
 ## # ... with 49 more rows</code></pre>
 </div>
 <div id="details-and-the-start_date-argument" class="section level2">
@@ -195,21 +195,21 @@ FANG &lt;-<span class="st"> </span><span class="kw"><a href="../reference/tbl_ti
 <p>Occasionally this is not what you want. Consider what would happen if you changed the period to “every 2 days”. The first date is <code>2013-01-02</code>, but because “daily” is chosen, this isn’t floored to <code>2013-01-01</code> so the groups are (2013-01-02, 2013-01-03), (2013-01-04, 2013-01-05) and so on. If you wanted the first group to be (2013-01-01, 2013-01-02), you can use the <code>start_date</code> argument.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Without start_date</span>
 <span class="kw"><a href="../reference/as_period.html">as_period</a></span>(FB, <span class="st">'2 d'</span>)</code></pre></div>
-<pre><code>## # A time tibble: 607 x 8
+<pre><code>## # A time tibble: 619 x 8
 ## # Index: date
-##    symbol date        open  high   low close   volume adjusted
-##    &lt;chr&gt;  &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
-##  1 FB     2013-01-02  27.4  28.2  27.4  28.0 69846400     28.0
-##  2 FB     2013-01-04  28.0  28.9  27.8  28.8 72715400     28.8
-##  3 FB     2013-01-07  28.7  29.8  28.6  29.4 83781800     29.4
-##  4 FB     2013-01-08  29.5  29.6  28.9  29.1 45871300     29.1
-##  5 FB     2013-01-10  30.6  31.5  30.3  31.3 95316400     31.3
-##  6 FB     2013-01-14  32.1  32.2  30.6  31.0 98892800     31.0
-##  7 FB     2013-01-16  30.2  30.4  29.5  29.8 75332700     29.8
-##  8 FB     2013-01-18  30.3  30.4  29.3  29.7 49631500     29.7
-##  9 FB     2013-01-22  29.8  30.9  29.7  30.7 55243300     30.7
-## 10 FB     2013-01-24  31.3  31.5  30.8  31.1 43845100     31.1
-## # ... with 597 more rows</code></pre>
+##    symbol date        open  high   low close    volume adjusted
+##    &lt;chr&gt;  &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+##  1 FB     2013-01-02  27.4  28.2  27.4  28.0  69846400     28.0
+##  2 FB     2013-01-03  27.9  28.5  27.6  27.8  63140600     27.8
+##  3 FB     2013-01-07  28.7  29.8  28.6  29.4  83781800     29.4
+##  4 FB     2013-01-09  29.7  30.6  29.5  30.6 104787700     30.6
+##  5 FB     2013-01-11  31.3  32.0  31.1  31.7  89598000     31.7
+##  6 FB     2013-01-14  32.1  32.2  30.6  31.0  98892800     31.0
+##  7 FB     2013-01-15  30.6  31.7  29.9  30.1 173242600     30.1
+##  8 FB     2013-01-17  30.1  30.4  30.0  30.1  40256700     30.1
+##  9 FB     2013-01-22  29.8  30.9  29.7  30.7  55243300     30.7
+## 10 FB     2013-01-23  31.1  31.5  30.8  30.8  48899800     30.8
+## # ... with 609 more rows</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># With start_date</span>
 <span class="kw"><a href="../reference/as_period.html">as_period</a></span>(FB, <span class="st">'2 d'</span>, <span class="dt">start_date =</span> <span class="st">"2013-01-01"</span>)</code></pre></div>
 <pre><code>## # A time tibble: 619 x 8
@@ -248,19 +248,23 @@ FANG &lt;-<span class="st"> </span><span class="kw"><a href="../reference/tbl_ti
 <p>One of the neat things about working in the <code>tidyverse</code> is that these functions can also work with grouped datasets. Here we transform the daily series of the 4 FANG stocks to a periodicity of every 2 years.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">FANG <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw"><a href="../reference/as_period.html">as_period</a></span>(<span class="st">'2 y'</span>)</code></pre></div>
-<pre><code>## # A time tibble: 8 x 8
-## # Index: date
+<pre><code>## # A time tibble: 12 x 8
+## # Index:  date
 ## # Groups: symbol [4]
-##   symbol date        open  high   low close   volume adjusted
-##   &lt;chr&gt;  &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
-## 1 FB     2013-01-02  27.4  28.2  27.4  28.0 69846400     28.0
-## 2 FB     2015-01-02  78.6  78.9  77.7  78.4 18177500     78.4
-## 3 AMZN   2013-01-02 256   258   253   257    3271000    257  
-## 4 AMZN   2015-01-02 313   315   307   309    2783200    309  
-## 5 NFLX   2013-01-02  95.2  95.8  90.7  92.0 19431300     13.1
-## 6 NFLX   2015-01-02 344   352   341   349   13475000     49.8
-## 7 GOOG   2013-01-02 719   727   717   723    5101500    361  
-## 8 GOOG   2015-01-02 529   531   524   525    1447500    525</code></pre>
+##    symbol date         open   high    low  close   volume adjusted
+##    &lt;chr&gt;  &lt;date&gt;      &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+##  1 FB     2013-01-02   27.4   28.2   27.4   28.0 69846400     28.0
+##  2 FB     2014-01-02   54.8   55.2   54.2   54.7 43195500     54.7
+##  3 FB     2016-01-04  102    102     99.8  102   37912400    102  
+##  4 AMZN   2013-01-02  256    258    253    257    3271000    257  
+##  5 AMZN   2014-01-02  399    399    394    398    2137800    398  
+##  6 AMZN   2016-01-04  656    658    628    637    9314500    637  
+##  7 NFLX   2013-01-02   95.2   95.8   90.7   92.0 19431300     13.1
+##  8 NFLX   2014-01-02  367    368    361    363   12325600     51.8
+##  9 NFLX   2016-01-04  109    110    105    110   20794800    110  
+## 10 GOOG   2013-01-02  719    727    717    723    5101500    361  
+## 11 GOOG   2014-01-02 1115   1118   1108   1113    3656400    556  
+## 12 GOOG   2016-01-04  743    744    731    742    3272800    742</code></pre>
 </div>
 </div>
 </div>

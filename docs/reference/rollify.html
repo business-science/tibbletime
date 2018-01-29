@@ -197,19 +197,19 @@ function. See the examples for more details.</p>
 <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='no'>FB</span>,
        <span class='kw'>normal_mean</span>  <span class='kw'>=</span> <span class='fu'>mean</span>(<span class='no'>adjusted</span>),
        <span class='kw'>rolling_mean</span> <span class='kw'>=</span> <span class='fu'>mean_roll_5</span>(<span class='no'>adjusted</span>))</div><div class='output co'>#&gt; # A tibble: 1,008 x 10
-#&gt;    symbol date        open  high   low close    volume adjusted normal… rollin…
-#&gt;    &lt;chr&gt;  &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
-#&gt;  1 FB     2013-01-02  27.4  28.2  27.4  28.0  69846400     28.0    77.5    NA  
-#&gt;  2 FB     2013-01-03  27.9  28.5  27.6  27.8  63140600     27.8    77.5    NA  
-#&gt;  3 FB     2013-01-04  28.0  28.9  27.8  28.8  72715400     28.8    77.5    NA  
-#&gt;  4 FB     2013-01-07  28.7  29.8  28.6  29.4  83781800     29.4    77.5    NA  
-#&gt;  5 FB     2013-01-08  29.5  29.6  28.9  29.1  45871300     29.1    77.5    28.6
-#&gt;  6 FB     2013-01-09  29.7  30.6  29.5  30.6 104787700     30.6    77.5    29.1
-#&gt;  7 FB     2013-01-10  30.6  31.5  30.3  31.3  95316400     31.3    77.5    29.8
-#&gt;  8 FB     2013-01-11  31.3  32.0  31.1  31.7  89598000     31.7    77.5    30.4
-#&gt;  9 FB     2013-01-14  32.1  32.2  30.6  31.0  98892800     31.0    77.5    30.7
-#&gt; 10 FB     2013-01-15  30.6  31.7  29.9  30.1 173242600     30.1    77.5    30.9
-#&gt; # ... with 998 more rows</div><div class='input'>
+#&gt;    symbol date        open  high   low close    volume adjusted normal_mean
+#&gt;    &lt;chr&gt;  &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;       &lt;dbl&gt;
+#&gt;  1 FB     2013-01-02  27.4  28.2  27.4  28.0  69846400     28.0        77.5
+#&gt;  2 FB     2013-01-03  27.9  28.5  27.6  27.8  63140600     27.8        77.5
+#&gt;  3 FB     2013-01-04  28.0  28.9  27.8  28.8  72715400     28.8        77.5
+#&gt;  4 FB     2013-01-07  28.7  29.8  28.6  29.4  83781800     29.4        77.5
+#&gt;  5 FB     2013-01-08  29.5  29.6  28.9  29.1  45871300     29.1        77.5
+#&gt;  6 FB     2013-01-09  29.7  30.6  29.5  30.6 104787700     30.6        77.5
+#&gt;  7 FB     2013-01-10  30.6  31.5  30.3  31.3  95316400     31.3        77.5
+#&gt;  8 FB     2013-01-11  31.3  32.0  31.1  31.7  89598000     31.7        77.5
+#&gt;  9 FB     2013-01-14  32.1  32.2  30.6  31.0  98892800     31.0        77.5
+#&gt; 10 FB     2013-01-15  30.6  31.7  29.9  30.1 173242600     30.1        77.5
+#&gt; # ... with 998 more rows, and 1 more variable: rolling_mean &lt;dbl&gt;</div><div class='input'>
 <span class='co'># There's nothing stopping you from combining multiple rolling functions with</span>
 <span class='co'># different window sizes in the same mutate call</span>
 <span class='no'>mean_roll_10</span> <span class='kw'>&lt;-</span> <span class='fu'>rollify</span>(<span class='no'>mean</span>, <span class='kw'>window</span> <span class='kw'>=</span> <span class='fl'>10</span>)
@@ -217,19 +217,19 @@ function. See the examples for more details.</p>
 <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='no'>FB</span>,
        <span class='kw'>rolling_mean_5</span>  <span class='kw'>=</span> <span class='fu'>mean_roll_5</span>(<span class='no'>adjusted</span>),
        <span class='kw'>rolling_mean_10</span> <span class='kw'>=</span> <span class='fu'>mean_roll_10</span>(<span class='no'>adjusted</span>))</div><div class='output co'>#&gt; # A tibble: 1,008 x 10
-#&gt;    symbol date        open  high   low close    volume adjusted rollin… rollin…
-#&gt;    &lt;chr&gt;  &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
-#&gt;  1 FB     2013-01-02  27.4  28.2  27.4  28.0  69846400     28.0    NA      NA  
-#&gt;  2 FB     2013-01-03  27.9  28.5  27.6  27.8  63140600     27.8    NA      NA  
-#&gt;  3 FB     2013-01-04  28.0  28.9  27.8  28.8  72715400     28.8    NA      NA  
-#&gt;  4 FB     2013-01-07  28.7  29.8  28.6  29.4  83781800     29.4    NA      NA  
-#&gt;  5 FB     2013-01-08  29.5  29.6  28.9  29.1  45871300     29.1    28.6    NA  
-#&gt;  6 FB     2013-01-09  29.7  30.6  29.5  30.6 104787700     30.6    29.1    NA  
-#&gt;  7 FB     2013-01-10  30.6  31.5  30.3  31.3  95316400     31.3    29.8    NA  
-#&gt;  8 FB     2013-01-11  31.3  32.0  31.1  31.7  89598000     31.7    30.4    NA  
-#&gt;  9 FB     2013-01-14  32.1  32.2  30.6  31.0  98892800     31.0    30.7    NA  
-#&gt; 10 FB     2013-01-15  30.6  31.7  29.9  30.1 173242600     30.1    30.9    29.8
-#&gt; # ... with 998 more rows</div><div class='input'>
+#&gt;    symbol date        open  high   low close    volume adjusted rolling_mean_5
+#&gt;    &lt;chr&gt;  &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;          &lt;dbl&gt;
+#&gt;  1 FB     2013-01-02  27.4  28.2  27.4  28.0  69846400     28.0           NA  
+#&gt;  2 FB     2013-01-03  27.9  28.5  27.6  27.8  63140600     27.8           NA  
+#&gt;  3 FB     2013-01-04  28.0  28.9  27.8  28.8  72715400     28.8           NA  
+#&gt;  4 FB     2013-01-07  28.7  29.8  28.6  29.4  83781800     29.4           NA  
+#&gt;  5 FB     2013-01-08  29.5  29.6  28.9  29.1  45871300     29.1           28.6
+#&gt;  6 FB     2013-01-09  29.7  30.6  29.5  30.6 104787700     30.6           29.1
+#&gt;  7 FB     2013-01-10  30.6  31.5  30.3  31.3  95316400     31.3           29.8
+#&gt;  8 FB     2013-01-11  31.3  32.0  31.1  31.7  89598000     31.7           30.4
+#&gt;  9 FB     2013-01-14  32.1  32.2  30.6  31.0  98892800     31.0           30.7
+#&gt; 10 FB     2013-01-15  30.6  31.7  29.9  30.1 173242600     30.1           30.9
+#&gt; # ... with 998 more rows, and 1 more variable: rolling_mean_10 &lt;dbl&gt;</div><div class='input'>
 <span class='co'># Functions with multiple args and optional args ----------------------------</span>
 
 <span class='co'># With 2 args, use the purrr syntax of ~ and .x, .y</span>
@@ -307,6 +307,28 @@ function. See the examples for more details.</p>
 <span class='no'>FB_summarised</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='no'>FB</span>, <span class='kw'>summary_roll</span> <span class='kw'>=</span> <span class='fu'>summary_roll</span>(<span class='no'>adjusted</span>))
 <span class='no'>FB_summarised</span>$<span class='no'>summary_roll</span><span class='kw'>[[</span><span class='fl'>5</span>]]</div><div class='output co'>#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
 #&gt;   27.77   28.51   28.91   28.75   29.15   29.42       1 </div><div class='input'>
+<span class='co'># dplyr::bind_rows() is often helpful in these cases to get</span>
+<span class='co'># meaningful output</span>
+
+<span class='no'>summary_roll</span> <span class='kw'>&lt;-</span> <span class='fu'>rollify</span>(~<span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/bind.html'>bind_rows</a></span>(<span class='fu'>summary</span>(<span class='no'>.</span>)), <span class='kw'>window</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>unlist</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='no'>FB_summarised</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='no'>FB</span>, <span class='kw'>summary_roll</span> <span class='kw'>=</span> <span class='fu'>summary_roll</span>(<span class='no'>adjusted</span>))
+<span class='no'>FB_summarised</span> <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(!<span class='fu'>is.na</span>(<span class='no'>summary_roll</span>)) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>tidyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/tidyr/topics/unnest'>unnest</a></span>(<span class='no'>summary_roll</span>)</div><div class='output co'>#&gt; # A tibble: 1,004 x 15
+#&gt;    symbol date        open  high   low close    volume adjusted  Min. `1st Qu.`
+#&gt;    &lt;chr&gt;  &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;
+#&gt;  1 FB     2013-01-08  29.5  29.6  28.9  29.1  45871300     29.1  27.8      28.5
+#&gt;  2 FB     2013-01-09  29.7  30.6  29.5  30.6 104787700     30.6  27.8      28.8
+#&gt;  3 FB     2013-01-10  30.6  31.5  30.3  31.3  95316400     31.3  28.8      29.1
+#&gt;  4 FB     2013-01-11  31.3  32.0  31.1  31.7  89598000     31.7  29.1      29.4
+#&gt;  5 FB     2013-01-14  32.1  32.2  30.6  31.0  98892800     31.0  29.1      30.6
+#&gt;  6 FB     2013-01-15  30.6  31.7  29.9  30.1 173242600     30.1  30.1      30.6
+#&gt;  7 FB     2013-01-16  30.2  30.4  29.5  29.8  75332700     29.8  29.8      30.1
+#&gt;  8 FB     2013-01-17  30.1  30.4  30.0  30.1  40256700     30.1  29.8      30.1
+#&gt;  9 FB     2013-01-18  30.3  30.4  29.3  29.7  49631500     29.7  29.7      29.8
+#&gt; 10 FB     2013-01-22  29.8  30.9  29.7  30.7  55243300     30.7  29.7      29.8
+#&gt; # ... with 994 more rows, and 5 more variables: Median &lt;dbl&gt;, Mean &lt;dbl&gt;, `3rd
+#&gt; #   Qu.` &lt;dbl&gt;, Max. &lt;dbl&gt;, `NA's` &lt;dbl&gt;</div><div class='input'>
 <span class='co'># Rolling regressions -------------------------------------------------------</span>
 
 <span class='co'># Extending an example from R 4 Data Science on "Many Models".</span>
@@ -320,9 +342,9 @@ function. See the examples for more details.</p>
 <span class='no'>gapminder</span> <span class='kw'>%&gt;%</span>
   <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>country</span>) <span class='kw'>%&gt;%</span>
   <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>rolling_lm</span> <span class='kw'>=</span> <span class='fu'>lm_roll</span>(<span class='no'>lifeExp</span>, <span class='no'>year</span>))</div><div class='output co'>#&gt; # A tibble: 1,704 x 7
-#&gt; # Groups: country [142]
+#&gt; # Groups:   country [142]
 #&gt;    country     continent  year lifeExp      pop gdpPercap rolling_lm
-#&gt;    &lt;fctr&gt;      &lt;fctr&gt;    &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt; &lt;list&gt;    
+#&gt;    &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt; &lt;list&gt;    
 #&gt;  1 Afghanistan Asia       1952    28.8  8425333       779 &lt;lgl [1]&gt; 
 #&gt;  2 Afghanistan Asia       1957    30.3  9240934       821 &lt;lgl [1]&gt; 
 #&gt;  3 Afghanistan Asia       1962    32.0 10267083       853 &lt;lgl [1]&gt; 
@@ -347,7 +369,7 @@ function. See the examples for more details.</p>
 <span class='no'>FANG</span> <span class='kw'>%&gt;%</span>
   <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>mean_roll</span> <span class='kw'>=</span> <span class='fu'>mean_roll_3</span>(<span class='no'>adjusted</span>)) <span class='kw'>%&gt;%</span>
   <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>1</span>:<span class='fl'>5</span>)</div><div class='output co'>#&gt; # A tibble: 20 x 9
-#&gt; # Groups: symbol [4]
+#&gt; # Groups:   symbol [4]
 #&gt;    symbol date        open  high   low close   volume adjusted mean_roll
 #&gt;    &lt;chr&gt;  &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
 #&gt;  1 AMZN   2013-01-02 256   258   253   257    3271000    257        NA  

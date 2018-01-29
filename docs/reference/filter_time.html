@@ -213,7 +213,7 @@ but only expands to include whole seconds.</p>
 
 <span class='co'># 2013-01-01 to 2014-12-31</span>
 <span class='fu'>filter_time</span>(<span class='no'>FANG</span>, <span class='st'>'2013'</span> ~ <span class='st'>'2014'</span>)</div><div class='output co'>#&gt; # A time tibble: 2,016 x 8
-#&gt; # Index: date
+#&gt; # Index:  date
 #&gt; # Groups: symbol [4]
 #&gt;    symbol date        open  high   low close    volume adjusted
 #&gt;    &lt;chr&gt;  &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
@@ -230,7 +230,7 @@ but only expands to include whole seconds.</p>
 #&gt; # ... with 2,006 more rows</div><div class='input'>
 <span class='co'># 2013-05-25 to 2014-06-04</span>
 <span class='fu'>filter_time</span>(<span class='no'>FANG</span>, <span class='st'>'2013-05-25'</span> ~ <span class='st'>'2014-06-04'</span>)</div><div class='output co'>#&gt; # A time tibble: 1,032 x 8
-#&gt; # Index: date
+#&gt; # Index:  date
 #&gt; # Groups: symbol [4]
 #&gt;    symbol date        open  high   low close   volume adjusted
 #&gt;    &lt;chr&gt;  &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
@@ -247,7 +247,7 @@ but only expands to include whole seconds.</p>
 #&gt; # ... with 1,022 more rows</div><div class='input'>
 <span class='co'># Using the `[` subset operator</span>
 <span class='no'>FANG</span>[<span class='st'>'2014'</span>~<span class='st'>'2015'</span>]</div><div class='output co'>#&gt; # A time tibble: 2,016 x 8
-#&gt; # Index: date
+#&gt; # Index:  date
 #&gt; # Groups: symbol [4]
 #&gt;    symbol date        open  high   low close   volume adjusted
 #&gt;    &lt;chr&gt;  &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
@@ -264,7 +264,7 @@ but only expands to include whole seconds.</p>
 #&gt; # ... with 2,006 more rows</div><div class='input'>
 <span class='co'># Using `[` and one sided formula for only dates in 2014</span>
 <span class='no'>FANG</span>[~<span class='st'>'2014'</span>]</div><div class='output co'>#&gt; # A time tibble: 1,008 x 8
-#&gt; # Index: date
+#&gt; # Index:  date
 #&gt; # Groups: symbol [4]
 #&gt;    symbol date        open  high   low close   volume adjusted
 #&gt;    &lt;chr&gt;  &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
@@ -299,7 +299,7 @@ but only expands to include whole seconds.</p>
 <span class='no'>lhs_date</span> <span class='kw'>&lt;-</span> <span class='st'>"2013"</span>
 <span class='no'>rhs_date</span> <span class='kw'>&lt;-</span> <span class='fu'>as.Date</span>(<span class='st'>"2014-01-01"</span>)
 <span class='fu'>filter_time</span>(<span class='no'>FANG</span>, <span class='no'>lhs_date</span> ~ <span class='no'>rhs_date</span>)</div><div class='output co'>#&gt; # A time tibble: 1,008 x 8
-#&gt; # Index: date
+#&gt; # Index:  date
 #&gt; # Groups: symbol [4]
 #&gt;    symbol date        open  high   low close    volume adjusted
 #&gt;    &lt;chr&gt;  &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
@@ -316,7 +316,7 @@ but only expands to include whole seconds.</p>
 #&gt; # ... with 998 more rows</div><div class='input'>
 <span class='co'># Use the keywords 'start' and 'end' to conveniently access ends</span>
 <span class='fu'>filter_time</span>(<span class='no'>FANG</span>, <span class='st'>'start'</span> ~ <span class='st'>'2014'</span>)</div><div class='output co'>#&gt; # A time tibble: 2,016 x 8
-#&gt; # Index: date
+#&gt; # Index:  date
 #&gt; # Groups: symbol [4]
 #&gt;    symbol date        open  high   low close    volume adjusted
 #&gt;    &lt;chr&gt;  &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
