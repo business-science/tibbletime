@@ -1,10 +1,7 @@
 ## Release Summary
-This is the third release of tibbletime. This is a major release for the package
-and includes a number of breaking changes that have been well documented in the
-NEWS file. The changes promote a more flexible use with the dplyr package, and
-at this early stage in the package lifecycle no attempt at backwards compat was
-made. Users have been warned of this already, and initial feedback of the 
-github development version has been positive.
+This is the fourth release of tibbletime. This is a minor release that
+introduces a new function, collapse_by(), but otherwise is maintanence and 
+fixing minor bugs.
 
 ## Test environments
 * local Windows install, R 3.4.1
@@ -14,7 +11,7 @@ github development version has been positive.
 
 ## R CMD check results
 
-Otherwise there were no ERRORs, WARNINGs or NOTEs.
+There were no ERRORs, WARNINGs or NOTEs.
 
     R CMD check results
     0 errors | 0 warnings | 0 note 
