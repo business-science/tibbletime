@@ -72,10 +72,10 @@ get_default_time_zone <- function() {
   "UTC"
 }
 
-get_index_col_time_zone <- function(.tbl_time) {
-  attr(.tbl_time, "tzone") %||% get_default_time_zone()
+get_index_col_time_zone <- function(index) {
+  attr(index, "tzone") %||% get_default_time_zone()
 }
 
-get_index_col_class <- function(.tbl_time) {
-  class(.tbl_time)[[1]]
+get_index_col_class <- function(index) {
+  class(index)[[1]]
 }
