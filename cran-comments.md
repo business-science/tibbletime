@@ -1,3 +1,14 @@
+## Resubmission
+This is a resubmission. 
+
+In this version I have removed 'tidyselect' from Imports
+as it was not necessary and caused a NOTE. 
+
+There is an error with the 'tibble' package v1.4.1 on r-oldrel on OSX. I 
+require >=1.4.1 in 'tibbletime', and all other  builds pass so I would request 
+that this is ignored for now. I have opened an issue on the 'tibble' GitHub 
+page letting them know about the ERROR.
+
 ## Release Summary
 This is the fourth release of tibbletime. This is a minor release that
 introduces a new function, collapse_by(), but otherwise is maintanence and 
