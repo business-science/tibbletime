@@ -50,3 +50,16 @@ test_that("Collapsing works on hms", {
   expect_equal(collapse_index(ex$date, "minute", side = "start"),
                hms::hms(rep(43200, 60)))
 })
+
+test_that("day becomes DSTday for POSIXct to prevent DST boundary problems", {
+  seq_fun <- lookup_seq_fun(x = make_dummy_dispatch_obj("POSIXct"))
+
+  ret <- seq_fun(as.POSIXct("2016-03-12", tz = "America/New_York"),
+                 as.POSIXct("2016-03-14", tz = "America/New_York"),
+                 "1 day")
+
+  test <- as.POSIXct(c("2016-03-12", "2016-03-13", "2016-03-14"),
+                     tz = "America/New_York")
+
+  expect_equal(ret, test)
+})

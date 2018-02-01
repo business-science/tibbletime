@@ -19,7 +19,16 @@ lookup_seq_fun <- function(x) {
 }
 
 lookup_seq_fun.POSIXct <- function(x) {
-  seq.POSIXt
+
+  # For POSIXct object, DST can cause problems with
+  # rollover between DST boundaries. See #31. Using DSTday as the "by"
+  # uses the actual "clock time" which is what is commonly desired.
+  function(from, to, by) {
+    if(grepl(pattern = "day", by)) {
+      by <- gsub("day", "DSTday", by)
+    }
+    seq.POSIXt(from, to, by)
+  }
 }
 
 lookup_seq_fun.Date <- function(x) {
@@ -55,8 +64,8 @@ push_datetime.default <- function(x, push) {
 
   posixct_numeric_to_datetime(
     pushed,
-    class = get_index_col_class(x_num),
-    tz = get_index_col_time_zone(x_num)
+    class = get_index_col_class(x),
+    tz = get_index_col_time_zone(x)
   )
 }
 

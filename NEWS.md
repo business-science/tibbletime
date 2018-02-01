@@ -1,3 +1,14 @@
+## tibbletime 0.1.1.9000
+
+* Bug fixes
+
+    * The tbl_time time zone for `POSIXct` indices is now set as the first
+    non NA value of: "tzone" attribute -> `Sys.timezone()` -> "UTC". Previously
+    there was no `Sys.timezone()` step as there were problems with local time zones
+    such as `America/New_York` interacting with collapsing by day. Those problems have 
+    been fixed by using `DSTday` with all `POSIXct` indices even if `day` is
+    specified.
+
 ## tibbletime 0.1.1
 
 * General

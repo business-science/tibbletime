@@ -73,7 +73,11 @@ get_default_time_zone <- function() {
 }
 
 get_index_col_time_zone <- function(index) {
-  attr(index, "tzone") %||% get_default_time_zone()
+  if(inherits(index, "POSIXct")) {
+    (attr(index, "tzone") %||% Sys.timezone()) %||% get_default_time_zone()
+  } else {
+    get_default_time_zone()
+  }
 }
 
 get_index_col_class <- function(index) {
