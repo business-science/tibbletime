@@ -11,6 +11,9 @@
 #' a list-column of the rolling results.
 #' @param na_value A default value for the `NA` values at the beginning of the
 #' roll.
+#' @param align One of `"right"`, `"center"`, or `"left"` or (`"r"`, `"c"` or
+#'   `"l"`), specifying whether the index of the result should be right-,
+#'   center-, or left-aligned.
 #'
 #' @details
 #'
@@ -136,21 +139,21 @@
 #'
 #' @export
 #'
-rollify <- function(.f, window = 1, unlist = TRUE, na_value = NULL) {
+rollify <- function(.f, window = 1, unlist = TRUE, na_value = NULL, align = "right") {
 
   # Mappify the function
   .f <- purrr::as_mapper(.f)
 
   # Return function that calls roller
   function(...) {
-    roller(..., .f = .f, window = window, unlist = unlist, na_value = na_value)
+    roller(..., .f = .f, window = window, unlist = unlist, na_value = na_value, align = align)
   }
 }
 
 
 # Utils ------------------------------------------------------------------------
 
-roller <- function(..., .f, window, unlist = TRUE, na_value = NULL) {
+roller <- function(..., .f, window, unlist = TRUE, na_value = NULL, align = "right") {
 
   # na_value as NA if not specified
   if(is.null(na_value)) {
@@ -170,10 +173,18 @@ roller <- function(..., .f, window, unlist = TRUE, na_value = NULL) {
   # Initialize `filled` vector
   filled <- rlang::rep_along(1:roll_length, list(na_value))
 
+  # Window adjustment for align location
+  window_adjust <- switch(
+    substr(tolower(align), 1, 1),
+    'l' = -window + 1,
+    'c' = -floor((window)/2),
+    0
+  )
+
   # Roll and fill
   for(i in window:roll_length) {
     .f_dots   <- lapply(.dots, function(x) {x[(i-window+1):i]})
-    filled[[i]] <- do.call(.f, .f_dots)
+    filled[[i + window_adjust]] <- do.call(.f, .f_dots)
   }
 
   # Don't unlist if requested (when >1 value returned)
