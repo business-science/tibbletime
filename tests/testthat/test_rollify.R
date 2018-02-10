@@ -29,6 +29,18 @@ test_that("rollify() with function call works", {
                dplyr::mutate(test_tbl_time, test = c(NA, 1.5, 2.5)))
 })
 
+test_that("rollify() with align='left' works", {
+  test_roll_left <- rollify(mean, window = 2, align = "left")
+  expect_equal(dplyr::mutate(test_tbl_time, test = test_roll_left(value)),
+               dplyr::mutate(test_tbl_time, test = c(1.5, 2.5, NA)))
+})
+
+test_that("rollify() with align='center' works", {
+  test_roll_center <- rollify(mean, window = 3, align = "center")
+  expect_equal(dplyr::mutate(test_tbl_time, test = test_roll_center(value)),
+               dplyr::mutate(test_tbl_time, test = c(NA, 2, NA)))
+})
+
 test_that("rollify() with ~ specification works", {
   test_roll <- rollify(~mean(.x), window = 2)
   expect_equal(dplyr::mutate(test_tbl_time, test = test_roll(value)),
@@ -61,3 +73,24 @@ test_that("rollify() with unlist = FALSE works", {
   expect_equal(length(test_rolled$test[[2]]), 2L)
 })
 
+test_that("rollify() with unlist = FALSE works, align = 'left'", {
+  test_roll <- rollify(~c(mean(.x), sd(.x)), window = 2, unlist = FALSE, align = "left")
+  test_rolled <- dplyr::mutate(test_tbl_time, test = test_roll(value))
+  expect_is(test_rolled$test[[1]], "numeric")
+  expect_is(test_rolled$test[[2]], "numeric")
+  expect_is(test_rolled$test[[3]], "logical")
+  expect_equal(length(test_rolled$test[[1]]), 2L)
+})
+
+test_that("rollify() with unlist = FALSE works, align = 'center'", {
+  test_roll <- rollify(~c(mean(.x), sd(.x)), window = 3, unlist = FALSE, align = "center")
+  test_rolled <- dplyr::mutate(test_tbl_time, test = test_roll(value))
+  expect_is(test_rolled$test[[1]], "logical")
+  expect_is(test_rolled$test[[2]], "numeric")
+  expect_is(test_rolled$test[[3]], "logical")
+  expect_equal(length(test_rolled$test[[2]]), 2L)
+})
+
+test_that("rollify() throws error with incorrect align option", {
+  expect_error(rollify(mean, window = 2, align = "middle"))
+})
