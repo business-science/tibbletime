@@ -11,9 +11,8 @@
 #' a list-column of the rolling results.
 #' @param na_value A default value for the `NA` values at the beginning of the
 #' roll.
-#' @param align One of `"right"`, `"center"`, or `"left"` or (`"r"`, `"c"` or
-#'   `"l"`), specifying whether the index of the result should be right-,
-#'   center-, or left-aligned.
+#' @param align One of `"right"`, `"center"`, or `"left"`, specifying whether
+#' the index of the result should be right-, center-, or left-aligned.
 #'
 #' @details
 #'
@@ -139,10 +138,13 @@
 #'
 #' @export
 #'
-rollify <- function(.f, window = 1, unlist = TRUE, na_value = NULL, align = "right") {
+rollify <- function(.f, window = 1, unlist = TRUE, na_value = NULL,
+                    align = c("right", "center", "left")) {
 
   # Mappify the function
   .f <- purrr::as_mapper(.f)
+
+  align <- match.arg(align)
 
   # Return function that calls roller
   function(...) {
@@ -153,7 +155,8 @@ rollify <- function(.f, window = 1, unlist = TRUE, na_value = NULL, align = "rig
 
 # Utils ------------------------------------------------------------------------
 
-roller <- function(..., .f, window, unlist = TRUE, na_value = NULL, align = "right") {
+roller <- function(..., .f, window, unlist = TRUE, na_value = NULL,
+                   align = c("right", "center", "left")) {
 
   # na_value as NA if not specified
   if(is.null(na_value)) {
@@ -175,16 +178,16 @@ roller <- function(..., .f, window, unlist = TRUE, na_value = NULL, align = "rig
 
   # Window adjustment for align location
   window_adjust <- switch(
-    substr(tolower(align), 1, 1),
-    'l' = -window + 1,
-    'c' = -floor((window)/2),
-    0
+    match.arg(align),
+    "left"   = window - 1,
+    "center" = floor((window)/2),
+    "right"  = 0
   )
 
   # Roll and fill
   for(i in window:roll_length) {
-    .f_dots   <- lapply(.dots, function(x) {x[(i-window+1):i]})
-    filled[[i + window_adjust]] <- do.call(.f, .f_dots)
+    .f_dots <- lapply(.dots, function(x) {x[(i-window+1):i]})
+    filled[[i - window_adjust]] <- do.call(.f, .f_dots)
   }
 
   # Don't unlist if requested (when >1 value returned)

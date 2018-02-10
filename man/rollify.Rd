@@ -4,7 +4,8 @@
 \alias{rollify}
 \title{Create a rolling version of any function}
 \usage{
-rollify(.f, window = 1, unlist = TRUE, na_value = NULL, align = "right")
+rollify(.f, window = 1, unlist = TRUE, na_value = NULL,
+  align = c("right", "center", "left"))
 }
 \arguments{
 \item{.f}{A function, formula, or atomic vector.
@@ -38,9 +39,8 @@ a list-column of the rolling results.}
 \item{na_value}{A default value for the \code{NA} values at the beginning of the
 roll.}
 
-\item{align}{One of \code{"right"}, \code{"center"}, or \code{"left"} or (\code{"r"}, \code{"c"} or
-\code{"l"}), specifying whether the index of the result should be right-,
-center-, or left-aligned.}
+\item{align}{One of \code{"right"}, \code{"center"}, or \code{"left"}, specifying whether
+the index of the result should be right-, center-, or left-aligned.}
 }
 \description{
 \code{rollify} returns a rolling version of the input function, with a
