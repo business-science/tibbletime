@@ -2,6 +2,19 @@
 # Currently for internal use, may later be exported when we have more
 # packages
 
+
+#' Create a new tbl_time object
+#'
+#' Often used internally by developers extending tibbletime
+#'
+#' @param x A tibble or data.frame
+#' @param index_quo The quo that references the index column
+#' @param index_time_zone The index time zone
+#' @param ... Other attributes passed through to new_tibble()
+#' @param subclass A subclass to have as a child
+#'
+#' @export
+#'
 new_tbl_time <- function(x, index_quo, index_time_zone, ..., subclass = NULL) {
 
   stopifnot(is.data.frame(x))
@@ -18,6 +31,7 @@ new_tbl_time <- function(x, index_quo, index_time_zone, ..., subclass = NULL) {
     x,
     index_quo       = index_quo,
     index_time_zone = index_time_zone,
+    ...,
     subclass        = subclass
   )
 

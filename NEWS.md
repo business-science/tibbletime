@@ -2,6 +2,9 @@
 
 * Bug fixes
 
+    * Export a constructor for `tbl_time` object through `new_tbl_time()`. Only
+    to be used by package developers extending `tibbletime`.
+
     * The tbl_time time zone for `POSIXct` indices is now set as the first
     non NA value of: "tzone" attribute -> `Sys.timezone()` -> "UTC". Previously
     there was no `Sys.timezone()` step as there were problems with local time zones
