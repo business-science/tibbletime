@@ -2,7 +2,7 @@ Package: tibbletime
 Type: Package
 Title: Time Aware Tibbles
 Version: 0.1.1.9000
-Date: 2018-01-31
+Date: 2018-03-02
 Authors@R: c(
     person("Davis", "Vaughan", email = "dvaughan@business-science.io", role = c("aut", "cre")),
     person("Matt", "Dancho", email = "mdancho@business-science.io", role = c("aut"))
@@ -17,13 +17,6 @@ URL: https://github.com/business-science/tibbletime
 BugReports: https://github.com/business-science/tibbletime/issues
 License: MIT + file LICENSE
 Encoding: UTF-8
-Suggests: 
-    broom,
-    covr,
-    gapminder,
-    knitr,
-    testthat,
-    tidyr
 RoxygenNote: 6.0.1
 Roxygen: list(markdown = TRUE)
 Depends:
@@ -39,5 +32,12 @@ Imports:
     tibble (>= 1.4.1),
     Rcpp (>= 0.12.7),
     zoo (>= 1.8-0)
+Suggests: 
+    broom,
+    covr,
+    gapminder,
+    knitr,
+    testthat,
+    tidyr
 VignetteBuilder: knitr
 LinkingTo: Rcpp
