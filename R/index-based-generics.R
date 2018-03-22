@@ -143,7 +143,7 @@ split_to_list.Date <- function(x) {
 
 #' @export
 split_to_list.POSIXct <- function(x) {
-  x_lt <- as.POSIXlt(x, tz = attr(x, "tzone"))
+  x_lt <- as.POSIXlt(x, tz = get_index_col_time_zone(x))
   list(x_lt$year + 1900, x_lt$mon + 1, x_lt$mday,
        x_lt$hour,        x_lt$min, x_lt$sec)
 }
