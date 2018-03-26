@@ -2,6 +2,14 @@
 
 * Bug fixes
 
+    * `get_index_quo()` now checks that the index column still exists in the 
+    `tbl_time` column names. This ensures that if the user manually removes or
+    renames the column, an appropriate error message is thrown the next time
+    they try to use a function that requires that index column.
+
+    * Support `dplyr::rename()`. If the user renames the index column, the 
+    resulting object is then a `tibble` and no longer a `tbl_time`.
+
     * Export a constructor for `tbl_time` object through `new_tbl_time()`. Only
     to be used by package developers extending `tibbletime`.
 
