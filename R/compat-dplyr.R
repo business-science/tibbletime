@@ -148,12 +148,38 @@ ungroup.tbl_time <- function(x, ...) {
 #'
 rename.tbl_time <- function(.data, ...) {
   # rename() is supported in the case where the user does `date2 = date`.
-  # The result should be a tibble, no longer a tbl_time because the index does
-  # not exist anymore. See #56.
+  # The result should be a new tbl_time with a new index corresponding
+  # to the renaming. See #56.
 
   #reconstruct(NextMethod(), .data)
   copy_.data <- new_tbl_time(.data, get_index_quo(.data), get_index_time_zone(.data))
-  reconstruct(NextMethod(), copy_.data)
+  out <- reconstruct(NextMethod(), copy_.data)
+
+  # Catch renamed index (if applicable) and create a new tbl_time using it
+  dots <- rlang::enquos(...)
+  dots_named <- purrr::map(dots, rlang::quo_name)
+
+  # Check if any RHS of the dots match the name of the original index
+  new_index_lgl <- purrr::map_lgl(dots_named, ~.x == get_index_char(.data))
+
+  if(any(new_index_lgl)) {
+
+    # Take only the dots that match the original index
+    new_index <- new_index_lgl[new_index_lgl]
+
+    # If renamed more than once, take the last (same as dplyr::rename)
+    if(length(new_index) > 1) {
+      new_index <- new_index[length(new_index)]
+    }
+
+    index_expr <- as.name(names(new_index))
+    index_quo <- rlang::new_quosure(index_expr)
+
+    # New tbl_time, with new index but same time zone
+    out <- new_tbl_time(out, index_quo, get_index_time_zone(.data))
+  }
+
+  out
 }
 
 ### Backwards compat support for deprecated standard eval dplyr

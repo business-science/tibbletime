@@ -13,7 +13,16 @@ test_tbl_time <- as_tbl_time(test_time, date)
 
 # Tests
 
-test_that("rename() catches a renamed index and returns tibble", {
-  now_a_tbl <- dplyr::rename(test_tbl_time, date2 = date)
-  expect_equal(class(now_a_tbl), c("tbl_df", "tbl", "data.frame"))
+test_that("rename() catches a renamed index and returns new tbl_time", {
+  a_new_tbl_time <- dplyr::rename(test_tbl_time, date2 = date)
+  index_char <- get_index_char(a_new_tbl_time)
+  expect_equal(class(a_new_tbl_time), c("tbl_time", "tbl_df", "tbl", "data.frame"))
+  expect_equal(index_char, "date2")
+})
+
+test_that("rename() catches a multiple renamed index and uses the last one", {
+  a_new_tbl_time <- dplyr::rename(test_tbl_time, date2 = date, date3 = date)
+  index_char <- get_index_char(a_new_tbl_time)
+  expect_equal(class(a_new_tbl_time), c("tbl_time", "tbl_df", "tbl", "data.frame"))
+  expect_equal(index_char, "date3")
 })
