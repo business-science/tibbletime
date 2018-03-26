@@ -8,7 +8,7 @@
     they try to use a function that requires that index column.
 
     * Support `dplyr::rename()`. If the user renames the index column, the 
-    resulting object is then a `tibble` and no longer a `tbl_time`.
+    resulting object is a new `tbl_time` that uses the renamed index.
 
     * Export a constructor for `tbl_time` object through `new_tbl_time()`. Only
     to be used by package developers extending `tibbletime`.
