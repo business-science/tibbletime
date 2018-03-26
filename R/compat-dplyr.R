@@ -143,6 +143,18 @@ ungroup.tbl_time <- function(x, ...) {
   reconstruct(NextMethod(), copy_.data)
 }
 
+#' @export
+#' @importFrom dplyr rename
+#'
+rename.tbl_time <- function(.data, ...) {
+  # rename() is supported in the case where the user does `date2 = date`.
+  # The result should be a tibble, no longer a tbl_time because the index does
+  # not exist anymore. See #56.
+
+  #reconstruct(NextMethod(), .data)
+  copy_.data <- new_tbl_time(.data, get_index_quo(.data), get_index_time_zone(.data))
+  reconstruct(NextMethod(), copy_.data)
+}
 
 ### Backwards compat support for deprecated standard eval dplyr
 
