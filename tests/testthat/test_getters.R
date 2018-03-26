@@ -28,3 +28,11 @@ test_that("Creation getters are working", {
   expect_equal(get_index_col_time_zone(test_tbl_time), "UTC")
   expect_equal(get_index_col_class(test_tbl_time$date), "Date")
 })
+
+test_that("Manual removal/renaming of index is caught", {
+  test_tbl_time$date2 <- test_tbl_time$date
+  test_tbl_time$date <- NULL
+  msg <- "Index: `date` is not present in the names of the tbl_time object."
+  expect_error(get_index_quo(test_tbl_time), msg)
+  expect_error(collapse_by(test_tbl_time), msg)
+})

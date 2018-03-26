@@ -9,7 +9,7 @@
 #' @name getters
 #' @export
 get_index_quo <- function(.tbl_time) {
-  if(!inherits(.tbl_time, "tbl_time")) glue_stop("Object is not of class `tbl_time`.")
+  assert_inherits_tbl_time(.tbl_time)
 
   index_quo <- attr(.tbl_time, "index_quo")
 
@@ -18,6 +18,8 @@ get_index_quo <- function(.tbl_time) {
               "but class is still `tbl_time`. This should not happen unless ",
               "something has gone horribly wrong.")
   }
+
+  assert_index_quo_in_colnames(!!index_quo, .tbl_time)
 
   index_quo
 }
@@ -37,7 +39,7 @@ get_index_col <- function(.tbl_time) {
 #' @rdname getters
 #' @export
 get_index_time_zone <- function(.tbl_time) {
-  if(!inherits(.tbl_time, "tbl_time")) glue_stop("Object is not of class `tbl_time`.")
+  assert_inherits_tbl_time(.tbl_time)
 
   index_time_zone <- attr(.tbl_time, "index_time_zone")
 
@@ -82,4 +84,22 @@ get_index_col_time_zone <- function(index) {
 
 get_index_col_class <- function(index) {
   class(index)[[1]]
+}
+
+# Assertions -------------------------------------------------------------------
+
+assert_index_quo_in_colnames <- function(index_quo, .tbl_time) {
+  index_quo <- rlang::enquo(index_quo)
+  index_chr <- rlang::quo_name(index_quo)
+  column_names <- colnames(.tbl_time)
+  if(!(index_chr %in% column_names)) {
+    glue_stop("Index: `",
+              index_chr,
+              "` is not present in the names of the tbl_time object.",
+              " Did you remove or rename it?")
+  }
+}
+
+assert_inherits_tbl_time <- function(x) {
+  if(!inherits(x, "tbl_time")) glue_stop("Object is not of class `tbl_time`.")
 }
