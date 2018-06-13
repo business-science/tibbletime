@@ -167,6 +167,10 @@ roller <- function(..., .f, window, unlist = TRUE, na_value = NULL) {
   # as the length of the dataset
   roll_length <- length(.dots[[1]])
 
+  if(roll_length < window) {
+    return(rep(na_value, roll_length))
+  }
+
   # Initialize `filled` vector
   filled <- rlang::rep_along(1:roll_length, list(na_value))
 
@@ -192,12 +196,6 @@ check_dots <- function(x, window) {
   assertthat::assert_that(length(x) > 0,
                           msg = "At least 1 data argument must be supplied to be
                           passed on to the rolling function")
-
-
-  # The window must be smaller than the length of the data
-  assertthat::assert_that(window <= length(x[[1]]),
-                          msg = "Cannot roll apply with a window larger than the
-                          length of the data")
 
 
   # Length of every element of .dots should be the same

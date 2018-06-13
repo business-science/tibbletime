@@ -61,3 +61,8 @@ test_that("rollify() with unlist = FALSE works", {
   expect_equal(length(test_rolled$test[[2]]), 2L)
 })
 
+test_that("rollify() handles windows larger than length of data", {
+  test_roll <- rollify(mean, window = 4)
+  expect_equal(dplyr::mutate(test_tbl_time, test = test_roll(value)),
+               dplyr::mutate(test_tbl_time, test = c(NA, NA, NA)))
+})
