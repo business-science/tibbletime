@@ -17,6 +17,14 @@ devtools::load_all()
 [![Travis-CI Build Status](https://travis-ci.org/business-science/tibbletime.svg?branch=master)](https://travis-ci.org/business-science/tibbletime.svg?branch=master)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/tibbletime)](https://cran.r-project.org/package=tibbletime)
 [![codecov](https://codecov.io/gh/business-science/tibbletime/branch/master/graph/badge.svg)](https://codecov.io/gh/business-science/tibbletime)
+[status](https://img.shields.io/badge/status-on%20hold-brightgreen.svg)
+
+## Package status
+
+This package is currently on hold as we determine the best way forward for the
+entire R community regarding time series in the `tidyverse`. We thank you for
+your patience as we refine our ideas, and hope to bring you something very
+useful in the near future.
 
 ## A time aware tibble
 
