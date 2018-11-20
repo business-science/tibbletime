@@ -32,6 +32,7 @@ new_tbl_time <- function(x, index_quo, index_time_zone, ..., subclass = NULL) {
     index_quo       = index_quo,
     index_time_zone = index_time_zone,
     ...,
+    nrow            = nrow(x),
     subclass        = subclass
   )
 
