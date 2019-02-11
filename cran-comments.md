@@ -1,23 +1,12 @@
-## Resubmission
-This is a resubmission. 
-
-In this version I have removed 'tidyselect' from Imports
-as it was not necessary and caused a NOTE. 
-
-There is an error with the 'tibble' package v1.4.1 on r-oldrel on OSX. I 
-require >=1.4.1 in 'tibbletime', and all other  builds pass so I would request 
-that this is ignored for now. I have opened an issue on the 'tibble' GitHub 
-page letting them know about the ERROR.
-
 ## Release Summary
-This is the fourth release of tibbletime. This is a minor release that
-introduces a new function, collapse_by(), but otherwise is maintanence and 
-fixing minor bugs.
+
+This is a minor release of 'tibbletime'. It fixes a few small bugs regarding
+the new version of 'tibble', and changes a test in preparation for 
+'dplyr' 0.8.0.
 
 ## Test environments
-* local Windows install, R 3.4.1
-* local Mac install, R 3.4.3
-* ubuntu 12.04 (on travis-ci), R 3.4.3
+* local Mac install, R 3.5.1
+* ubuntu 14.04.5 (on travis-ci) (3.4.4, devel, release)
 * win-builder (devel and release)
 
 ## R CMD check results
@@ -29,5 +18,15 @@ There were no ERRORs, WARNINGs or NOTEs.
 
     R CMD check succeeded
 
-## Downstream dependencies
-None
+## Revdep checks
+
+The 3 reverse dependencies passed with no errors, and the warnings / notes
+were unrelated to this update.
+
+|package                            |version |error |warning |note |
+|:----------------------------------|:-------|:-----|:-------|:----|
+|[anomalize](problems.md#anomalize) |0.1.1   |      |        |1    |
+|[tidyquant](problems.md#tidyquant) |0.5.5   |      |1       |     |
+|tsbox                              |0.0.3   |      |        |     |
+
+
