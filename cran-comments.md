@@ -1,3 +1,8 @@
+## Resubmission
+
+I accidentally shipped the entire revdep/ folder alongside the package. I have
+added it to '.Rbuildignore' now.
+
 ## Release Summary
 
 This is a minor release of 'tibbletime'. It fixes a few small bugs regarding
