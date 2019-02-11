@@ -1,7 +1,7 @@
 Package: tibbletime
 Type: Package
 Title: Time Aware Tibbles
-Version: 0.1.2
+Version: 0.1.2.9000
 Authors@R: c(
     person("Davis", "Vaughan", email = "davis@rstudio.com", role = c("aut", "cre")),
     person("Matt", "Dancho", email = "mdancho@business-science.io", role = c("aut"))
