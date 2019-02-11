@@ -3,10 +3,10 @@ Type: Package
 Title: Time Aware Tibbles
 Version: 0.1.1.9000
 Authors@R: c(
-    person("Davis", "Vaughan", email = "dvaughan@business-science.io", role = c("aut", "cre")),
+    person("Davis", "Vaughan", email = "davis@rstudio.com", role = c("aut", "cre")),
     person("Matt", "Dancho", email = "mdancho@business-science.io", role = c("aut"))
   )
-Maintainer: Davis Vaughan <dvaughan@business-science.io>
+Maintainer: Davis Vaughan <davis@rstudio.com>
 Description: Built on top of the 'tibble' package, 'tibbletime' is an extension
   that allows for the creation of time aware tibbles. Some immediate
   advantages of this include: the ability to perform time-based subsetting
