@@ -36,7 +36,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tibbletime</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
       </span>
     </div>
 
@@ -118,18 +118,18 @@
 <a class="sourceLine" id="cb1-8" data-line-number="8">series</a></code></pre></div>
 <pre><code>## # A time tibble: 1,826 x 2
 ## # Index: date
-##    date           var
-##    &lt;date&gt;       &lt;dbl&gt;
-##  1 2013-01-01 -1.57  
-##  2 2013-01-02  0.787 
-##  3 2013-01-03  0.781 
-##  4 2013-01-04 -0.159 
-##  5 2013-01-05 -0.275 
-##  6 2013-01-06  0.443 
-##  7 2013-01-07 -1.44  
-##  8 2013-01-08 -0.0356
-##  9 2013-01-09 -0.615 
-## 10 2013-01-10 -0.544 
+##    date            var
+##    &lt;date&gt;        &lt;dbl&gt;
+##  1 2013-01-01 -0.441  
+##  2 2013-01-02 -0.421  
+##  3 2013-01-03  1.70   
+##  4 2013-01-04 -0.00390
+##  5 2013-01-05 -0.779  
+##  6 2013-01-06  0.267  
+##  7 2013-01-07  0.272  
+##  8 2013-01-08 -0.809  
+##  9 2013-01-09 -0.588  
+## 10 2013-01-10 -0.775  
 ## # … with 1,816 more rows</code></pre>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">series <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb3-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">year =</span> <span class="kw"><a href="http://lubridate.tidyverse.org/reference/year.html">year</a></span>(date), <span class="dt">month =</span> <span class="kw"><a href="http://lubridate.tidyverse.org/reference/month.html">month</a></span>(date)) <span class="op">%&gt;%</span></a>
@@ -138,16 +138,16 @@
 <pre><code>## # A tibble: 60 x 3
 ##     year month mean_var
 ##    &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;
-##  1  2013     1  0.153  
-##  2  2013     2  0.145  
-##  3  2013     3  0.222  
-##  4  2013     4  0.158  
-##  5  2013     5  0.218  
-##  6  2013     6  0.237  
-##  7  2013     7 -0.0840 
-##  8  2013     8  0.133  
-##  9  2013     9  0.00306
-## 10  2013    10 -0.00677
+##  1  2013     1 -0.0533 
+##  2  2013     2 -0.456  
+##  3  2013     3  0.281  
+##  4  2013     4  0.103  
+##  5  2013     5  0.00477
+##  6  2013     6 -0.0955 
+##  7  2013     7 -0.0363 
+##  8  2013     8 -0.215  
+##  9  2013     9 -0.258  
+## 10  2013    10  0.196  
 ## # … with 50 more rows</code></pre>
 <p>This gets more difficult the more granular you go. Getting 5-minute summaries from minute or second data requires grouping on year, month, day, hour and minute columns.</p>
 </div>
@@ -163,16 +163,16 @@
 ## # Index: date
 ##    date       mean_var
 ##    &lt;date&gt;        &lt;dbl&gt;
-##  1 2013-01-31  0.153  
-##  2 2013-02-28  0.145  
-##  3 2013-03-31  0.222  
-##  4 2013-04-30  0.158  
-##  5 2013-05-31  0.218  
-##  6 2013-06-30  0.237  
-##  7 2013-07-31 -0.0840 
-##  8 2013-08-31  0.133  
-##  9 2013-09-30  0.00306
-## 10 2013-10-31 -0.00677
+##  1 2013-01-31 -0.0533 
+##  2 2013-02-28 -0.456  
+##  3 2013-03-31  0.281  
+##  4 2013-04-30  0.103  
+##  5 2013-05-31  0.00477
+##  6 2013-06-30 -0.0955 
+##  7 2013-07-31 -0.0363 
+##  8 2013-08-31 -0.215  
+##  9 2013-09-30 -0.258  
+## 10 2013-10-31  0.196  
 ## # … with 50 more rows</code></pre>
 <p>While <code><a href="../reference/collapse_by.html">collapse_by()</a></code> directly manipulates the index column, the lower level <code><a href="../reference/collapse_index.html">collapse_index()</a></code> function can be used inside of a call to <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> to modify the index column and then save it as a new column. This can be useful if you don’t want to lose the original index column.</p>
 <p>This works for more granular series too. Below we aggregate 5 second level data up to hourly. This is working with a faily sizable ~19 million row data set.</p>
@@ -185,18 +185,18 @@
 <a class="sourceLine" id="cb7-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span>(<span class="dt">mean_var =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/mean">mean</a></span>(var))</a></code></pre></div>
 <pre><code>## # A time tibble: 26,280 x 2
 ## # Index: date
-##    date                mean_var
-##    &lt;dttm&gt;                 &lt;dbl&gt;
-##  1 2013-01-01 00:59:55  0.0454 
-##  2 2013-01-01 01:59:55  0.00587
-##  3 2013-01-01 02:59:55  0.0286 
-##  4 2013-01-01 03:59:55 -0.0426 
-##  5 2013-01-01 04:59:55 -0.0233 
-##  6 2013-01-01 05:59:55  0.00240
-##  7 2013-01-01 06:59:55  0.0141 
-##  8 2013-01-01 07:59:55 -0.0319 
-##  9 2013-01-01 08:59:55 -0.00227
-## 10 2013-01-01 09:59:55  0.0435 
+##    date                 mean_var
+##    &lt;dttm&gt;                  &lt;dbl&gt;
+##  1 2013-01-01 00:59:55 -0.0337  
+##  2 2013-01-01 01:59:55  0.0423  
+##  3 2013-01-01 02:59:55 -0.0411  
+##  4 2013-01-01 03:59:55  0.104   
+##  5 2013-01-01 04:59:55  0.0288  
+##  6 2013-01-01 05:59:55 -0.00726 
+##  7 2013-01-01 06:59:55  0.00199 
+##  8 2013-01-01 07:59:55  0.000698
+##  9 2013-01-01 08:59:55 -0.0550  
+## 10 2013-01-01 09:59:55 -0.0175  
 ## # … with 26,270 more rows</code></pre>
 </div>
 <div id="multiple-series" class="section level2">

@@ -36,7 +36,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tibbletime</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
       </span>
     </div>
 
@@ -136,8 +136,8 @@
 ## {
 ##     roller(..., .f = .f, window = window, unlist = unlist, na_value = na_value)
 ## }
-## &lt;bytecode: 0x7fda6de9a2b0&gt;
-## &lt;environment: 0x7fda6de99c90&gt;</code></pre>
+## &lt;bytecode: 0x7fa40cdcf458&gt;
+## &lt;environment: 0x7fa40cdcee38&gt;</code></pre>
 <p>We now have a rolling version of the function, <code><a href="https://www.rdocumentation.org/packages/base/topics/mean">mean()</a></code>. You use it in a similar way to how you might use <code><a href="https://www.rdocumentation.org/packages/base/topics/mean">mean()</a></code>.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(FB, <span class="dt">mean_5 =</span> <span class="kw">rolling_mean</span>(adjusted))</a></code></pre></div>
 <pre><code>## # A tibble: 1,008 x 6

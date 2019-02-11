@@ -69,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tibbletime</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
       </span>
     </div>
 
@@ -130,9 +130,9 @@
       <small>Source: <a href='https://github.com/business-science/tibbletime/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="tibbletime-0-1-1-9000" class="section level2">
+    <div id="tibbletime-0-1-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#tibbletime-0-1-1-9000" class="anchor"></a>tibbletime 0.1.1.9000</h2>
+<a href="#tibbletime-0-1-2" class="anchor"></a>tibbletime 0.1.2</h2>
 <ul>
 <li>
 <p>Features</p>
@@ -145,6 +145,7 @@
 <ul>
 <li><p>For <code>tibble</code> 2.0.1, an internal bug fix was made to pass along an <code>nrow</code> argument.</p></li>
 <li><p>For <code>dplyr</code> 0.8.0, an internal fix was made in one of the tests.</p></li>
+<li><p>A new line was added to <code><a href="https://www.rdocumentation.org/packages/base/topics/Arithmetic">inst/include/is_ordered.h</a></code> to appease CRAN.</p></li>
 <li><p>The tbl_time time zone for <code>POSIXct</code> indices is now set as the first non NA value of: “tzone” attribute -&gt; <code><a href="https://www.rdocumentation.org/packages/base/topics/timezones">Sys.timezone()</a></code> -&gt; “UTC”. Previously there was no <code><a href="https://www.rdocumentation.org/packages/base/topics/timezones">Sys.timezone()</a></code> step as there were problems with local time zones such as <code><a href="https://www.rdocumentation.org/packages/base/topics/Arithmetic">America/New_York</a></code> interacting with collapsing by day. Those problems have been fixed by using <code>DSTday</code> with all <code>POSIXct</code> indices even if <code>day</code> is specified.</p></li>
 </ul>
 </li>
@@ -262,7 +263,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#tibbletime-0-1-1-9000">0.1.1.9000</a></li>
+        <li><a href="#tibbletime-0-1-2">0.1.2</a></li>
         <li><a href="#tibbletime-0-1-1">0.1.1</a></li>
         <li><a href="#tibbletime-0-1-0">0.1.0</a></li>
         <li><a href="#tibbletime-0-0-2">0.0.2</a></li>
