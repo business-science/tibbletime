@@ -22,7 +22,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Davis Vaughan \email{dvaughan@business-science.io}
+\strong{Maintainer}: Davis Vaughan \email{davis@rstudio.com}
 
 Authors:
 \itemize{

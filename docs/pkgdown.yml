@@ -1,0 +1,9 @@
+pandoc: 2.3.1
+pkgdown: 1.1.0.9000
+pkgdown_sha: 33c059119873eb94656ec119f5ba62e86b3e7977
+articles:
+  TT-01-time-based-filtering: TT-01-time-based-filtering.html
+  TT-02-changing-time-periods: TT-02-changing-time-periods.html
+  TT-03-rollify-for-rolling-analysis: TT-03-rollify-for-rolling-analysis.html
+  TT-04-use-with-dplyr: TT-04-use-with-dplyr.html
+
