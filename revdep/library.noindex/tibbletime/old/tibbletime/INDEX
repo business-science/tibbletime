@@ -1,0 +1,24 @@
+FANG                    Stock prices for Facebook, Amazon, Netflix and
+                        Google from 2013-2016
+FB                      Stock prices for Facebook from 2013-2016
+as_period               Change 'tbl_time' periodicity
+as_tbl_time             Create 'tbl_time' objects
+ceiling_index           A simple wrapper of 'lubridate::ceiling_date()'
+collapse_by             Collapse a tbl_time object by its index
+collapse_index          Collapse an index vector so that all
+                        observations in an interval share the same date
+create_series           Create a 'tbl_time' object with a sequence of
+                        regularly spaced dates
+filter_time             Succinctly filter a 'tbl_time' object by its
+                        index
+floor_index             A simple wrapper of 'lubridate::floor_date()'
+getters                 Getters
+parse_period            Parse a character period specification
+partition_index         Partition an index vector into an integer
+                        vector representing groups
+posixct_numeric_to_datetime
+                        Converting a posixct numeric time back to a
+                        classed datetime
+reconstruct             Reconstruct an S3 class from a template
+rollify                 Create a rolling version of any function
+tibbletime              tibbletime: time-aware tibbles

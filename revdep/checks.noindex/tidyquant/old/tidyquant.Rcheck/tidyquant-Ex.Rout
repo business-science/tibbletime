@@ -1,0 +1,892 @@
+
+R version 3.5.1 (2018-07-02) -- "Feather Spray"
+Copyright (C) 2018 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin15.6.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "tidyquant"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> library('tidyquant')
+Loading required package: lubridate
+
+Attaching package: ‘lubridate’
+
+The following object is masked from ‘package:base’:
+
+    date
+
+Loading required package: PerformanceAnalytics
+Loading required package: xts
+Loading required package: zoo
+
+Attaching package: ‘zoo’
+
+The following objects are masked from ‘package:base’:
+
+    as.Date, as.Date.numeric
+
+
+Attaching package: ‘PerformanceAnalytics’
+
+The following object is masked from ‘package:graphics’:
+
+    legend
+
+Loading required package: quantmod
+Loading required package: TTR
+Version 0.4-0 included new data defaults. See ?getSymbols.
+Loading required package: tidyverse
+── [1mAttaching packages[22m ───────────────────────────────────────────────────────────────── tidyverse 1.2.1 ──
+[32m✔[39m [34mggplot2[39m 3.1.0     [32m✔[39m [34mpurrr  [39m 0.3.0
+[32m✔[39m [34mtibble [39m 2.0.1     [32m✔[39m [34mdplyr  [39m 0.7.8
+[32m✔[39m [34mtidyr  [39m 0.8.2     [32m✔[39m [34mstringr[39m 1.4.0
+[32m✔[39m [34mreadr  [39m 1.3.1     [32m✔[39m [34mforcats[39m 0.3.0
+Warning: package ‘tibble’ was built under R version 3.5.2
+Warning: package ‘purrr’ was built under R version 3.5.2
+Warning: package ‘stringr’ was built under R version 3.5.2
+── [1mConflicts[22m ──────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+[31m✖[39m [34mlubridate[39m::[32mas.difftime()[39m masks [34mbase[39m::as.difftime()
+[31m✖[39m [34mlubridate[39m::[32mdate()[39m        masks [34mbase[39m::date()
+[31m✖[39m [34mdplyr[39m::[32mfilter()[39m          masks [34mstats[39m::filter()
+[31m✖[39m [34mdplyr[39m::[32mfirst()[39m           masks [34mxts[39m::first()
+[31m✖[39m [34mlubridate[39m::[32mintersect()[39m   masks [34mbase[39m::intersect()
+[31m✖[39m [34mdplyr[39m::[32mlag()[39m             masks [34mstats[39m::lag()
+[31m✖[39m [34mdplyr[39m::[32mlast()[39m            masks [34mxts[39m::last()
+[31m✖[39m [34mlubridate[39m::[32msetdiff()[39m     masks [34mbase[39m::setdiff()
+[31m✖[39m [34mlubridate[39m::[32munion()[39m       masks [34mbase[39m::union()
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("av_api_key")
+> ### * av_api_key
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: av_api_key
+> ### Title: Set Alpha Vantage API Key
+> ### Aliases: av_api_key
+> 
+> ### ** Examples
+> 
+> 
+> ## Not run: 
+> ##D av_api_key(api_key = "foobar")
+> ## End(Not run)
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("coord_x_date")
+> ### * coord_x_date
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: coord_x_date
+> ### Title: Zoom in on plot regions using date ranges or date-time ranges
+> ### Aliases: coord_x_date coord_x_datetime
+> 
+> ### ** Examples
+> 
+> # Load libraries
+> library(tidyquant)
+> 
+> # coord_x_date
+> AAPL <- tq_get("AAPL")
+> AAPL %>%
++     ggplot(aes(x = date, y = adjusted)) +
++     geom_line() +                         # Plot stock price
++     geom_ma(n = 50) +                 # Plot 50-day Moving Average
++     geom_ma(n = 200, color = "red") + # Plot 200-day Moving Average
++     coord_x_date(xlim = c(today() - weeks(12), today()),
++                ylim = c(100, 130))        # Zoom in
+> 
+> 
+> # coord_x_datetime
+> time_index <- seq(from = as.POSIXct("2012-05-15 07:00"),
++                   to = as.POSIXct("2012-05-17 18:00"),
++                   by = "hour")
+> set.seed(1)
+> value <- rnorm(n = length(time_index))
+> hourly_data <- tibble(time.index = time_index,
++                       value = value)
+> hourly_data %>%
++     ggplot(aes(x = time.index, y = value)) +
++     geom_point() +
++     coord_x_datetime(xlim = c("2012-05-15 07:00:00", "2012-05-15 16:00:00"))
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:bindrcpp’
+
+> nameEx("geom_bbands")
+> ### * geom_bbands
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: geom_bbands
+> ### Title: Plot Bollinger Bands using Moving Averages
+> ### Aliases: geom_bbands geom_bbands_
+> 
+> ### ** Examples
+> 
+> # Load libraries
+> library(tidyquant)
+> 
+> AAPL <- tq_get("AAPL")
+> 
+> # SMA
+> AAPL %>%
++     ggplot(aes(x = date, y = close)) +
++     geom_line() +           # Plot stock price
++     geom_bbands(aes(high = high, low = low, close = close), ma_fun = SMA, n = 50) +
++     coord_x_date(xlim = c(today() - years(1), today()), ylim = c(80, 130))
+> 
+> 
+> # EMA
+> AAPL %>%
++    ggplot(aes(x = date, y = close)) +
++    geom_line() +           # Plot stock price
++    geom_bbands(aes(high = high, low = low, close = close),
++                   ma_fun = EMA, wilder = TRUE, ratio = NULL, n = 50) +
++    coord_x_date(xlim = c(today() - years(1), today()), ylim = c(80, 130))
+> 
+> 
+> # VWMA
+> AAPL %>%
++     ggplot(aes(x = date, y = close)) +
++     geom_line() +           # Plot stock price
++     geom_bbands(aes(high = high, low = low, close = close, volume = volume),
++                    ma_fun = VWMA, n = 50) +
++     coord_x_date(xlim = c(today() - years(1), today()), ylim = c(80, 130))
+> 
+> 
+> 
+> cleanEx()
+> nameEx("geom_chart")
+> ### * geom_chart
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: geom_chart
+> ### Title: Plot Financial Charts in ggplot2
+> ### Aliases: geom_chart geom_barchart geom_candlestick
+> 
+> ### ** Examples
+> 
+> # Load libraries
+> library(tidyquant)
+> 
+> AAPL <- tq_get("AAPL")
+> 
+> # Bar Chart
+> AAPL %>%
++     ggplot(aes(x = date, y = close)) +
++     geom_barchart(aes(open = open, high = high, low = low, close = close)) +
++     geom_ma(color = "darkgreen") +
++     coord_x_date(xlim = c(today() - weeks(6), today()),
++                  ylim = c(100, 130))
+Warning: Ignoring unknown parameters: colour_up, colour_down
+Warning: Ignoring unknown parameters: colour_up, colour_down
+Warning: Ignoring unknown parameters: colour_up, colour_down
+Warning: Computation failed in `stat_linerange_bc()`:
+Evaluation error: argument "color_up" is missing, with no default.
+Warning: Computation failed in `stat_segment_left_bc()`:
+Evaluation error: argument "color_up" is missing, with no default.
+Warning: Computation failed in `stat_segment_right_bc()`:
+Evaluation error: argument "color_up" is missing, with no default.
+> 
+> # Candlestick Chart
+> AAPL %>%
++     ggplot(aes(x = date, y = close)) +
++     geom_candlestick(aes(open = open, high = high, low = low, close = close)) +
++     geom_ma(color = "darkgreen") +
++     coord_x_date(xlim = c(today() - weeks(6), today()),
++                  ylim = c(100, 130))
+Warning: Ignoring unknown parameters: colour_up, colour_down
+Warning: Ignoring unknown parameters: colour_up, colour_down
+Warning: Computation failed in `stat_linerange_bc()`:
+Evaluation error: argument "color_up" is missing, with no default.
+> 
+> 
+> 
+> cleanEx()
+> nameEx("geom_ma")
+> ### * geom_ma
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: geom_ma
+> ### Title: Plot moving averages
+> ### Aliases: geom_ma geom_ma_
+> 
+> ### ** Examples
+> 
+> # Load libraries
+> library(tidyquant)
+> 
+> AAPL <- tq_get("AAPL")
+> 
+> # SMA
+> AAPL %>%
++     ggplot(aes(x = date, y = adjusted)) +
++     geom_line() +                         # Plot stock price
++     geom_ma(ma_fun = SMA, n = 50) +                 # Plot 50-day SMA
++     geom_ma(ma_fun = SMA, n = 200, color = "red") + # Plot 200-day SMA
++     coord_x_date(xlim = c(today() - weeks(12), today()),
++                ylim = c(100, 130))                     # Zoom in
+> 
+> # EVWMA
+> AAPL %>%
++     ggplot(aes(x = date, y = adjusted)) +
++     geom_line() +                                                   # Plot stock price
++     geom_ma(aes(volume = volume), ma_fun = EVWMA, n = 50) +   # Plot 50-day EVWMA
++     coord_x_date(xlim = c(today() - weeks(12), today()),
++                ylim = c(100, 130))                                  # Zoom in
+> 
+> 
+> 
+> cleanEx()
+> nameEx("palette_tq")
+> ### * palette_tq
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: palette_tq
+> ### Title: tidyquant palettes for use with scales
+> ### Aliases: palette_tq palette_light palette_dark palette_green
+> 
+> ### ** Examples
+> 
+> library(scales)
+
+Attaching package: ‘scales’
+
+The following object is masked from ‘package:purrr’:
+
+    discard
+
+The following object is masked from ‘package:readr’:
+
+    col_factor
+
+> scales::show_col(palette_light())
+> 
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:scales’
+
+> nameEx("quandl_api_key")
+> ### * quandl_api_key
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: quandl_api_key
+> ### Title: Query or set Quandl API Key
+> ### Aliases: quandl_api_key quandl_api_key
+> 
+> ### ** Examples
+> 
+> 
+> ## Not run: 
+> ##D quandl_api_key(api_key = "foobar")
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("quandl_search")
+> ### * quandl_search
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: quandl_search
+> ### Title: Search the Quandl database
+> ### Aliases: quandl_search quandl_search
+> 
+> ### ** Examples
+> 
+> 
+> ## Not run: 
+> ##D quandl_search(query = "oil")
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("scale_manual")
+> ### * scale_manual
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: scale_manual
+> ### Title: tidyquant colors and fills for ggplot2.
+> ### Aliases: scale_manual scale_color_tq scale_colour_tq scale_fill_tq
+> 
+> ### ** Examples
+> 
+> # Load libraries
+> library(tidyquant)
+> 
+> # Get stock prices
+> stocks <- c("AAPL", "FB", "NFLX") %>%
++     tq_get(from = "2013-01-01",
++            to   = "2017-01-01")
+> 
+> # Plot for stocks
+> a <- stocks %>%
++     ggplot(aes(date, adjusted, color = symbol)) +
++     geom_line() +
++     labs(title = "Multi stock example",
++          xlab = "Date",
++          ylab = "Adjusted Close")
+> 
+> # Plot with tidyquant theme and colors
+> a +
++     theme_tq() +
++     scale_color_tq()
+> 
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("theme_tq")
+> ### * theme_tq
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: theme_tq
+> ### Title: tidyquant themes for ggplot2.
+> ### Aliases: theme_tq theme_tq theme_tq_dark theme_tq_green
+> 
+> ### ** Examples
+> 
+> # Load libraries
+> library(tidyquant)
+> 
+> # Get stock prices
+> AAPL <- tq_get("AAPL")
+> 
+> # Plot using ggplot with theme_tq
+> AAPL %>% ggplot(aes(x = date, y = close)) +
++        geom_line() +
++        geom_bbands(aes(high = high, low = low, close = close),
++                    ma_fun = EMA,
++                    wilder = TRUE,
++                    ratio = NULL,
++                    n = 50) +
++        coord_x_date(xlim = c(today() - years(1), today()),
++                     ylim = c(80, 130)) +
++        labs(title = "Apple BBands",
++             x = "Date",
++             y = "Price") +
++        theme_tq()
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("tq_get")
+> ### * tq_get
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: tq_get
+> ### Title: Get quantitative data in 'tibble' format
+> ### Aliases: tq_get tq_get_options tq_get_stock_index_options
+> 
+> ### ** Examples
+> 
+> # Load libraries
+> library(tidyquant)
+> 
+> # Get the list of `get` options
+> tq_get_options()
+ [1] "stock.prices"        "stock.prices.google" "stock.prices.japan" 
+ [4] "financials"          "key.ratios"          "dividends"          
+ [7] "splits"              "economic.data"       "exchange.rates"     
+[10] "metal.prices"        "quandl"              "quandl.datatable"   
+[13] "alphavantager"       "rblpapi"            
+> 
+> # Get stock prices for a stock from Yahoo
+> aapl_stock_prices <- tq_get("AAPL")
+> 
+> # Get stock prices for multiple stocks
+> mult_stocks <- tq_get(c("FB", "AMZN"),
++                       get  = "stock.prices",
++                       from = "2016-01-01",
++                       to   = "2017-01-01")
+> 
+> # Multiple gets
+> mult_gets <- tq_get("AAPL",
++                     get = c("stock.prices", "dividends"),
++                     from = "2016-01-01",
++                     to   = "2017-01-01")
+> 
+> 
+> 
+> cleanEx()
+> nameEx("tq_mutate")
+> ### * tq_mutate
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: tq_mutate
+> ### Title: Mutates quantitative data
+> ### Aliases: tq_mutate tq_mutate tq_mutate_ tq_mutate_xy tq_mutate_xy_
+> ###   tq_mutate_fun_options tq_transmute tq_transmute_ tq_transmute_xy
+> ###   tq_transmute_xy_ tq_transmute_fun_options
+> 
+> ### ** Examples
+> 
+> # Load libraries
+> library(tidyquant)
+> 
+> ##### Basic Functionality
+> 
+> fb_stock_prices  <- tq_get("FB",
++                            get  = "stock.prices",
++                            from = "2016-01-01",
++                            to   = "2016-12-31")
+> 
+> # Example 1: Return logarithmic daily returns using periodReturn()
+> fb_stock_prices %>%
++     tq_mutate(select = close, mutate_fun = periodReturn,
++               period = "daily", type = "log")
+[90m# A tibble: 252 x 8[39m
+   date        open  high   low close   volume adjusted daily.returns
+   [3m[90m<date>[39m[23m     [3m[90m<dbl>[39m[23m [3m[90m<dbl>[39m[23m [3m[90m<dbl>[39m[23m [3m[90m<dbl>[39m[23m    [3m[90m<dbl>[39m[23m    [3m[90m<dbl>[39m[23m         [3m[90m<dbl>[39m[23m
+[90m 1[39m 2016-01-04 102.  102.   99.8 102.  37[4m9[24m[4m1[24m[4m2[24m400    102.        0      
+[90m 2[39m 2016-01-05 103.  104.  102.  103.  23[4m2[24m[4m5[24m[4m8[24m200    103.        0.004[4m9[24m[4m8[24m
+[90m 3[39m 2016-01-06 101.  104.  101.  103.  25[4m0[24m[4m9[24m[4m6[24m200    103.        0.002[4m3[24m[4m3[24m
+[90m 4[39m 2016-01-07 100.  101.   97.3  97.9 45[4m1[24m[4m7[24m[4m2[24m900     97.9      -[31m0[39m[31m.[39m[31m0[39m[31m50[4m3[24m[39m 
+[90m 5[39m 2016-01-08  99.9 100.   97.0  97.3 35[4m4[24m[4m0[24m[4m2[24m300     97.3      -[31m0[39m[31m.[39m[31m00[39m[31m6[4m0[24m[4m4[24m[39m
+[90m 6[39m 2016-01-11  97.9  98.6  95.4  97.5 29[4m9[24m[4m3[24m[4m2[24m400     97.5       0.001[4m8[24m[4m5[24m
+[90m 7[39m 2016-01-12  99   100.0  97.6  99.4 28[4m3[24m[4m9[24m[4m5[24m400     99.4       0.018[4m9[24m 
+[90m 8[39m 2016-01-13 101.  101.   95.2  95.4 33[4m4[24m[4m1[24m[4m0[24m600     95.4      -[31m0[39m[31m.[39m[31m0[39m[31m40[4m4[24m[39m 
+[90m 9[39m 2016-01-14  95.8  98.9  92.4  98.4 48[4m6[24m[4m5[24m[4m8[24m600     98.4       0.030[4m2[24m 
+[90m10[39m 2016-01-15  94.0  96.4  93.5  95.0 45[4m9[24m[4m3[24m[4m5[24m600     95.0      -[31m0[39m[31m.[39m[31m0[39m[31m35[4m2[24m[39m 
+[90m# … with 242 more rows[39m
+> 
+> # Example 2: Use tq_mutate_xy to use functions with two columns required
+> fb_stock_prices %>%
++     tq_mutate_xy(x = close, y = volume, mutate_fun = EVWMA,
++                  col_rename = "EVWMA")
+[90m# A tibble: 252 x 8[39m
+   date        open  high   low close   volume adjusted EVWMA
+   [3m[90m<date>[39m[23m     [3m[90m<dbl>[39m[23m [3m[90m<dbl>[39m[23m [3m[90m<dbl>[39m[23m [3m[90m<dbl>[39m[23m    [3m[90m<dbl>[39m[23m    [3m[90m<dbl>[39m[23m [3m[90m<dbl>[39m[23m
+[90m 1[39m 2016-01-04 102.  102.   99.8 102.  37[4m9[24m[4m1[24m[4m2[24m400    102.   [31mNA[39m  
+[90m 2[39m 2016-01-05 103.  104.  102.  103.  23[4m2[24m[4m5[24m[4m8[24m200    103.   [31mNA[39m  
+[90m 3[39m 2016-01-06 101.  104.  101.  103.  25[4m0[24m[4m9[24m[4m6[24m200    103.   [31mNA[39m  
+[90m 4[39m 2016-01-07 100.  101.   97.3  97.9 45[4m1[24m[4m7[24m[4m2[24m900     97.9  [31mNA[39m  
+[90m 5[39m 2016-01-08  99.9 100.   97.0  97.3 35[4m4[24m[4m0[24m[4m2[24m300     97.3  [31mNA[39m  
+[90m 6[39m 2016-01-11  97.9  98.6  95.4  97.5 29[4m9[24m[4m3[24m[4m2[24m400     97.5  [31mNA[39m  
+[90m 7[39m 2016-01-12  99   100.0  97.6  99.4 28[4m3[24m[4m9[24m[4m5[24m400     99.4  [31mNA[39m  
+[90m 8[39m 2016-01-13 101.  101.   95.2  95.4 33[4m4[24m[4m1[24m[4m0[24m600     95.4  [31mNA[39m  
+[90m 9[39m 2016-01-14  95.8  98.9  92.4  98.4 48[4m6[24m[4m5[24m[4m8[24m600     98.4  [31mNA[39m  
+[90m10[39m 2016-01-15  94.0  96.4  93.5  95.0 45[4m9[24m[4m3[24m[4m5[24m600     95.0  95.0
+[90m# … with 242 more rows[39m
+> 
+> # Example 3: Using tq_mutate to work with non-OHLC data
+> tq_get("DCOILWTICO", get = "economic.data") %>%
++     tq_mutate(select = price, mutate_fun = lag.xts, k = 1, na.pad = TRUE)
+[90m# A tibble: 2,633 x 3[39m
+   date       price lag.xts
+   [3m[90m<date>[39m[23m     [3m[90m<dbl>[39m[23m   [3m[90m<dbl>[39m[23m
+[90m 1[39m 2009-01-01  [31mNA[39m      [31mNA[39m  
+[90m 2[39m 2009-01-02  46.2    [31mNA[39m  
+[90m 3[39m 2009-01-05  48.6    46.2
+[90m 4[39m 2009-01-06  48.6    48.6
+[90m 5[39m 2009-01-07  42.8    48.6
+[90m 6[39m 2009-01-08  41.7    42.8
+[90m 7[39m 2009-01-09  40.7    41.7
+[90m 8[39m 2009-01-12  37.6    40.7
+[90m 9[39m 2009-01-13  37.8    37.6
+[90m10[39m 2009-01-14  37.4    37.8
+[90m# … with 2,623 more rows[39m
+> 
+> # Example 4: Using tq_mutate to apply a rolling regression
+> fb_returns <- fb_stock_prices %>%
++     tq_transmute(adjusted, periodReturn, period = "monthly", col_rename = "fb.returns")
+> xlk_returns <- tq_get("XLK", from = "2016-01-01", to = "2016-12-31") %>%
++     tq_transmute(adjusted, periodReturn, period = "monthly", col_rename = "xlk.returns")
+> returns_combined <- left_join(fb_returns, xlk_returns, by = "date")
+> regr_fun <- function(data) {
++     coef(lm(fb.returns ~ xlk.returns, data = as_data_frame(data)))
++ }
+> returns_combined %>%
++     tq_mutate(mutate_fun = rollapply,
++               width      = 6,
++               FUN        = regr_fun,
++               by.column  = FALSE,
++               col_rename = c("coef.0", "coef.1"))
+Warning: `as_data_frame()` is deprecated, use `as_tibble()` (but mind the new semantics).
+[90mThis warning is displayed once per session.[39m
+[90m# A tibble: 12 x 5[39m
+   date       fb.returns xlk.returns    coef.0 coef.1
+   [3m[90m<date>[39m[23m          [3m[90m<dbl>[39m[23m       [3m[90m<dbl>[39m[23m     [3m[90m<dbl>[39m[23m  [3m[90m<dbl>[39m[23m
+[90m 1[39m 2016-01-29     0.097[4m7[24m    -[31m0[39m[31m.[39m[31m0[39m[31m24[4m4[24m[39m   [31mNA[39m       [31mNA[39m    
+[90m 2[39m 2016-02-29    -[31m0[39m[31m.[39m[31m0[39m[31m47[4m1[24m[39m    -[31m0[39m[31m.[39m[31m00[39m[31m6[4m5[24m[4m5[24m[39m  [31mNA[39m       [31mNA[39m    
+[90m 3[39m 2016-03-31     0.067[4m2[24m     0.088[4m2[24m   [31mNA[39m       [31mNA[39m    
+[90m 4[39m 2016-04-29     0.030[4m5[24m    -[31m0[39m[31m.[39m[31m0[39m[31m50[4m3[24m[39m   [31mNA[39m       [31mNA[39m    
+[90m 5[39m 2016-05-31     0.010[4m5[24m     0.048[4m9[24m   [31mNA[39m       [31mNA[39m    
+[90m 6[39m 2016-06-30    -[31m0[39m[31m.[39m[31m0[39m[31m38[4m1[24m[39m    -[31m0[39m[31m.[39m[31m0[39m[31m13[4m8[24m[39m    0.018[4m8[24m   0.190
+[90m 7[39m 2016-07-29     0.084[4m5[24m     0.071[4m0[24m    0.003[4m5[24m[4m5[24m  0.626
+[90m 8[39m 2016-08-31     0.017[4m6[24m     0.011[4m6[24m    0.015[4m4[24m   0.511
+[90m 9[39m 2016-09-30     0.017[4m0[24m     0.021[4m0[24m    0.013[4m6[24m   0.453
+[90m10[39m 2016-10-31     0.021[4m2[24m    -[31m0[39m[31m.[39m[31m00[39m[31m7[4m5[24m[4m3[24m[39m  -[31m0[39m[31m.[39m[31m00[39m[31m1[4m4[24m[4m3[24m[39m  0.924
+[90m11[39m 2016-11-30    -[31m0[39m[31m.[39m[31m0[39m[31m96[4m0[24m[39m     0.001[4m6[24m[4m9[24m  -[31m0[39m[31m.[39m[31m0[39m[31m18[4m9[24m[39m   1.42 
+[90m12[39m 2016-12-30    -[31m0[39m[31m.[39m[31m0[39m[31m28[4m5[24m[39m     0.022[4m6[24m   -[31m0[39m[31m.[39m[31m0[39m[31m25[4m4[24m[39m   1.40 
+> 
+> # Example 5: Non-standard evaluation:
+> # Programming with tq_mutate_() and tq_mutate_xy_()
+> col_name <- "adjusted"
+> mutate <- c("MACD", "SMA")
+> tq_mutate_xy_(fb_stock_prices, x = col_name, mutate_fun = mutate[[1]])
+[90m# A tibble: 252 x 9[39m
+   date        open  high   low close   volume adjusted  macd signal
+   [3m[90m<date>[39m[23m     [3m[90m<dbl>[39m[23m [3m[90m<dbl>[39m[23m [3m[90m<dbl>[39m[23m [3m[90m<dbl>[39m[23m    [3m[90m<dbl>[39m[23m    [3m[90m<dbl>[39m[23m [3m[90m<dbl>[39m[23m  [3m[90m<dbl>[39m[23m
+[90m 1[39m 2016-01-04 102.  102.   99.8 102.  37[4m9[24m[4m1[24m[4m2[24m400    102.     [31mNA[39m     [31mNA[39m
+[90m 2[39m 2016-01-05 103.  104.  102.  103.  23[4m2[24m[4m5[24m[4m8[24m200    103.     [31mNA[39m     [31mNA[39m
+[90m 3[39m 2016-01-06 101.  104.  101.  103.  25[4m0[24m[4m9[24m[4m6[24m200    103.     [31mNA[39m     [31mNA[39m
+[90m 4[39m 2016-01-07 100.  101.   97.3  97.9 45[4m1[24m[4m7[24m[4m2[24m900     97.9    [31mNA[39m     [31mNA[39m
+[90m 5[39m 2016-01-08  99.9 100.   97.0  97.3 35[4m4[24m[4m0[24m[4m2[24m300     97.3    [31mNA[39m     [31mNA[39m
+[90m 6[39m 2016-01-11  97.9  98.6  95.4  97.5 29[4m9[24m[4m3[24m[4m2[24m400     97.5    [31mNA[39m     [31mNA[39m
+[90m 7[39m 2016-01-12  99   100.0  97.6  99.4 28[4m3[24m[4m9[24m[4m5[24m400     99.4    [31mNA[39m     [31mNA[39m
+[90m 8[39m 2016-01-13 101.  101.   95.2  95.4 33[4m4[24m[4m1[24m[4m0[24m600     95.4    [31mNA[39m     [31mNA[39m
+[90m 9[39m 2016-01-14  95.8  98.9  92.4  98.4 48[4m6[24m[4m5[24m[4m8[24m600     98.4    [31mNA[39m     [31mNA[39m
+[90m10[39m 2016-01-15  94.0  96.4  93.5  95.0 45[4m9[24m[4m3[24m[4m5[24m600     95.0    [31mNA[39m     [31mNA[39m
+[90m# … with 242 more rows[39m
+> 
+> 
+> 
+> cleanEx()
+> nameEx("tq_performance")
+> ### * tq_performance
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: tq_performance
+> ### Title: Computes a wide variety of summary performance metrics from
+> ###   stock or portfolio returns
+> ### Aliases: tq_performance tq_performance_ tq_performance_fun_options
+> 
+> ### ** Examples
+> 
+> # Load libraries
+> library(tidyquant)
+> 
+> # Use FANG data set
+> data(FANG)
+> 
+> # Get returns for individual stock components grouped by symbol
+> Ra <- FANG %>%
++     group_by(symbol) %>%
++     tq_transmute(adjusted, periodReturn, period = "monthly", col_rename = "Ra")
+> 
+> # Get returns for SP500 as baseline
+> Rb <- "^GSPC" %>%
++     tq_get(get  = "stock.prices",
++            from = "2010-01-01",
++            to   = "2015-12-31") %>%
++     tq_transmute(adjusted, periodReturn, period = "monthly", col_rename = "Rb")
+> 
+> # Merge stock returns with baseline
+> RaRb <- left_join(Ra, Rb, by = c("date" = "date"))
+> 
+> ##### Performance Metrics #####
+> 
+> # View options
+> tq_performance_fun_options()
+$table.funs
+ [1] "table.AnnualizedReturns" "table.Arbitrary"        
+ [3] "table.Autocorrelation"   "table.CAPM"             
+ [5] "table.CaptureRatios"     "table.Correlation"      
+ [7] "table.Distributions"     "table.DownsideRisk"     
+ [9] "table.DownsideRiskRatio" "table.DrawdownsRatio"   
+[11] "table.HigherMoments"     "table.InformationRatio" 
+[13] "table.RollingPeriods"    "table.SFM"              
+[15] "table.SpecificRisk"      "table.Stats"            
+[17] "table.TrailingPeriods"   "table.UpDownRatios"     
+[19] "table.Variability"      
+
+$CAPM.funs
+ [1] "CAPM.CML"         "CAPM.CML.slope"   "CAPM.RiskPremium" "CAPM.SML.slope"  
+ [5] "CAPM.alpha"       "CAPM.beta"        "CAPM.beta.bear"   "CAPM.beta.bull"  
+ [9] "CAPM.dynamic"     "CAPM.epsilon"     "CAPM.jensenAlpha" "TimingRatio"     
+[13] "MarketTiming"    
+
+$SFM.funs
+[1] "SFM.CML"         "SFM.CML.slope"   "SFM.alpha"       "SFM.beta"       
+[5] "SFM.dynamic"     "SFM.epsilon"     "SFM.jensenAlpha"
+
+$descriptive.funs
+[1] "mean"           "sd"             "min"            "max"           
+[5] "cor"            "mean.geometric" "mean.stderr"    "mean.LCL"      
+[9] "mean.UCL"      
+
+$annualized.funs
+[1] "Return.annualized"        "Return.annualized.excess"
+[3] "sd.annualized"            "SharpeRatio.annualized"  
+
+$VaR.funs
+[1] "VaR"  "ES"   "ETL"  "CDD"  "CVaR"
+
+$moment.funs
+ [1] "var"              "cov"              "skewness"         "kurtosis"        
+ [5] "CoVariance"       "CoSkewness"       "CoSkewnessMatrix" "CoKurtosis"      
+ [9] "CoKurtosisMatrix" "M3.MM"            "M4.MM"            "BetaCoVariance"  
+[13] "BetaCoSkewness"   "BetaCoKurtosis"  
+
+$drawdown.funs
+[1] "AverageDrawdown"   "AverageLength"     "AverageRecovery"  
+[4] "DrawdownDeviation" "DrawdownPeak"      "maxDrawdown"      
+
+$Bacon.risk.funs
+[1] "MeanAbsoluteDeviation" "Frequency"             "SharpeRatio"          
+[4] "MSquared"              "MSquaredExcess"        "HurstIndex"           
+
+$Bacon.regression.funs
+ [1] "CAPM.alpha"       "CAPM.beta"        "CAPM.epsilon"     "CAPM.jensenAlpha"
+ [5] "SystematicRisk"   "SpecificRisk"     "TotalRisk"        "TreynorRatio"    
+ [9] "AppraisalRatio"   "FamaBeta"         "Selectivity"      "NetSelectivity"  
+
+$Bacon.relative.risk.funs
+[1] "ActivePremium"    "ActiveReturn"     "TrackingError"    "InformationRatio"
+
+$Bacon.drawdown.funs
+[1] "PainIndex"     "PainRatio"     "CalmarRatio"   "SterlingRatio"
+[5] "BurkeRatio"    "MartinRatio"   "UlcerIndex"   
+
+$Bacon.downside.risk.funs
+ [1] "DownsideDeviation"     "DownsidePotential"     "DownsideFrequency"    
+ [4] "SemiDeviation"         "SemiVariance"          "UpsideRisk"           
+ [7] "UpsidePotentialRatio"  "UpsideFrequency"       "BernardoLedoitRatio"  
+[10] "DRatio"                "Omega"                 "OmegaSharpeRatio"     
+[13] "OmegaExcessReturn"     "SortinoRatio"          "M2Sortino"            
+[16] "Kappa"                 "VolatilitySkewness"    "AdjustedSharpeRatio"  
+[19] "SkewnessKurtosisRatio" "ProspectRatio"        
+
+$misc.funs
+[1] "KellyRatio"   "Modigliani"   "UpDownRatios"
+
+> 
+> # Get performance metrics
+> RaRb %>%
++     tq_performance(Ra = Ra, performance_fun = SharpeRatio, p = 0.95)
+[90m# A tibble: 4 x 4[39m
+[90m# Groups:   symbol [4][39m
+  symbol `ESSharpe(Rf=0%,p=95%… `StdDevSharpe(Rf=0%,p=95… `VaRSharpe(Rf=0%,p=95…
+  [3m[90m<chr>[39m[23m                   [3m[90m<dbl>[39m[23m                     [3m[90m<dbl>[39m[23m                  [3m[90m<dbl>[39m[23m
+[90m1[39m FB                      0.193                     0.345                  0.605
+[90m2[39m AMZN                    0.215                     0.314                  0.265
+[90m3[39m NFLX                    0.199                     0.355                  0.606
+[90m4[39m GOOG                    0.213                     0.296                  0.310
+> 
+> RaRb %>%
++     tq_performance(Ra = Ra, Rb = Rb, performance_fun = table.CAPM)
+[90m# A tibble: 4 x 13[39m
+[90m# Groups:   symbol [4][39m
+  symbol ActivePremium  Alpha AnnualizedAlpha  Beta `Beta+` `Beta-` Correlation
+  [3m[90m<chr>[39m[23m          [3m[90m<dbl>[39m[23m  [3m[90m<dbl>[39m[23m           [3m[90m<dbl>[39m[23m [3m[90m<dbl>[39m[23m   [3m[90m<dbl>[39m[23m   [3m[90m<dbl>[39m[23m       [3m[90m<dbl>[39m[23m
+[90m1[39m FB             0.431 0.034            0.493 0.846    3.00  0.819        0.234
+[90m2[39m AMZN           0.246 0.014[4m4[24m           0.187 1.46     2.04 -[31m0[39m[31m.[39m[31m0[39m[31m44[4m2[24m[39m       0.524
+[90m3[39m NFLX           1.02  0.063[4m2[24m           1.09  1.35     1.90 -[31m2[39m[31m.[39m[31m78[39m         0.234
+[90m4[39m GOOG           0.142 0.012[4m3[24m           0.158 0.901    1.56 -[31m0[39m[31m.[39m[31m247[39m        0.451
+[90m# … with 5 more variables: `Correlationp-value` [3m[90m<dbl>[90m[23m, InformationRatio [3m[90m<dbl>[90m[23m,
+#   `R-squared` [3m[90m<dbl>[90m[23m, TrackingError [3m[90m<dbl>[90m[23m, TreynorRatio [3m[90m<dbl>[90m[23m[39m
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("tq_portfolio")
+> ### * tq_portfolio
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: tq_portfolio
+> ### Title: Aggregates a group of returns by asset into portfolio returns
+> ### Aliases: tq_portfolio tq_portfolio_ tq_repeat_df
+> 
+> ### ** Examples
+> 
+> # Load libraries
+> library(tidyquant)
+> 
+> # Use FANG data set
+> data(FANG)
+> 
+> # Get returns for individual stock components
+> monthly_returns_stocks <- FANG %>%
++     group_by(symbol) %>%
++     tq_transmute(adjusted, periodReturn, period = "monthly")
+> 
+> ##### Portfolio Aggregation Methods #####
+> 
+> # Method 1: Use tq_portfolio with numeric vector of weights
+> 
+> weights <- c(0.50, 0.25, 0.25, 0)
+> tq_portfolio(data = monthly_returns_stocks,
++              assets_col = symbol,
++              returns_col = monthly.returns,
++              weights = weights,
++              col_rename = NULL,
++              wealth.index = FALSE)
+[90m# A tibble: 48 x 2[39m
+   date       portfolio.returns
+   [3m[90m<date>[39m[23m                 [3m[90m<dbl>[39m[23m
+[90m 1[39m 2013-01-31           0.260  
+[90m 2[39m 2013-02-28          -[31m0[39m[31m.[39m[31m00[39m[31m4[4m5[24m[4m6[24m[39m
+[90m 3[39m 2013-03-28          -[31m0[39m[31m.[39m[31m0[39m[31m19[4m5[24m[39m 
+[90m 4[39m 2013-04-30           0.081[4m0[24m 
+[90m 5[39m 2013-05-31          -[31m0[39m[31m.[39m[31m0[39m[31m13[4m9[24m[39m 
+[90m 6[39m 2013-06-28          -[31m0[39m[31m.[39m[31m0[39m[31m17[4m9[24m[39m 
+[90m 7[39m 2013-07-31           0.254  
+[90m 8[39m 2013-08-30           0.104  
+[90m 9[39m 2013-09-30           0.145  
+[90m10[39m 2013-10-31           0.042[4m0[24m 
+[90m# … with 38 more rows[39m
+> 
+> # Method 2: Use tq_portfolio with two column tibble and map weights
+> 
+> # Note that GOOG's weighting is zero in Method 1. In Method 2,
+> # GOOG is not added and same result is achieved.
+> weights_df <- tibble(symbol = c("FB", "AMZN", "NFLX"),
++                      weights = c(0.50, 0.25, 0.25))
+> tq_portfolio(data = monthly_returns_stocks,
++              assets_col = symbol,
++              returns_col = monthly.returns,
++              weights = weights_df,
++              col_rename = NULL,
++              wealth.index = FALSE)
+[90m# A tibble: 48 x 2[39m
+   date       portfolio.returns
+   [3m[90m<date>[39m[23m                 [3m[90m<dbl>[39m[23m
+[90m 1[39m 2013-01-31           0.260  
+[90m 2[39m 2013-02-28          -[31m0[39m[31m.[39m[31m00[39m[31m4[4m5[24m[4m6[24m[39m
+[90m 3[39m 2013-03-28          -[31m0[39m[31m.[39m[31m0[39m[31m19[4m5[24m[39m 
+[90m 4[39m 2013-04-30           0.081[4m0[24m 
+[90m 5[39m 2013-05-31          -[31m0[39m[31m.[39m[31m0[39m[31m13[4m9[24m[39m 
+[90m 6[39m 2013-06-28          -[31m0[39m[31m.[39m[31m0[39m[31m17[4m9[24m[39m 
+[90m 7[39m 2013-07-31           0.254  
+[90m 8[39m 2013-08-30           0.104  
+[90m 9[39m 2013-09-30           0.145  
+[90m10[39m 2013-10-31           0.042[4m0[24m 
+[90m# … with 38 more rows[39m
+> 
+> # Method 3: Working with multiple portfolios
+> 
+> # 3A: Duplicate monthly_returns_stocks multiple times
+> mult_monthly_returns_stocks <- tq_repeat_df(monthly_returns_stocks, n = 4)
+Ungrouping data frame groups: symbol
+> 
+> # 3B: Create weights table grouped by portfolio id
+> weights <- c(0.50, 0.25, 0.25, 0.00,
++              0.00, 0.50, 0.25, 0.25,
++              0.25, 0.00, 0.50, 0.25,
++              0.25, 0.25, 0.00, 0.50)
+> stocks <- c("FB", "AMZN", "NFLX", "GOOG")
+> weights_table <- tibble(stocks) %>%
++     tq_repeat_df(n = 4) %>%
++     bind_cols(tibble(weights)) %>%
++     group_by(portfolio)
+> 
+> # 3C: Scale to multiple portfolios
+> tq_portfolio(data = mult_monthly_returns_stocks,
++              assets_col = symbol,
++              returns_col = monthly.returns,
++              weights = weights_table,
++              col_rename = NULL,
++              wealth.index = FALSE)
+[90m# A tibble: 192 x 3[39m
+[90m# Groups:   portfolio [4][39m
+   portfolio date       portfolio.returns
+       [3m[90m<int>[39m[23m [3m[90m<date>[39m[23m                 [3m[90m<dbl>[39m[23m
+[90m 1[39m         1 2013-01-31           0.260  
+[90m 2[39m         1 2013-02-28          -[31m0[39m[31m.[39m[31m00[39m[31m4[4m5[24m[4m6[24m[39m
+[90m 3[39m         1 2013-03-28          -[31m0[39m[31m.[39m[31m0[39m[31m19[4m5[24m[39m 
+[90m 4[39m         1 2013-04-30           0.081[4m0[24m 
+[90m 5[39m         1 2013-05-31          -[31m0[39m[31m.[39m[31m0[39m[31m13[4m9[24m[39m 
+[90m 6[39m         1 2013-06-28          -[31m0[39m[31m.[39m[31m0[39m[31m17[4m9[24m[39m 
+[90m 7[39m         1 2013-07-31           0.254  
+[90m 8[39m         1 2013-08-30           0.104  
+[90m 9[39m         1 2013-09-30           0.145  
+[90m10[39m         1 2013-10-31           0.042[4m0[24m 
+[90m# … with 182 more rows[39m
+> 
+> 
+> 
+> cleanEx()
+> nameEx("tq_stock_list")
+> ### * tq_stock_list
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: tq_index
+> ### Title: Get all stocks in a stock index or stock exchange in 'tibble'
+> ###   format
+> ### Aliases: tq_index tq_exchange tq_index_options tq_exchange_options
+> 
+> ### ** Examples
+> 
+> # Load libraries
+> library(tidyquant)
+> 
+> # Get the list of stock index options
+> tq_index_options()
+[1] "RUSSELL1000" "RUSSELL2000" "RUSSELL3000" "DOW"         "DOWGLOBAL"  
+[6] "SP400"       "SP500"       "SP600"       "SP1000"     
+> 
+> # Get all stock symbols in a stock index
+> ## Not run: 
+> ##D tq_index("DOW")
+> ## End(Not run)
+> 
+> # Get the list of stock exchange options
+> tq_exchange_options()
+[1] "AMEX"   "NASDAQ" "NYSE"  
+> 
+> # Get all stocks in a stock exchange
+> ## Not run: 
+> ##D tq_exchange("NYSE")
+> ## End(Not run)
+> 
+> 
+> 
+> ### * <FOOTER>
+> ###
+> cleanEx()
+> options(digits = 7L)
+> base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  6.886 0.22 13.511 0.002 0.002 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')

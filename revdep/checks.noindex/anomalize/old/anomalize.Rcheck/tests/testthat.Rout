@@ -1,0 +1,49 @@
+
+R version 3.5.1 (2018-07-02) -- "Feather Spray"
+Copyright (C) 2018 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin15.6.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> library(testthat)
+> library(anomalize)
+> library(dplyr)
+
+Attaching package: 'dplyr'
+
+The following object is masked from 'package:testthat':
+
+    matches
+
+The following objects are masked from 'package:stats':
+
+    filter, lag
+
+The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union
+
+> library(ggplot2)
+> library(tibble)
+Warning message:
+package 'tibble' was built under R version 3.5.2 
+> 
+> # set_time_scale_template(time_scale_template())
+> 
+> test_check("anomalize")
+══ testthat results  ═════════════════════════════════════════════════════════════════════════════════════
+OK: 64 SKIPPED: 0 FAILED: 0
+> 
+> proc.time()
+   user  system elapsed 
+  8.059   0.134   8.189 

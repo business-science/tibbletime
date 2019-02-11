@@ -1,0 +1,391 @@
+Hmm ... looks like a package
+
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex)
+ restricted \write18 enabled.
+entering extended mode
+LaTeX2e <2018-04-01> patch level 5
+(./Rd2.tex
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/base/book.cls
+Document Class: book 2014/09/29 v1.4h Standard LaTeX document class
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/base/bk10.clo))
+(/Library/Frameworks/R.framework/Resources/share/texmf/tex/latex/Rd.sty
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/base/ifthen.sty)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/tools/longtable.sty)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/tools/bm.sty)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/base/alltt.sty)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/tools/verbatim.sty)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/url/url.sty)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/base/textcomp.sty
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/base/ts1enc.def
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/base/ts1enc.dfu)))
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/inconsolata/zi4.sty
+`inconsolata-zi4' v1.112, 2017/01/04 Text macros for Inconsolata (msharpe)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/xkeyval/xkeyval.sty
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/generic/xkeyval/xkeyval.tex
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/generic/xkeyval/xkvutils.tex
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/generic/xkeyval/keyval.tex)))))
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/graphics/color.sty
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/graphics-cfg/color.cfg)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/graphics-def/pdftex.def))
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/hyperref/hyperref.sty
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/generic/oberdiek/hobsub-hyperref.s
+ty
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/generic/oberdiek/hobsub-generic.st
+y)) (/Users/davis/Library/TinyTeX/texmf-dist/tex/generic/ifxetex/ifxetex.sty)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/oberdiek/auxhook.sty)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/oberdiek/kvoptions.sty)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/hyperref/pd1enc.def)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/latexconfig/hyperref.cfg))
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/hyperref/hpdftex.def
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty)
+)
+
+Package hyperref Warning: Option `hyperindex' has already been used,
+(hyperref)                setting the option has no effect on input line 366.
+
+
+Package hyperref Warning: Option `pagebackref' has already been used,
+(hyperref)                setting the option has no effect on input line 366.
+
+) (/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/base/makeidx.sty)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/base/inputenc.sty)
+Writing index file Rd2.idx
+No file Rd2.aux.
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/base/ts1cmr.fd)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/hyperref/nameref.sty
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/generic/oberdiek/gettitlestring.st
+y)) (/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/inconsolata/ot1zi4.fd)
+
+LaTeX Font Warning: Font shape `OML/zi4/m/n' undefined
+(Font)              using `OML/cmm/m/it' instead
+(Font)              for symbol `textless' on input line 46.
+
+[1{/Users/davis/Library/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+Overfull \hbox (8.34766pt too wide) in paragraph at lines 106--111
+[]\OT1/cmr/m/n/10 The IQR Method uses an in-nerquar-tile range of 25 the me-dia
+n. With the de-fault \OT1/zi4/m/n/10 alpha = 0.05\OT1/cmr/m/n/10 ,
+[2]
+Overfull \hbox (15.12314pt too wide) in paragraph at lines 137--138
+\OT1/cmr/m/n/10 nique for Deal-ing with Mul-ti-ple Out-liers. ASTM Stan-dard-iz
+a-tion News. www.astm.org/sn[][] 
+[3] [4]
+Overfull \hbox (37.13551pt too wide) in paragraph at lines 268--270
+[]\OT1/cmr/m/n/10 To learn more about \OT1/zi4/m/n/10 anomalize\OT1/cmr/m/n/10 
+, start with the vi-gnettes: \OT1/zi4/m/n/10 browseVignettes(package = "anomali
+ze") 
+[5] [6] [7] [8] [9] [10] [11]
+Overfull \hbox (5.34558pt too wide) in paragraph at lines 721--724
+\OT1/cmr/m/n/10 Twit-ter method uses \OT1/zi4/m/n/10 trend \OT1/cmr/m/n/10 to r
+e-move the trend (see [][]\OT1/zi4/m/n/10 decompose[]twitter()[][][]\OT1/cmr/m/
+n/10 ). 
+[12] [13] [14]
+Overfull \hbox (9.2994pt too wide) in paragraph at lines 862--865
+\OT1/cmr/m/n/10 ber of ob-ser-va-tions per fre-quency (e.g. 10). See [][]\OT1/z
+i4/m/n/10 tibbletime::collapse[]by()[][][]
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/inconsolata/ts1zi4.fd)
+[15]
+Overfull \hbox (8.91667pt too wide) in paragraph at lines 967--969
+[]\OT1/cmr/m/n/10 A \OT1/zi4/m/n/10 tibble \OT1/cmr/m/n/10 or \OT1/zi4/m/n/10 t
+bl[]time \OT1/cmr/m/n/10 ob-ject that has been pro-cessed with \OT1/zi4/m/n/10 
+time[]decompose()
+[16]
+No file Rd2.ind.
+[17] (./Rd2.aux)
+
+Package rerunfilecheck Warning: File `Rd2.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+
+LaTeX Font Warning: Some font shapes were not available, defaults substituted.
+
+ )
+(see the transcript file for additional information)pdfTeX warning (dest): name
+{Rfn.stats::stl\(\)} has been referenced but does not exist, replaced by a fixe
+d one
+
+pdfTeX warning (dest): name{Rfn.tibbletime::collapse.Rul.by\(\)} has been refer
+enced but does not exist, replaced by a fixed one
+
+{/Users/davis/Library/TinyTeX/texmf-dist/fonts/enc/dvips/inconsolata/i4-ts1.enc
+}{/Users/davis/Library/TinyTeX/texmf-dist/fonts/enc/dvips/inconsolata/i4-ot1-0.
+enc} </Users/davis/.TinyTeX/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1000.600p
+k></Users/davis/Library/TinyTeX/texmf-dist/fonts/type1/public/inconsolata/Incon
+solata-zi4r.pfb></Users/davis/Library/TinyTeX/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmb10.pfb></Users/davis/Library/TinyTeX/texmf-dist/fonts/type1/public/
+amsfonts/cm/cmbx10.pfb></Users/davis/Library/TinyTeX/texmf-dist/fonts/type1/pub
+lic/amsfonts/cm/cmbx12.pfb></Users/davis/Library/TinyTeX/texmf-dist/fonts/type1
+/public/amsfonts/cm/cmmi10.pfb></Users/davis/Library/TinyTeX/texmf-dist/fonts/t
+ype1/public/amsfonts/cm/cmr10.pfb></Users/davis/Library/TinyTeX/texmf-dist/font
+s/type1/public/amsfonts/cm/cmr12.pfb></Users/davis/Library/TinyTeX/texmf-dist/f
+onts/type1/public/amsfonts/cm/cmsl10.pfb></Users/davis/Library/TinyTeX/texmf-di
+st/fonts/type1/public/amsfonts/cm/cmss12.pfb></Users/davis/Library/TinyTeX/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
+Output written on Rd2.pdf (17 pages, 184492 bytes).
+Transcript written on Rd2.log.
+This is makeindex, version 2.15 [TeX Live 2018] (kpathsea + Thai support).
+Scanning input file Rd2.idx....done (49 entries accepted, 0 rejected).
+Sorting entries....done (341 comparisons).
+Generating output file Rd2.ind....done (80 lines written, 0 warnings).
+Output written in Rd2.ind.
+Transcript written in Rd2.ilg.
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex)
+ restricted \write18 enabled.
+entering extended mode
+LaTeX2e <2018-04-01> patch level 5
+(./Rd2.tex
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/base/book.cls
+Document Class: book 2014/09/29 v1.4h Standard LaTeX document class
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/base/bk10.clo))
+(/Library/Frameworks/R.framework/Resources/share/texmf/tex/latex/Rd.sty
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/base/ifthen.sty)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/tools/longtable.sty)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/tools/bm.sty)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/base/alltt.sty)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/tools/verbatim.sty)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/url/url.sty)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/base/textcomp.sty
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/base/ts1enc.def
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/base/ts1enc.dfu)))
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/inconsolata/zi4.sty
+`inconsolata-zi4' v1.112, 2017/01/04 Text macros for Inconsolata (msharpe)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/xkeyval/xkeyval.sty
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/generic/xkeyval/xkeyval.tex
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/generic/xkeyval/xkvutils.tex
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/generic/xkeyval/keyval.tex)))))
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/graphics/color.sty
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/graphics-cfg/color.cfg)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/graphics-def/pdftex.def))
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/hyperref/hyperref.sty
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/generic/oberdiek/hobsub-hyperref.s
+ty
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/generic/oberdiek/hobsub-generic.st
+y)) (/Users/davis/Library/TinyTeX/texmf-dist/tex/generic/ifxetex/ifxetex.sty)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/oberdiek/auxhook.sty)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/oberdiek/kvoptions.sty)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/hyperref/pd1enc.def)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/latexconfig/hyperref.cfg))
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/hyperref/hpdftex.def
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty)
+)
+
+Package hyperref Warning: Option `hyperindex' has already been used,
+(hyperref)                setting the option has no effect on input line 366.
+
+
+Package hyperref Warning: Option `pagebackref' has already been used,
+(hyperref)                setting the option has no effect on input line 366.
+
+) (/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/base/makeidx.sty)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/base/inputenc.sty)
+Writing index file Rd2.idx
+(./Rd2.aux) (/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/base/ts1cmr.fd)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/hyperref/nameref.sty
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/generic/oberdiek/gettitlestring.st
+y)) (./Rd2.out) (./Rd2.out)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/inconsolata/ot1zi4.fd)
+
+LaTeX Font Warning: Font shape `OML/zi4/m/n' undefined
+(Font)              using `OML/cmm/m/it' instead
+(Font)              for symbol `textless' on input line 46.
+
+[1{/Users/davis/Library/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+(./Rd2.toc) [2]
+Overfull \hbox (8.34766pt too wide) in paragraph at lines 106--111
+[]\OT1/cmr/m/n/10 The IQR Method uses an in-nerquar-tile range of 25 the me-dia
+n. With the de-fault \OT1/zi4/m/n/10 alpha = 0.05\OT1/cmr/m/n/10 ,
+
+Overfull \hbox (15.12314pt too wide) in paragraph at lines 137--138
+\OT1/cmr/m/n/10 nique for Deal-ing with Mul-ti-ple Out-liers. ASTM Stan-dard-iz
+a-tion News. www.astm.org/sn[][] 
+[3] [4]
+Overfull \hbox (37.13551pt too wide) in paragraph at lines 268--270
+[]\OT1/cmr/m/n/10 To learn more about \OT1/zi4/m/n/10 anomalize\OT1/cmr/m/n/10 
+, start with the vi-gnettes: \OT1/zi4/m/n/10 browseVignettes(package = "anomali
+ze") 
+[5] [6] [7] [8] [9] [10] [11] [12]
+Overfull \hbox (5.34558pt too wide) in paragraph at lines 721--724
+\OT1/cmr/m/n/10 Twit-ter method uses \OT1/zi4/m/n/10 trend \OT1/cmr/m/n/10 to r
+e-move the trend (see [][]\OT1/zi4/m/n/10 decompose[]twitter()[][][]\OT1/cmr/m/
+n/10 ). 
+[13] [14]
+Overfull \hbox (9.2994pt too wide) in paragraph at lines 862--865
+\OT1/cmr/m/n/10 ber of ob-ser-va-tions per fre-quency (e.g. 10). See [][]\OT1/z
+i4/m/n/10 tibbletime::collapse[]by()[][][]
+[15] (/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/inconsolata/ts1zi4.fd)
+[16]
+Overfull \hbox (8.91667pt too wide) in paragraph at lines 967--969
+[]\OT1/cmr/m/n/10 A \OT1/zi4/m/n/10 tibble \OT1/cmr/m/n/10 or \OT1/zi4/m/n/10 t
+bl[]time \OT1/cmr/m/n/10 ob-ject that has been pro-cessed with \OT1/zi4/m/n/10 
+time[]decompose()
+[17] (./Rd2.ind [18]
+
+LaTeX Font Warning: Font shape `OT1/zi4/m/it' undefined
+(Font)              using `OT1/zi4/m/n' instead on input line 14.
+
+[19]) (./Rd2.aux)
+
+Package rerunfilecheck Warning: File `Rd2.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+
+LaTeX Font Warning: Some font shapes were not available, defaults substituted.
+
+ )
+(see the transcript file for additional information)pdfTeX warning (dest): name
+{Rfn.stats::stl\(\)} has been referenced but does not exist, replaced by a fixe
+d one
+
+pdfTeX warning (dest): name{Rfn.tibbletime::collapse.Rul.by\(\)} has been refer
+enced but does not exist, replaced by a fixed one
+
+{/Users/davis/Library/TinyTeX/texmf-dist/fonts/enc/dvips/inconsolata/i4-ts1.enc
+}{/Users/davis/Library/TinyTeX/texmf-dist/fonts/enc/dvips/inconsolata/i4-ot1-0.
+enc} </Users/davis/.TinyTeX/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1000.600p
+k></Users/davis/Library/TinyTeX/texmf-dist/fonts/type1/public/inconsolata/Incon
+solata-zi4r.pfb></Users/davis/Library/TinyTeX/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmb10.pfb></Users/davis/Library/TinyTeX/texmf-dist/fonts/type1/public/
+amsfonts/cm/cmbx10.pfb></Users/davis/Library/TinyTeX/texmf-dist/fonts/type1/pub
+lic/amsfonts/cm/cmbx12.pfb></Users/davis/Library/TinyTeX/texmf-dist/fonts/type1
+/public/amsfonts/cm/cmmi10.pfb></Users/davis/Library/TinyTeX/texmf-dist/fonts/t
+ype1/public/amsfonts/cm/cmr10.pfb></Users/davis/Library/TinyTeX/texmf-dist/font
+s/type1/public/amsfonts/cm/cmr12.pfb></Users/davis/Library/TinyTeX/texmf-dist/f
+onts/type1/public/amsfonts/cm/cmsl10.pfb></Users/davis/Library/TinyTeX/texmf-di
+st/fonts/type1/public/amsfonts/cm/cmss12.pfb></Users/davis/Library/TinyTeX/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></Users/davis/Library/TinyTeX/
+texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
+Output written on Rd2.pdf (19 pages, 200198 bytes).
+Transcript written on Rd2.log.
+This is makeindex, version 2.15 [TeX Live 2018] (kpathsea + Thai support).
+Scanning input file Rd2.idx....done (49 entries accepted, 0 rejected).
+Sorting entries....done (337 comparisons).
+Generating output file Rd2.ind....done (80 lines written, 0 warnings).
+Output written in Rd2.ind.
+Transcript written in Rd2.ilg.
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex)
+ restricted \write18 enabled.
+entering extended mode
+LaTeX2e <2018-04-01> patch level 5
+(./Rd2.tex
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/base/book.cls
+Document Class: book 2014/09/29 v1.4h Standard LaTeX document class
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/base/bk10.clo))
+(/Library/Frameworks/R.framework/Resources/share/texmf/tex/latex/Rd.sty
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/base/ifthen.sty)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/tools/longtable.sty)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/tools/bm.sty)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/base/alltt.sty)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/tools/verbatim.sty)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/url/url.sty)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/base/textcomp.sty
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/base/ts1enc.def
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/base/ts1enc.dfu)))
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/inconsolata/zi4.sty
+`inconsolata-zi4' v1.112, 2017/01/04 Text macros for Inconsolata (msharpe)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/xkeyval/xkeyval.sty
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/generic/xkeyval/xkeyval.tex
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/generic/xkeyval/xkvutils.tex
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/generic/xkeyval/keyval.tex)))))
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/graphics/color.sty
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/graphics-cfg/color.cfg)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/graphics-def/pdftex.def))
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/hyperref/hyperref.sty
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/generic/oberdiek/hobsub-hyperref.s
+ty
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/generic/oberdiek/hobsub-generic.st
+y)) (/Users/davis/Library/TinyTeX/texmf-dist/tex/generic/ifxetex/ifxetex.sty)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/oberdiek/auxhook.sty)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/oberdiek/kvoptions.sty)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/hyperref/pd1enc.def)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/latexconfig/hyperref.cfg))
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/hyperref/hpdftex.def
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty)
+)
+
+Package hyperref Warning: Option `hyperindex' has already been used,
+(hyperref)                setting the option has no effect on input line 366.
+
+
+Package hyperref Warning: Option `pagebackref' has already been used,
+(hyperref)                setting the option has no effect on input line 366.
+
+) (/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/base/makeidx.sty)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/base/inputenc.sty)
+Writing index file Rd2.idx
+(./Rd2.aux) (/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/base/ts1cmr.fd)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/hyperref/nameref.sty
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/generic/oberdiek/gettitlestring.st
+y)) (./Rd2.out) (./Rd2.out)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/inconsolata/ot1zi4.fd)
+
+LaTeX Font Warning: Font shape `OML/zi4/m/n' undefined
+(Font)              using `OML/cmm/m/it' instead
+(Font)              for symbol `textless' on input line 46.
+
+[1{/Users/davis/Library/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+(./Rd2.toc) [2]
+Overfull \hbox (8.34766pt too wide) in paragraph at lines 106--111
+[]\OT1/cmr/m/n/10 The IQR Method uses an in-nerquar-tile range of 25 the me-dia
+n. With the de-fault \OT1/zi4/m/n/10 alpha = 0.05\OT1/cmr/m/n/10 ,
+
+Overfull \hbox (15.12314pt too wide) in paragraph at lines 137--138
+\OT1/cmr/m/n/10 nique for Deal-ing with Mul-ti-ple Out-liers. ASTM Stan-dard-iz
+a-tion News. www.astm.org/sn[][] 
+[3] [4]
+Overfull \hbox (37.13551pt too wide) in paragraph at lines 268--270
+[]\OT1/cmr/m/n/10 To learn more about \OT1/zi4/m/n/10 anomalize\OT1/cmr/m/n/10 
+, start with the vi-gnettes: \OT1/zi4/m/n/10 browseVignettes(package = "anomali
+ze") 
+[5] [6] [7] [8] [9] [10] [11] [12]
+Overfull \hbox (5.34558pt too wide) in paragraph at lines 721--724
+\OT1/cmr/m/n/10 Twit-ter method uses \OT1/zi4/m/n/10 trend \OT1/cmr/m/n/10 to r
+e-move the trend (see [][]\OT1/zi4/m/n/10 decompose[]twitter()[][][]\OT1/cmr/m/
+n/10 ). 
+[13] [14]
+Overfull \hbox (9.2994pt too wide) in paragraph at lines 862--865
+\OT1/cmr/m/n/10 ber of ob-ser-va-tions per fre-quency (e.g. 10). See [][]\OT1/z
+i4/m/n/10 tibbletime::collapse[]by()[][][]
+[15] (/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/inconsolata/ts1zi4.fd)
+[16]
+Overfull \hbox (8.91667pt too wide) in paragraph at lines 967--969
+[]\OT1/cmr/m/n/10 A \OT1/zi4/m/n/10 tibble \OT1/cmr/m/n/10 or \OT1/zi4/m/n/10 t
+bl[]time \OT1/cmr/m/n/10 ob-ject that has been pro-cessed with \OT1/zi4/m/n/10 
+time[]decompose()
+[17] (./Rd2.ind [18]
+
+LaTeX Font Warning: Font shape `OT1/zi4/m/it' undefined
+(Font)              using `OT1/zi4/m/n' instead on input line 14.
+
+[19]) (./Rd2.aux)
+
+LaTeX Font Warning: Some font shapes were not available, defaults substituted.
+
+ )
+(see the transcript file for additional information)pdfTeX warning (dest): name
+{Rfn.stats::stl\(\)} has been referenced but does not exist, replaced by a fixe
+d one
+
+pdfTeX warning (dest): name{Rfn.tibbletime::collapse.Rul.by\(\)} has been refer
+enced but does not exist, replaced by a fixed one
+
+{/Users/davis/Library/TinyTeX/texmf-dist/fonts/enc/dvips/inconsolata/i4-ts1.enc
+}{/Users/davis/Library/TinyTeX/texmf-dist/fonts/enc/dvips/inconsolata/i4-ot1-0.
+enc} </Users/davis/.TinyTeX/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1000.600p
+k></Users/davis/Library/TinyTeX/texmf-dist/fonts/type1/public/inconsolata/Incon
+solata-zi4r.pfb></Users/davis/Library/TinyTeX/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmb10.pfb></Users/davis/Library/TinyTeX/texmf-dist/fonts/type1/public/
+amsfonts/cm/cmbx10.pfb></Users/davis/Library/TinyTeX/texmf-dist/fonts/type1/pub
+lic/amsfonts/cm/cmbx12.pfb></Users/davis/Library/TinyTeX/texmf-dist/fonts/type1
+/public/amsfonts/cm/cmmi10.pfb></Users/davis/Library/TinyTeX/texmf-dist/fonts/t
+ype1/public/amsfonts/cm/cmr10.pfb></Users/davis/Library/TinyTeX/texmf-dist/font
+s/type1/public/amsfonts/cm/cmr12.pfb></Users/davis/Library/TinyTeX/texmf-dist/f
+onts/type1/public/amsfonts/cm/cmsl10.pfb></Users/davis/Library/TinyTeX/texmf-di
+st/fonts/type1/public/amsfonts/cm/cmss12.pfb></Users/davis/Library/TinyTeX/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></Users/davis/Library/TinyTeX/
+texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
+Output written on Rd2.pdf (19 pages, 200680 bytes).
+Transcript written on Rd2.log.
+Saving output to ‘anomalize-manual.pdf’ ...
+Done
+You may want to clean up by 'rm -Rf /var/folders/41/qx_9ygp112nfysdfgxcssgwc0000gn/T//RtmpoyoFJJ/Rd2pdfd9521e2c9f77'

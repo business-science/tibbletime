@@ -1,0 +1,581 @@
+Hmm ... looks like a package
+
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex)
+ restricted \write18 enabled.
+entering extended mode
+LaTeX2e <2018-04-01> patch level 5
+(./Rd2.tex
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/base/book.cls
+Document Class: book 2014/09/29 v1.4h Standard LaTeX document class
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/base/bk10.clo))
+(/Library/Frameworks/R.framework/Resources/share/texmf/tex/latex/Rd.sty
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/base/ifthen.sty)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/tools/longtable.sty)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/tools/bm.sty)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/base/alltt.sty)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/tools/verbatim.sty)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/url/url.sty)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/base/textcomp.sty
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/base/ts1enc.def
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/base/ts1enc.dfu)))
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/inconsolata/zi4.sty
+`inconsolata-zi4' v1.112, 2017/01/04 Text macros for Inconsolata (msharpe)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/xkeyval/xkeyval.sty
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/generic/xkeyval/xkeyval.tex
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/generic/xkeyval/xkvutils.tex
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/generic/xkeyval/keyval.tex)))))
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/graphics/color.sty
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/graphics-cfg/color.cfg)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/graphics-def/pdftex.def))
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/hyperref/hyperref.sty
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/generic/oberdiek/hobsub-hyperref.s
+ty
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/generic/oberdiek/hobsub-generic.st
+y)) (/Users/davis/Library/TinyTeX/texmf-dist/tex/generic/ifxetex/ifxetex.sty)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/oberdiek/auxhook.sty)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/oberdiek/kvoptions.sty)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/hyperref/pd1enc.def)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/latexconfig/hyperref.cfg))
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/hyperref/hpdftex.def
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty)
+)
+
+Package hyperref Warning: Option `hyperindex' has already been used,
+(hyperref)                setting the option has no effect on input line 366.
+
+
+Package hyperref Warning: Option `pagebackref' has already been used,
+(hyperref)                setting the option has no effect on input line 366.
+
+) (/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/base/makeidx.sty)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/base/inputenc.sty)
+Writing index file Rd2.idx
+No file Rd2.aux.
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/base/ts1cmr.fd)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/hyperref/nameref.sty
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/generic/oberdiek/gettitlestring.st
+y)) (/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/inconsolata/ot1zi4.fd)
+
+LaTeX Font Warning: Font shape `OML/zi4/m/n' undefined
+(Font)              using `OML/cmm/m/it' instead
+(Font)              for symbol `textless' on input line 21.
+
+[1{/Users/davis/Library/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+[2] [3] [4] [5] [6] [7] [8] [9] [10] [11] [12] [13]
+Overfull \hbox (5.41223pt too wide) in paragraph at lines 886--887
+[]\OT1/cmr/m/n/10 common dis-crete scale pa-ram-e-ters: \OT1/zi4/m/n/10 name\OT
+1/cmr/m/n/10 , \OT1/zi4/m/n/10 breaks\OT1/cmr/m/n/10 , \OT1/zi4/m/n/10 labels\O
+T1/cmr/m/n/10 , \OT1/zi4/m/n/10 na.value\OT1/cmr/m/n/10 , \OT1/zi4/m/n/10 limit
+s
+[14] [15]
+Overfull \hbox (10.39813pt too wide) in paragraph at lines 1016--1018
+[]\OT1/cmr/b/n/10 Performance Anal-y-sis and Port-fo-lio Ag-gre-ga-tion: [][]\O
+T1/zi4/m/n/10 tq[]performance()[][][] \OT1/cmr/m/n/10 and [][]\OT1/zi4/m/n/10 t
+q[]portfolio()[][][] 
+
+Overfull \hbox (34.63564pt too wide) in paragraph at lines 1022--1024
+[]\OT1/cmr/m/n/10 To learn more about tidyquant, start with the vi-gnettes: \OT
+1/zi4/m/n/10 browseVignettes(package = "tidyquant") 
+[16]
+Overfull \hbox (103.43173pt too wide) in paragraph at lines 1069--1071
+[]\OT1/zi4/m/n/10 "economic.data"\OT1/cmr/m/n/10 : Get eco-nomic data from [][]
+FRED[][]. rap-per for \OT1/zi4/m/n/10 quantmod::getSymbols.FRED()\OT1/cmr/m/n/1
+0 . 
+
+Overfull \hbox (4.83914pt too wide) in paragraph at lines 1075--1078
+[]\OT1/zi4/m/n/10 "quandl"\OT1/cmr/m/n/10 : Get data sets from [][]Quandl[][]. 
+Wrap-per for \OT1/zi4/m/n/10 Quandl::Quandl()\OT1/cmr/m/n/10 .
+[17] (/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/inconsolata/ts1zi4.fd)
+[18] [19] [20]
+Overfull \hbox (3.809pt too wide) in paragraph at lines 1354--1360
+[]\OT1/zi4/m/n/10 tq[]mutate[]\OT1/cmr/m/n/10 , \OT1/zi4/m/n/10 tq[]mutate[]xy[
+]\OT1/cmr/m/n/10 , \OT1/zi4/m/n/10 tq[]transmute[]\OT1/cmr/m/n/10 , and \OT1/zi
+4/m/n/10 tq[]transmute[]xy[] \OT1/cmr/m/n/10 are setup for Non-Standard
+[21] [22]
+Overfull \hbox (77.56415pt too wide) in paragraph at lines 1455--1457
+[]\OT1/cmr/m/n/10 The per-for-mance func-tion from \OT1/zi4/m/n/10 PerformanceA
+nalytics\OT1/cmr/m/n/10 . See \OT1/zi4/m/n/10 tq[]performance[]fun[]options()
+[23] [24]
+Overfull \hbox (18.10669pt too wide) in paragraph at lines 1575--1576
+[]\OT1/cmr/m/n/10 Additional pa-ram-e-ters passed to \OT1/zi4/m/n/10 Performanc
+eAnalytics::Returns.portfolio 
+[25] [26]
+No file Rd2.ind.
+[27] (./Rd2.aux)
+
+Package rerunfilecheck Warning: File `Rd2.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+
+LaTeX Font Warning: Some font shapes were not available, defaults substituted.
+
+ )
+(see the transcript file for additional information)pdfTeX warning (dest): name
+{Rfn.PerformanceAnalytics::Return.portfolio\(\)} has been referenced but does n
+ot exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.Rblpapi::blpConnect\(\)} has been referenced bu
+t does not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.discrete.Rul.scale} has been referenced but doe
+s not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.TTR::EVWMA\(\)} has been referenced but does no
+t exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.TTR::VWMA\(\)} has been referenced but does not
+ exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.TTR::ZLEMA\(\)} has been referenced but does no
+t exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.TTR::DEMA\(\)} has been referenced but does not
+ exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.TTR::WMA\(\)} has been referenced but does not 
+exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.TTR::EMA\(\)} has been referenced but does not 
+exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.ggplot2::layer\(\)} has been referenced but doe
+s not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.ggplot2::borders\(\)} has been referenced but d
+oes not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.ggplot2::fortify\(\)} has been referenced but d
+oes not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.ggplot2::ggplot\(\)} has been referenced but do
+es not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.ggplot2::aes.Rul.\(\)} has been referenced but 
+does not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.ggplot2::aes\(\)} has been referenced but does 
+not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.TTR::SMA\(\)} has been referenced but does not 
+exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.timetk::tk.Rul.tbl\(\)} has been referenced but
+ does not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.timetk::tk.Rul.xts\(\)} has been referenced but
+ does not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.ggplot2::coord.Rul.cartesian\(\)} has been refe
+renced but does not exist, replaced by a fixed one
+
+{/Users/davis/Library/TinyTeX/texmf-dist/fonts/enc/dvips/inconsolata/i4-ts1.enc
+} </Users/davis/.TinyTeX/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1000.600pk>{
+/Users/davis/Library/TinyTeX/texmf-dist/fonts/enc/dvips/inconsolata/i4-ot1-0.en
+c}</Users/davis/Library/TinyTeX/texmf-dist/fonts/type1/public/inconsolata/Incon
+solata-zi4r.pfb></Users/davis/Library/TinyTeX/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmb10.pfb></Users/davis/Library/TinyTeX/texmf-dist/fonts/type1/public/
+amsfonts/cm/cmbx10.pfb></Users/davis/Library/TinyTeX/texmf-dist/fonts/type1/pub
+lic/amsfonts/cm/cmbx12.pfb></Users/davis/Library/TinyTeX/texmf-dist/fonts/type1
+/public/amsfonts/cm/cmmi10.pfb></Users/davis/Library/TinyTeX/texmf-dist/fonts/t
+ype1/public/amsfonts/cm/cmr10.pfb></Users/davis/Library/TinyTeX/texmf-dist/font
+s/type1/public/amsfonts/cm/cmr12.pfb></Users/davis/Library/TinyTeX/texmf-dist/f
+onts/type1/public/amsfonts/cm/cmsl10.pfb></Users/davis/Library/TinyTeX/texmf-di
+st/fonts/type1/public/amsfonts/cm/cmss12.pfb></Users/davis/Library/TinyTeX/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
+Output written on Rd2.pdf (27 pages, 216406 bytes).
+Transcript written on Rd2.log.
+This is makeindex, version 2.15 [TeX Live 2018] (kpathsea + Thai support).
+Scanning input file Rd2.idx....done (130 entries accepted, 0 rejected).
+Sorting entries....done (974 comparisons).
+Generating output file Rd2.ind....done (190 lines written, 0 warnings).
+Output written in Rd2.ind.
+Transcript written in Rd2.ilg.
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex)
+ restricted \write18 enabled.
+entering extended mode
+LaTeX2e <2018-04-01> patch level 5
+(./Rd2.tex
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/base/book.cls
+Document Class: book 2014/09/29 v1.4h Standard LaTeX document class
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/base/bk10.clo))
+(/Library/Frameworks/R.framework/Resources/share/texmf/tex/latex/Rd.sty
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/base/ifthen.sty)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/tools/longtable.sty)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/tools/bm.sty)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/base/alltt.sty)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/tools/verbatim.sty)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/url/url.sty)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/base/textcomp.sty
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/base/ts1enc.def
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/base/ts1enc.dfu)))
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/inconsolata/zi4.sty
+`inconsolata-zi4' v1.112, 2017/01/04 Text macros for Inconsolata (msharpe)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/xkeyval/xkeyval.sty
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/generic/xkeyval/xkeyval.tex
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/generic/xkeyval/xkvutils.tex
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/generic/xkeyval/keyval.tex)))))
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/graphics/color.sty
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/graphics-cfg/color.cfg)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/graphics-def/pdftex.def))
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/hyperref/hyperref.sty
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/generic/oberdiek/hobsub-hyperref.s
+ty
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/generic/oberdiek/hobsub-generic.st
+y)) (/Users/davis/Library/TinyTeX/texmf-dist/tex/generic/ifxetex/ifxetex.sty)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/oberdiek/auxhook.sty)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/oberdiek/kvoptions.sty)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/hyperref/pd1enc.def)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/latexconfig/hyperref.cfg))
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/hyperref/hpdftex.def
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty)
+)
+
+Package hyperref Warning: Option `hyperindex' has already been used,
+(hyperref)                setting the option has no effect on input line 366.
+
+
+Package hyperref Warning: Option `pagebackref' has already been used,
+(hyperref)                setting the option has no effect on input line 366.
+
+) (/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/base/makeidx.sty)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/base/inputenc.sty)
+Writing index file Rd2.idx
+(./Rd2.aux) (/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/base/ts1cmr.fd)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/hyperref/nameref.sty
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/generic/oberdiek/gettitlestring.st
+y)) (./Rd2.out) (./Rd2.out)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/inconsolata/ot1zi4.fd)
+
+LaTeX Font Warning: Font shape `OML/zi4/m/n' undefined
+(Font)              using `OML/cmm/m/it' instead
+(Font)              for symbol `textless' on input line 21.
+
+(./Rd2.toc [1{/Users/davis/Library/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pd
+ftex.map}]) [2] [3] [4] [5] [6] [7] [8] [9] [10] [11] [12] [13] [14]
+Overfull \hbox (5.41223pt too wide) in paragraph at lines 886--887
+[]\OT1/cmr/m/n/10 common dis-crete scale pa-ram-e-ters: \OT1/zi4/m/n/10 name\OT
+1/cmr/m/n/10 , \OT1/zi4/m/n/10 breaks\OT1/cmr/m/n/10 , \OT1/zi4/m/n/10 labels\O
+T1/cmr/m/n/10 , \OT1/zi4/m/n/10 na.value\OT1/cmr/m/n/10 , \OT1/zi4/m/n/10 limit
+s
+[15] [16]
+Overfull \hbox (10.39813pt too wide) in paragraph at lines 1016--1018
+[]\OT1/cmr/b/n/10 Performance Anal-y-sis and Port-fo-lio Ag-gre-ga-tion: [][]\O
+T1/zi4/m/n/10 tq[]performance()[][][] \OT1/cmr/m/n/10 and [][]\OT1/zi4/m/n/10 t
+q[]portfolio()[][][] 
+
+Overfull \hbox (34.63564pt too wide) in paragraph at lines 1022--1024
+[]\OT1/cmr/m/n/10 To learn more about tidyquant, start with the vi-gnettes: \OT
+1/zi4/m/n/10 browseVignettes(package = "tidyquant") 
+[17]
+Overfull \hbox (103.43173pt too wide) in paragraph at lines 1069--1071
+[]\OT1/zi4/m/n/10 "economic.data"\OT1/cmr/m/n/10 : Get eco-nomic data from [][]
+FRED[][]. rap-per for \OT1/zi4/m/n/10 quantmod::getSymbols.FRED()\OT1/cmr/m/n/1
+0 . 
+
+Overfull \hbox (4.83914pt too wide) in paragraph at lines 1075--1078
+[]\OT1/zi4/m/n/10 "quandl"\OT1/cmr/m/n/10 : Get data sets from [][]Quandl[][]. 
+Wrap-per for \OT1/zi4/m/n/10 Quandl::Quandl()\OT1/cmr/m/n/10 .
+[18] (/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/inconsolata/ts1zi4.fd)
+[19] [20] [21]
+Overfull \hbox (3.809pt too wide) in paragraph at lines 1354--1360
+[]\OT1/zi4/m/n/10 tq[]mutate[]\OT1/cmr/m/n/10 , \OT1/zi4/m/n/10 tq[]mutate[]xy[
+]\OT1/cmr/m/n/10 , \OT1/zi4/m/n/10 tq[]transmute[]\OT1/cmr/m/n/10 , and \OT1/zi
+4/m/n/10 tq[]transmute[]xy[] \OT1/cmr/m/n/10 are setup for Non-Standard
+[22] [23]
+Overfull \hbox (77.56415pt too wide) in paragraph at lines 1455--1457
+[]\OT1/cmr/m/n/10 The per-for-mance func-tion from \OT1/zi4/m/n/10 PerformanceA
+nalytics\OT1/cmr/m/n/10 . See \OT1/zi4/m/n/10 tq[]performance[]fun[]options()
+[24] [25]
+Overfull \hbox (18.10669pt too wide) in paragraph at lines 1575--1576
+[]\OT1/cmr/m/n/10 Additional pa-ram-e-ters passed to \OT1/zi4/m/n/10 Performanc
+eAnalytics::Returns.portfolio 
+[26] [27] (./Rd2.ind [28]
+
+LaTeX Font Warning: Font shape `OT1/zi4/m/it' undefined
+(Font)              using `OT1/zi4/m/n' instead on input line 17.
+
+
+Overfull \hbox (13.63449pt too wide) in paragraph at lines 75--77
+[]\OT1/zi4/m/it/10 PerformanceAnalytics::Return.portfolio()\OT1/cmr/m/n/10 , 
+[29] [30]) (./Rd2.aux)
+
+Package rerunfilecheck Warning: File `Rd2.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+
+LaTeX Font Warning: Some font shapes were not available, defaults substituted.
+
+ )
+(see the transcript file for additional information)pdfTeX warning (dest): name
+{Rfn.PerformanceAnalytics::Return.portfolio\(\)} has been referenced but does n
+ot exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.Rblpapi::blpConnect\(\)} has been referenced bu
+t does not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.discrete.Rul.scale} has been referenced but doe
+s not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.TTR::EVWMA\(\)} has been referenced but does no
+t exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.TTR::VWMA\(\)} has been referenced but does not
+ exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.TTR::ZLEMA\(\)} has been referenced but does no
+t exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.TTR::DEMA\(\)} has been referenced but does not
+ exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.TTR::WMA\(\)} has been referenced but does not 
+exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.TTR::EMA\(\)} has been referenced but does not 
+exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.ggplot2::layer\(\)} has been referenced but doe
+s not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.ggplot2::borders\(\)} has been referenced but d
+oes not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.ggplot2::fortify\(\)} has been referenced but d
+oes not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.ggplot2::ggplot\(\)} has been referenced but do
+es not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.ggplot2::aes.Rul.\(\)} has been referenced but 
+does not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.ggplot2::aes\(\)} has been referenced but does 
+not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.TTR::SMA\(\)} has been referenced but does not 
+exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.timetk::tk.Rul.tbl\(\)} has been referenced but
+ does not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.timetk::tk.Rul.xts\(\)} has been referenced but
+ does not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.ggplot2::coord.Rul.cartesian\(\)} has been refe
+renced but does not exist, replaced by a fixed one
+
+{/Users/davis/Library/TinyTeX/texmf-dist/fonts/enc/dvips/inconsolata/i4-ts1.enc
+} </Users/davis/.TinyTeX/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1000.600pk>{
+/Users/davis/Library/TinyTeX/texmf-dist/fonts/enc/dvips/inconsolata/i4-ot1-0.en
+c}</Users/davis/Library/TinyTeX/texmf-dist/fonts/type1/public/inconsolata/Incon
+solata-zi4r.pfb></Users/davis/Library/TinyTeX/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmb10.pfb></Users/davis/Library/TinyTeX/texmf-dist/fonts/type1/public/
+amsfonts/cm/cmbx10.pfb></Users/davis/Library/TinyTeX/texmf-dist/fonts/type1/pub
+lic/amsfonts/cm/cmbx12.pfb></Users/davis/Library/TinyTeX/texmf-dist/fonts/type1
+/public/amsfonts/cm/cmmi10.pfb></Users/davis/Library/TinyTeX/texmf-dist/fonts/t
+ype1/public/amsfonts/cm/cmr10.pfb></Users/davis/Library/TinyTeX/texmf-dist/font
+s/type1/public/amsfonts/cm/cmr12.pfb></Users/davis/Library/TinyTeX/texmf-dist/f
+onts/type1/public/amsfonts/cm/cmsl10.pfb></Users/davis/Library/TinyTeX/texmf-di
+st/fonts/type1/public/amsfonts/cm/cmss12.pfb></Users/davis/Library/TinyTeX/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></Users/davis/Library/TinyTeX/
+texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
+Output written on Rd2.pdf (30 pages, 238228 bytes).
+Transcript written on Rd2.log.
+This is makeindex, version 2.15 [TeX Live 2018] (kpathsea + Thai support).
+Scanning input file Rd2.idx....done (130 entries accepted, 0 rejected).
+Sorting entries....done (972 comparisons).
+Generating output file Rd2.ind....done (190 lines written, 0 warnings).
+Output written in Rd2.ind.
+Transcript written in Rd2.ilg.
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex)
+ restricted \write18 enabled.
+entering extended mode
+LaTeX2e <2018-04-01> patch level 5
+(./Rd2.tex
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/base/book.cls
+Document Class: book 2014/09/29 v1.4h Standard LaTeX document class
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/base/bk10.clo))
+(/Library/Frameworks/R.framework/Resources/share/texmf/tex/latex/Rd.sty
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/base/ifthen.sty)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/tools/longtable.sty)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/tools/bm.sty)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/base/alltt.sty)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/tools/verbatim.sty)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/url/url.sty)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/base/textcomp.sty
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/base/ts1enc.def
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/base/ts1enc.dfu)))
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/inconsolata/zi4.sty
+`inconsolata-zi4' v1.112, 2017/01/04 Text macros for Inconsolata (msharpe)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/xkeyval/xkeyval.sty
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/generic/xkeyval/xkeyval.tex
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/generic/xkeyval/xkvutils.tex
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/generic/xkeyval/keyval.tex)))))
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/graphics/color.sty
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/graphics-cfg/color.cfg)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/graphics-def/pdftex.def))
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/hyperref/hyperref.sty
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/generic/oberdiek/hobsub-hyperref.s
+ty
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/generic/oberdiek/hobsub-generic.st
+y)) (/Users/davis/Library/TinyTeX/texmf-dist/tex/generic/ifxetex/ifxetex.sty)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/oberdiek/auxhook.sty)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/oberdiek/kvoptions.sty)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/hyperref/pd1enc.def)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/latexconfig/hyperref.cfg))
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/hyperref/hpdftex.def
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty)
+)
+
+Package hyperref Warning: Option `hyperindex' has already been used,
+(hyperref)                setting the option has no effect on input line 366.
+
+
+Package hyperref Warning: Option `pagebackref' has already been used,
+(hyperref)                setting the option has no effect on input line 366.
+
+) (/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/base/makeidx.sty)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/base/inputenc.sty)
+Writing index file Rd2.idx
+(./Rd2.aux) (/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/base/ts1cmr.fd)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/hyperref/nameref.sty
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/generic/oberdiek/gettitlestring.st
+y)) (./Rd2.out) (./Rd2.out)
+(/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/inconsolata/ot1zi4.fd)
+
+LaTeX Font Warning: Font shape `OML/zi4/m/n' undefined
+(Font)              using `OML/cmm/m/it' instead
+(Font)              for symbol `textless' on input line 21.
+
+(./Rd2.toc [1{/Users/davis/Library/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pd
+ftex.map}]) [2] [3] [4] [5] [6] [7] [8] [9] [10] [11] [12] [13] [14]
+Overfull \hbox (5.41223pt too wide) in paragraph at lines 886--887
+[]\OT1/cmr/m/n/10 common dis-crete scale pa-ram-e-ters: \OT1/zi4/m/n/10 name\OT
+1/cmr/m/n/10 , \OT1/zi4/m/n/10 breaks\OT1/cmr/m/n/10 , \OT1/zi4/m/n/10 labels\O
+T1/cmr/m/n/10 , \OT1/zi4/m/n/10 na.value\OT1/cmr/m/n/10 , \OT1/zi4/m/n/10 limit
+s
+[15] [16]
+Overfull \hbox (10.39813pt too wide) in paragraph at lines 1016--1018
+[]\OT1/cmr/b/n/10 Performance Anal-y-sis and Port-fo-lio Ag-gre-ga-tion: [][]\O
+T1/zi4/m/n/10 tq[]performance()[][][] \OT1/cmr/m/n/10 and [][]\OT1/zi4/m/n/10 t
+q[]portfolio()[][][] 
+
+Overfull \hbox (34.63564pt too wide) in paragraph at lines 1022--1024
+[]\OT1/cmr/m/n/10 To learn more about tidyquant, start with the vi-gnettes: \OT
+1/zi4/m/n/10 browseVignettes(package = "tidyquant") 
+[17]
+Overfull \hbox (103.43173pt too wide) in paragraph at lines 1069--1071
+[]\OT1/zi4/m/n/10 "economic.data"\OT1/cmr/m/n/10 : Get eco-nomic data from [][]
+FRED[][]. rap-per for \OT1/zi4/m/n/10 quantmod::getSymbols.FRED()\OT1/cmr/m/n/1
+0 . 
+
+Overfull \hbox (4.83914pt too wide) in paragraph at lines 1075--1078
+[]\OT1/zi4/m/n/10 "quandl"\OT1/cmr/m/n/10 : Get data sets from [][]Quandl[][]. 
+Wrap-per for \OT1/zi4/m/n/10 Quandl::Quandl()\OT1/cmr/m/n/10 .
+[18] (/Users/davis/Library/TinyTeX/texmf-dist/tex/latex/inconsolata/ts1zi4.fd)
+[19] [20] [21]
+Overfull \hbox (3.809pt too wide) in paragraph at lines 1354--1360
+[]\OT1/zi4/m/n/10 tq[]mutate[]\OT1/cmr/m/n/10 , \OT1/zi4/m/n/10 tq[]mutate[]xy[
+]\OT1/cmr/m/n/10 , \OT1/zi4/m/n/10 tq[]transmute[]\OT1/cmr/m/n/10 , and \OT1/zi
+4/m/n/10 tq[]transmute[]xy[] \OT1/cmr/m/n/10 are setup for Non-Standard
+[22] [23]
+Overfull \hbox (77.56415pt too wide) in paragraph at lines 1455--1457
+[]\OT1/cmr/m/n/10 The per-for-mance func-tion from \OT1/zi4/m/n/10 PerformanceA
+nalytics\OT1/cmr/m/n/10 . See \OT1/zi4/m/n/10 tq[]performance[]fun[]options()
+[24] [25]
+Overfull \hbox (18.10669pt too wide) in paragraph at lines 1575--1576
+[]\OT1/cmr/m/n/10 Additional pa-ram-e-ters passed to \OT1/zi4/m/n/10 Performanc
+eAnalytics::Returns.portfolio 
+[26] [27] (./Rd2.ind [28]
+
+LaTeX Font Warning: Font shape `OT1/zi4/m/it' undefined
+(Font)              using `OT1/zi4/m/n' instead on input line 17.
+
+
+Overfull \hbox (13.63449pt too wide) in paragraph at lines 75--77
+[]\OT1/zi4/m/it/10 PerformanceAnalytics::Return.portfolio()\OT1/cmr/m/n/10 , 
+[29] [30]) (./Rd2.aux)
+
+LaTeX Font Warning: Some font shapes were not available, defaults substituted.
+
+ )
+(see the transcript file for additional information)pdfTeX warning (dest): name
+{Rfn.PerformanceAnalytics::Return.portfolio\(\)} has been referenced but does n
+ot exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.Rblpapi::blpConnect\(\)} has been referenced bu
+t does not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.discrete.Rul.scale} has been referenced but doe
+s not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.TTR::EVWMA\(\)} has been referenced but does no
+t exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.TTR::VWMA\(\)} has been referenced but does not
+ exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.TTR::ZLEMA\(\)} has been referenced but does no
+t exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.TTR::DEMA\(\)} has been referenced but does not
+ exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.TTR::WMA\(\)} has been referenced but does not 
+exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.TTR::EMA\(\)} has been referenced but does not 
+exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.ggplot2::layer\(\)} has been referenced but doe
+s not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.ggplot2::borders\(\)} has been referenced but d
+oes not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.ggplot2::fortify\(\)} has been referenced but d
+oes not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.ggplot2::ggplot\(\)} has been referenced but do
+es not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.ggplot2::aes.Rul.\(\)} has been referenced but 
+does not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.ggplot2::aes\(\)} has been referenced but does 
+not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.TTR::SMA\(\)} has been referenced but does not 
+exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.timetk::tk.Rul.tbl\(\)} has been referenced but
+ does not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.timetk::tk.Rul.xts\(\)} has been referenced but
+ does not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.ggplot2::coord.Rul.cartesian\(\)} has been refe
+renced but does not exist, replaced by a fixed one
+
+{/Users/davis/Library/TinyTeX/texmf-dist/fonts/enc/dvips/inconsolata/i4-ts1.enc
+} </Users/davis/.TinyTeX/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1000.600pk>{
+/Users/davis/Library/TinyTeX/texmf-dist/fonts/enc/dvips/inconsolata/i4-ot1-0.en
+c}</Users/davis/Library/TinyTeX/texmf-dist/fonts/type1/public/inconsolata/Incon
+solata-zi4r.pfb></Users/davis/Library/TinyTeX/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmb10.pfb></Users/davis/Library/TinyTeX/texmf-dist/fonts/type1/public/
+amsfonts/cm/cmbx10.pfb></Users/davis/Library/TinyTeX/texmf-dist/fonts/type1/pub
+lic/amsfonts/cm/cmbx12.pfb></Users/davis/Library/TinyTeX/texmf-dist/fonts/type1
+/public/amsfonts/cm/cmmi10.pfb></Users/davis/Library/TinyTeX/texmf-dist/fonts/t
+ype1/public/amsfonts/cm/cmr10.pfb></Users/davis/Library/TinyTeX/texmf-dist/font
+s/type1/public/amsfonts/cm/cmr12.pfb></Users/davis/Library/TinyTeX/texmf-dist/f
+onts/type1/public/amsfonts/cm/cmsl10.pfb></Users/davis/Library/TinyTeX/texmf-di
+st/fonts/type1/public/amsfonts/cm/cmss12.pfb></Users/davis/Library/TinyTeX/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></Users/davis/Library/TinyTeX/
+texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
+Output written on Rd2.pdf (30 pages, 238840 bytes).
+Transcript written on Rd2.log.
+Saving output to ‘tidyquant-manual.pdf’ ...
+Done
+You may want to clean up by 'rm -Rf /var/folders/41/qx_9ygp112nfysdfgxcssgwc0000gn/T//RtmpoRJ2Y1/Rd2pdfcbcc668ccb80'

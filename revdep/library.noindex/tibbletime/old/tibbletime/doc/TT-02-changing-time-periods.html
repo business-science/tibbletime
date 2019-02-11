@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="author" content="Davis Vaughan" />
+
+<meta name="date" content="2018-01-30" />
+
+<title>Changing periodicity</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+
+
+<link href="data:text/css;charset=utf-8,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23header%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%20code%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Changing periodicity</h1>
+<h4 class="author"><em>Davis Vaughan</em></h4>
+<h4 class="date"><em>2018-01-30</em></h4>
+
+
+<div id="TOC">
+<ul>
+<li><a href="#introducing-as_period">Introducing as_period()</a><ul>
+<li><a href="#datasets-required">Datasets required</a></li>
+<li><a href="#daily-to-monthly">Daily to monthly</a></li>
+<li><a href="#generic-periods">Generic periods</a></li>
+<li><a href="#details-and-the-start_date-argument">Details and the <code>start_date</code> argument</a></li>
+<li><a href="#the-side-argument">The <code>side</code> argument</a></li>
+<li><a href="#grouped-datasets">Grouped datasets</a></li>
+</ul></li>
+</ul>
+</div>
+
+<div id="introducing-as_period" class="section level1">
+<h1>Introducing as_period()</h1>
+<p>Often with time series you want to aggregate your dataset to a less granular period. An example of this might be moving from a daily series to a monthly series to look at broader trends in your data. <code>as_period()</code> allows you to do exactly this.</p>
+<p>The <code>period</code> argument in <code>as_period()</code> for specifying the transformation you want is a character with a general format of <code>&quot;frequency period&quot;</code> where frequency is a number like 1 or 2, and period is an interval like <code>weekly</code> or <code>yearly</code>. There must be a space between the two.</p>
+<div id="datasets-required" class="section level2">
+<h2>Datasets required</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tibbletime)
+<span class="kw">library</span>(dplyr)
+
+<span class="co"># Facebook stock prices.</span>
+<span class="kw">data</span>(FB)
+
+<span class="co"># Convert FB to tbl_time</span>
+FB &lt;-<span class="st"> </span><span class="kw">as_tbl_time</span>(FB, <span class="dt">index =</span> date)
+
+<span class="co"># FANG stock prices</span>
+<span class="kw">data</span>(FANG)
+
+<span class="co"># Convert FANG to tbl_time and group</span>
+FANG &lt;-<span class="st"> </span><span class="kw">as_tbl_time</span>(FANG, <span class="dt">index =</span> date) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(symbol)</code></pre></div>
+</div>
+<div id="daily-to-monthly" class="section level2">
+<h2>Daily to monthly</h2>
+<p>To see this in action, transform the daily <code>FB</code> data set to monthly data.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">as_period</span>(FB, <span class="st">'1 month'</span>)</code></pre></div>
+<pre><code>## # A time tibble: 48 x 8
+## # Index: date
+##    symbol date        open  high   low close    volume adjusted
+##    &lt;chr&gt;  &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+##  1 FB     2013-01-02  27.4  28.2  27.4  28.0  69846400     28.0
+##  2 FB     2013-02-01  31.0  31.0  29.6  29.7  85856700     29.7
+##  3 FB     2013-03-01  27.0  28.1  26.8  27.8  54064800     27.8
+##  4 FB     2013-04-01  25.6  25.9  25.3  25.5  22249300     25.5
+##  5 FB     2013-05-01  27.8  27.9  27.3  27.4  64567600     27.4
+##  6 FB     2013-06-03  24.3  24.3  23.7  23.8  35733800     23.8
+##  7 FB     2013-07-01  25.0  25.1  24.6  24.8  20582200     24.8
+##  8 FB     2013-08-01  37.3  38.3  36.9  37.5 106066500     37.5
+##  9 FB     2013-09-03  41.8  42.2  41.5  41.9  48774900     41.9
+## 10 FB     2013-10-01  50.0  51.0  49.5  50.4  98114000     50.4
+## # ... with 38 more rows</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Additionally, the following are equivalent</span>
+<span class="co"># as_period(FB, 'monthly')</span>
+<span class="co"># as_period(FB, 'm')</span>
+<span class="co"># as_period(FB, '1 m')</span></code></pre></div>
+</div>
+<div id="generic-periods" class="section level2">
+<h2>Generic periods</h2>
+<p>You aren’t restricted to only 1 month periods. Maybe you wanted every 2 months?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">as_period</span>(FB, <span class="st">'2 m'</span>)</code></pre></div>
+<pre><code>## # A time tibble: 24 x 8
+## # Index: date
+##    symbol date        open  high   low close   volume adjusted
+##    &lt;chr&gt;  &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+##  1 FB     2013-01-02  27.4  28.2  27.4  28.0 69846400     28.0
+##  2 FB     2013-03-01  27.0  28.1  26.8  27.8 54064800     27.8
+##  3 FB     2013-05-01  27.8  27.9  27.3  27.4 64567600     27.4
+##  4 FB     2013-07-01  25.0  25.1  24.6  24.8 20582200     24.8
+##  5 FB     2013-09-03  41.8  42.2  41.5  41.9 48774900     41.9
+##  6 FB     2013-11-01  50.8  52.1  49.7  49.8 95033000     49.8
+##  7 FB     2014-01-02  54.8  55.2  54.2  54.7 43195500     54.7
+##  8 FB     2014-03-03  67.0  68.1  66.5  67.4 56824100     67.4
+##  9 FB     2014-05-01  60.4  62.3  60.2  61.2 82429000     61.2
+## 10 FB     2014-07-01  67.6  68.4  67.4  68.1 33243000     68.1
+## # ... with 14 more rows</code></pre>
+<p>Or maybe every 25 days? Note that the dates do not line up exactly with a difference of 25 days. This is due to the data set not being completely regular (there are gaps due to weekends and holidays). <code>as_period()</code> chooses the first date it can find in the period specified.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">as_period</span>(FB, <span class="st">'25 d'</span>)</code></pre></div>
+<pre><code>## # A time tibble: 59 x 8
+## # Index: date
+##    symbol date        open  high   low close   volume adjusted
+##    &lt;chr&gt;  &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+##  1 FB     2013-01-02  27.4  28.2  27.4  28.0 69846400     28.0
+##  2 FB     2013-01-28  31.9  32.5  31.8  32.5 59682500     32.5
+##  3 FB     2013-02-20  28.9  29.0  28.3  28.5 42098200     28.5
+##  4 FB     2013-03-18  26.4  26.8  25.8  26.5 26653700     26.5
+##  5 FB     2013-04-11  27.5  28.1  27.2  28.0 33368500     28.0
+##  6 FB     2013-05-06  28.3  28.5  27.5  27.6 43939400     27.6
+##  7 FB     2013-05-31  24.6  25.0  24.3  24.4 35925000     24.4
+##  8 FB     2013-06-25  24.1  24.4  24.0  24.2 24713200     24.2
+##  9 FB     2013-07-22  26.0  26.1  25.7  26.0 27526300     26.0
+## 10 FB     2013-08-14  36.8  37.5  36.6  36.7 48423900     36.7
+## # ... with 49 more rows</code></pre>
+</div>
+<div id="details-and-the-start_date-argument" class="section level2">
+<h2>Details and the <code>start_date</code> argument</h2>
+<p>By default, the date that starts the first group is calculated as:</p>
+<ol style="list-style-type: decimal">
+<li><p>Find the minimum date in your dataset.</p></li>
+<li><p>Floor that date to the period that you specified.</p></li>
+</ol>
+<p>In the 1 month example above, <code>2013-01-02</code> is the first date in the series, and because “monthly” was chosen, the first group is defined as (2013-01-01 to 2013-01-31).</p>
+<p>Occasionally this is not what you want. Consider what would happen if you changed the period to “every 2 days”. The first date is <code>2013-01-02</code>, but because “daily” is chosen, this isn’t floored to <code>2013-01-01</code> so the groups are (2013-01-02, 2013-01-03), (2013-01-04, 2013-01-05) and so on. If you wanted the first group to be (2013-01-01, 2013-01-02), you can use the <code>start_date</code> argument.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Without start_date</span>
+<span class="kw">as_period</span>(FB, <span class="st">'2 d'</span>)</code></pre></div>
+<pre><code>## # A time tibble: 619 x 8
+## # Index: date
+##    symbol date        open  high   low close    volume adjusted
+##    &lt;chr&gt;  &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+##  1 FB     2013-01-02  27.4  28.2  27.4  28.0  69846400     28.0
+##  2 FB     2013-01-03  27.9  28.5  27.6  27.8  63140600     27.8
+##  3 FB     2013-01-07  28.7  29.8  28.6  29.4  83781800     29.4
+##  4 FB     2013-01-09  29.7  30.6  29.5  30.6 104787700     30.6
+##  5 FB     2013-01-11  31.3  32.0  31.1  31.7  89598000     31.7
+##  6 FB     2013-01-14  32.1  32.2  30.6  31.0  98892800     31.0
+##  7 FB     2013-01-15  30.6  31.7  29.9  30.1 173242600     30.1
+##  8 FB     2013-01-17  30.1  30.4  30.0  30.1  40256700     30.1
+##  9 FB     2013-01-22  29.8  30.9  29.7  30.7  55243300     30.7
+## 10 FB     2013-01-23  31.1  31.5  30.8  30.8  48899800     30.8
+## # ... with 609 more rows</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># With start_date</span>
+<span class="kw">as_period</span>(FB, <span class="st">'2 d'</span>, <span class="dt">start_date =</span> <span class="st">&quot;2013-01-01&quot;</span>)</code></pre></div>
+<pre><code>## # A time tibble: 619 x 8
+## # Index: date
+##    symbol date        open  high   low close    volume adjusted
+##    &lt;chr&gt;  &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+##  1 FB     2013-01-02  27.4  28.2  27.4  28.0  69846400     28.0
+##  2 FB     2013-01-03  27.9  28.5  27.6  27.8  63140600     27.8
+##  3 FB     2013-01-07  28.7  29.8  28.6  29.4  83781800     29.4
+##  4 FB     2013-01-09  29.7  30.6  29.5  30.6 104787700     30.6
+##  5 FB     2013-01-11  31.3  32.0  31.1  31.7  89598000     31.7
+##  6 FB     2013-01-14  32.1  32.2  30.6  31.0  98892800     31.0
+##  7 FB     2013-01-15  30.6  31.7  29.9  30.1 173242600     30.1
+##  8 FB     2013-01-17  30.1  30.4  30.0  30.1  40256700     30.1
+##  9 FB     2013-01-22  29.8  30.9  29.7  30.7  55243300     30.7
+## 10 FB     2013-01-23  31.1  31.5  30.8  30.8  48899800     30.8
+## # ... with 609 more rows</code></pre>
+</div>
+<div id="the-side-argument" class="section level2">
+<h2>The <code>side</code> argument</h2>
+<p>By default, the first date per period is returned. If you want the end of each period instead, specify the <code>side = &quot;end&quot;</code> argument.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">as_period</span>(FB, <span class="st">'y'</span>, <span class="dt">side =</span> <span class="st">&quot;end&quot;</span>)</code></pre></div>
+<pre><code>## # A time tibble: 4 x 8
+## # Index: date
+##   symbol date        open  high   low close   volume adjusted
+##   &lt;chr&gt;  &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+## 1 FB     2013-12-31  54.1  54.9  53.9  54.7 43076200     54.7
+## 2 FB     2014-12-31  79.5  79.8  77.9  78.0 19935400     78.0
+## 3 FB     2015-12-31 106   106   105   105   18298700    105  
+## 4 FB     2016-12-30 117   117   115   115   18600100    115</code></pre>
+</div>
+<div id="grouped-datasets" class="section level2">
+<h2>Grouped datasets</h2>
+<p>One of the neat things about working in the <code>tidyverse</code> is that these functions can also work with grouped datasets. Here we transform the daily series of the 4 FANG stocks to a periodicity of every 2 years.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">FANG <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">as_period</span>(<span class="st">'2 y'</span>)</code></pre></div>
+<pre><code>## # A time tibble: 12 x 8
+## # Index:  date
+## # Groups: symbol [4]
+##    symbol date         open   high    low  close   volume adjusted
+##    &lt;chr&gt;  &lt;date&gt;      &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+##  1 FB     2013-01-02   27.4   28.2   27.4   28.0 69846400     28.0
+##  2 FB     2014-01-02   54.8   55.2   54.2   54.7 43195500     54.7
+##  3 FB     2016-01-04  102    102     99.8  102   37912400    102  
+##  4 AMZN   2013-01-02  256    258    253    257    3271000    257  
+##  5 AMZN   2014-01-02  399    399    394    398    2137800    398  
+##  6 AMZN   2016-01-04  656    658    628    637    9314500    637  
+##  7 NFLX   2013-01-02   95.2   95.8   90.7   92.0 19431300     13.1
+##  8 NFLX   2014-01-02  367    368    361    363   12325600     51.8
+##  9 NFLX   2016-01-04  109    110    105    110   20794800    110  
+## 10 GOOG   2013-01-02  719    727    717    723    5101500    361  
+## 11 GOOG   2014-01-02 1115   1118   1108   1113    3656400    556  
+## 12 GOOG   2016-01-04  743    744    731    742    3272800    742</code></pre>
+</div>
+</div>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
