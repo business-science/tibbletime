@@ -1,9 +1,16 @@
 ## tibbletime 0.1.1.9000
 
-* Bug fixes
+* Features
 
     * Export a constructor for `tbl_time` object through `new_tbl_time()`. Only
     to be used by package developers extending `tibbletime`.
+
+* Bug fixes
+
+    * For `tibble` 2.0.1, an internal bug fix was made to pass along an `nrow`
+    argument.
+    
+    * For `dplyr` 0.8.0, an internal fix was made in one of the tests.
 
     * The tbl_time time zone for `POSIXct` indices is now set as the first
     non NA value of: "tzone" attribute -> `Sys.timezone()` -> "UTC". Previously
