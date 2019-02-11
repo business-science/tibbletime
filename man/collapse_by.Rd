@@ -4,8 +4,8 @@
 \alias{collapse_by}
 \title{Collapse a tbl_time object by its index}
 \usage{
-collapse_by(.tbl_time, period = "yearly", start_date = NULL, side = "end",
-  clean = FALSE, ...)
+collapse_by(.tbl_time, period = "yearly", start_date = NULL,
+  side = "end", clean = FALSE, ...)
 }
 \arguments{
 \item{.tbl_time}{A \code{tbl_time} object.}

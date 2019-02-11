@@ -4,8 +4,8 @@
 \alias{as_period}
 \title{Change \code{tbl_time} periodicity}
 \usage{
-as_period(.tbl_time, period = "yearly", start_date = NULL, side = "start",
-  include_endpoints = FALSE, ...)
+as_period(.tbl_time, period = "yearly", start_date = NULL,
+  side = "start", include_endpoints = FALSE, ...)
 }
 \arguments{
 \item{.tbl_time}{A \code{tbl_time} object.}
