@@ -35,7 +35,7 @@ reconstruct.tbl_time <- function(new, old) {
   }
 
   else {
-    tibble::new_tibble(new, subclass = subclass)
+    tibble::new_tibble(new, nrow = nrow(new), subclass = subclass)
   }
 
 }
