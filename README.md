@@ -3,18 +3,18 @@
 
 # tibbletime <img src="man/figures/tibbletime-logo.png" width="147" height="170" align="right" />
 
+[![Lifecycle
+Status](https://img.shields.io/badge/lifecycle-retired-orange.svg)](https://www.tidyverse.org/lifecycle/)
 ![Travis-CI Build
 Status](https://travis-ci.org/business-science/tibbletime.svg?branch=master)
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/tibbletime)](https://cran.r-project.org/package=tibbletime)
 [![codecov](https://codecov.io/gh/business-science/tibbletime/branch/master/graph/badge.svg)](https://codecov.io/gh/business-science/tibbletime)
-![status](https://img.shields.io/badge/status-on%20hold-brightgreen.svg)
 
 ## Package status
 
-This package is currently on hold as we determine the best way forward
-for the entire R community regarding time series in the `tidyverse`. We
-thank you for your patience as we refine our ideas, and hope to bring
-you something very useful in the near future.
+`tibbletime` has been officially retired. Please use the great
+[`tsibble`](https://github.com/tidyverts/tsibble) package instead as
+that is where further development will be.
 
 ## A time aware tibble
 
@@ -99,7 +99,7 @@ FB
 #>  8 FB     2013-01-11  31.3  32.0  31.1  31.7  89598000     31.7
 #>  9 FB     2013-01-14  32.1  32.2  30.6  31.0  98892800     31.0
 #> 10 FB     2013-01-15  30.6  31.7  29.9  30.1 173242600     30.1
-#> # ... with 998 more rows
+#> # … with 998 more rows
 ```
 
 There are a number of functions that were designed specifically for
@@ -151,7 +151,7 @@ FB %>%
 #>  8 FB     2013-03-12  28.1  28.3  27.6  27.8 27569600     27.8
 #>  9 FB     2013-03-13  27.6  27.6  26.9  27.1 39619500     27.1
 #> 10 FB     2013-03-14  27.1  27.4  26.8  27.0 27646400     27.0
-#> # ... with 706 more rows
+#> # … with 706 more rows
 
 # Change from daily to monthly periodicity
 # This just reduces the tibble to the last row in each month
@@ -171,7 +171,7 @@ FB %>%
 #>  8 FB     2013-08-30  42.0  42.3  41.1  41.3  67735100     41.3
 #>  9 FB     2013-09-30  50.1  51.6  49.8  50.2 100095000     50.2
 #> 10 FB     2013-10-31  47.2  52    46.5  50.2 248809000     50.2
-#> # ... with 38 more rows
+#> # … with 38 more rows
 
 # Maybe you don't want to lose the rest of the month's information,
 # and instead you'd like to take the average of every column for each month
@@ -194,7 +194,7 @@ FB %>%
 #>  8 2013-08-30  38.7  39.3  38.2  38.7 61136095.     38.7
 #>  9 2013-09-30  45.5  46.3  44.9  45.8 79154190      45.8
 #> 10 2013-10-31  50.7  51.5  49.7  50.5 88375435.     50.5
-#> # ... with 38 more rows
+#> # … with 38 more rows
 
 # Perform a 5 period rolling average
 mean_5 <- rollify(mean, window = 5)
@@ -213,7 +213,7 @@ mutate(FB, roll_mean = mean_5(adjusted))
 #>  8 FB     2013-01-11  31.3  32.0  31.1  31.7  89598000     31.7      30.4
 #>  9 FB     2013-01-14  32.1  32.2  30.6  31.0  98892800     31.0      30.7
 #> 10 FB     2013-01-15  30.6  31.7  29.9  30.1 173242600     30.1      30.9
-#> # ... with 998 more rows
+#> # … with 998 more rows
 
 # Create a time series
 # Every other day in 2013
@@ -232,7 +232,7 @@ create_series(~'2013', '2 day')
 #>  8 2013-01-15 00:00:00
 #>  9 2013-01-17 00:00:00
 #> 10 2013-01-19 00:00:00
-#> # ... with 173 more rows
+#> # … with 173 more rows
 ```
 
 ## Grouping
