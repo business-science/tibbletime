@@ -11,6 +11,8 @@
     argument.
     
     * For `dplyr` 0.8.0, an internal fix was made in one of the tests.
+    
+    * A new line was added to `inst/include/is_ordered.h` to appease CRAN.
 
     * The tbl_time time zone for `POSIXct` indices is now set as the first
     non NA value of: "tzone" attribute -> `Sys.timezone()` -> "UTC". Previously
