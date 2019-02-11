@@ -4,6 +4,8 @@ This is a minor release of 'tibbletime'. It fixes a few small bugs regarding
 the new version of 'tibble', and changes a test in preparation for 
 'dplyr' 0.8.0.
 
+I have also changed the maintainer email to reflect a job change.
+
 ## Test environments
 * local Mac install, R 3.5.1
 * ubuntu 14.04.5 (on travis-ci) (3.4.4, devel, release)
