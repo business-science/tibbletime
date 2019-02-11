@@ -1,4 +1,4 @@
-## tibbletime 0.1.1.9000
+## tibbletime 0.1.2
 
 * Features
 
