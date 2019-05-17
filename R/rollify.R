@@ -11,6 +11,7 @@
 #' a list-column of the rolling results.
 #' @param na_value A default value for the `NA` values at the beginning of the
 #' roll.
+#' @param expand Calculate for rolling 8default) or expanding window.
 #'
 #' @details
 #'
@@ -136,7 +137,7 @@
 #'
 #' @export
 #'
-rollify <- function(.f, window = 1, unlist = TRUE, na_value = NULL) {
+rollify <- function(.f, window = 1, unlist = TRUE, na_value = NULL, expand = FALSE) {
 
   # Mappify the function
   .f <- purrr::as_mapper(.f)
@@ -171,9 +172,16 @@ roller <- function(..., .f, window, unlist = TRUE, na_value = NULL) {
   filled <- rlang::rep_along(1:roll_length, list(na_value))
 
   # Roll and fill
-  for(i in window:roll_length) {
-    .f_dots   <- lapply(.dots, function(x) {x[(i-window+1):i]})
-    filled[[i]] <- do.call(.f, .f_dots)
+  if (expand) {
+    for(i in window:roll_length) {
+      .f_dots   <- lapply(.dots, function(x) {x[1:i]})
+      filled[[i]] <- do.call(.f, .f_dots)
+    }
+  } else {
+    for(i in window:roll_length) {
+      .f_dots   <- lapply(.dots, function(x) {x[(i-window+1):i]})
+      filled[[i]] <- do.call(.f, .f_dots)
+    }
   }
 
   # Don't unlist if requested (when >1 value returned)
