@@ -47,12 +47,20 @@
 #'        normal_mean  = mean(adjusted),
 #'        rolling_mean = mean_roll_5(adjusted))
 #'
+#' # Turn the normal mean function into an expanding mean starting with a 5 row window
+#' mean_roll_5e <- rollify(mean, window = 5, expand = TRUE)
+#'
+#' dplyr::mutate(FB,
+#'        normal_mean  = mean(adjusted),
+#'        rolling_mean = mean_roll_5e(adjusted))
+#'
 #' # There's nothing stopping you from combining multiple rolling functions with
 #' # different window sizes in the same mutate call
 #' mean_roll_10 <- rollify(mean, window = 10)
 #'
 #' dplyr::mutate(FB,
 #'        rolling_mean_5  = mean_roll_5(adjusted),
+#'        rolling_mean_5e  = mean_roll_5e(adjusted),
 #'        rolling_mean_10 = mean_roll_10(adjusted))
 #'
 #' # Functions with multiple args and optional args ----------------------------
@@ -144,14 +152,14 @@ rollify <- function(.f, window = 1, unlist = TRUE, na_value = NULL, expand = FAL
 
   # Return function that calls roller
   function(...) {
-    roller(..., .f = .f, window = window, unlist = unlist, na_value = na_value)
+    roller(..., .f = .f, window = window, unlist = unlist, na_value = na_value, expand = expand)
   }
 }
 
 
 # Utils ------------------------------------------------------------------------
 
-roller <- function(..., .f, window, unlist = TRUE, na_value = NULL) {
+roller <- function(..., .f, window, unlist = TRUE, na_value = NULL, expand = FALSE) {
 
   # na_value as NA if not specified
   if(is.null(na_value)) {
