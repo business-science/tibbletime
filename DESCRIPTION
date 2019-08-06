@@ -30,13 +30,16 @@ Imports:
     rlang (>= 0.1.6),
     tibble (>= 1.4.1),
     Rcpp (>= 0.12.7),
-    zoo (>= 1.8-0)
+    zoo (>= 1.8-0),
+    vctrs (>= 0.2.0)
 Suggests: 
     broom,
     covr,
     gapminder,
     knitr,
     testthat,
-    tidyr
+    tidyr (>= 0.8.3.9000)
 VignetteBuilder: knitr
 LinkingTo: Rcpp
+Remotes:
+    tidyverse/tidyr
