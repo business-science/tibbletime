@@ -28,9 +28,18 @@ test_that("nest() with index creates tbl_df", {
 test_that("nest() without index stays tbl_time", {
 
   # Can't use grouped_df with -date, tidyr::nest only chooses groups
-  FANG_nested <- FANG_time %>% tidyr::nest(-date)
+  FANG_nested <- FANG_time %>% tidyr::nest(data = -date)
 
   expect_is(FANG_nested, "tbl_time")
+})
+
+test_that("nest() with .key is deprecated but works", {
+  expect_warning(
+    FANG_nested <- FANG_time %>% tidyr::nest(-date, .key = "stuff")
+  )
+
+  expect_is(FANG_nested, "tbl_time")
+  expect_is(FANG_nested$stuff[[1]], "tbl_df")
 })
 
 test_that("unnest() with index goes back to tbl_time", {

@@ -1,31 +1,50 @@
-nest.tbl_time <- function(data, ..., .key = "data") {
+nest.tbl_time <- function(.data, ..., .key = "DEPRECATED") {
   .key       <- rlang::enexpr(.key)
   .key_sym   <- rlang::sym(.key)
   .key_char  <- rlang::expr_name(.key)
-  index_quo  <- get_index_quo(data)
-  index_char <- get_index_char(data)
+  index_quo  <- get_index_quo(.data)
+  index_char <- get_index_char(.data)
 
   # Need this to avoid data VS .key = "data" collision in the mutate/map
-  ..original_data <- data
+  ..original_data <- .data
 
   # Perform the nest on a tibble
-  .data_nested <- tidyr::nest(as_tibble(data), ..., .key = !! .key)
+  .data_nested <- tidyr::nest(as_tibble(.data), ..., .key = .key_char)
 
-  # See if the index is nested
-  index_is_nested <- index_char %in% colnames(.data_nested[[.key_char]][[1]])
+  # Figure out the names of the new nested columns
+  if (.key == "DEPRECATED") {
+    nested_columns <- names(rlang::enquos(...))
 
-  # Each nested element should be a tbl_time with attributes
-  if(index_is_nested) {
-    dplyr::mutate(
-      .data_nested,
-      !! .key_sym := purrr::map(
-        .x = !! .key_sym,
-        .f = ~reconstruct(.x, ..original_data))
-    )
+    if (rlang::is_empty(nested_columns)) {
+      nested_columns <- "data"
+    }
   } else {
-    # The index is in the outer df
-    reconstruct(.data_nested, ..original_data)
+    nested_columns <- .key_char
   }
+
+  contains_index <- function(col) {
+    index_char %in% colnames(.data_nested[[col]][[1]])
+  }
+
+  index_is_nested <- vapply(nested_columns, contains_index, logical(1))
+
+  for (i in seq_along(nested_columns)) {
+    # Each nested element should be a list_of<tbl_time> with attributes
+    if (index_is_nested[i]) {
+      nested_column_sym <- rlang::sym(nested_columns[i])
+
+      .data_nested <- dplyr::mutate(
+        .data_nested,
+        !!nested_column_sym := purrr::map(!!nested_column_sym, ~reconstruct(.x, ..original_data)),
+        !!nested_column_sym := vctrs::as_list_of(!!nested_column_sym, .ptype = (!!nested_column_sym)[[1]])
+      )
+    } else {
+      # The index is in the outer df
+      .data_nested <- reconstruct(.data_nested, ..original_data)
+    }
+  }
+
+  .data_nested
 }
 
 unnest.tbl_time <- function(data, ..., .drop = NA, .id = NULL, .sep = NULL) {
