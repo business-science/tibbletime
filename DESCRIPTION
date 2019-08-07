@@ -27,11 +27,11 @@ Imports:
     hms (>= 0.4),
     lubridate (>= 1.6.0),
     purrr (>= 0.2.3),
+    Rcpp (>= 0.12.7),
     rlang (>= 0.1.6),
     tibble (>= 1.4.1),
-    Rcpp (>= 0.12.7),
-    zoo (>= 1.8-0),
     vctrs (>= 0.2.0)
+    zoo (>= 1.8-0)
 Suggests: 
     broom,
     covr,
