@@ -44,7 +44,7 @@ test_that("nest() with .key is deprecated but works", {
 
 test_that("unnest() with index goes back to tbl_time", {
 
-  FANG_unnested <- FANG_g_time %>% tidyr::nest() %>% tidyr::unnest()
+  FANG_unnested <- FANG_g_time %>% tidyr::nest() %>% tidyr::unnest(cols = data)
 
   expect_is(FANG_unnested, "tbl_time")
   expect_equal(get_index_col(FANG_g_time), get_index_col(FANG_unnested))
@@ -52,8 +52,27 @@ test_that("unnest() with index goes back to tbl_time", {
 
 test_that("unnest() without index stays tbl_time", {
 
-  FANG_unnested <- FANG_time %>% tidyr::nest(-symbol, -date) %>% tidyr::unnest()
+  FANG_unnested <- FANG_time %>% tidyr::nest(data = c(-symbol, -date)) %>% tidyr::unnest(cols = data)
 
   expect_is(FANG_unnested, "tbl_time")
   expect_equal(get_index_col(FANG_time), get_index_col(FANG_unnested))
+})
+
+test_that("unnest() with `...` is deprecated but works", {
+  FANG_nested <- FANG_g_time %>% tidyr::nest(data1 = open, data2 = high)
+
+  expect_warning(
+    FANG_unnested <- tidyr::unnest(FANG_nested, data1, data2)
+  )
+
+  expect_is(FANG_unnested, "tbl_time")
+})
+
+test_that("can still do a normal unnest()", {
+  mtcars_unnested <- mtcars %>%
+    tidyr::nest(data = c(mpg, cyl)) %>%
+    tidyr::unnest(cols = data)
+
+  expect_is(mtcars_unnested, "tbl_df")
+  expect_equal(sort(colnames(mtcars_unnested)), sort(colnames(mtcars)))
 })

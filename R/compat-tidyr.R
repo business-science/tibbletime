@@ -47,16 +47,43 @@ nest.tbl_time <- function(.data, ..., .key = "DEPRECATED") {
   .data_nested
 }
 
-unnest.tbl_time <- function(data, ..., .drop = NA, .id = NULL, .sep = NULL) {
+unnest.tbl_time <- function(data,
+                            cols,
+                            ...,
+                            keep_empty = FALSE,
+                            ptype = NULL,
+                            names_sep = NULL,
+                            names_repair = "check_unique",
+                            .drop = "DEPRECATED",
+                            .id = "DEPRECATED",
+                            .sep = "DEPRECATED",
+                            .preserve = "DEPRECATED") {
   # This is called after nesting but excluding the index in the nest
   #reconstruct(NextMethod(), data)
+
+  # Pre-evaluate `cols`, as NextMethod() will evaluate it before tidyr can enquo() it
+  cols <- tidyselect::vars_select(names(data), !!rlang::enquo(cols))
+
   copy_.data <- new_tbl_time(data, get_index_quo(data), get_index_time_zone(data))
   reconstruct(NextMethod(), copy_.data)
 }
 
-unnest.tbl_df <- function(data, ..., .drop = NA, .id = NULL, .sep = NULL) {
+unnest.tbl_df <- function(data,
+                          cols,
+                          ...,
+                          keep_empty = FALSE,
+                          ptype = NULL,
+                          names_sep = NULL,
+                          names_repair = "check_unique",
+                          .drop = "DEPRECATED",
+                          .id = "DEPRECATED",
+                          .sep = "DEPRECATED",
+                          .preserve = "DEPRECATED") {
+
   # Called after nesting a tbl_time, index is in the nest, then unnesting
-  quos <- rlang::quos(...)
+
+  # Pre-evaluate `cols`, as NextMethod() will evaluate it before tidyr can enquo() it
+  cols <- tidyselect::vars_select(names(data), !!rlang::enquo(cols))
 
   list_cols <- names(data)[purrr::map_lgl(data, rlang::is_list)]
 
