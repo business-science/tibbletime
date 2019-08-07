@@ -42,5 +42,6 @@ Suggests:
     tidyr (>= 0.8.3.9000)
 VignetteBuilder: knitr
 LinkingTo: Rcpp
+LazyData: yes
 Remotes:
     tidyverse/tidyr
