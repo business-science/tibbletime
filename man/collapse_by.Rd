@@ -4,8 +4,8 @@
 \alias{collapse_by}
 \title{Collapse a tbl_time object by its index}
 \usage{
-collapse_by(.tbl_time, period = "yearly", start_date = NULL,
-  side = "end", clean = FALSE, ...)
+collapse_by(.tbl_time, period = "yearly",
+  start_date_for_collapse = NULL, side = "end", clean = FALSE, ...)
 }
 \arguments{
 \item{.tbl_time}{A \code{tbl_time} object.}
@@ -25,11 +25,6 @@ second, millisecond and microsecond periodicities.
 
 Additionally, you have the option of passing in a vector of dates to
 use as custom and more flexible boundaries.}
-
-\item{start_date}{Optional argument used to
-specify the start date for the
-first group. The default is to start at the closest period boundary
-below the minimum date in the supplied index.}
 
 \item{side}{Whether to return the date at the beginning or the end of
 the new period. By default, the "end" of the period.

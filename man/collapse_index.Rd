@@ -5,8 +5,8 @@
 \title{Collapse an index vector so that all observations in an interval share the
 same date}
 \usage{
-collapse_index(index, period = "yearly", start_date = NULL,
-  side = "end", clean = FALSE, ...)
+collapse_index(index, period = "yearly",
+  start_date_for_collapse = NULL, side = "end", clean = FALSE, ...)
 }
 \arguments{
 \item{index}{An index vector.}
@@ -26,11 +26,6 @@ second, millisecond and microsecond periodicities.
 
 Additionally, you have the option of passing in a vector of dates to
 use as custom and more flexible boundaries.}
-
-\item{start_date}{Optional argument used to
-specify the start date for the
-first group. The default is to start at the closest period boundary
-below the minimum date in the supplied index.}
 
 \item{side}{Whether to return the date at the beginning or the end of
 the new period. By default, the "end" of the period.

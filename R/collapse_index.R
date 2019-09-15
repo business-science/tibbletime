@@ -73,7 +73,7 @@
 #' @export
 #'
 collapse_index <- function(index, period = "yearly",
-                           start_date = NULL, side = "end", clean = FALSE, ...) {
+                           start_date_for_collapse = NULL, side = "end", clean = FALSE, ...) {
 
   # Side either start or end
   assert_valid_side(side)
@@ -86,7 +86,7 @@ collapse_index <- function(index, period = "yearly",
   if(clean) {
 
     # Create datetime endpoints
-    endpoints <- make_endpoints(index, period, start_date)
+    endpoints <- make_endpoints(index, period, start_date_for_collapse)
 
     # Create a numeric index containing the endpoints positioned in a way
     # to replace the old index
@@ -103,7 +103,7 @@ collapse_index <- function(index, period = "yearly",
   } else {
 
     # Partition index
-    index_part <- partition_index(index, period, start_date)
+    index_part <- partition_index(index, period, start_date_for_collapse)
 
     if(side == "start") {
       # For each partition, find the first date position
@@ -182,7 +182,7 @@ collapse_index <- function(index, period = "yearly",
 #'   dplyr::summarise_all(sd)
 #'
 #' @export
-collapse_by <- function(.tbl_time, period = "yearly", start_date = NULL, side = "end", clean = FALSE, ...) {
+collapse_by <- function(.tbl_time, period = "yearly", start_date_for_collapse = NULL, side = "end", clean = FALSE, ...) {
 
   index_quo  <- get_index_quo(.tbl_time)
   index_char <- get_index_char(.tbl_time)
@@ -192,7 +192,7 @@ collapse_by <- function(.tbl_time, period = "yearly", start_date = NULL, side = 
     !! index_char := collapse_index(
       index      = !! index_quo,
       period     = period,
-      start_date = start_date,
+      start_date_for_collapse = start_date_for_collapse,
       side       = side,
       clean      = clean,
       ...
