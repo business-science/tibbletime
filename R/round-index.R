@@ -30,7 +30,7 @@ ceiling_index.default <- function(x, unit = "seconds") {
 #' @export
 ceiling_index.hms <- function(x, unit = "seconds") {
   ceilinged <- ceiling_index(as.POSIXct(x), unit)
-  hms::as.hms(ceilinged, get_index_col_time_zone(ceilinged))
+  hms::as_hms(ceilinged)
 }
 
 #' @export
@@ -77,7 +77,7 @@ floor_index.default <- function(x, unit = "seconds") {
 #' @export
 floor_index.hms <- function(x, unit = "seconds") {
   floored <- floor_index(as.POSIXct(x), unit)
-  hms::as.hms(floored, attr(floored, "tzone"))
+  hms::as_hms(floored)
 }
 
 #' @export

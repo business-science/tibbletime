@@ -27,6 +27,6 @@ test_that("Floor works with hms", {
   hms_test <- create_series('01'~'12', period = "hourly", class = "hms")
   expect_equal(
     floor_index(hms_test$date, "12 hour"),
-    c(rep(0, 11), 43200) %>% hms::as.hms()
+    c(rep(0, 11), 43200) %>% hms::as_hms()
   )
 })

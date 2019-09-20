@@ -86,5 +86,5 @@ dispatch_to_datetime.yearqtr <- function(dummy, x, ..., tz = NULL) {
 
 dispatch_to_datetime.hms <- function(dummy, x, ..., tz = NULL) {
   datetime <- dispatch_to_datetime.default(dummy, x, tz = tz)
-  hms::as.hms(datetime, tz = get_index_col_time_zone(datetime))
+  hms::as_hms(datetime)
 }
