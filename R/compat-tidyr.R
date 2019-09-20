@@ -1,4 +1,6 @@
 nest.tbl_time <- function(.data, ..., .key = "DEPRECATED") {
+  check_tidyr_version()
+
   .key       <- rlang::enexpr(.key)
   .key_sym   <- rlang::sym(.key)
   .key_char  <- rlang::expr_name(.key)
@@ -58,6 +60,8 @@ unnest.tbl_time <- function(data,
                             .id = "DEPRECATED",
                             .sep = "DEPRECATED",
                             .preserve = "DEPRECATED") {
+  check_tidyr_version()
+
   # This is called after nesting but excluding the index in the nest
   #reconstruct(NextMethod(), data)
 
@@ -79,7 +83,7 @@ unnest.tbl_df <- function(data,
                           .id = "DEPRECATED",
                           .sep = "DEPRECATED",
                           .preserve = "DEPRECATED") {
-
+  check_tidyr_version()
   # Called after nesting a tbl_time, index is in the nest, then unnesting
 
   # Pre-evaluate `cols`, as NextMethod() will evaluate it before tidyr can enquo() it
@@ -126,7 +130,6 @@ unnest.tbl_df <- function(data,
 
 gather.tbl_time <- function(data, key = "key", value = "value", ..., na.rm = FALSE,
                             convert = FALSE, factor_key = FALSE)  {
-
   key   <- rlang::enquo(key)
   value <- rlang::enquo(value)
   quos  <- rlang::quos(...)
@@ -139,7 +142,6 @@ gather.tbl_time <- function(data, key = "key", value = "value", ..., na.rm = FAL
 
 spread.tbl_time <- function(data, key, value, fill = NA, convert = FALSE, drop = TRUE,
                             sep = NULL)  {
-
   key   <- rlang::enquo(key)
   value <- rlang::enquo(value)
 
@@ -149,3 +151,15 @@ spread.tbl_time <- function(data, key, value, fill = NA, convert = FALSE, drop =
 
   reconstruct(spread_data, data)
 }
+
+# ------------------------------------------------------------------------------
+
+check_tidyr_version <- function() {
+  if (tidyr_at_least_1.0.0) {
+    return()
+  }
+
+  rlang::abort("`tidyr` must be at least version '1.0.0' to use this feature.")
+}
+
+
