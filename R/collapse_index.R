@@ -187,12 +187,14 @@ collapse_by <- function(.tbl_time, period = "yearly", start_date = NULL, side = 
   index_quo  <- get_index_quo(.tbl_time)
   index_char <- get_index_char(.tbl_time)
 
+  start_date <- rlang::enquo(start_date)
+
   .tbl_time_collapsed <- dplyr::mutate(
     .data = .tbl_time,
     !! index_char := collapse_index(
       index      = !! index_quo,
       period     = period,
-      start_date = start_date,
+      start_date = !! start_date,
       side       = side,
       clean      = clean,
       ...
