@@ -1,9 +1,15 @@
-nest.tbl_time <- function(.data, ..., .key = "DEPRECATED") {
+#' @importFrom lifecycle deprecated
+
+nest.tbl_time <- function(.data, ..., .key = deprecated()) {
   check_tidyr_version()
 
-  .key       <- rlang::enexpr(.key)
-  .key_sym   <- rlang::sym(.key)
-  .key_char  <- rlang::expr_name(.key)
+  if (rlang::is_missing(.key)) {
+    .key_char <- deprecated()
+  } else {
+    .key <- rlang::enexpr(.key)
+    .key_char <- rlang::expr_name(.key)
+  }
+
   index_quo  <- get_index_quo(.data)
   index_char <- get_index_char(.data)
 
@@ -14,7 +20,7 @@ nest.tbl_time <- function(.data, ..., .key = "DEPRECATED") {
   .data_nested <- tidyr::nest(as_tibble(.data), ..., .key = .key_char)
 
   # Figure out the names of the new nested columns
-  if (.key == "DEPRECATED") {
+  if (rlang::is_missing(.key)) {
     nested_columns <- names(rlang::enquos(...))
 
     if (rlang::is_empty(nested_columns)) {
@@ -79,10 +85,10 @@ unnest.tbl_df <- function(data,
                           ptype = NULL,
                           names_sep = NULL,
                           names_repair = "check_unique",
-                          .drop = "DEPRECATED",
-                          .id = "DEPRECATED",
-                          .sep = "DEPRECATED",
-                          .preserve = "DEPRECATED") {
+                          .drop = deprecated(),
+                          .id = deprecated(),
+                          .sep = deprecated(),
+                          .preserve = deprecated()) {
   check_tidyr_version()
   # Called after nesting a tbl_time, index is in the nest, then unnesting
 
