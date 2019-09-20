@@ -63,3 +63,29 @@ test_that("day becomes DSTday for POSIXct to prevent DST boundary problems", {
 
   expect_equal(ret, test)
 })
+
+test_that("can use `collapse_by()` when a column is named `start_date` (#81)", {
+  x <- data.frame(
+    start_date = as.Date("2017-12-01") + 0:2,
+    value  = c(1, 2, 3)
+  )
+
+  x <- as_tbl_time(x, start_date)
+
+  expect_equal(
+    collapse_by(x),
+    dplyr::mutate(x, start_date = collapse_index(start_date))
+  )
+
+  expect_equal(
+    collapse_by(x, start_date = as.Date("2017-01-01"), side = "start", period = "2 days"),
+    dplyr::mutate(x, start_date = collapse_index(start_date, "2 days", start_date = as.Date("2017-01-01"), side = "start"))
+  )
+
+  expect_equal(
+    collapse_by(x, start_date = as.Date("2016-12-31"), side = "start", period = "2 days"),
+    dplyr::mutate(x, start_date = collapse_index(start_date, "2 days", start_date = as.Date("2016-12-31"), side = "start"))
+  )
+})
+
+
