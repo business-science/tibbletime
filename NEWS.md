@@ -1,4 +1,4 @@
-# tibbletime (development version)
+# tibbletime 0.1.3
 
 * Features
 
