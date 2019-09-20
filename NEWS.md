@@ -1,5 +1,10 @@
 # tibbletime (development version)
 
+* Bug fixes
+
+    * `collapse_by()` no longer errors when there is a column 
+    named `start_date` in the `tbl_time` object (#81).
+
 ## tibbletime 0.1.2
 
 * Features
