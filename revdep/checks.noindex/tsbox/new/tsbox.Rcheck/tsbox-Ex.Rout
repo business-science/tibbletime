@@ -1,6 +1,6 @@
 
-R version 3.5.1 (2018-07-02) -- "Feather Spray"
-Copyright (C) 2018 The R Foundation for Statistical Computing
+R version 3.6.0 (2019-04-26) -- "Planting of a Tree"
+Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-apple-darwin15.6.0 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -51,7 +51,7 @@ Type 'q()' to quit R.
 > 
 > ### Name: ts_
 > ### Title: Constructing ts-Functions
-> ### Aliases: ts_ load_suggested ts_ ts_ ts_apply
+> ### Aliases: ts_ load_suggested ts_apply
 > 
 > ### ** Examples
 > 
@@ -66,8 +66,7 @@ Type 'q()' to quit R.
 > 
 > ### Name: ts_arithmetic
 > ### Title: Arithmetic Operators for ts-boxable objects
-> ### Aliases: ts_arithmetic %ts+% ts_arithmetic %ts-% ts_arithmetic %ts*%
-> ###   ts_arithmetic %ts/%
+> ### Aliases: ts_arithmetic %ts+% %ts-% %ts*% %ts/%
 > 
 > ### ** Examples
 > 
@@ -94,7 +93,7 @@ Type 'q()' to quit R.
 > 
 > ### Name: ts_bind
 > ### Title: Bind Time Series
-> ### Aliases: ts_bind ts_bind ts_chain
+> ### Aliases: ts_bind ts_chain
 > 
 > ### ** Examples
 > 
@@ -233,6 +232,35 @@ Loading required namespace: xts
 > 
 > 
 > cleanEx()
+> nameEx("ts_default")
+> ### * ts_default
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ts_default
+> ### Title: Default Column Names
+> ### Aliases: ts_default
+> 
+> ### ** Examples
+> 
+> 
+> df <- ts_df(ts_c(mdeaths, fdeaths))
+> # non-default colnames
+> colnames(df) <- c("id", "date", "count")
+> # switch back to default colnames
+> head(ts_default(df))
+[time]: 'date' [value]: 'count' 
+       id       time value
+1 mdeaths 1974-01-01  2134
+2 mdeaths 1974-02-01  1863
+3 mdeaths 1974-03-01  1877
+4 mdeaths 1974-04-01  1877
+5 mdeaths 1974-05-01  1492
+6 mdeaths 1974-06-01  1249
+> 
+> 
+> 
+> cleanEx()
 > nameEx("ts_examples")
 > ### * ts_examples
 > 
@@ -240,8 +268,7 @@ Loading required namespace: xts
 > 
 > ### Name: ts_examples
 > ### Title: Principal Components, Dygraphs, Forecasts, Seasonal Adjustment
-> ### Aliases: ts_examples ts_prcomp ts_examples ts_dygraphs ts_examples
-> ###   ts_forecast ts_examples ts_seas
+> ### Aliases: ts_examples ts_prcomp ts_dygraphs ts_forecast ts_seas
 > 
 > ### ** Examples
 > 
@@ -260,106 +287,6 @@ Loading required namespace: xts
 > 
 > ### ** Examples
 > 
-> ts_frequency(cbind(mdeaths, fdeaths), "year", "sum")
-Time Series:
-Start = 1974 
-End = 1979 
-Frequency = 1 
-     mdeaths fdeaths
-1974   19071    7069
-1975   19247    6854
-1976   18697    7021
-1977   16927    6302
-1978   17329    6622
-1979   16437    6501
-> ts_frequency(cbind(mdeaths, fdeaths), "year", "sum")
-Time Series:
-Start = 1974 
-End = 1979 
-Frequency = 1 
-     mdeaths fdeaths
-1974   19071    7069
-1975   19247    6854
-1976   18697    7021
-1977   16927    6302
-1978   17329    6622
-1979   16437    6501
-> ts_frequency(cbind(mdeaths, fdeaths), "quarter", "last")
-        mdeaths fdeaths
-1974 Q1    1877     827
-1974 Q2    1249     406
-1974 Q3    1209     387
-1974 Q4    1846     666
-1975 Q1    2153     785
-1975 Q2    1288     438
-1975 Q3    1053     343
-1975 Q4    2066     771
-1976 Q1    2283     896
-1976 Q2    1160     420
-1976 Q3     999     357
-1976 Q4    2059     764
-1977 Q1    1722     663
-1977 Q2    1162     392
-1977 Q3     959     387
-1977 Q4    1655     638
-1978 Q1    1942     737
-1978 Q2    1187     446
-1978 Q3     970     387
-1978 Q4    1812     679
-1979 Q1    1846     727
-1979 Q2    1075     429
-1979 Q3     940     393
-1979 Q4    1341     574
-> 
-> ts_frequency(AirPassengers, 4, "sum")
-     Qtr1 Qtr2 Qtr3 Qtr4
-1949  362  385  432  341
-1950  382  409  498  387
-1951  473  513  582  474
-1952  544  582  681  557
-1953  628  707  773  592
-1954  627  725  854  661
-1955  742  854 1023  789
-1956  878 1005 1173  883
-1957  972 1125 1336  988
-1958 1020 1146 1400 1006
-1959 1108 1288 1570 1174
-1960 1227 1468 1736 1283
-> ts_frequency(AirPassengers, 1, "sum")
-Time Series:
-Start = 1949 
-End = 1960 
-Frequency = 1 
- [1] 1520 1676 2042 2364 2700 2867 3408 3939 4421 4572 5140 5714
-> 
-> # Note that incomplete years are omited by default
-> ts_frequency(EuStockMarkets, "year")
-Time Series:
-Start = 1992 
-End = 1997 
-Frequency = 1 
-          DAX      SMI      CAC     FTSE
-1992 1637.459 1854.162 1852.869 2559.458
-1993 1802.471 2372.175 2015.391 2957.114
-1994 2123.445 2716.570 2061.115 3144.673
-1995 2135.226 2824.320 1872.022 3343.207
-1996 2560.317 3610.032 2071.866 3821.407
-1997 3694.279 5173.600 2745.503 4673.295
-> ts_frequency(EuStockMarkets, "year", na.rm = TRUE)
-Time Series:
-Start = 1991 
-End = 1998 
-Frequency = 1 
-          DAX      SMI      CAC     FTSE
-1991 1602.058 1686.485 1795.779 2541.689
-1992 1637.459 1854.162 1852.869 2559.458
-1993 1802.471 2372.175 2015.391 2957.114
-1994 2123.445 2716.570 2061.115 3144.673
-1995 2135.226 2824.320 1872.022 3343.207
-1996 2560.317 3610.032 2071.866 3821.407
-1997 3694.279 5173.600 2745.503 4673.295
-1998 5162.252 7339.186 3723.700 5751.889
-> 
 > 
 > 
 > 
@@ -371,8 +298,8 @@ Frequency = 1
 > 
 > ### Name: ts_ggplot
 > ### Title: Plot Time Series, Using ggplot2
-> ### Aliases: ts_ggplot ts_ggplot theme_tsbox ts_ggplot colors_tsbox
-> ###   ts_ggplot scale_color_tsbox ts_ggplot scale_fill_tsbox
+> ### Aliases: ts_ggplot theme_tsbox colors_tsbox scale_color_tsbox
+> ###   scale_fill_tsbox
 > 
 > ### ** Examples
 > 
@@ -402,7 +329,7 @@ Frequency = 1
 > 
 > ### Name: ts_index
 > ### Title: Indices from Levels or Percentage Rates
-> ### Aliases: ts_index ts_compound ts_index
+> ### Aliases: ts_index ts_compound
 > 
 > ### ** Examples
 > 
@@ -437,19 +364,34 @@ Frequency = 1
 > 
 > ### ** Examples
 > 
-> head(ts_lag(AirPassengers, "1 month"))
-[1] 112 118 132 129 121 135
-> head(ts_lag(AirPassengers, "1 year"))
-[1] 112 118 132 129 121 135
-> head(ts_lag(ts_df(AirPassengers), "2 day"))
+> head(ts_lag(fdeaths, "1 month"))
+[1] 901 689 827 677 522 406
+> head(ts_lag(fdeaths, "1 year"))
+[1] 901 689 827 677 522 406
+> head(ts_lag(ts_df(fdeaths), "2 day"))
         time value
-1 1949-01-03   112
-2 1949-02-03   118
-3 1949-03-03   132
-4 1949-04-03   129
-5 1949-05-03   121
-6 1949-06-03   135
-> # head(ts_lag(ts_df(AirPassengers), "2 min")) not yet working
+1 1974-01-03   901
+2 1974-02-03   689
+3 1974-03-03   827
+4 1974-04-03   677
+5 1974-05-03   522
+6 1974-06-03   406
+> head(ts_lag(ts_df(fdeaths), "2 min"))
+                 time value
+1 1973-12-31 16:02:00   901
+2 1974-01-31 16:02:00   689
+3 1974-03-03 16:02:00   827
+4 1974-03-31 16:02:00   677
+5 1974-05-01 16:02:00   522
+6 1974-05-31 16:02:00   406
+> head(ts_lag(ts_df(fdeaths), "-1 day"))
+        time value
+1 1973-12-31   901
+2 1974-01-31   689
+3 1974-02-28   827
+4 1974-03-31   677
+5 1974-04-30   522
+6 1974-05-31   406
 > 
 > 
 > 
@@ -461,7 +403,7 @@ Frequency = 1
 > 
 > ### Name: ts_long
 > ### Title: Reshaping Multiple Time Series
-> ### Aliases: ts_long ts_long ts_wide
+> ### Aliases: ts_long ts_wide
 > 
 > ### ** Examples
 > 
@@ -508,11 +450,11 @@ Frequency = 1
 > head(ts_df(x))
         time value
 1 1949-01-01   112
-2 1949-03-01   132
-3 1949-05-01   121
-4 1949-06-01   135
-5 1949-07-01   148
-6 1949-08-01   148
+2 1949-02-01    NA
+3 1949-03-01   132
+4 1949-04-01    NA
+5 1949-05-01   121
+6 1949-06-01   135
 > 
 > # make NAs explicit
 > head(ts_regular(ts_df(x)))
@@ -544,42 +486,50 @@ Frequency = 1
 > 
 > ### Name: ts_pc
 > ### Title: First Differences and Percentage Change Rates
-> ### Aliases: ts_pc ts_pc ts_diff ts_pc ts_pcy ts_pc ts_diffy
+> ### Aliases: ts_pc ts_diff ts_pca ts_pcy ts_diffy
 > 
 > ### ** Examples
 > 
-> head(ts_diff(ts_c(fdeaths, mdeaths)))
-     fdeaths mdeaths
-[1,]    -212    -271
-[2,]     138      14
-[3,]    -150       0
-[4,]    -155    -385
-[5,]    -116    -243
-[6,]      35      31
-> head(ts_pc(ts_c(fdeaths, mdeaths)))
-       fdeaths     mdeaths
-[1,] -23.52941 -12.6991565
-[2,]  20.02903   0.7514761
-[3,] -18.13785   0.0000000
-[4,] -22.89513 -20.5114544
-[5,] -22.22222 -16.2868633
-[6,]   8.62069   2.4819856
-> head(ts_pcy(ts_c(fdeaths, mdeaths)))
+> tail(ts_diff(ts_c(fdeaths, mdeaths)))
+      fdeaths mdeaths
+[67,]     -24     -19
+[68,]     -26     -81
+[69,]      14     -35
+[70,]      18     141
+[71,]      76     213
+[72,]      87      47
+> tail(ts_pc(ts_c(fdeaths, mdeaths)))
         fdeaths   mdeaths
-[1,]  -7.880133 -1.452671
-[2,]   9.143687 14.707461
-[3,]  -5.078597 14.704315
-[4,]  -1.920236 -2.344166
-[5,] -10.536398 -5.965147
-[6,]   7.881773  3.122498
-> head(ts_diffy(ts_c(fdeaths, mdeaths)))
-     fdeaths mdeaths
-[1,]     -71     -31
-[2,]      63     274
-[3,]     -42     276
-[4,]     -13     -44
-[5,]     -55     -89
-[6,]      32      39
+[67,] -5.594406 -1.767442
+[68,] -6.419753 -7.670455
+[69,]  3.693931 -3.589744
+[70,]  4.580153 15.000000
+[71,] 18.491484 19.703978
+[72,] 17.864476  3.632148
+> tail(ts_pca(ts_c(fdeaths, mdeaths)))
+        fdeaths   mdeaths
+[67,] -49.88442 -19.26433
+[68,] -54.89650 -61.62147
+[69,]  54.53971 -35.51201
+[70,]  71.15566 435.02501
+[71,] 666.02981 765.57158
+[72,] 618.77866  53.43838
+> tail(ts_pcy(ts_c(fdeaths, mdeaths)))
+         fdeaths    mdeaths
+[67,]  -6.032483  -3.825137
+[68,]   4.696133  -2.888446
+[69,]   1.550388  -3.092784
+[70,]  -4.418605  -5.175439
+[71,]  14.588235  16.576577
+[72,] -15.463918 -25.993377
+> tail(ts_diffy(ts_c(fdeaths, mdeaths)))
+      fdeaths mdeaths
+[67,]     -26     -42
+[68,]      17     -29
+[69,]       6     -30
+[70,]     -19     -59
+[71,]      62     184
+[72,]    -105    -471
 > 
 > 
 > 
@@ -653,6 +603,19 @@ Frequency = 1
 142: 1960-10-01   461
 143: 1960-11-01   390
 144: 1960-12-01   432
+> ts_regular(x, fill = 0)
+           time value
+  1: 1949-01-01   112
+  2: 1949-02-01   118
+  3: 1949-03-01   132
+  4: 1949-04-01   129
+  5: 1949-05-01   121
+ ---                 
+140: 1960-08-01   606
+141: 1960-09-01   508
+142: 1960-10-01   461
+143: 1960-11-01   390
+144: 1960-12-01   432
 > 
 > m <- mdeaths
 > m[c(10, 69)] <- NA
@@ -698,47 +661,10 @@ Frequency = 1
 > 
 > ### Name: ts_span
 > ### Title: Limit Time Span
-> ### Aliases: ts_span ts_span ts_start ts_span ts_end
+> ### Aliases: ts_span
 > 
 > ### ** Examples
 > 
-> 
-> # use 'anytime' shortcuts
-> ts_span(mdeaths, start = "1979")       # shortcut for 1979-01-01
-      Jan  Feb  Mar  Apr  May  Jun  Jul  Aug  Sep  Oct  Nov  Dec
-1979 2263 1820 1846 1531 1215 1075 1056  975  940 1081 1294 1341
-> ts_span(mdeaths, start = "1979-4")     # shortcut for 1979-04-01
-      Apr  May  Jun  Jul  Aug  Sep  Oct  Nov  Dec
-1979 1531 1215 1075 1056  975  940 1081 1294 1341
-> ts_span(mdeaths, start = "197904")     # shortcut for 1979-04-01
-      Apr  May  Jun  Jul  Aug  Sep  Oct  Nov  Dec
-1979 1531 1215 1075 1056  975  940 1081 1294 1341
-> 
-> # it's fine to use an to date outside of series span
-> ts_span(mdeaths, end = "2001-01-01")
-      Jan  Feb  Mar  Apr  May  Jun  Jul  Aug  Sep  Oct  Nov  Dec
-1974 2134 1863 1877 1877 1492 1249 1280 1131 1209 1492 1621 1846
-1975 2103 2137 2153 1833 1403 1288 1186 1133 1053 1347 1545 2066
-1976 2020 2750 2283 1479 1189 1160 1113  970  999 1208 1467 2059
-1977 2240 1634 1722 1801 1246 1162 1087 1013  959 1179 1229 1655
-1978 2019 2284 1942 1423 1340 1187 1098 1004  970 1140 1110 1812
-1979 2263 1820 1846 1531 1215 1075 1056  975  940 1081 1294 1341
-> 
-> # use strings to set start or end relative to each other
-> 
-> ts_span(mdeaths, start = "-7 month")   # last 7 months
-      Jun  Jul  Aug  Sep  Oct  Nov  Dec
-1979 1075 1056  975  940 1081 1294 1341
-> ts_span(mdeaths, start = -7)           # last 7 periods
-      Jun  Jul  Aug  Sep  Oct  Nov  Dec
-1979 1075 1056  975  940 1081 1294 1341
-> ts_span(mdeaths, start = -1)           # last single value
-      Dec
-1979 1341
-> ts_span(mdeaths, end = "1e4 hours")    # first 10000 hours
-      Jan  Feb  Mar  Apr  May  Jun  Jul  Aug  Sep  Oct  Nov  Dec
-1974 2134 1863 1877 1877 1492 1249 1280 1131 1209 1492 1621 1846
-1975 2103                                                       
 > 
 > 
 > # Limit span of 'discoveries' to the same span as 'AirPassengers'
@@ -748,6 +674,45 @@ Start = 1949
 End = 1959 
 Frequency = 1 
  [1] 3 2 1 4 1 1 1 0 0 2 0
+> ts_span(mdeaths, end = "19801201", extend = TRUE)
+      Jan  Feb  Mar  Apr  May  Jun  Jul  Aug  Sep  Oct  Nov  Dec
+1974 2134 1863 1877 1877 1492 1249 1280 1131 1209 1492 1621 1846
+1975 2103 2137 2153 1833 1403 1288 1186 1133 1053 1347 1545 2066
+1976 2020 2750 2283 1479 1189 1160 1113  970  999 1208 1467 2059
+1977 2240 1634 1722 1801 1246 1162 1087 1013  959 1179 1229 1655
+1978 2019 2284 1942 1423 1340 1187 1098 1004  970 1140 1110 1812
+1979 2263 1820 1846 1531 1215 1075 1056  975  940 1081 1294 1341
+1980   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ts_summary")
+> ### * ts_summary
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ts_summary
+> ### Title: Time Series Properties
+> ### Aliases: ts_summary
+> 
+> ### ** Examples
+> 
+> ts_summary(ts_c(mdeaths, austres))
+       id obs    diff freq      start        end
+1 mdeaths  72 1 month   12 1974-01-01 1979-12-01
+2 austres  89 3 month    4 1971-04-01 1993-04-01
+> ts_summary(ts_c(mdeaths, austres), spark = TRUE)
+       id obs    diff freq      start        end      spark_line
+1 mdeaths  72 1 month   12 1974-01-01 1979-12-01  ⠈⠔⠢⡐⢄         
+2 austres  89 3 month    4 1971-04-01 1993-04-01 ⣀⣀⣀⣀⡠⠤⠤⠤⠒⠒⠒⠊⠉⠉⠉
+> # Extracting specific properties
+> ts_summary(AirPassengers)$start
+[1] "1949-01-01"
+> ts_summary(AirPassengers)$freq
+[1] 12
+> ts_summary(AirPassengers)$obs
+[1] 144
 > 
 > 
 > 
@@ -774,9 +739,9 @@ Frequency = 1
 > 
 > ### Name: ts_ts
 > ### Title: Convert Everything to Everything
-> ### Aliases: ts_ts ts_data.frame ts_ts ts_df ts_ts ts_data.table ts_ts
-> ###   ts_dt ts_ts ts_tbl ts_ts ts_tibbletime ts_ts ts_timeSeries ts_ts
-> ###   ts_ts ts_tsibble ts_ts ts_tslist ts_ts ts_xts ts_ts ts_zoo
+> ### Aliases: ts_ts ts_data.frame ts_df ts_data.table ts_dt ts_tbl
+> ###   ts_tibbletime ts_timeSeries ts_tis ts_irts ts_tsibble ts_tslist
+> ###   ts_xts ts_zoo
 > 
 > ### ** Examples
 > 
@@ -812,7 +777,6 @@ Frequency = 1
 [90m6[39m mdeaths 1974-06-01  [4m1[24m249
 > 
 > suppressMessages(library(data.table))
-Warning: package ‘data.table’ was built under R version 3.5.2
 > head(ts_dt(x.ts))
         id       time value
 1: mdeaths 1974-01-01  2134
@@ -833,7 +797,7 @@ Warning: package ‘data.table’ was built under R version 3.5.2
 1974-06-01    1249     406
 > 
 > # heuristic time conversion
-> # 1 momth: approx. 1/12 year
+> # 1 month: approx. 1/12 year
 > head(ts_df(AirPassengers))
         time value
 1 1949-01-01   112
@@ -881,7 +845,7 @@ detaching ‘package:xts’, ‘package:zoo’, ‘package:data.table’,
 
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  23.566 3.284 6.355 0.002 0.002 
+Time elapsed:  10.326 0.994 2.913 0.001 0.002 
 > grDevices::dev.off()
 null device 
           1 

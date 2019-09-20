@@ -1,7 +1,7 @@
 Package: tibbletime
 Type: Package
 Title: Time Aware Tibbles
-Version: 0.1.2
+Version: 0.1.2.9000
 Authors@R: c(
     person("Davis", "Vaughan", email = "davis@rstudio.com", role = c("aut", "cre")),
     person("Matt", "Dancho", email = "mdancho@business-science.io", role = c("aut"))
@@ -20,15 +20,17 @@ RoxygenNote: 6.1.1
 Roxygen: list(markdown = TRUE)
 Depends: R (>= 3.2.0)
 Imports: assertthat (>= 0.2.0), dplyr (>= 0.7.4), glue (>= 1.1.1), hms
-        (>= 0.4), lubridate (>= 1.6.0), purrr (>= 0.2.3), rlang (>=
-        0.1.6), tibble (>= 1.4.1), Rcpp (>= 0.12.7), zoo (>= 1.8-0)
-Suggests: broom, covr, gapminder, knitr, testthat, tidyr
+        (>= 0.4), lubridate (>= 1.6.0), purrr (>= 0.2.3), Rcpp (>=
+        0.12.7), rlang (>= 0.1.6), tibble (>= 1.4.1), tidyselect (>=
+        0.2.5), vctrs (>= 0.2.0), zoo (>= 1.8-0), lifecycle
+Suggests: broom, covr, gapminder, knitr, testthat, tidyr (>= 1.0.0)
 VignetteBuilder: knitr
 LinkingTo: Rcpp
+LazyData: yes
 RemoteType: local
 RemoteUrl: /Users/davis/Desktop/r/packages/tibbletime
 NeedsCompilation: yes
-Packaged: 2019-02-11 15:01:18 UTC; davis
+Packaged: 2019-09-20 01:38:23 UTC; davis
 Author: Davis Vaughan [aut, cre],
   Matt Dancho [aut]
-Built: R 3.5.1; x86_64-apple-darwin15.6.0; 2019-02-11 15:01:19 UTC; unix
+Built: R 3.6.0; x86_64-apple-darwin15.6.0; 2019-09-20 01:38:23 UTC; unix

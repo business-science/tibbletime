@@ -16,3 +16,7 @@ test_that("ts_pick works", {
   expect_equal(EuStockMarkets[, c(1, 2)], ts_pick(EuStockMarkets, c(1, 2)))
 
 })
+
+test_that("unknown series drops an error", {
+  expect_error(ts_pick(ts_df(ts_c(mdeaths, fdeaths)), "hallo"))
+})

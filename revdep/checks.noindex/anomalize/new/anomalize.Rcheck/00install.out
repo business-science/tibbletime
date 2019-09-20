@@ -1,5 +1,6 @@
 * installing *source* package ‘anomalize’ ...
 ** package ‘anomalize’ successfully unpacked and MD5 sums checked
+** using staged installation
 ** R
 ** data
 *** moving datasets to lazyload DB
@@ -10,5 +11,7 @@
 *** copying figures
 ** building package indices
 ** installing vignettes
-** testing if installed package can be loaded
+** testing if installed package can be loaded from temporary location
+** testing if installed package can be loaded from final location
+** testing if installed package keeps a record of temporary installation path
 * DONE (anomalize)

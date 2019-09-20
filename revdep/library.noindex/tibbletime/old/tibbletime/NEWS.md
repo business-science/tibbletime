@@ -1,3 +1,26 @@
+## tibbletime 0.1.2
+
+* Features
+
+    * Export a constructor for `tbl_time` object through `new_tbl_time()`. Only
+    to be used by package developers extending `tibbletime`.
+
+* Bug fixes
+
+    * For `tibble` 2.0.1, an internal bug fix was made to pass along an `nrow`
+    argument.
+    
+    * For `dplyr` 0.8.0, an internal fix was made in one of the tests.
+    
+    * A new line was added to `inst/include/is_ordered.h` to appease CRAN.
+
+    * The tbl_time time zone for `POSIXct` indices is now set as the first
+    non NA value of: "tzone" attribute -> `Sys.timezone()` -> "UTC". Previously
+    there was no `Sys.timezone()` step as there were problems with local time zones
+    such as `America/New_York` interacting with collapsing by day. Those problems have 
+    been fixed by using `DSTday` with all `POSIXct` indices even if `day` is
+    specified.
+
 ## tibbletime 0.1.1
 
 * General

@@ -1,6 +1,6 @@
 
-R version 3.5.1 (2018-07-02) -- "Feather Spray"
-Copyright (C) 2018 The R Foundation for Statistical Computing
+R version 3.6.0 (2019-04-26) -- "Planting of a Tree"
+Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-apple-darwin15.6.0 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -58,6 +58,11 @@ The following objects are masked from ‘package:base’:
 > tidyverse_cran_downloads %>%
 +     time_decompose(count, method = "stl") %>%
 +     anomalize(remainder, method = "iqr")
+Warning: Detecting old grouped_df format, replacing `vars` attribute by `groups`
+Warning: `cols` is now required.
+Please use `cols = c(nested.col)`
+Warning: `cols` is now required.
+Please use `cols = c(nested.col)`
 # A time tibble: 6,375 x 9
 [90m# Index:  date[39m
 [90m# Groups: package [15][39m
@@ -81,7 +86,7 @@ The following objects are masked from ‘package:base’:
 > 
 > cleanEx()
 
-detaching ‘package:bindrcpp’, ‘package:dplyr’
+detaching ‘package:dplyr’
 
 > nameEx("anomalize_methods")
 > ### * anomalize_methods
@@ -103,123 +108,123 @@ detaching ‘package:bindrcpp’, ‘package:dplyr’
 > iqr(x, alpha = 0.05, max_anoms = 0.2)
   [1] "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No" 
  [13] "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No" 
- [25] "No"  "No"  "No"  "No"  "No"  "No"  "Yes" "No"  "No"  "No"  "No"  "No" 
- [37] "Yes" "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No" 
+ [25] "No"  "No"  "No"  "No"  "No"  "Yes" "No"  "No"  "No"  "No"  "No"  "No" 
+ [37] "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No" 
  [49] "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No" 
- [61] "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No" 
- [73] "No"  "No"  "No"  "No"  "No"  "No"  "No"  "Yes" "No"  "No"  "No"  "No" 
- [85] "No"  "No"  "No"  "No"  "No"  "Yes" "No"  "No"  "No"  "No"  "Yes" "No" 
- [97] "No"  "No"  "No"  "No" 
+ [61] "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "Yes" "No" 
+ [73] "No"  "Yes" "No"  "No"  "No"  "No"  "No"  "No"  "No"  "Yes" "No"  "No" 
+ [85] "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No" 
+ [97] "Yes" "No"  "No"  "No" 
 > iqr(x, alpha = 0.05, max_anoms = 0.2, verbose = TRUE)
 $outlier
   [1] "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No" 
  [13] "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No" 
- [25] "No"  "No"  "No"  "No"  "No"  "No"  "Yes" "No"  "No"  "No"  "No"  "No" 
- [37] "Yes" "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No" 
+ [25] "No"  "No"  "No"  "No"  "No"  "Yes" "No"  "No"  "No"  "No"  "No"  "No" 
+ [37] "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No" 
  [49] "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No" 
- [61] "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No" 
- [73] "No"  "No"  "No"  "No"  "No"  "No"  "No"  "Yes" "No"  "No"  "No"  "No" 
- [85] "No"  "No"  "No"  "No"  "No"  "Yes" "No"  "No"  "No"  "No"  "Yes" "No" 
- [97] "No"  "No"  "No"  "No" 
+ [61] "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "Yes" "No" 
+ [73] "No"  "Yes" "No"  "No"  "No"  "No"  "No"  "No"  "No"  "Yes" "No"  "No" 
+ [85] "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No" 
+ [97] "Yes" "No"  "No"  "No" 
 
 $outlier_idx
-[1] 37 31 90 95 80
+[1] 74 71 30 82 97
 
 $outlier_vals
-[1] 10.182908  9.908886  9.896230  9.469704  7.925595
+[1] 11.648522 10.448903 10.247076  9.950004  9.167504
 
 $outlier_direction
 [1] "Up" "Up" "Up" "Up" "Up"
 
 $critical_limits
 limit_lower limit_upper 
-  -4.606339    4.827444 
+  -4.552347    4.755455 
 
 $outlier_report
 [90m# A tibble: 20 x 7[39m
-    rank index  value limit_lower limit_upper outlier direction
-   [3m[90m<dbl>[39m[23m [3m[90m<dbl>[39m[23m  [3m[90m<dbl>[39m[23m       [3m[90m<dbl>[39m[23m       [3m[90m<dbl>[39m[23m [3m[90m<chr>[39m[23m   [3m[90m<chr>[39m[23m    
-[90m 1[39m     1    37  10.2        -[31m4[39m[31m.[39m[31m61[39m        4.83 Yes     Up       
-[90m 2[39m     2    31   9.91       -[31m4[39m[31m.[39m[31m61[39m        4.83 Yes     Up       
-[90m 3[39m     3    90   9.90       -[31m4[39m[31m.[39m[31m61[39m        4.83 Yes     Up       
-[90m 4[39m     4    95   9.47       -[31m4[39m[31m.[39m[31m61[39m        4.83 Yes     Up       
-[90m 5[39m     5    80   7.93       -[31m4[39m[31m.[39m[31m61[39m        4.83 Yes     Up       
-[90m 6[39m     6    64   2.58       -[31m4[39m[31m.[39m[31m61[39m        4.83 No      [31mNA[39m       
-[90m 7[39m     7    55  -[31m2[39m[31m.[39m[31m27[39m       -[31m4[39m[31m.[39m[31m61[39m        4.83 No      [31mNA[39m       
-[90m 8[39m     8    96   2.45       -[31m4[39m[31m.[39m[31m61[39m        4.83 No      [31mNA[39m       
-[90m 9[39m     9    20   2.31       -[31m4[39m[31m.[39m[31m61[39m        4.83 No      [31mNA[39m       
-[90m10[39m    10    75  -[31m2[39m[31m.[39m[31m0[39m[31m6[39m       -[31m4[39m[31m.[39m[31m61[39m        4.83 No      [31mNA[39m       
-[90m11[39m    11    84  -[31m1[39m[31m.[39m[31m93[39m       -[31m4[39m[31m.[39m[31m61[39m        4.83 No      [31mNA[39m       
-[90m12[39m    12    50  -[31m1[39m[31m.[39m[31m88[39m       -[31m4[39m[31m.[39m[31m61[39m        4.83 No      [31mNA[39m       
-[90m13[39m    13    43  -[31m1[39m[31m.[39m[31m78[39m       -[31m4[39m[31m.[39m[31m61[39m        4.83 No      [31mNA[39m       
-[90m14[39m    14    52  -[31m1[39m[31m.[39m[31m74[39m       -[31m4[39m[31m.[39m[31m61[39m        4.83 No      [31mNA[39m       
-[90m15[39m    15    54   1.90       -[31m4[39m[31m.[39m[31m61[39m        4.83 No      [31mNA[39m       
-[90m16[39m    16    58   1.82       -[31m4[39m[31m.[39m[31m61[39m        4.83 No      [31mNA[39m       
-[90m17[39m    17    32   1.76       -[31m4[39m[31m.[39m[31m61[39m        4.83 No      [31mNA[39m       
-[90m18[39m    18    89   1.73       -[31m4[39m[31m.[39m[31m61[39m        4.83 No      [31mNA[39m       
-[90m19[39m    19    74   1.65       -[31m4[39m[31m.[39m[31m61[39m        4.83 No      [31mNA[39m       
-[90m20[39m    20    57  -[31m1[39m[31m.[39m[31m40[39m       -[31m4[39m[31m.[39m[31m61[39m        4.83 No      [31mNA[39m       
+    rank index value limit_lower limit_upper outlier direction
+   [3m[90m<dbl>[39m[23m [3m[90m<dbl>[39m[23m [3m[90m<dbl>[39m[23m       [3m[90m<dbl>[39m[23m       [3m[90m<dbl>[39m[23m [3m[90m<chr>[39m[23m   [3m[90m<chr>[39m[23m    
+[90m 1[39m     1    74 11.6        -[31m4[39m[31m.[39m[31m55[39m        4.76 Yes     Up       
+[90m 2[39m     2    71 10.4        -[31m4[39m[31m.[39m[31m55[39m        4.76 Yes     Up       
+[90m 3[39m     3    30 10.2        -[31m4[39m[31m.[39m[31m55[39m        4.76 Yes     Up       
+[90m 4[39m     4    82  9.95       -[31m4[39m[31m.[39m[31m55[39m        4.76 Yes     Up       
+[90m 5[39m     5    97  9.17       -[31m4[39m[31m.[39m[31m55[39m        4.76 Yes     Up       
+[90m 6[39m     6    64  2.58       -[31m4[39m[31m.[39m[31m55[39m        4.76 No      [31mNA[39m       
+[90m 7[39m     7    55 -[31m2[39m[31m.[39m[31m27[39m       -[31m4[39m[31m.[39m[31m55[39m        4.76 No      [31mNA[39m       
+[90m 8[39m     8    96  2.45       -[31m4[39m[31m.[39m[31m55[39m        4.76 No      [31mNA[39m       
+[90m 9[39m     9    20  2.31       -[31m4[39m[31m.[39m[31m55[39m        4.76 No      [31mNA[39m       
+[90m10[39m    10    80 -[31m2[39m[31m.[39m[31m0[39m[31m7[39m       -[31m4[39m[31m.[39m[31m55[39m        4.76 No      [31mNA[39m       
+[90m11[39m    11    75 -[31m2[39m[31m.[39m[31m0[39m[31m6[39m       -[31m4[39m[31m.[39m[31m55[39m        4.76 No      [31mNA[39m       
+[90m12[39m    12    84 -[31m1[39m[31m.[39m[31m93[39m       -[31m4[39m[31m.[39m[31m55[39m        4.76 No      [31mNA[39m       
+[90m13[39m    13    50 -[31m1[39m[31m.[39m[31m88[39m       -[31m4[39m[31m.[39m[31m55[39m        4.76 No      [31mNA[39m       
+[90m14[39m    14    43 -[31m1[39m[31m.[39m[31m78[39m       -[31m4[39m[31m.[39m[31m55[39m        4.76 No      [31mNA[39m       
+[90m15[39m    15    52 -[31m1[39m[31m.[39m[31m74[39m       -[31m4[39m[31m.[39m[31m55[39m        4.76 No      [31mNA[39m       
+[90m16[39m    16    54  1.90       -[31m4[39m[31m.[39m[31m55[39m        4.76 No      [31mNA[39m       
+[90m17[39m    17    58  1.82       -[31m4[39m[31m.[39m[31m55[39m        4.76 No      [31mNA[39m       
+[90m18[39m    18    32  1.76       -[31m4[39m[31m.[39m[31m55[39m        4.76 No      [31mNA[39m       
+[90m19[39m    19    89  1.73       -[31m4[39m[31m.[39m[31m55[39m        4.76 No      [31mNA[39m       
+[90m20[39m    20    57 -[31m1[39m[31m.[39m[31m40[39m       -[31m4[39m[31m.[39m[31m55[39m        4.76 No      [31mNA[39m       
 
 > 
 > gesd(x, alpha = 0.05, max_anoms = 0.2)
   [1] "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No" 
  [13] "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No" 
- [25] "No"  "No"  "No"  "No"  "No"  "No"  "Yes" "No"  "No"  "No"  "No"  "No" 
- [37] "Yes" "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No" 
+ [25] "No"  "No"  "No"  "No"  "No"  "Yes" "No"  "No"  "No"  "No"  "No"  "No" 
+ [37] "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No" 
  [49] "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No" 
- [61] "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No" 
- [73] "No"  "No"  "No"  "No"  "No"  "No"  "No"  "Yes" "No"  "No"  "No"  "No" 
- [85] "No"  "No"  "No"  "No"  "No"  "Yes" "No"  "No"  "No"  "No"  "Yes" "No" 
- [97] "No"  "No"  "No"  "No" 
+ [61] "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "Yes" "No" 
+ [73] "No"  "Yes" "No"  "No"  "No"  "No"  "No"  "No"  "No"  "Yes" "No"  "No" 
+ [85] "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No" 
+ [97] "Yes" "No"  "No"  "No" 
 > gesd(x, alpha = 0.05, max_anoms = 0.2, verbose = TRUE)
 $outlier
   [1] "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No" 
  [13] "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No" 
- [25] "No"  "No"  "No"  "No"  "No"  "No"  "Yes" "No"  "No"  "No"  "No"  "No" 
- [37] "Yes" "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No" 
+ [25] "No"  "No"  "No"  "No"  "No"  "Yes" "No"  "No"  "No"  "No"  "No"  "No" 
+ [37] "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No" 
  [49] "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No" 
- [61] "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No" 
- [73] "No"  "No"  "No"  "No"  "No"  "No"  "No"  "Yes" "No"  "No"  "No"  "No" 
- [85] "No"  "No"  "No"  "No"  "No"  "Yes" "No"  "No"  "No"  "No"  "Yes" "No" 
- [97] "No"  "No"  "No"  "No" 
+ [61] "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "Yes" "No" 
+ [73] "No"  "Yes" "No"  "No"  "No"  "No"  "No"  "No"  "No"  "Yes" "No"  "No" 
+ [85] "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No"  "No" 
+ [97] "Yes" "No"  "No"  "No" 
 
 $outlier_idx
-[1] 37 31 90 95 80
+[1] 74 71 30 82 97
 
 $outlier_vals
-[1] 10.182908  9.908886  9.896230  9.469704  7.925595
+[1] 11.648522 10.448903 10.247076  9.950004  9.167504
 
 $outlier_direction
 [1] "Up" "Up" "Up" "Up" "Up"
 
 $critical_limits
 limit_lower limit_upper 
-  -3.441812    3.441812 
+   -3.31569     3.31569 
 
 $outlier_report
 [90m# A tibble: 20 x 7[39m
-    rank index  value limit_lower limit_upper outlier direction
-   [3m[90m<dbl>[39m[23m [3m[90m<dbl>[39m[23m  [3m[90m<dbl>[39m[23m       [3m[90m<dbl>[39m[23m       [3m[90m<dbl>[39m[23m [3m[90m<chr>[39m[23m   [3m[90m<chr>[39m[23m    
-[90m 1[39m     1    37  10.2        -[31m3[39m[31m.[39m[31m45[39m        3.45 Yes     Up       
-[90m 2[39m     2    31   9.91       -[31m3[39m[31m.[39m[31m57[39m        3.57 Yes     Up       
-[90m 3[39m     3    90   9.90       -[31m3[39m[31m.[39m[31m55[39m        3.55 Yes     Up       
-[90m 4[39m     4    95   9.47       -[31m3[39m[31m.[39m[31m50[39m        3.50 Yes     Up       
-[90m 5[39m     5    80   7.93       -[31m3[39m[31m.[39m[31m55[39m        3.55 Yes     Up       
-[90m 6[39m     6    64   2.58       -[31m3[39m[31m.[39m[31m44[39m        3.44 No      [31mNA[39m       
-[90m 7[39m     7    96   2.45       -[31m3[39m[31m.[39m[31m41[39m        3.41 No      [31mNA[39m       
-[90m 8[39m     8    20   2.31       -[31m3[39m[31m.[39m[31m39[39m        3.39 No      [31mNA[39m       
-[90m 9[39m     9    55  -[31m2[39m[31m.[39m[31m27[39m       -[31m3[39m[31m.[39m[31m33[39m        3.33 No      [31mNA[39m       
-[90m10[39m    10    75  -[31m2[39m[31m.[39m[31m0[39m[31m6[39m       -[31m3[39m[31m.[39m[31m34[39m        3.34 No      [31mNA[39m       
-[90m11[39m    11    54   1.90       -[31m3[39m[31m.[39m[31m30[39m        3.30 No      [31mNA[39m       
-[90m12[39m    12    84  -[31m1[39m[31m.[39m[31m93[39m       -[31m3[39m[31m.[39m[31m22[39m        3.22 No      [31mNA[39m       
-[90m13[39m    13    58   1.82       -[31m3[39m[31m.[39m[31m0[39m[31m1[39m        3.01 No      [31mNA[39m       
-[90m14[39m    14    50  -[31m1[39m[31m.[39m[31m88[39m       -[31m2[39m[31m.[39m[31m82[39m        2.82 No      [31mNA[39m       
-[90m15[39m    15    32   1.76       -[31m2[39m[31m.[39m[31m74[39m        2.74 No      [31mNA[39m       
-[90m16[39m    16    89   1.73       -[31m2[39m[31m.[39m[31m67[39m        2.67 No      [31mNA[39m       
-[90m17[39m    17    43  -[31m1[39m[31m.[39m[31m78[39m       -[31m2[39m[31m.[39m[31m60[39m        2.60 No      [31mNA[39m       
-[90m18[39m    18    74   1.65       -[31m2[39m[31m.[39m[31m55[39m        2.55 No      [31mNA[39m       
-[90m19[39m    19    52  -[31m1[39m[31m.[39m[31m74[39m       -[31m2[39m[31m.[39m[31m53[39m        2.53 No      [31mNA[39m       
-[90m20[39m    20    92   1.43       -[31m2[39m[31m.[39m[31m50[39m        2.50 No      [31mNA[39m       
+    rank index value limit_lower limit_upper outlier direction
+   [3m[90m<dbl>[39m[23m [3m[90m<dbl>[39m[23m [3m[90m<dbl>[39m[23m       [3m[90m<dbl>[39m[23m       [3m[90m<dbl>[39m[23m [3m[90m<chr>[39m[23m   [3m[90m<chr>[39m[23m    
+[90m 1[39m     1    74 11.6        -[31m3[39m[31m.[39m[31m60[39m        3.60 Yes     Up       
+[90m 2[39m     2    71 10.4        -[31m3[39m[31m.[39m[31m49[39m        3.49 Yes     Up       
+[90m 3[39m     3    30 10.2        -[31m3[39m[31m.[39m[31m45[39m        3.45 Yes     Up       
+[90m 4[39m     4    82  9.95       -[31m3[39m[31m.[39m[31m53[39m        3.53 Yes     Up       
+[90m 5[39m     5    97  9.17       -[31m3[39m[31m.[39m[31m42[39m        3.42 Yes     Up       
+[90m 6[39m     6    64  2.58       -[31m3[39m[31m.[39m[31m32[39m        3.32 No      [31mNA[39m       
+[90m 7[39m     7    96  2.45       -[31m3[39m[31m.[39m[31m28[39m        3.28 No      [31mNA[39m       
+[90m 8[39m     8    20  2.31       -[31m3[39m[31m.[39m[31m24[39m        3.24 No      [31mNA[39m       
+[90m 9[39m     9    55 -[31m2[39m[31m.[39m[31m27[39m       -[31m3[39m[31m.[39m[31m15[39m        3.15 No      [31mNA[39m       
+[90m10[39m    10    80 -[31m2[39m[31m.[39m[31m0[39m[31m7[39m       -[31m3[39m[31m.[39m[31m12[39m        3.12 No      [31mNA[39m       
+[90m11[39m    11    75 -[31m2[39m[31m.[39m[31m0[39m[31m6[39m       -[31m3[39m[31m.[39m[31m0[39m[31m5[39m        3.05 No      [31mNA[39m       
+[90m12[39m    12    54  1.90       -[31m2[39m[31m.[39m[31m95[39m        2.95 No      [31mNA[39m       
+[90m13[39m    13    58  1.82       -[31m2[39m[31m.[39m[31m78[39m        2.78 No      [31mNA[39m       
+[90m14[39m    14    84 -[31m1[39m[31m.[39m[31m93[39m       -[31m2[39m[31m.[39m[31m57[39m        2.57 No      [31mNA[39m       
+[90m15[39m    15    32  1.76       -[31m2[39m[31m.[39m[31m54[39m        2.54 No      [31mNA[39m       
+[90m16[39m    16    89  1.73       -[31m2[39m[31m.[39m[31m53[39m        2.53 No      [31mNA[39m       
+[90m17[39m    17    50 -[31m1[39m[31m.[39m[31m88[39m       -[31m2[39m[31m.[39m[31m54[39m        2.54 No      [31mNA[39m       
+[90m18[39m    18    43 -[31m1[39m[31m.[39m[31m78[39m       -[31m2[39m[31m.[39m[31m50[39m        2.50 No      [31mNA[39m       
+[90m19[39m    19    52 -[31m1[39m[31m.[39m[31m74[39m       -[31m2[39m[31m.[39m[31m46[39m        2.46 No      [31mNA[39m       
+[90m20[39m    20    92  1.43       -[31m2[39m[31m.[39m[31m44[39m        2.44 No      [31mNA[39m       
 
 > 
 > 
@@ -318,6 +323,7 @@ The following objects are masked from ‘package:base’:
 +     anomalize(remainder, method = "iqr") %>%
 +     time_recompose() %>%
 +     plot_anomalies(time_recomposed = TRUE)
+Warning: Detecting old grouped_df format, replacing `vars` attribute by `groups`
 frequency = 7 days
 trend = 91 days
 > 
@@ -328,6 +334,10 @@ trend = 91 days
 +     anomalize(remainder, method = "iqr") %>%
 +     time_recompose() %>%
 +     plot_anomalies(time_recomposed = TRUE, ncol = 3)
+Warning: `cols` is now required.
+Please use `cols = c(nested.col)`
+Warning: `cols` is now required.
+Please use `cols = c(nested.col)`
 > 
 > 
 > 
@@ -370,6 +380,7 @@ The following objects are masked from ‘package:base’:
 +     time_decompose(count, method = "stl") %>%
 +     anomalize(remainder, method = "iqr") %>%
 +     plot_anomaly_decomposition()
+Warning: Detecting old grouped_df format, replacing `vars` attribute by `groups`
 frequency = 7 days
 trend = 91 days
 > 
@@ -471,6 +482,9 @@ The following objects are masked from ‘package:base’:
 > # Basic Usage
 > tidyverse_cran_downloads %>%
 +     time_apply(count, period = "1 week", .fun = mean, na.rm = TRUE)
+Warning: Detecting old grouped_df format, replacing `vars` attribute by `groups`
+Warning: `cols` is now required.
+Please use `cols = c(nested.col)`
 # A time tibble: 6,375 x 4
 [90m# Index:  date[39m
 [90m# Groups: package [15][39m
@@ -525,6 +539,9 @@ The following objects are masked from ‘package:base’:
 > # Basic Usage
 > tidyverse_cran_downloads %>%
 +     time_decompose(count, method = "stl")
+Warning: Detecting old grouped_df format, replacing `vars` attribute by `groups`
+Warning: `cols` is now required.
+Please use `cols = c(nested.col)`
 # A time tibble: 6,375 x 6
 [90m# Index:  date[39m
 [90m# Groups: package [15][39m
@@ -550,6 +567,8 @@ The following objects are masked from ‘package:base’:
 +                    trend        = "2 months",
 +                    merge        = TRUE,
 +                    message      = FALSE)
+Warning: `cols` is now required.
+Please use `cols = c(nested.col)`
 # A time tibble: 6,375 x 7
 [90m# Index:  date[39m
 [90m# Groups: package [15][39m
@@ -608,6 +627,7 @@ The following objects are masked from ‘package:base’:
 +     filter(package == "tidyquant") %>%
 +     ungroup() %>%
 +     time_frequency(period = "auto")
+Warning: Detecting old grouped_df format, replacing `vars` attribute by `groups`
 frequency = 7 days
 [1] 7
 > 
@@ -679,6 +699,11 @@ The following objects are masked from ‘package:base’:
 +     time_decompose(count, method = "stl") %>%
 +     anomalize(remainder, method = "iqr") %>%
 +     time_recompose()
+Warning: Detecting old grouped_df format, replacing `vars` attribute by `groups`
+Warning: `cols` is now required.
+Please use `cols = c(nested.col)`
+Warning: `cols` is now required.
+Please use `cols = c(nested.col)`
 # A time tibble: 6,375 x 11
 [90m# Index:  date[39m
 [90m# Groups: package [15][39m
@@ -741,7 +766,7 @@ detaching ‘package:dplyr’
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  7.176 0.111 7.296 0.001 0.001 
+Time elapsed:  7.939 0.154 8.343 0.002 0.003 
 > grDevices::dev.off()
 null device 
           1 

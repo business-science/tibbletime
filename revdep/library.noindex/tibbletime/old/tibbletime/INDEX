@@ -13,6 +13,7 @@ filter_time             Succinctly filter a 'tbl_time' object by its
                         index
 floor_index             A simple wrapper of 'lubridate::floor_date()'
 getters                 Getters
+new_tbl_time            Create a new tbl_time object
 parse_period            Parse a character period specification
 partition_index         Partition an index vector into an integer
                         vector representing groups

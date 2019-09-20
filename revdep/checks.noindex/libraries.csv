@@ -1,2 +1,4 @@
 package,old,new,delta
-tibbletime,0.1.1,0.1.2,*
+tibbletime,0.1.2,0.1.2.9000,*
+ellipsis,NA,0.2.0.9000,*
+zoo,NA,1.8-6,*

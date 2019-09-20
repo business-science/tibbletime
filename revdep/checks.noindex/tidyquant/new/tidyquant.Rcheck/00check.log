@@ -1,10 +1,11 @@
 * using log directory ‘/Users/davis/Desktop/r/packages/tibbletime/revdep/checks.noindex/tidyquant/new/tidyquant.Rcheck’
-* using R version 3.5.1 (2018-07-02)
+* using R version 3.6.0 (2019-04-26)
 * using platform: x86_64-apple-darwin15.6.0 (64-bit)
 * using session charset: UTF-8
+* using options ‘--no-manual --no-build-vignettes’
 * checking for file ‘tidyquant/DESCRIPTION’ ... OK
 * checking extension type ... Package
-* this is package ‘tidyquant’ version ‘0.5.5’
+* this is package ‘tidyquant’ version ‘0.5.6’
 * package encoding: UTF-8
 * checking package namespace information ... OK
 * checking package dependencies ... OK
@@ -14,12 +15,7 @@
 * checking for hidden files and directories ... OK
 * checking for portable file names ... OK
 * checking for sufficient/correct file permissions ... OK
-* checking whether package ‘tidyquant’ can be installed ... WARNING
-Found the following significant warnings:
-  Warning: package ‘tibble’ was built under R version 3.5.2
-  Warning: package ‘purrr’ was built under R version 3.5.2
-  Warning: package ‘stringr’ was built under R version 3.5.2
-See ‘/Users/davis/Desktop/r/packages/tibbletime/revdep/checks.noindex/tidyquant/new/tidyquant.Rcheck/00install.out’ for details.
+* checking whether package ‘tidyquant’ can be installed ... OK
 * checking installed package size ... OK
 * checking package directory ... OK
 * checking ‘build’ directory ... OK
@@ -35,7 +31,9 @@ See ‘/Users/davis/Desktop/r/packages/tibbletime/revdep/checks.noindex/tidyquan
 * checking whether the package can be unloaded cleanly ... OK
 * checking whether the namespace can be loaded with stated dependencies ... OK
 * checking whether the namespace can be unloaded cleanly ... OK
-* checking dependencies in R code ... OK
+* checking dependencies in R code ... NOTE
+Namespace in Imports field not imported from: ‘xml2’
+  All declared Imports should be used.
 * checking S3 generic/method consistency ... OK
 * checking replacement functions ... OK
 * checking foreign function calls ... OK
@@ -56,12 +54,28 @@ See ‘/Users/davis/Desktop/r/packages/tibbletime/revdep/checks.noindex/tidyquan
 * checking files in ‘vignettes’ ... OK
 * checking examples ... OK
 * checking for unstated dependencies in ‘tests’ ... OK
-* checking tests ... OK
+* checking tests ... ERROR
   Running ‘testthat.R’
+Running the tests in ‘tests/testthat.R’ failed.
+Last 13 lines of output:
+  [31m✖[39m [34mdplyr[39m::[32mmatches()[39m         masks [34mtidyr[39m::matches(), [34mtestthat[39m::matches()
+  [31m✖[39m [34mlubridate[39m::[32msetdiff()[39m     masks [34mbase[39m::setdiff()
+  [31m✖[39m [34mlubridate[39m::[32munion()[39m       masks [34mbase[39m::union()
+  > 
+  > test_check("tidyquant")
+  [31m──[39m [31m1. Failure: Test 1.2 grouped data frames are same with mutate and tq_mutate (@test_tq_mutate.R#93) [39m [31m────────────────────[39m
+  `test1.2a` not identical to `test1.2b`.
+  Objects equal but not identical
+  
+  ══ testthat results  ══════════════════════════════════════════════════════════════════════════════════════════════════════
+  [ OK: 125 | SKIPPED: 1 | WARNINGS: 26 | FAILED: 1 ]
+  1. Failure: Test 1.2 grouped data frames are same with mutate and tq_mutate (@test_tq_mutate.R#93) 
+  
+  Error: testthat unit tests failed
+  Execution halted
 * checking for unstated dependencies in vignettes ... OK
 * checking package vignettes in ‘inst/doc’ ... OK
 * checking running R code from vignettes ... NONE
-* checking re-building of vignette outputs ... OK
-* checking PDF version of manual ... OK
+* checking re-building of vignette outputs ... SKIPPED
 * DONE
-Status: 1 WARNING
+Status: 1 ERROR, 1 NOTE

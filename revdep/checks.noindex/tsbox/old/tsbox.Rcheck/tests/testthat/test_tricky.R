@@ -49,8 +49,8 @@ test_that("Irregular regular series work.", {
         seq.Date(as.Date("2010-03-01"), by = "day", length.out = 10)
       ),
       value = rnorm(30)
-    ) %>% 
-      ts_ts(), 
+    ) %>%
+      ts_ts(),
     "ts"
   )
 })
@@ -94,13 +94,13 @@ test_that("Non unique colnames work fine", {
 test_that("Only combined ids are unique", {
 
   # individual ids columns don't matter
-  df1 <- df2 <- ts_df(ts_c(mdeaths, fdeaths)) 
+  df1 <- df2 <- ts_df(ts_c(mdeaths, fdeaths))
   df1$cat <- "1"
   df2$cat <- "2"
   comb <- ts_c(df1, df2)
   expect_equal(unique(comb$id), c("mdeaths", "fdeaths"))
 
-  df1 <- df2 <- ts_df(ts_c(mdeaths, mdeaths, fdeaths)) 
+  df1 <- df2 <- ts_df(ts_c(mdeaths, mdeaths, fdeaths))
   df1$cat <- "1"
   df2$cat <- "2"
   comb <- ts_c(df1, df2)
@@ -114,3 +114,19 @@ test_that("Only combined ids are unique", {
 })
 
 
+test_that("No duplicated series are allowed", {
+  dta <-
+    bind_rows(
+      tibble(id = "reihe_1", time = 2011:2018, value = 2:9),
+      tibble(id = "reihe_1", time = 2011:2018, value = 1:8)
+    )
+  expect_error(ts_ts(dta))
+  # mutliple ids
+  dta <-
+  bind_rows(
+    tibble(rr = "a", id = "reihe_1", time = 2011:2018, value = 2:9),
+    tibble(rr = "a", id = "reihe_1", time = 2011:2018, value = 1:8)
+  )
+  expect_error(ts_ts(dta))
+
+})

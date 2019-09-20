@@ -30,7 +30,7 @@ flush(stderr()); flush(stdout())
 
 ### Name: ts_
 ### Title: Constructing ts-Functions
-### Aliases: ts_ load_suggested ts_ ts_ ts_apply
+### Aliases: ts_ load_suggested ts_apply
 
 ### ** Examples
 
@@ -45,8 +45,7 @@ flush(stderr()); flush(stdout())
 
 ### Name: ts_arithmetic
 ### Title: Arithmetic Operators for ts-boxable objects
-### Aliases: ts_arithmetic %ts+% ts_arithmetic %ts-% ts_arithmetic %ts*%
-###   ts_arithmetic %ts/%
+### Aliases: ts_arithmetic %ts+% %ts-% %ts*% %ts/%
 
 ### ** Examples
 
@@ -64,7 +63,7 @@ flush(stderr()); flush(stdout())
 
 ### Name: ts_bind
 ### Title: Bind Time Series
-### Aliases: ts_bind ts_bind ts_chain
+### Aliases: ts_bind ts_chain
 
 ### ** Examples
 
@@ -122,6 +121,27 @@ head(x)
 
 
 cleanEx()
+nameEx("ts_default")
+### * ts_default
+
+flush(stderr()); flush(stdout())
+
+### Name: ts_default
+### Title: Default Column Names
+### Aliases: ts_default
+
+### ** Examples
+
+
+df <- ts_df(ts_c(mdeaths, fdeaths))
+# non-default colnames
+colnames(df) <- c("id", "date", "count")
+# switch back to default colnames
+head(ts_default(df))
+
+
+
+cleanEx()
 nameEx("ts_examples")
 ### * ts_examples
 
@@ -129,8 +149,7 @@ flush(stderr()); flush(stdout())
 
 ### Name: ts_examples
 ### Title: Principal Components, Dygraphs, Forecasts, Seasonal Adjustment
-### Aliases: ts_examples ts_prcomp ts_examples ts_dygraphs ts_examples
-###   ts_forecast ts_examples ts_seas
+### Aliases: ts_examples ts_prcomp ts_dygraphs ts_forecast ts_seas
 
 ### ** Examples
 
@@ -149,17 +168,6 @@ flush(stderr()); flush(stdout())
 
 ### ** Examples
 
-ts_frequency(cbind(mdeaths, fdeaths), "year", "sum")
-ts_frequency(cbind(mdeaths, fdeaths), "year", "sum")
-ts_frequency(cbind(mdeaths, fdeaths), "quarter", "last")
-
-ts_frequency(AirPassengers, 4, "sum")
-ts_frequency(AirPassengers, 1, "sum")
-
-# Note that incomplete years are omited by default
-ts_frequency(EuStockMarkets, "year")
-ts_frequency(EuStockMarkets, "year", na.rm = TRUE)
-
 
 
 
@@ -171,8 +179,8 @@ flush(stderr()); flush(stdout())
 
 ### Name: ts_ggplot
 ### Title: Plot Time Series, Using ggplot2
-### Aliases: ts_ggplot ts_ggplot theme_tsbox ts_ggplot colors_tsbox
-###   ts_ggplot scale_color_tsbox ts_ggplot scale_fill_tsbox
+### Aliases: ts_ggplot theme_tsbox colors_tsbox scale_color_tsbox
+###   scale_fill_tsbox
 
 ### ** Examples
 
@@ -202,7 +210,7 @@ flush(stderr()); flush(stdout())
 
 ### Name: ts_index
 ### Title: Indices from Levels or Percentage Rates
-### Aliases: ts_index ts_compound ts_index
+### Aliases: ts_index ts_compound
 
 ### ** Examples
 
@@ -223,10 +231,11 @@ flush(stderr()); flush(stdout())
 
 ### ** Examples
 
-head(ts_lag(AirPassengers, "1 month"))
-head(ts_lag(AirPassengers, "1 year"))
-head(ts_lag(ts_df(AirPassengers), "2 day"))
-# head(ts_lag(ts_df(AirPassengers), "2 min")) not yet working
+head(ts_lag(fdeaths, "1 month"))
+head(ts_lag(fdeaths, "1 year"))
+head(ts_lag(ts_df(fdeaths), "2 day"))
+head(ts_lag(ts_df(fdeaths), "2 min"))
+head(ts_lag(ts_df(fdeaths), "-1 day"))
 
 
 
@@ -238,7 +247,7 @@ flush(stderr()); flush(stdout())
 
 ### Name: ts_long
 ### Title: Reshaping Multiple Time Series
-### Aliases: ts_long ts_long ts_wide
+### Aliases: ts_long ts_wide
 
 ### ** Examples
 
@@ -285,14 +294,15 @@ flush(stderr()); flush(stdout())
 
 ### Name: ts_pc
 ### Title: First Differences and Percentage Change Rates
-### Aliases: ts_pc ts_pc ts_diff ts_pc ts_pcy ts_pc ts_diffy
+### Aliases: ts_pc ts_diff ts_pca ts_pcy ts_diffy
 
 ### ** Examples
 
-head(ts_diff(ts_c(fdeaths, mdeaths)))
-head(ts_pc(ts_c(fdeaths, mdeaths)))
-head(ts_pcy(ts_c(fdeaths, mdeaths)))
-head(ts_diffy(ts_c(fdeaths, mdeaths)))
+tail(ts_diff(ts_c(fdeaths, mdeaths)))
+tail(ts_pc(ts_c(fdeaths, mdeaths)))
+tail(ts_pca(ts_c(fdeaths, mdeaths)))
+tail(ts_pcy(ts_c(fdeaths, mdeaths)))
+tail(ts_diffy(ts_c(fdeaths, mdeaths)))
 
 
 
@@ -347,6 +357,7 @@ x0 <- AirPassengers
 x0[c(10, 15)] <- NA
 x <- ts_na_omit(ts_dts(x0))
 ts_regular(x)
+ts_regular(x, fill = 0)
 
 m <- mdeaths
 m[c(10, 69)] <- NA
@@ -380,29 +391,36 @@ flush(stderr()); flush(stdout())
 
 ### Name: ts_span
 ### Title: Limit Time Span
-### Aliases: ts_span ts_span ts_start ts_span ts_end
+### Aliases: ts_span
 
 ### ** Examples
 
 
-# use 'anytime' shortcuts
-ts_span(mdeaths, start = "1979")       # shortcut for 1979-01-01
-ts_span(mdeaths, start = "1979-4")     # shortcut for 1979-04-01
-ts_span(mdeaths, start = "197904")     # shortcut for 1979-04-01
-
-# it's fine to use an to date outside of series span
-ts_span(mdeaths, end = "2001-01-01")
-
-# use strings to set start or end relative to each other
-
-ts_span(mdeaths, start = "-7 month")   # last 7 months
-ts_span(mdeaths, start = -7)           # last 7 periods
-ts_span(mdeaths, start = -1)           # last single value
-ts_span(mdeaths, end = "1e4 hours")    # first 10000 hours
-
 
 # Limit span of 'discoveries' to the same span as 'AirPassengers'
 ts_span(discoveries, template = AirPassengers)
+ts_span(mdeaths, end = "19801201", extend = TRUE)
+
+
+
+cleanEx()
+nameEx("ts_summary")
+### * ts_summary
+
+flush(stderr()); flush(stdout())
+
+### Name: ts_summary
+### Title: Time Series Properties
+### Aliases: ts_summary
+
+### ** Examples
+
+ts_summary(ts_c(mdeaths, austres))
+ts_summary(ts_c(mdeaths, austres), spark = TRUE)
+# Extracting specific properties
+ts_summary(AirPassengers)$start
+ts_summary(AirPassengers)$freq
+ts_summary(AirPassengers)$obs
 
 
 
@@ -429,9 +447,9 @@ flush(stderr()); flush(stdout())
 
 ### Name: ts_ts
 ### Title: Convert Everything to Everything
-### Aliases: ts_ts ts_data.frame ts_ts ts_df ts_ts ts_data.table ts_ts
-###   ts_dt ts_ts ts_tbl ts_ts ts_tibbletime ts_ts ts_timeSeries ts_ts
-###   ts_ts ts_tsibble ts_ts ts_tslist ts_ts ts_xts ts_ts ts_zoo
+### Aliases: ts_ts ts_data.frame ts_df ts_data.table ts_dt ts_tbl
+###   ts_tibbletime ts_timeSeries ts_tis ts_irts ts_tsibble ts_tslist
+###   ts_xts ts_zoo
 
 ### ** Examples
 
@@ -450,7 +468,7 @@ suppressMessages(library(xts))
 head(ts_xts(x.ts))
 
 # heuristic time conversion
-# 1 momth: approx. 1/12 year
+# 1 month: approx. 1/12 year
 head(ts_df(AirPassengers))
 
 # exact time conversion

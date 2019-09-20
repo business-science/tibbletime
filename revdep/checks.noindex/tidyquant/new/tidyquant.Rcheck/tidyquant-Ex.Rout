@@ -1,6 +1,6 @@
 
-R version 3.5.1 (2018-07-02) -- "Feather Spray"
-Copyright (C) 2018 The R Foundation for Statistical Computing
+R version 3.6.0 (2019-04-26) -- "Planting of a Tree"
+Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-apple-darwin15.6.0 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -50,15 +50,12 @@ Loading required package: quantmod
 Loading required package: TTR
 Version 0.4-0 included new data defaults. See ?getSymbols.
 Loading required package: tidyverse
-── [1mAttaching packages[22m ───────────────────────────────────────────────────────────────── tidyverse 1.2.1 ──
-[32m✔[39m [34mggplot2[39m 3.1.0     [32m✔[39m [34mpurrr  [39m 0.3.0
-[32m✔[39m [34mtibble [39m 2.0.1     [32m✔[39m [34mdplyr  [39m 0.7.8
-[32m✔[39m [34mtidyr  [39m 0.8.2     [32m✔[39m [34mstringr[39m 1.4.0
-[32m✔[39m [34mreadr  [39m 1.3.1     [32m✔[39m [34mforcats[39m 0.3.0
-Warning: package ‘tibble’ was built under R version 3.5.2
-Warning: package ‘purrr’ was built under R version 3.5.2
-Warning: package ‘stringr’ was built under R version 3.5.2
-── [1mConflicts[22m ──────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+── [1mAttaching packages[22m ────────────────────────────────────────────────────────────────────────────────── tidyverse 1.2.1 ──
+[32m✔[39m [34mggplot2[39m 3.2.1     [32m✔[39m [34mpurrr  [39m 0.3.2
+[32m✔[39m [34mtibble [39m 2.1.3     [32m✔[39m [34mdplyr  [39m 0.8.3
+[32m✔[39m [34mtidyr  [39m 1.0.0     [32m✔[39m [34mstringr[39m 1.4.0
+[32m✔[39m [34mreadr  [39m 1.3.1     [32m✔[39m [34mforcats[39m 0.4.0
+── [1mConflicts[22m ───────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
 [31m✖[39m [34mlubridate[39m::[32mas.difftime()[39m masks [34mbase[39m::as.difftime()
 [31m✖[39m [34mlubridate[39m::[32mdate()[39m        masks [34mbase[39m::date()
 [31m✖[39m [34mdplyr[39m::[32mfilter()[39m          masks [34mstats[39m::filter()
@@ -133,9 +130,6 @@ Warning: package ‘stringr’ was built under R version 3.5.2
 > 
 > 
 > cleanEx()
-
-detaching ‘package:bindrcpp’
-
 > nameEx("geom_bbands")
 > ### * geom_bbands
 > 
@@ -207,11 +201,11 @@ Warning: Ignoring unknown parameters: colour_up, colour_down
 Warning: Ignoring unknown parameters: colour_up, colour_down
 Warning: Ignoring unknown parameters: colour_up, colour_down
 Warning: Computation failed in `stat_linerange_bc()`:
-Evaluation error: argument "color_up" is missing, with no default.
+argument "color_up" is missing, with no default
 Warning: Computation failed in `stat_segment_left_bc()`:
-Evaluation error: argument "color_up" is missing, with no default.
+argument "color_up" is missing, with no default
 Warning: Computation failed in `stat_segment_right_bc()`:
-Evaluation error: argument "color_up" is missing, with no default.
+argument "color_up" is missing, with no default
 > 
 > # Candlestick Chart
 > AAPL %>%
@@ -223,7 +217,7 @@ Evaluation error: argument "color_up" is missing, with no default.
 Warning: Ignoring unknown parameters: colour_up, colour_down
 Warning: Ignoring unknown parameters: colour_up, colour_down
 Warning: Computation failed in `stat_linerange_bc()`:
-Evaluation error: argument "color_up" is missing, with no default.
+argument "color_up" is missing, with no default
 > 
 > 
 > 
@@ -303,7 +297,7 @@ detaching ‘package:scales’
 > 
 > ### Name: quandl_api_key
 > ### Title: Query or set Quandl API Key
-> ### Aliases: quandl_api_key quandl_api_key
+> ### Aliases: quandl_api_key
 > 
 > ### ** Examples
 > 
@@ -322,7 +316,7 @@ detaching ‘package:scales’
 > 
 > ### Name: quandl_search
 > ### Title: Search the Quandl database
-> ### Aliases: quandl_search quandl_search
+> ### Aliases: quandl_search
 > 
 > ### ** Examples
 > 
@@ -352,6 +346,8 @@ detaching ‘package:scales’
 > stocks <- c("AAPL", "FB", "NFLX") %>%
 +     tq_get(from = "2013-01-01",
 +            to   = "2017-01-01")
+Warning: `cols` is now required.
+Please use `cols = c(stock.prices)`
 > 
 > # Plot for stocks
 > a <- stocks %>%
@@ -378,7 +374,7 @@ detaching ‘package:scales’
 > 
 > ### Name: theme_tq
 > ### Title: tidyquant themes for ggplot2.
-> ### Aliases: theme_tq theme_tq theme_tq_dark theme_tq_green
+> ### Aliases: theme_tq theme_tq_dark theme_tq_green
 > 
 > ### ** Examples
 > 
@@ -437,6 +433,8 @@ detaching ‘package:scales’
 +                       get  = "stock.prices",
 +                       from = "2016-01-01",
 +                       to   = "2017-01-01")
+Warning: `cols` is now required.
+Please use `cols = c(stock.prices)`
 > 
 > # Multiple gets
 > mult_gets <- tq_get("AAPL",
@@ -454,7 +452,7 @@ detaching ‘package:scales’
 > 
 > ### Name: tq_mutate
 > ### Title: Mutates quantitative data
-> ### Aliases: tq_mutate tq_mutate tq_mutate_ tq_mutate_xy tq_mutate_xy_
+> ### Aliases: tq_mutate tq_mutate_ tq_mutate_xy tq_mutate_xy_
 > ###   tq_mutate_fun_options tq_transmute tq_transmute_ tq_transmute_xy
 > ###   tq_transmute_xy_ tq_transmute_fun_options
 > 
@@ -486,7 +484,7 @@ detaching ‘package:scales’
 [90m 7[39m 2016-01-12  99   100.0  97.6  99.4 28[4m3[24m[4m9[24m[4m5[24m400     99.4       0.018[4m9[24m 
 [90m 8[39m 2016-01-13 101.  101.   95.2  95.4 33[4m4[24m[4m1[24m[4m0[24m600     95.4      -[31m0[39m[31m.[39m[31m0[39m[31m40[4m4[24m[39m 
 [90m 9[39m 2016-01-14  95.8  98.9  92.4  98.4 48[4m6[24m[4m5[24m[4m8[24m600     98.4       0.030[4m2[24m 
-[90m10[39m 2016-01-15  94.0  96.4  93.5  95.0 45[4m9[24m[4m3[24m[4m5[24m600     95.0      -[31m0[39m[31m.[39m[31m0[39m[31m35[4m2[24m[39m 
+[90m10[39m 2016-01-15  94.0  96.4  93.5  95.0 46[4m1[24m[4m3[24m[4m2[24m800     95.0      -[31m0[39m[31m.[39m[31m0[39m[31m35[4m2[24m[39m 
 [90m# … with 242 more rows[39m
 > 
 > # Example 2: Use tq_mutate_xy to use functions with two columns required
@@ -505,13 +503,13 @@ detaching ‘package:scales’
 [90m 7[39m 2016-01-12  99   100.0  97.6  99.4 28[4m3[24m[4m9[24m[4m5[24m400     99.4  [31mNA[39m  
 [90m 8[39m 2016-01-13 101.  101.   95.2  95.4 33[4m4[24m[4m1[24m[4m0[24m600     95.4  [31mNA[39m  
 [90m 9[39m 2016-01-14  95.8  98.9  92.4  98.4 48[4m6[24m[4m5[24m[4m8[24m600     98.4  [31mNA[39m  
-[90m10[39m 2016-01-15  94.0  96.4  93.5  95.0 45[4m9[24m[4m3[24m[4m5[24m600     95.0  95.0
+[90m10[39m 2016-01-15  94.0  96.4  93.5  95.0 46[4m1[24m[4m3[24m[4m2[24m800     95.0  95.0
 [90m# … with 242 more rows[39m
 > 
 > # Example 3: Using tq_mutate to work with non-OHLC data
 > tq_get("DCOILWTICO", get = "economic.data") %>%
 +     tq_mutate(select = price, mutate_fun = lag.xts, k = 1, na.pad = TRUE)
-[90m# A tibble: 2,633 x 3[39m
+[90m# A tibble: 2,793 x 3[39m
    date       price lag.xts
    [3m[90m<date>[39m[23m     [3m[90m<dbl>[39m[23m   [3m[90m<dbl>[39m[23m
 [90m 1[39m 2009-01-01  [31mNA[39m      [31mNA[39m  
@@ -524,7 +522,7 @@ detaching ‘package:scales’
 [90m 8[39m 2009-01-12  37.6    40.7
 [90m 9[39m 2009-01-13  37.8    37.6
 [90m10[39m 2009-01-14  37.4    37.8
-[90m# … with 2,623 more rows[39m
+[90m# … with 2,783 more rows[39m
 > 
 > # Example 4: Using tq_mutate to apply a rolling regression
 > fb_returns <- fb_stock_prices %>%
@@ -544,20 +542,20 @@ detaching ‘package:scales’
 Warning: `as_data_frame()` is deprecated, use `as_tibble()` (but mind the new semantics).
 [90mThis warning is displayed once per session.[39m
 [90m# A tibble: 12 x 5[39m
-   date       fb.returns xlk.returns    coef.0 coef.1
-   [3m[90m<date>[39m[23m          [3m[90m<dbl>[39m[23m       [3m[90m<dbl>[39m[23m     [3m[90m<dbl>[39m[23m  [3m[90m<dbl>[39m[23m
-[90m 1[39m 2016-01-29     0.097[4m7[24m    -[31m0[39m[31m.[39m[31m0[39m[31m24[4m4[24m[39m   [31mNA[39m       [31mNA[39m    
-[90m 2[39m 2016-02-29    -[31m0[39m[31m.[39m[31m0[39m[31m47[4m1[24m[39m    -[31m0[39m[31m.[39m[31m00[39m[31m6[4m5[24m[4m5[24m[39m  [31mNA[39m       [31mNA[39m    
-[90m 3[39m 2016-03-31     0.067[4m2[24m     0.088[4m2[24m   [31mNA[39m       [31mNA[39m    
-[90m 4[39m 2016-04-29     0.030[4m5[24m    -[31m0[39m[31m.[39m[31m0[39m[31m50[4m3[24m[39m   [31mNA[39m       [31mNA[39m    
-[90m 5[39m 2016-05-31     0.010[4m5[24m     0.048[4m9[24m   [31mNA[39m       [31mNA[39m    
-[90m 6[39m 2016-06-30    -[31m0[39m[31m.[39m[31m0[39m[31m38[4m1[24m[39m    -[31m0[39m[31m.[39m[31m0[39m[31m13[4m8[24m[39m    0.018[4m8[24m   0.190
-[90m 7[39m 2016-07-29     0.084[4m5[24m     0.071[4m0[24m    0.003[4m5[24m[4m5[24m  0.626
-[90m 8[39m 2016-08-31     0.017[4m6[24m     0.011[4m6[24m    0.015[4m4[24m   0.511
-[90m 9[39m 2016-09-30     0.017[4m0[24m     0.021[4m0[24m    0.013[4m6[24m   0.453
-[90m10[39m 2016-10-31     0.021[4m2[24m    -[31m0[39m[31m.[39m[31m00[39m[31m7[4m5[24m[4m3[24m[39m  -[31m0[39m[31m.[39m[31m00[39m[31m1[4m4[24m[4m3[24m[39m  0.924
-[90m11[39m 2016-11-30    -[31m0[39m[31m.[39m[31m0[39m[31m96[4m0[24m[39m     0.001[4m6[24m[4m9[24m  -[31m0[39m[31m.[39m[31m0[39m[31m18[4m9[24m[39m   1.42 
-[90m12[39m 2016-12-30    -[31m0[39m[31m.[39m[31m0[39m[31m28[4m5[24m[39m     0.022[4m6[24m   -[31m0[39m[31m.[39m[31m0[39m[31m25[4m4[24m[39m   1.40 
+   date       fb.returns xlk.returns   coef.0 coef.1
+   [3m[90m<date>[39m[23m          [3m[90m<dbl>[39m[23m       [3m[90m<dbl>[39m[23m    [3m[90m<dbl>[39m[23m  [3m[90m<dbl>[39m[23m
+[90m 1[39m 2016-01-29     0.097[4m7[24m    -[31m0[39m[31m.[39m[31m0[39m[31m24[4m4[24m[39m  [31mNA[39m       [31mNA[39m    
+[90m 2[39m 2016-02-29    -[31m0[39m[31m.[39m[31m0[39m[31m47[4m1[24m[39m    -[31m0[39m[31m.[39m[31m00[39m[31m6[4m5[24m[4m5[24m[39m [31mNA[39m       [31mNA[39m    
+[90m 3[39m 2016-03-31     0.067[4m2[24m     0.088[4m2[24m  [31mNA[39m       [31mNA[39m    
+[90m 4[39m 2016-04-29     0.030[4m5[24m    -[31m0[39m[31m.[39m[31m0[39m[31m50[4m3[24m[39m  [31mNA[39m       [31mNA[39m    
+[90m 5[39m 2016-05-31     0.010[4m5[24m     0.048[4m9[24m  [31mNA[39m       [31mNA[39m    
+[90m 6[39m 2016-06-30    -[31m0[39m[31m.[39m[31m0[39m[31m38[4m1[24m[39m    -[31m0[39m[31m.[39m[31m0[39m[31m13[4m8[24m[39m   0.018[4m8[24m   0.190
+[90m 7[39m 2016-07-29     0.084[4m5[24m     0.071[4m0[24m   0.003[4m5[24m[4m5[24m  0.626
+[90m 8[39m 2016-08-31     0.017[4m6[24m     0.011[4m6[24m   0.015[4m4[24m   0.511
+[90m 9[39m 2016-09-30     0.017[4m0[24m     0.021[4m0[24m   0.013[4m6[24m   0.453
+[90m10[39m 2016-10-31     0.021[4m2[24m    -[31m0[39m[31m.[39m[31m00[39m[31m7[4m5[24m[4m3[24m[39m -[31m0[39m[31m.[39m[31m00[39m[31m1[4m4[24m[4m3[24m[39m  0.924
+[90m11[39m 2016-11-30    -[31m0[39m[31m.[39m[31m0[39m[31m96[4m0[24m[39m     0.001[4m6[24m[4m9[24m -[31m0[39m[31m.[39m[31m0[39m[31m18[4m9[24m[39m   1.42 
+[90m12[39m 2016-12-30    -[31m0[39m[31m.[39m[31m0[39m[31m28[4m5[24m[39m     0.022[4m6[24m  -[31m0[39m[31m.[39m[31m0[39m[31m25[4m4[24m[39m   1.40 
 > 
 > # Example 5: Non-standard evaluation:
 > # Programming with tq_mutate_() and tq_mutate_xy_()
@@ -576,7 +574,7 @@ Warning: `as_data_frame()` is deprecated, use `as_tibble()` (but mind the new se
 [90m 7[39m 2016-01-12  99   100.0  97.6  99.4 28[4m3[24m[4m9[24m[4m5[24m400     99.4    [31mNA[39m     [31mNA[39m
 [90m 8[39m 2016-01-13 101.  101.   95.2  95.4 33[4m4[24m[4m1[24m[4m0[24m600     95.4    [31mNA[39m     [31mNA[39m
 [90m 9[39m 2016-01-14  95.8  98.9  92.4  98.4 48[4m6[24m[4m5[24m[4m8[24m600     98.4    [31mNA[39m     [31mNA[39m
-[90m10[39m 2016-01-15  94.0  96.4  93.5  95.0 45[4m9[24m[4m3[24m[4m5[24m600     95.0    [31mNA[39m     [31mNA[39m
+[90m10[39m 2016-01-15  94.0  96.4  93.5  95.0 46[4m1[24m[4m3[24m[4m2[24m800     95.0    [31mNA[39m     [31mNA[39m
 [90m# … with 242 more rows[39m
 > 
 > 
@@ -604,6 +602,8 @@ Warning: `as_data_frame()` is deprecated, use `as_tibble()` (but mind the new se
 > Ra <- FANG %>%
 +     group_by(symbol) %>%
 +     tq_transmute(adjusted, periodReturn, period = "monthly", col_rename = "Ra")
+Warning: `cols` is now required.
+Please use `cols = c(nested.col)`
 > 
 > # Get returns for SP500 as baseline
 > Rb <- "^GSPC" %>%
@@ -695,6 +695,8 @@ $misc.funs
 > # Get performance metrics
 > RaRb %>%
 +     tq_performance(Ra = Ra, performance_fun = SharpeRatio, p = 0.95)
+Warning: `cols` is now required.
+Please use `cols = c(nested.col)`
 [90m# A tibble: 4 x 4[39m
 [90m# Groups:   symbol [4][39m
   symbol `ESSharpe(Rf=0%,p=95%… `StdDevSharpe(Rf=0%,p=95… `VaRSharpe(Rf=0%,p=95…
@@ -706,6 +708,8 @@ $misc.funs
 > 
 > RaRb %>%
 +     tq_performance(Ra = Ra, Rb = Rb, performance_fun = table.CAPM)
+Warning: `cols` is now required.
+Please use `cols = c(nested.col)`
 [90m# A tibble: 4 x 13[39m
 [90m# Groups:   symbol [4][39m
   symbol ActivePremium  Alpha AnnualizedAlpha  Beta `Beta+` `Beta-` Correlation
@@ -742,6 +746,8 @@ $misc.funs
 > monthly_returns_stocks <- FANG %>%
 +     group_by(symbol) %>%
 +     tq_transmute(adjusted, periodReturn, period = "monthly")
+Warning: `cols` is now required.
+Please use `cols = c(nested.col)`
 > 
 > ##### Portfolio Aggregation Methods #####
 > 
@@ -820,6 +826,8 @@ Ungrouping data frame groups: symbol
 +              weights = weights_table,
 +              col_rename = NULL,
 +              wealth.index = FALSE)
+Warning: `cols` is now required.
+Please use `cols = c(portfolio..)`
 [90m# A tibble: 192 x 3[39m
 [90m# Groups:   portfolio [4][39m
    portfolio date       portfolio.returns
@@ -880,7 +888,7 @@ Ungrouping data frame groups: symbol
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  6.847 0.244 12.703 0.002 0.002 
+Time elapsed:  4.239 0.19 8.395 0.001 0.001 
 > grDevices::dev.off()
 null device 
           1 

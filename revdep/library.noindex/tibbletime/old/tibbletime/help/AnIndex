@@ -17,6 +17,7 @@ get_index_class	getters
 get_index_col	getters
 get_index_quo	getters
 get_index_time_zone	getters
+new_tbl_time	new_tbl_time
 parse_period	parse_period
 partition_index	partition_index
 posixct_numeric_to_datetime	posixct_numeric_to_datetime
