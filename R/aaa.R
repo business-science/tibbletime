@@ -42,7 +42,7 @@ tidyr_at_least_1.0.0 <- NULL
     register_s3_method("tidyr", "nest",   "tbl_time")
     register_s3_method("tidyr", "unnest", "tbl_time")
     register_s3_method("tidyr", "unnest", "tbl_df")
-    tidyr_at_least_1.0.0 <<- packageVersion("tidyr") >= "1.0.0"
+    tidyr_at_least_1.0.0 <<- utils::packageVersion("tidyr") >= "1.0.0"
   }
 
   invisible()
