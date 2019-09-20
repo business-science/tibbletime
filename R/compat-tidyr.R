@@ -1,43 +1,99 @@
-nest.tbl_time <- function(data, ..., .key = "data") {
-  .key       <- rlang::enexpr(.key)
-  .key_sym   <- rlang::sym(.key)
-  .key_char  <- rlang::expr_name(.key)
-  index_quo  <- get_index_quo(data)
-  index_char <- get_index_char(data)
+#' @importFrom lifecycle deprecated
+
+nest.tbl_time <- function(.data, ..., .key = deprecated()) {
+  check_tidyr_version()
+
+  if (rlang::is_missing(.key)) {
+    .key_char <- deprecated()
+  } else {
+    .key <- rlang::enexpr(.key)
+    .key_char <- rlang::expr_name(.key)
+  }
+
+  index_quo  <- get_index_quo(.data)
+  index_char <- get_index_char(.data)
 
   # Need this to avoid data VS .key = "data" collision in the mutate/map
-  ..original_data <- data
+  ..original_data <- .data
 
   # Perform the nest on a tibble
-  .data_nested <- tidyr::nest(as_tibble(data), ..., .key = !! .key)
+  .data_nested <- tidyr::nest(as_tibble(.data), ..., .key = .key_char)
 
-  # See if the index is nested
-  index_is_nested <- index_char %in% colnames(.data_nested[[.key_char]][[1]])
+  # Figure out the names of the new nested columns
+  if (rlang::is_missing(.key)) {
+    nested_columns <- names(rlang::enquos(...))
 
-  # Each nested element should be a tbl_time with attributes
-  if(index_is_nested) {
-    dplyr::mutate(
-      .data_nested,
-      !! .key_sym := purrr::map(
-        .x = !! .key_sym,
-        .f = ~reconstruct(.x, ..original_data))
-    )
+    if (rlang::is_empty(nested_columns)) {
+      nested_columns <- "data"
+    }
   } else {
-    # The index is in the outer df
-    reconstruct(.data_nested, ..original_data)
+    nested_columns <- .key_char
   }
+
+  contains_index <- function(col) {
+    index_char %in% colnames(.data_nested[[col]][[1]])
+  }
+
+  index_is_nested <- vapply(nested_columns, contains_index, logical(1))
+
+  for (i in seq_along(nested_columns)) {
+    # Each nested element should be a list_of<tbl_time> with attributes
+    if (index_is_nested[i]) {
+      nested_column_sym <- rlang::sym(nested_columns[i])
+
+      .data_nested <- dplyr::mutate(
+        .data_nested,
+        !!nested_column_sym := purrr::map(!!nested_column_sym, ~reconstruct(.x, ..original_data)),
+        !!nested_column_sym := vctrs::as_list_of(!!nested_column_sym, .ptype = (!!nested_column_sym)[[1]])
+      )
+    } else {
+      # The index is in the outer df
+      .data_nested <- reconstruct(.data_nested, ..original_data)
+    }
+  }
+
+  .data_nested
 }
 
-unnest.tbl_time <- function(data, ..., .drop = NA, .id = NULL, .sep = NULL) {
+unnest.tbl_time <- function(data,
+                            cols,
+                            ...,
+                            keep_empty = FALSE,
+                            ptype = NULL,
+                            names_sep = NULL,
+                            names_repair = "check_unique",
+                            .drop = "DEPRECATED",
+                            .id = "DEPRECATED",
+                            .sep = "DEPRECATED",
+                            .preserve = "DEPRECATED") {
+  check_tidyr_version()
+
   # This is called after nesting but excluding the index in the nest
   #reconstruct(NextMethod(), data)
+
+  # Pre-evaluate `cols`, as NextMethod() will evaluate it before tidyr can enquo() it
+  cols <- tidyselect::vars_select(names(data), !!rlang::enquo(cols))
+
   copy_.data <- new_tbl_time(data, get_index_quo(data), get_index_time_zone(data))
   reconstruct(NextMethod(), copy_.data)
 }
 
-unnest.tbl_df <- function(data, ..., .drop = NA, .id = NULL, .sep = NULL) {
+unnest.tbl_df <- function(data,
+                          cols,
+                          ...,
+                          keep_empty = FALSE,
+                          ptype = NULL,
+                          names_sep = NULL,
+                          names_repair = "check_unique",
+                          .drop = deprecated(),
+                          .id = deprecated(),
+                          .sep = deprecated(),
+                          .preserve = deprecated()) {
+  check_tidyr_version()
   # Called after nesting a tbl_time, index is in the nest, then unnesting
-  quos <- rlang::quos(...)
+
+  # Pre-evaluate `cols`, as NextMethod() will evaluate it before tidyr can enquo() it
+  cols <- tidyselect::vars_select(names(data), !!rlang::enquo(cols))
 
   list_cols <- names(data)[purrr::map_lgl(data, rlang::is_list)]
 
@@ -80,7 +136,6 @@ unnest.tbl_df <- function(data, ..., .drop = NA, .id = NULL, .sep = NULL) {
 
 gather.tbl_time <- function(data, key = "key", value = "value", ..., na.rm = FALSE,
                             convert = FALSE, factor_key = FALSE)  {
-
   key   <- rlang::enquo(key)
   value <- rlang::enquo(value)
   quos  <- rlang::quos(...)
@@ -93,7 +148,6 @@ gather.tbl_time <- function(data, key = "key", value = "value", ..., na.rm = FAL
 
 spread.tbl_time <- function(data, key, value, fill = NA, convert = FALSE, drop = TRUE,
                             sep = NULL)  {
-
   key   <- rlang::enquo(key)
   value <- rlang::enquo(value)
 
@@ -103,3 +157,15 @@ spread.tbl_time <- function(data, key, value, fill = NA, convert = FALSE, drop =
 
   reconstruct(spread_data, data)
 }
+
+# ------------------------------------------------------------------------------
+
+check_tidyr_version <- function() {
+  if (tidyr_at_least_1.0.0) {
+    return()
+  }
+
+  rlang::abort("`tidyr` must be at least version '1.0.0' to use this feature.")
+}
+
+

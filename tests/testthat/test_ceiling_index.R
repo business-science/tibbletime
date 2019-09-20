@@ -27,6 +27,6 @@ test_that("Ceiling works with hms", {
   hms_test <- create_series('01'~'12', period = "hourly", class = "hms")
   expect_equal(
     ceiling_index(hms_test$date, "12 hour"),
-    rep(43200, 12) %>% hms::as.hms()
+    rep(43200, 12) %>% hms::as_hms()
   )
 })

@@ -9,7 +9,7 @@ test_df <- data.frame(
   group2 = c("d", "e", "e")
 )
 
-test_time <- tibble::as.tibble(test_df)
+test_time <- tibble::as_tibble(test_df)
 
 # Tests
 
@@ -19,7 +19,7 @@ test_that("Can coerce tbl_df to tbl_time", {
   attr(test_time2, "index_quo") <- rlang::quo(date)
   attr(test_time2, "index_time_zone") <- "UTC"
   class(test_time2) <- c("tbl_time", class(test_time2))
-  
+
   expect_equal(as_tbl_time(test_time, date), test_time2)
 })
 
@@ -31,7 +31,7 @@ test_that("Can coerce grouped_df to tbl_time", {
   # tbl_time first then group
   test_time_g <- as_tbl_time(test_time, date) %>%
     group_by(group1)
-  
+
   # group then tbl_time
   expect_equal(test_time %>% group_by(group1) %>% as_tbl_time(date), test_time_g)
 })
