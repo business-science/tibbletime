@@ -3,6 +3,9 @@ template:
     bootswatch: flatly
     ganalytics: UA-76139189-1
 
+development:
+  mode: auto
+
 navbar:
   title: "tibbletime"
   left:
