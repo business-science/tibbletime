@@ -4,7 +4,7 @@ library(dplyr)
 library(lubridate)
 
 series <- create_series('2013' ~ '2017', 'daily', class = "Date") %>%
-  mutate(var = rnorm(1826))
+  mutate(var = rnorm(n()))
 
 series
 
@@ -23,7 +23,7 @@ series %>%
 second_series <- create_series('2013' ~ '2015', '5 second')
 
 second_series %>%
-  mutate(var = rnorm(nrow(second_series))) %>%
+  mutate(var = rnorm(n())) %>%
   collapse_by("hourly") %>%
   group_by(date) %>%
   summarise(mean_var = mean(var))
@@ -33,10 +33,10 @@ set.seed(123)
 
 # Create price series of hourly movements for apple and facebook stock.
 apple <- create_series('2014' ~ '2016', period = '1 hour') %>%
-  mutate(price = 100 + cumsum(rnorm(26304, mean = 0, sd = .5)))
+  mutate(price = 100 + cumsum(rnorm(n(), mean = 0, sd = .5)))
 
 facebook <- create_series('2014' ~ '2016', period = '1 hour') %>%
-  mutate(price = 150 + cumsum(rnorm(26304, mean = 0, sd = .5)))
+  mutate(price = 150 + cumsum(rnorm(n(), mean = 0, sd = .5)))
 
 # Bind them together and create a symbol column to group on
 price_series <- bind_rows(list(apple = apple, facebook = facebook), .id = "symbol") %>%

@@ -207,7 +207,7 @@ flush(stderr()); flush(stdout())
 
 ### Name: quandl_api_key
 ### Title: Query or set Quandl API Key
-### Aliases: quandl_api_key quandl_api_key
+### Aliases: quandl_api_key
 
 ### ** Examples
 
@@ -226,7 +226,7 @@ flush(stderr()); flush(stdout())
 
 ### Name: quandl_search
 ### Title: Search the Quandl database
-### Aliases: quandl_search quandl_search
+### Aliases: quandl_search
 
 ### ** Examples
 
@@ -282,7 +282,7 @@ flush(stderr()); flush(stdout())
 
 ### Name: theme_tq
 ### Title: tidyquant themes for ggplot2.
-### Aliases: theme_tq theme_tq theme_tq_dark theme_tq_green
+### Aliases: theme_tq theme_tq_dark theme_tq_green
 
 ### ** Examples
 
@@ -353,7 +353,7 @@ flush(stderr()); flush(stdout())
 
 ### Name: tq_mutate
 ### Title: Mutates quantitative data
-### Aliases: tq_mutate tq_mutate tq_mutate_ tq_mutate_xy tq_mutate_xy_
+### Aliases: tq_mutate tq_mutate_ tq_mutate_xy tq_mutate_xy_
 ###   tq_mutate_fun_options tq_transmute tq_transmute_ tq_transmute_xy
 ###   tq_transmute_xy_ tq_transmute_fun_options
 

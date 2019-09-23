@@ -1,13 +1,12 @@
 Package: tibbletime
 Type: Package
 Title: Time Aware Tibbles
-Version: 0.1.1
-Date: 2018-01-29
+Version: 0.1.2
 Authors@R: c(
-    person("Davis", "Vaughan", email = "dvaughan@business-science.io", role = c("aut", "cre")),
+    person("Davis", "Vaughan", email = "davis@rstudio.com", role = c("aut", "cre")),
     person("Matt", "Dancho", email = "mdancho@business-science.io", role = c("aut"))
   )
-Maintainer: Davis Vaughan <dvaughan@business-science.io>
+Maintainer: Davis Vaughan <davis@rstudio.com>
 Description: Built on top of the 'tibble' package, 'tibbletime' is an extension
   that allows for the creation of time aware tibbles. Some immediate
   advantages of this include: the ability to perform time-based subsetting
@@ -17,19 +16,19 @@ URL: https://github.com/business-science/tibbletime
 BugReports: https://github.com/business-science/tibbletime/issues
 License: MIT + file LICENSE
 Encoding: UTF-8
-Suggests: broom, covr, gapminder, knitr, testthat, tidyr
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.1
 Depends: R (>= 3.2.0)
 Imports: assertthat (>= 0.2.0), dplyr (>= 0.7.4), glue (>= 1.1.1), hms
         (>= 0.4), lubridate (>= 1.6.0), purrr (>= 0.2.3), rlang (>=
         0.1.6), tibble (>= 1.4.1), Rcpp (>= 0.12.7), zoo (>= 1.8-0)
+Suggests: broom, covr, gapminder, knitr, testthat, tidyr
 VignetteBuilder: knitr
 LinkingTo: Rcpp
 NeedsCompilation: yes
-Packaged: 2018-01-30 15:39:02 UTC; davisvaughan
+Packaged: 2019-02-11 16:14:09 UTC; davis
 Author: Davis Vaughan [aut, cre],
   Matt Dancho [aut]
 Repository: CRAN
-Date/Publication: 2018-01-30 15:51:52 UTC
-Built: R 3.5.0; x86_64-apple-darwin15.6.0; 2018-04-24 09:57:54 UTC; unix
+Date/Publication: 2019-02-11 17:10:04 UTC
+Built: R 3.6.0; x86_64-apple-darwin15.6.0; 2019-04-27 04:18:54 UTC; unix
 Archs: tibbletime.so.dSYM

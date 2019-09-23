@@ -1,7 +1,8 @@
 * using log directory ‘/Users/davis/Desktop/r/packages/tibbletime/revdep/checks.noindex/anomalize/new/anomalize.Rcheck’
-* using R version 3.5.1 (2018-07-02)
+* using R version 3.6.0 (2019-04-26)
 * using platform: x86_64-apple-darwin15.6.0 (64-bit)
 * using session charset: UTF-8
+* using options ‘--no-manual --no-build-vignettes’
 * checking for file ‘anomalize/DESCRIPTION’ ... OK
 * checking extension type ... Package
 * this is package ‘anomalize’ version ‘0.1.1’
@@ -58,7 +59,6 @@
 * checking for unstated dependencies in vignettes ... OK
 * checking package vignettes in ‘inst/doc’ ... OK
 * checking running R code from vignettes ... NONE
-* checking re-building of vignette outputs ... OK
-* checking PDF version of manual ... OK
+* checking re-building of vignette outputs ... SKIPPED
 * DONE
 Status: 1 NOTE

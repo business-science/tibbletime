@@ -2,29 +2,23 @@
 
 |field    |value                        |
 |:--------|:----------------------------|
-|version  |R version 3.5.1 (2018-07-02) |
-|os       |macOS  10.14                 |
+|version  |R version 3.6.0 (2019-04-26) |
+|os       |macOS Mojave 10.14.5         |
 |system   |x86_64, darwin15.6.0         |
 |ui       |RStudio                      |
 |language |(EN)                         |
 |collate  |en_US.UTF-8                  |
 |ctype    |en_US.UTF-8                  |
-|tz       |America/New_York             |
-|date     |2019-02-11                   |
+|tz       |America/Los_Angeles          |
+|date     |2019-09-19                   |
 
 # Dependencies
 
-|package    |old   |new   |Δ  |
-|:----------|:-----|:-----|:--|
-|tibbletime |0.1.1 |0.1.2 |*  |
+|package    |old   |new        |Δ  |
+|:----------|:-----|:----------|:--|
+|tibbletime |0.1.2 |0.1.2.9000 |*  |
+|ellipsis   |NA    |0.2.0.9000 |*  |
+|zoo        |NA    |1.8-6      |*  |
 
 # Revdeps
-
-## All (3)
-
-|package                            |version |error |warning |note |
-|:----------------------------------|:-------|:-----|:-------|:----|
-|[anomalize](problems.md#anomalize) |0.1.1   |      |        |1    |
-|[tidyquant](problems.md#tidyquant) |0.5.5   |      |1       |     |
-|tsbox                              |0.0.3   |      |        |     |
 

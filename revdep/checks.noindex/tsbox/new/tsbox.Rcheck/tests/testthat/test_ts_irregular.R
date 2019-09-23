@@ -38,7 +38,6 @@ test_that("universal functions work with irregular series", {
   expect_is(ts_c(x, ts_trend(x)), "data.frame")
   expect_is(ts_c(x, ts_index(x, base = "2007-03-03")), "data.frame")
 
-  # Should work, but does not
-  # expect_is(ts_c(x, ts_scale(x)), "data.frame")
+  expect_is(ts_c(x, ts_scale(x)), "data.frame")
 
 })

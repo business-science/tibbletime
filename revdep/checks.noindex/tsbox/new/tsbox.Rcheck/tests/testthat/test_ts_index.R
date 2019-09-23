@@ -39,6 +39,9 @@ test_that("ts_index works with multi ids", {
   )
 })
 
+test_that("ts_index keeps NA", {
+  expect_identical(ts_index(ts_bind(NA, mdeaths), 1977)[1], NA_real_)
+})
 
 test_that("ts_compound works", {
   expect_equal(ts_compound(ts_pc(mdeaths)), ts_index(mdeaths, "1974"))

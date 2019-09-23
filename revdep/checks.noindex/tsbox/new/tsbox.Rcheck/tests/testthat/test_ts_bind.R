@@ -35,7 +35,7 @@ test_that("ts_chain gives correct results", {
   )
 
   expect_equal(sum(ts_span((ts_pc(x) - ts_pc(fdeaths)), start = "1976-01-01")), 0)
-  expect_equal(sum(ts_span((ts_pc(x) - ts_pc(fdeaths)), end = "1974-12-01")), 0)
+  expect_equal(sum(ts_span((ts_pc(x) - ts_pc(fdeaths)), end = "1974-12-01"), na.rm = TRUE), 0)
 
   x.df <- ts_chain(
     ts_span(ts_df(mdeaths), start = "1975-01-01", end = "1975-12-01"),
