@@ -128,7 +128,7 @@ slice.tbl_time <- function(.data, ...) {
 
 #' @export
 #' @importFrom dplyr group_by
-group_by.tbl_time <- function(.data, ..., add = FALSE) {
+group_by.tbl_time <- function(.data, ...) {
   #reconstruct(NextMethod(), .data)
   copy_.data <- new_tbl_time(.data, get_index_quo(.data), get_index_time_zone(.data))
   reconstruct(NextMethod(), copy_.data)
