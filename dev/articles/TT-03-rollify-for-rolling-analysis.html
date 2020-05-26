@@ -139,8 +139,8 @@
 ## {
 ##     roller(..., .f = .f, window = window, unlist = unlist, na_value = na_value)
 ## }
-## &lt;bytecode: 0x7ff22e343e68&gt;
-## &lt;environment: 0x7ff22e347758&gt;</code></pre>
+## &lt;bytecode: 0x7fef0eecc468&gt;
+## &lt;environment: 0x7fef0eecfd58&gt;</code></pre>
 <p>We now have a rolling version of the function, <code><a href="https://rdrr.io/r/base/mean.html">mean()</a></code>. You use it in a similar way to how you might use <code><a href="https://rdrr.io/r/base/mean.html">mean()</a></code>.</p>
 <div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="no">FB</span>, <span class="kw">mean_5</span> <span class="kw">=</span> <span class="fu">rolling_mean</span>(<span class="no">adjusted</span>))</pre></body></html></div>
 <pre><code>## # A tibble: 1,008 x 6
