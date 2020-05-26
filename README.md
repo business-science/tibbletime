@@ -258,7 +258,7 @@ FANG %>%
   collapse_by("year") %>%
   
   # Additionally group by date (yearly)
-  group_by(date, add = TRUE) %>%
+  group_by(symbol, date) %>%
   
   # Perform a yearly summary for each symbol
   summarise(
@@ -266,10 +266,6 @@ FANG %>%
     adj_max   = max(adjusted),
     adj_range = adj_max - adj_min
   )
-#> Warning: The `add` argument of `group_by()` is deprecated as of dplyr 1.0.0.
-#> Please use the `.add` argument instead.
-#> This warning is displayed once every 8 hours.
-#> Call `lifecycle::last_warnings()` to see where this warning was generated.
 #> `summarise()` regrouping output by 'symbol' (override with `.groups` argument)
 #> # A time tibble: 16 x 5
 #> # Index:  date

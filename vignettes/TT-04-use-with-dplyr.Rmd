@@ -104,7 +104,7 @@ price_series <- bind_rows(list(apple = apple, facebook = facebook), .id = "symbo
 # common financial transformation
 price_series %>%
   collapse_by("daily") %>%
-  group_by(date, add = TRUE) %>%
+  group_by(symbol, date) %>%
   summarise(
     open  = first(price),
     high  = max(price),

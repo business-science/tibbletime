@@ -173,7 +173,7 @@ FANG %>%
   collapse_by("year") %>%
   
   # Additionally group by date (yearly)
-  group_by(date, add = TRUE) %>%
+  group_by(symbol, date) %>%
   
   # Perform a yearly summary for each symbol
   summarise(

@@ -66,7 +66,7 @@
 #' # calculate monthly standard deviation for each column
 #' FANG %>%
 #'   dplyr::mutate(date = collapse_index(date, "monthly")) %>%
-#'   dplyr::group_by(date, add = TRUE) %>%
+#'   dplyr::group_by(symbol, date) %>%
 #'   dplyr::summarise_all(sd)
 #'
 #'
@@ -178,7 +178,7 @@ collapse_index <- function(index, period = "yearly",
 #' # calculate monthly standard deviation for each column
 #' FANG %>%
 #'   collapse_by("monthly") %>%
-#'   dplyr::group_by(date, add = TRUE) %>%
+#'   dplyr::group_by(symbol, date) %>%
 #'   dplyr::summarise_all(sd)
 #'
 #' @export
