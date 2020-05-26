@@ -4,7 +4,9 @@
 
 ## function is called in .onLoad()
 
-register_s3_method <- function(pkg, generic, class, fun = NULL) { # nocov start
+# nocov start
+
+register_s3_method <- function(pkg, generic, class, fun = NULL) {
   stopifnot(is.character(pkg))
   envir <- asNamespace(pkg)
 
@@ -47,3 +49,5 @@ tidyr_at_least_1.0.0 <- NULL
 
   invisible()
 }
+
+# nocov end
