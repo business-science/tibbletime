@@ -16,7 +16,9 @@ There were no ERRORs, WARNINGs or NOTEs.
 
     R CMD check succeeded
 
-## Revdep checks
+## revdepcheck results
 
-The 4 revdeps have been checked, and nothing has been broken by this release.
+We checked 5 reverse dependencies, comparing R CMD check results across CRAN and dev versions of this package.
 
+ * We saw 0 new problems
+ * We failed to check 0 packages

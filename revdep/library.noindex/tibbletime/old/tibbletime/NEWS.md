@@ -1,3 +1,17 @@
+# tibbletime 0.1.3
+
+* Features
+
+    * Methods for `tidyr::nest()` and `tidyr::unnest()` have been updated to be
+    compliant with tidyr 1.0.0. An error will be triggered if you have a version 
+    of tidyr installed that is < 1.0.0 and try to use one of these functions 
+    on a `tbl_time` object.
+
+* Bug fixes
+
+    * `collapse_by()` no longer errors when there is a column 
+    named `start_date` in the `tbl_time` object (#81).
+
 ## tibbletime 0.1.2
 
 * Features

@@ -9,16 +9,14 @@
 |language |(EN)                         |
 |collate  |en_US.UTF-8                  |
 |ctype    |en_US.UTF-8                  |
-|tz       |America/Los_Angeles          |
-|date     |2019-09-19                   |
+|tz       |America/New_York             |
+|date     |2020-05-26                   |
 
 # Dependencies
 
-|package    |old   |new        |Δ  |
-|:----------|:-----|:----------|:--|
-|tibbletime |0.1.2 |0.1.2.9000 |*  |
-|ellipsis   |NA    |0.2.0.9000 |*  |
-|zoo        |NA    |1.8-6      |*  |
+|package    |old   |new   |Δ  |
+|:----------|:-----|:-----|:--|
+|tibbletime |0.1.3 |0.1.4 |*  |
 
 # Revdeps
 

@@ -17,6 +17,9 @@ Type 'q()' to quit R.
 
 > library(testthat)
 > library(anomalize)
+[30m══[39m [30mUse anomalize to improve your Forecasts by 50%![39m [30m═════════════════════════════[39m[34m
+Business Science offers a 1-hour course - Lab #18: Time Series Anomaly Detection!
+[39m[34m</> Learn more at: https://university.business-science.io/p/learning-labs-pro </>[39m
 > library(dplyr)
 
 Attaching package: 'dplyr'
@@ -35,13 +38,16 @@ The following objects are masked from 'package:base':
 
 > library(ggplot2)
 > library(tibble)
+Warning message:
+package 'tibble' was built under R version 3.6.2 
+> library(stringr)
 > 
 > # set_time_scale_template(time_scale_template())
 > 
 > test_check("anomalize")
-══ testthat results  ══════════════════════════════════════════════════════════════════════════════════════════════════════
-[ OK: 64 | SKIPPED: 0 | WARNINGS: 17 | FAILED: 0 ]
+══ testthat results  ═══════════════════════════════════════════════════════════
+[ OK: 67 | SKIPPED: 0 | WARNINGS: 0 | FAILED: 0 ]
 > 
 > proc.time()
    user  system elapsed 
-  8.106   0.184   8.317 
+ 14.141   0.257  14.437 

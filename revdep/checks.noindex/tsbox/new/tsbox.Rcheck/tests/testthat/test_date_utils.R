@@ -23,8 +23,7 @@ test_that("df aggregation using date_ functions is working", {
     summarize(value = mean(value)) %>%
     ungroup()
 
-  expect_equal(x, ts_tbl(ts_frequency(ts_c(mdeaths, fdeaths), "quarter")))
-
+  expect_equal(x, arrange(ts_tbl(ts_frequency(ts_c(mdeaths, fdeaths), "quarter")), id))
 
   x <- ts_bind(NA, ts_tbl(ts_c(EuStockMarkets)), NA) %>%
     mutate(time = as.Date(date_month(time))) %>%

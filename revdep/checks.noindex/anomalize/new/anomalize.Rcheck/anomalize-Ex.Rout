@@ -21,6 +21,9 @@ Type 'q()' to quit R.
 > source(file.path(R.home("share"), "R", "examples-header.R"))
 > options(warn = 1)
 > library('anomalize')
+[30m══[39m [30mUse anomalize to improve your Forecasts by 50%![39m [30m═════════════════════════════[39m[34m
+Business Science offers a 1-hour course - Lab #18: Time Series Anomaly Detection!
+[39m[34m</> Learn more at: https://university.business-science.io/p/learning-labs-pro </>[39m
 > 
 > base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
 > base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
@@ -58,11 +61,6 @@ The following objects are masked from ‘package:base’:
 > tidyverse_cran_downloads %>%
 +     time_decompose(count, method = "stl") %>%
 +     anomalize(remainder, method = "iqr")
-Warning: Detecting old grouped_df format, replacing `vars` attribute by `groups`
-Warning: `cols` is now required.
-Please use `cols = c(nested.col)`
-Warning: `cols` is now required.
-Please use `cols = c(nested.col)`
 # A time tibble: 6,375 x 9
 [90m# Index:  date[39m
 [90m# Groups: package [15][39m
@@ -232,6 +230,66 @@ $outlier_report
 > 
 > 
 > cleanEx()
+> nameEx("clean_anomalies")
+> ### * clean_anomalies
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: clean_anomalies
+> ### Title: Clean anomalies from anomalized data
+> ### Aliases: clean_anomalies
+> 
+> ### ** Examples
+> 
+> 
+> library(dplyr)
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+> 
+> # Needed to pass CRAN check / This is loaded by default
+> set_time_scale_template(time_scale_template())
+> 
+> data(tidyverse_cran_downloads)
+> 
+> tidyverse_cran_downloads %>%
++     time_decompose(count, method = "stl") %>%
++     anomalize(remainder, method = "iqr") %>%
++     clean_anomalies()
+# A time tibble: 6,375 x 10
+[90m# Index:  date[39m
+[90m# Groups: package [15][39m
+   package date       observed season trend remainder remainder_l1 remainder_l2
+   [3m[90m<chr>[39m[23m   [3m[90m<date>[39m[23m        [3m[90m<dbl>[39m[23m  [3m[90m<dbl>[39m[23m [3m[90m<dbl>[39m[23m     [3m[90m<dbl>[39m[23m        [3m[90m<dbl>[39m[23m        [3m[90m<dbl>[39m[23m
+[90m 1[39m tidyr   2017-01-01      873 -[31m[4m2[24m76[39m[31m1[39m[31m.[39m [4m5[24m053.    -[31m[4m1[24m41[39m[31m8[39m[31m.[39m       -[31m[4m3[24m74[39m[31m8[39m[31m.[39m        [4m3[24m708.
+[90m 2[39m tidyr   2017-01-02     [4m1[24m840   901. [4m5[24m047.    -[31m[4m4[24m10[39m[31m8[39m[31m.[39m       -[31m[4m3[24m74[39m[31m8[39m[31m.[39m        [4m3[24m708.
+[90m 3[39m tidyr   2017-01-03     [4m2[24m495  [4m1[24m460. [4m5[24m041.    -[31m[4m4[24m00[39m[31m6[39m[31m.[39m       -[31m[4m3[24m74[39m[31m8[39m[31m.[39m        [4m3[24m708.
+[90m 4[39m tidyr   2017-01-04     [4m2[24m906  [4m1[24m430. [4m5[24m035.    -[31m[4m3[24m55[39m[31m9[39m[31m.[39m       -[31m[4m3[24m74[39m[31m8[39m[31m.[39m        [4m3[24m708.
+[90m 5[39m tidyr   2017-01-05     [4m2[24m847  [4m1[24m239. [4m5[24m029.    -[31m[4m3[24m42[39m[31m1[39m[31m.[39m       -[31m[4m3[24m74[39m[31m8[39m[31m.[39m        [4m3[24m708.
+[90m 6[39m tidyr   2017-01-06     [4m2[24m756   367. [4m5[24m024.    -[31m[4m2[24m63[39m[31m5[39m[31m.[39m       -[31m[4m3[24m74[39m[31m8[39m[31m.[39m        [4m3[24m708.
+[90m 7[39m tidyr   2017-01-07     [4m1[24m439 -[31m[4m2[24m63[39m[31m5[39m[31m.[39m [4m5[24m018.     -[31m944[39m[31m.[39m       -[31m[4m3[24m74[39m[31m8[39m[31m.[39m        [4m3[24m708.
+[90m 8[39m tidyr   2017-01-08     [4m1[24m556 -[31m[4m2[24m76[39m[31m1[39m[31m.[39m [4m5[24m012.     -[31m695[39m[31m.[39m       -[31m[4m3[24m74[39m[31m8[39m[31m.[39m        [4m3[24m708.
+[90m 9[39m tidyr   2017-01-09     [4m3[24m678   901. [4m5[24m006.    -[31m[4m2[24m22[39m[31m9[39m[31m.[39m       -[31m[4m3[24m74[39m[31m8[39m[31m.[39m        [4m3[24m708.
+[90m10[39m tidyr   2017-01-10     [4m7[24m086  [4m1[24m460. [4m5[24m000.      626.       -[31m[4m3[24m74[39m[31m8[39m[31m.[39m        [4m3[24m708.
+[90m# … with 6,365 more rows, and 2 more variables: anomaly [3m[90m<chr>[90m[23m,[39m
+[90m#   observed_cleaned [3m[90m<dbl>[90m[23m[39m
+> 
+> 
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:dplyr’
+
 > nameEx("decompose_methods")
 > ### * decompose_methods
 > 
@@ -323,7 +381,6 @@ The following objects are masked from ‘package:base’:
 +     anomalize(remainder, method = "iqr") %>%
 +     time_recompose() %>%
 +     plot_anomalies(time_recomposed = TRUE)
-Warning: Detecting old grouped_df format, replacing `vars` attribute by `groups`
 frequency = 7 days
 trend = 91 days
 > 
@@ -334,10 +391,6 @@ trend = 91 days
 +     anomalize(remainder, method = "iqr") %>%
 +     time_recompose() %>%
 +     plot_anomalies(time_recomposed = TRUE, ncol = 3)
-Warning: `cols` is now required.
-Please use `cols = c(nested.col)`
-Warning: `cols` is now required.
-Please use `cols = c(nested.col)`
 > 
 > 
 > 
@@ -380,7 +433,6 @@ The following objects are masked from ‘package:base’:
 +     time_decompose(count, method = "stl") %>%
 +     anomalize(remainder, method = "iqr") %>%
 +     plot_anomaly_decomposition()
-Warning: Detecting old grouped_df format, replacing `vars` attribute by `groups`
 frequency = 7 days
 trend = 91 days
 > 
@@ -482,9 +534,6 @@ The following objects are masked from ‘package:base’:
 > # Basic Usage
 > tidyverse_cran_downloads %>%
 +     time_apply(count, period = "1 week", .fun = mean, na.rm = TRUE)
-Warning: Detecting old grouped_df format, replacing `vars` attribute by `groups`
-Warning: `cols` is now required.
-Please use `cols = c(nested.col)`
 # A time tibble: 6,375 x 4
 [90m# Index:  date[39m
 [90m# Groups: package [15][39m
@@ -539,9 +588,6 @@ The following objects are masked from ‘package:base’:
 > # Basic Usage
 > tidyverse_cran_downloads %>%
 +     time_decompose(count, method = "stl")
-Warning: Detecting old grouped_df format, replacing `vars` attribute by `groups`
-Warning: `cols` is now required.
-Please use `cols = c(nested.col)`
 # A time tibble: 6,375 x 6
 [90m# Index:  date[39m
 [90m# Groups: package [15][39m
@@ -567,8 +613,6 @@ Please use `cols = c(nested.col)`
 +                    trend        = "2 months",
 +                    merge        = TRUE,
 +                    message      = FALSE)
-Warning: `cols` is now required.
-Please use `cols = c(nested.col)`
 # A time tibble: 6,375 x 7
 [90m# Index:  date[39m
 [90m# Groups: package [15][39m
@@ -627,7 +671,6 @@ The following objects are masked from ‘package:base’:
 +     filter(package == "tidyquant") %>%
 +     ungroup() %>%
 +     time_frequency(period = "auto")
-Warning: Detecting old grouped_df format, replacing `vars` attribute by `groups`
 frequency = 7 days
 [1] 7
 > 
@@ -699,11 +742,6 @@ The following objects are masked from ‘package:base’:
 +     time_decompose(count, method = "stl") %>%
 +     anomalize(remainder, method = "iqr") %>%
 +     time_recompose()
-Warning: Detecting old grouped_df format, replacing `vars` attribute by `groups`
-Warning: `cols` is now required.
-Please use `cols = c(nested.col)`
-Warning: `cols` is now required.
-Please use `cols = c(nested.col)`
 # A time tibble: 6,375 x 11
 [90m# Index:  date[39m
 [90m# Groups: package [15][39m
@@ -719,8 +757,8 @@ Please use `cols = c(nested.col)`
 [90m 8[39m tidyr   2017-01-08     [4m1[24m556 -[31m[4m2[24m76[39m[31m1[39m[31m.[39m [4m5[24m012.     -[31m695[39m[31m.[39m       -[31m[4m3[24m74[39m[31m8[39m[31m.[39m        [4m3[24m708.
 [90m 9[39m tidyr   2017-01-09     [4m3[24m678   901. [4m5[24m006.    -[31m[4m2[24m22[39m[31m9[39m[31m.[39m       -[31m[4m3[24m74[39m[31m8[39m[31m.[39m        [4m3[24m708.
 [90m10[39m tidyr   2017-01-10     [4m7[24m086  [4m1[24m460. [4m5[24m000.      626.       -[31m[4m3[24m74[39m[31m8[39m[31m.[39m        [4m3[24m708.
-[90m# … with 6,365 more rows, and 3 more variables: anomaly [3m[90m<chr>[90m[23m,
-#   recomposed_l1 [3m[90m<dbl>[90m[23m, recomposed_l2 [3m[90m<dbl>[90m[23m[39m
+[90m# … with 6,365 more rows, and 3 more variables: anomaly [3m[90m<chr>[90m[23m,[39m
+[90m#   recomposed_l1 [3m[90m<dbl>[90m[23m, recomposed_l2 [3m[90m<dbl>[90m[23m[39m
 > 
 > 
 > 
@@ -766,7 +804,7 @@ detaching ‘package:dplyr’
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  7.939 0.154 8.343 0.002 0.003 
+Time elapsed:  10.053 0.208 10.304 0.001 0.002 
 > grDevices::dev.off()
 null device 
           1 

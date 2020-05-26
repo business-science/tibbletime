@@ -5,7 +5,7 @@
 * using options ‘--no-manual --no-build-vignettes’
 * checking for file ‘anomalize/DESCRIPTION’ ... OK
 * checking extension type ... Package
-* this is package ‘anomalize’ version ‘0.1.1’
+* this is package ‘anomalize’ version ‘0.2.0’
 * package encoding: UTF-8
 * checking package namespace information ... OK
 * checking package dependencies ... OK
@@ -16,10 +16,7 @@
 * checking for portable file names ... OK
 * checking for sufficient/correct file permissions ... OK
 * checking whether package ‘anomalize’ can be installed ... OK
-* checking installed package size ... NOTE
-  installed size is  5.3Mb
-  sub-directories of 1Mb or more:
-    help   4.7Mb
+* checking installed package size ... OK
 * checking package directory ... OK
 * checking ‘build’ directory ... OK
 * checking DESCRIPTION meta-information ... OK
@@ -52,67 +49,13 @@
 * checking data for ASCII and uncompressed saves ... OK
 * checking installed files from ‘inst/doc’ ... OK
 * checking files in ‘vignettes’ ... OK
-* checking examples ... ERROR
-Running examples in ‘anomalize-Ex.R’ failed
-The error most likely occurred in:
-
-> ### Name: anomalize
-> ### Title: Detect anomalies using the tidyverse
-> ### Aliases: anomalize
-> 
-> ### ** Examples
-> 
-> 
-> library(dplyr)
-
-Attaching package: ‘dplyr’
-
-The following objects are masked from ‘package:stats’:
-
-    filter, lag
-
-The following objects are masked from ‘package:base’:
-
-    intersect, setdiff, setequal, union
-
-> 
-> # Needed to pass CRAN check / This is loaded by default
-> set_time_scale_template(time_scale_template())
-> 
-> data(tidyverse_cran_downloads)
-> 
-> tidyverse_cran_downloads %>%
-+     time_decompose(count, method = "stl") %>%
-+     anomalize(remainder, method = "iqr")
-Warning: Detecting old grouped_df format, replacing `vars` attribute by `groups`
-Warning: `cols` is now required.
-Please use `cols = c(nested.col)`
-Error in !.key : invalid argument type
-Calls: %>% ... <Anonymous> -> nest.grouped_df -> check_key -> is_missing
-Execution halted
+* checking examples ... OK
 * checking for unstated dependencies in ‘tests’ ... OK
-* checking tests ... ERROR
+* checking tests ... OK
   Running ‘testthat.R’
-Running the tests in ‘tests/testthat.R’ failed.
-Last 13 lines of output:
-  ══ testthat results  ══════════════════════════════════════════════════════════════════════════════════════════════════════
-  [ OK: 33 | SKIPPED: 0 | WARNINGS: 1 | FAILED: 14 ]
-  1. Error: iqr_grouped_df works (@test-anomalize.R#32) 
-  2. Error: gesd_grouped_df works (@test-anomalize.R#45) 
-  3. Error: returns a ggplot (@test-plot_anomalies.R#8) 
-  4. Error: grouped_tbl_time works (@test-time_apply.R#11) 
-  5. Error: grouped tbl_df (@test-time_decompose.R#26) 
-  6. Error: method = stl, auto freq/trend (@test-time_decompose.R#36) 
-  7. Error: method = stl, character freq/trend (@test-time_decompose.R#46) 
-  8. Error: method = stl, numeric freq/trend (@test-time_decompose.R#56) 
-  9. Error: method = twitter, auto freq/trend (@test-time_decompose.R#66) 
-  1. ...
-  
-  Error: testthat unit tests failed
-  Execution halted
 * checking for unstated dependencies in vignettes ... OK
 * checking package vignettes in ‘inst/doc’ ... OK
 * checking running R code from vignettes ... NONE
 * checking re-building of vignette outputs ... SKIPPED
 * DONE
-Status: 2 ERRORs, 1 NOTE
+Status: OK

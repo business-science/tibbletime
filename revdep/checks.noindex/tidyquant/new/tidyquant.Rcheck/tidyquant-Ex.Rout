@@ -22,16 +22,18 @@ Type 'q()' to quit R.
 > options(warn = 1)
 > library('tidyquant')
 Loading required package: lubridate
+Warning: package ‘lubridate’ was built under R version 3.6.2
 
 Attaching package: ‘lubridate’
 
-The following object is masked from ‘package:base’:
+The following objects are masked from ‘package:base’:
 
-    date
+    date, intersect, setdiff, union
 
 Loading required package: PerformanceAnalytics
 Loading required package: xts
 Loading required package: zoo
+Warning: package ‘zoo’ was built under R version 3.6.2
 
 Attaching package: ‘zoo’
 
@@ -47,24 +49,12 @@ The following object is masked from ‘package:graphics’:
     legend
 
 Loading required package: quantmod
+Warning: package ‘quantmod’ was built under R version 3.6.2
 Loading required package: TTR
 Version 0.4-0 included new data defaults. See ?getSymbols.
-Loading required package: tidyverse
-── [1mAttaching packages[22m ────────────────────────────────────────────────────────────────────────────────── tidyverse 1.2.1 ──
-[32m✔[39m [34mggplot2[39m 3.2.1     [32m✔[39m [34mpurrr  [39m 0.3.2
-[32m✔[39m [34mtibble [39m 2.1.3     [32m✔[39m [34mdplyr  [39m 0.8.3
-[32m✔[39m [34mtidyr  [39m 1.0.0     [32m✔[39m [34mstringr[39m 1.4.0
-[32m✔[39m [34mreadr  [39m 1.3.1     [32m✔[39m [34mforcats[39m 0.4.0
-── [1mConflicts[22m ───────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
-[31m✖[39m [34mlubridate[39m::[32mas.difftime()[39m masks [34mbase[39m::as.difftime()
-[31m✖[39m [34mlubridate[39m::[32mdate()[39m        masks [34mbase[39m::date()
-[31m✖[39m [34mdplyr[39m::[32mfilter()[39m          masks [34mstats[39m::filter()
-[31m✖[39m [34mdplyr[39m::[32mfirst()[39m           masks [34mxts[39m::first()
-[31m✖[39m [34mlubridate[39m::[32mintersect()[39m   masks [34mbase[39m::intersect()
-[31m✖[39m [34mdplyr[39m::[32mlag()[39m             masks [34mstats[39m::lag()
-[31m✖[39m [34mdplyr[39m::[32mlast()[39m            masks [34mxts[39m::last()
-[31m✖[39m [34mlubridate[39m::[32msetdiff()[39m     masks [34mbase[39m::setdiff()
-[31m✖[39m [34mlubridate[39m::[32munion()[39m       masks [34mbase[39m::union()
+[30m══[39m [30mNeed to Learn tidyquant?[39m [30m════════════════════════════════════════════════════[39m[34m
+Business Science offers a 1-hour course - Learning Lab #9: Performance Analysis & Portfolio Optimization with tidyquant!
+[39m[34m</> Learn more at: https://university.business-science.io/p/learning-labs-pro </>[39m
 > 
 > base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
 > base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
@@ -102,26 +92,48 @@ Loading required package: tidyverse
 > 
 > # Load libraries
 > library(tidyquant)
+> library(dplyr)
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:xts’:
+
+    first, last
+
+The following objects are masked from ‘package:lubridate’:
+
+    intersect, setdiff, union
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+> library(ggplot2)
 > 
 > # coord_x_date
-> AAPL <- tq_get("AAPL")
+> AAPL <- tq_get("AAPL", from = "2013-01-01", to = "2016-12-31")
 > AAPL %>%
 +     ggplot(aes(x = date, y = adjusted)) +
 +     geom_line() +                         # Plot stock price
-+     geom_ma(n = 50) +                 # Plot 50-day Moving Average
-+     geom_ma(n = 200, color = "red") + # Plot 200-day Moving Average
-+     coord_x_date(xlim = c(today() - weeks(12), today()),
-+                ylim = c(100, 130))        # Zoom in
++     geom_ma(n = 50) +                     # Plot 50-day Moving Average
++     geom_ma(n = 200, color = "red") +     # Plot 200-day Moving Average
++     # Zoom in
++     coord_x_date(xlim = c("2016-01-01", "2016-12-31"),
++                  ylim = c(75, 125))
 > 
 > 
 > # coord_x_datetime
 > time_index <- seq(from = as.POSIXct("2012-05-15 07:00"),
-+                   to = as.POSIXct("2012-05-17 18:00"),
-+                   by = "hour")
++                   to   = as.POSIXct("2012-05-17 18:00"),
++                   by   = "hour")
 > set.seed(1)
 > value <- rnorm(n = length(time_index))
 > hourly_data <- tibble(time.index = time_index,
-+                       value = value)
++                       value      = value)
 > hourly_data %>%
 +     ggplot(aes(x = time.index, y = value)) +
 +     geom_point() +
@@ -130,6 +142,684 @@ Loading required package: tidyverse
 > 
 > 
 > cleanEx()
+
+detaching ‘package:ggplot2’, ‘package:dplyr’
+
+> nameEx("excel_date_functions")
+> ### * excel_date_functions
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: excel_date_functions
+> ### Title: Excel Date and Time Functions
+> ### Aliases: excel_date_functions AS_DATE AS_DATETIME DATE DATEVALUE YMD
+> ###   MDY DMY YMD_HMS MDY_HMS DMY_HMS YMD_HM MDY_HM DMY_HM YMD_H MDY_H
+> ###   DMY_H WEEKDAY WDAY DOW MONTHDAY MDAY DOM QUARTERDAY QDAY DAY WEEKNUM
+> ###   WEEK WEEKNUM_ISO MONTH QUARTER YEAR YEAR_ISO DATE_TO_NUMERIC
+> ###   DATE_TO_DECIMAL SECOND MINUTE HOUR NOW TODAY EOMONTH EDATE
+> ###   NET_WORKDAYS COUNT_DAYS YEARFRAC DATE_SEQUENCE WORKDAY_SEQUENCE
+> ###   HOLIDAY_SEQUENCE HOLIDAY_TABLE FLOOR_DATE FLOOR_DAY FLOOR_WEEK
+> ###   FLOOR_MONTH FLOOR_QUARTER FLOOR_YEAR CEILING_DATE CEILING_DAY
+> ###   CEILING_WEEK CEILING_MONTH CEILING_QUARTER CEILING_YEAR ROUND_DATE
+> ###   ROUND_DAY ROUND_WEEK ROUND_MONTH ROUND_QUARTER ROUND_YEAR
+> 
+> ### ** Examples
+> 
+> # Libraries
+> library(tidyquant)
+> library(tidyverse)
+── [1mAttaching packages[22m ─────────────────────────────────────── tidyverse 1.3.0 ──
+[32m✔[39m [34mggplot2[39m 3.3.0     [32m✔[39m [34mpurrr  [39m 0.3.4
+[32m✔[39m [34mtibble [39m 3.0.1     [32m✔[39m [34mdplyr  [39m 0.8.5
+[32m✔[39m [34mtidyr  [39m 1.1.0     [32m✔[39m [34mstringr[39m 1.4.0
+[32m✔[39m [34mreadr  [39m 1.3.1     [32m✔[39m [34mforcats[39m 0.5.0
+Warning: package ‘tibble’ was built under R version 3.6.2
+Warning: package ‘tidyr’ was built under R version 3.6.2
+Warning: package ‘purrr’ was built under R version 3.6.2
+── [1mConflicts[22m ────────────────────────────────────────── tidyverse_conflicts() ──
+[31m✖[39m [34mlubridate[39m::[32mas.difftime()[39m masks [34mbase[39m::as.difftime()
+[31m✖[39m [34mlubridate[39m::[32mdate()[39m        masks [34mbase[39m::date()
+[31m✖[39m [34mdplyr[39m::[32mfilter()[39m          masks [34mstats[39m::filter()
+[31m✖[39m [34mdplyr[39m::[32mfirst()[39m           masks [34mxts[39m::first()
+[31m✖[39m [34mlubridate[39m::[32mintersect()[39m   masks [34mbase[39m::intersect()
+[31m✖[39m [34mdplyr[39m::[32mlag()[39m             masks [34mstats[39m::lag()
+[31m✖[39m [34mdplyr[39m::[32mlast()[39m            masks [34mxts[39m::last()
+[31m✖[39m [34mlubridate[39m::[32msetdiff()[39m     masks [34mbase[39m::setdiff()
+[31m✖[39m [34mlubridate[39m::[32munion()[39m       masks [34mbase[39m::union()
+> library(lubridate)
+> 
+> # --- Basic Usage ----
+> 
+> # Converters ---
+> AS_DATE("2011 Jan-01") # General
+[1] "2011-01-01"
+> YMD("2011 Jan-01")     # Year, Month-Day Format
+[1] "2011-01-01"
+> MDY("01-02-20")        # Month-Day, Year Format (January 2nd, 2020)
+[1] "2020-01-02"
+> DMY("01-02-20")        # Day-Month, Year Format (February 1st, 2020)
+[1] "2020-02-01"
+> 
+> # Extractors ---
+> WEEKDAY("2020-01-01")                                  # Labelled Day
+[1] 4
+> WEEKDAY("2020-01-01", label = FALSE)                   # Numeric Day
+[1] 4
+> WEEKDAY("2020-01-01", label = FALSE, week_start = 1)   # Start at 1 (Monday) vs 7 (Sunday)
+[1] 3
+> MONTH("2020-01-01")
+[1] 1
+> QUARTER("2020-01-01")
+[1] 1
+> YEAR("2020-01-01")
+[1] 2020
+> 
+> # Current Date-Time ---
+> NOW()
+[1] "2020-05-26 15:04:05 EDT"
+> TODAY()
+[1] "2020-05-26"
+> 
+> # Date Math ---
+> EOMONTH("2020-01-01")
+[1] "2020-01-31"
+> EOMONTH("2020-01-01", months = 1)
+[1] "2020-02-29"
+> NET_WORKDAYS("2020-01-01", "2020-07-01") # 131 Skipping Weekends
+[1] 131
+> NET_WORKDAYS("2020-01-01", "2020-07-01",
++              holidays = HOLIDAY_SEQUENCE("2020-01-01", "2020-07-01",
++                                          calendar = "NYSE")) # 126 Skipping 5 NYSE Holidays
+[1] 126
+> 
+> # Date Sequences ---
+> DATE_SEQUENCE("2020-01-01", "2020-07-01")
+  [1] "2020-01-01" "2020-01-02" "2020-01-03" "2020-01-04" "2020-01-05"
+  [6] "2020-01-06" "2020-01-07" "2020-01-08" "2020-01-09" "2020-01-10"
+ [11] "2020-01-11" "2020-01-12" "2020-01-13" "2020-01-14" "2020-01-15"
+ [16] "2020-01-16" "2020-01-17" "2020-01-18" "2020-01-19" "2020-01-20"
+ [21] "2020-01-21" "2020-01-22" "2020-01-23" "2020-01-24" "2020-01-25"
+ [26] "2020-01-26" "2020-01-27" "2020-01-28" "2020-01-29" "2020-01-30"
+ [31] "2020-01-31" "2020-02-01" "2020-02-02" "2020-02-03" "2020-02-04"
+ [36] "2020-02-05" "2020-02-06" "2020-02-07" "2020-02-08" "2020-02-09"
+ [41] "2020-02-10" "2020-02-11" "2020-02-12" "2020-02-13" "2020-02-14"
+ [46] "2020-02-15" "2020-02-16" "2020-02-17" "2020-02-18" "2020-02-19"
+ [51] "2020-02-20" "2020-02-21" "2020-02-22" "2020-02-23" "2020-02-24"
+ [56] "2020-02-25" "2020-02-26" "2020-02-27" "2020-02-28" "2020-02-29"
+ [61] "2020-03-01" "2020-03-02" "2020-03-03" "2020-03-04" "2020-03-05"
+ [66] "2020-03-06" "2020-03-07" "2020-03-08" "2020-03-09" "2020-03-10"
+ [71] "2020-03-11" "2020-03-12" "2020-03-13" "2020-03-14" "2020-03-15"
+ [76] "2020-03-16" "2020-03-17" "2020-03-18" "2020-03-19" "2020-03-20"
+ [81] "2020-03-21" "2020-03-22" "2020-03-23" "2020-03-24" "2020-03-25"
+ [86] "2020-03-26" "2020-03-27" "2020-03-28" "2020-03-29" "2020-03-30"
+ [91] "2020-03-31" "2020-04-01" "2020-04-02" "2020-04-03" "2020-04-04"
+ [96] "2020-04-05" "2020-04-06" "2020-04-07" "2020-04-08" "2020-04-09"
+[101] "2020-04-10" "2020-04-11" "2020-04-12" "2020-04-13" "2020-04-14"
+[106] "2020-04-15" "2020-04-16" "2020-04-17" "2020-04-18" "2020-04-19"
+[111] "2020-04-20" "2020-04-21" "2020-04-22" "2020-04-23" "2020-04-24"
+[116] "2020-04-25" "2020-04-26" "2020-04-27" "2020-04-28" "2020-04-29"
+[121] "2020-04-30" "2020-05-01" "2020-05-02" "2020-05-03" "2020-05-04"
+[126] "2020-05-05" "2020-05-06" "2020-05-07" "2020-05-08" "2020-05-09"
+[131] "2020-05-10" "2020-05-11" "2020-05-12" "2020-05-13" "2020-05-14"
+[136] "2020-05-15" "2020-05-16" "2020-05-17" "2020-05-18" "2020-05-19"
+[141] "2020-05-20" "2020-05-21" "2020-05-22" "2020-05-23" "2020-05-24"
+[146] "2020-05-25" "2020-05-26" "2020-05-27" "2020-05-28" "2020-05-29"
+[151] "2020-05-30" "2020-05-31" "2020-06-01" "2020-06-02" "2020-06-03"
+[156] "2020-06-04" "2020-06-05" "2020-06-06" "2020-06-07" "2020-06-08"
+[161] "2020-06-09" "2020-06-10" "2020-06-11" "2020-06-12" "2020-06-13"
+[166] "2020-06-14" "2020-06-15" "2020-06-16" "2020-06-17" "2020-06-18"
+[171] "2020-06-19" "2020-06-20" "2020-06-21" "2020-06-22" "2020-06-23"
+[176] "2020-06-24" "2020-06-25" "2020-06-26" "2020-06-27" "2020-06-28"
+[181] "2020-06-29" "2020-06-30" "2020-07-01"
+> WORKDAY_SEQUENCE("2020-01-01", "2020-07-01")
+  [1] "2020-01-01" "2020-01-02" "2020-01-03" "2020-01-06" "2020-01-07"
+  [6] "2020-01-08" "2020-01-09" "2020-01-10" "2020-01-13" "2020-01-14"
+ [11] "2020-01-15" "2020-01-16" "2020-01-17" "2020-01-20" "2020-01-21"
+ [16] "2020-01-22" "2020-01-23" "2020-01-24" "2020-01-27" "2020-01-28"
+ [21] "2020-01-29" "2020-01-30" "2020-01-31" "2020-02-03" "2020-02-04"
+ [26] "2020-02-05" "2020-02-06" "2020-02-07" "2020-02-10" "2020-02-11"
+ [31] "2020-02-12" "2020-02-13" "2020-02-14" "2020-02-17" "2020-02-18"
+ [36] "2020-02-19" "2020-02-20" "2020-02-21" "2020-02-24" "2020-02-25"
+ [41] "2020-02-26" "2020-02-27" "2020-02-28" "2020-03-02" "2020-03-03"
+ [46] "2020-03-04" "2020-03-05" "2020-03-06" "2020-03-09" "2020-03-10"
+ [51] "2020-03-11" "2020-03-12" "2020-03-13" "2020-03-16" "2020-03-17"
+ [56] "2020-03-18" "2020-03-19" "2020-03-20" "2020-03-23" "2020-03-24"
+ [61] "2020-03-25" "2020-03-26" "2020-03-27" "2020-03-30" "2020-03-31"
+ [66] "2020-04-01" "2020-04-02" "2020-04-03" "2020-04-06" "2020-04-07"
+ [71] "2020-04-08" "2020-04-09" "2020-04-10" "2020-04-13" "2020-04-14"
+ [76] "2020-04-15" "2020-04-16" "2020-04-17" "2020-04-20" "2020-04-21"
+ [81] "2020-04-22" "2020-04-23" "2020-04-24" "2020-04-27" "2020-04-28"
+ [86] "2020-04-29" "2020-04-30" "2020-05-01" "2020-05-04" "2020-05-05"
+ [91] "2020-05-06" "2020-05-07" "2020-05-08" "2020-05-11" "2020-05-12"
+ [96] "2020-05-13" "2020-05-14" "2020-05-15" "2020-05-18" "2020-05-19"
+[101] "2020-05-20" "2020-05-21" "2020-05-22" "2020-05-25" "2020-05-26"
+[106] "2020-05-27" "2020-05-28" "2020-05-29" "2020-06-01" "2020-06-02"
+[111] "2020-06-03" "2020-06-04" "2020-06-05" "2020-06-08" "2020-06-09"
+[116] "2020-06-10" "2020-06-11" "2020-06-12" "2020-06-15" "2020-06-16"
+[121] "2020-06-17" "2020-06-18" "2020-06-19" "2020-06-22" "2020-06-23"
+[126] "2020-06-24" "2020-06-25" "2020-06-26" "2020-06-29" "2020-06-30"
+[131] "2020-07-01"
+> HOLIDAY_SEQUENCE("2020-01-01", "2020-07-01", calendar = "NYSE")
+[1] "2020-01-01" "2020-01-20" "2020-02-17" "2020-04-10" "2020-05-25"
+> WORKDAY_SEQUENCE("2020-01-01", "2020-07-01",
++                  holidays = HOLIDAY_SEQUENCE("2020-01-01", "2020-07-01",
++                                              calendar = "NYSE"))
+  [1] "2020-01-02" "2020-01-03" "2020-01-06" "2020-01-07" "2020-01-08"
+  [6] "2020-01-09" "2020-01-10" "2020-01-13" "2020-01-14" "2020-01-15"
+ [11] "2020-01-16" "2020-01-17" "2020-01-21" "2020-01-22" "2020-01-23"
+ [16] "2020-01-24" "2020-01-27" "2020-01-28" "2020-01-29" "2020-01-30"
+ [21] "2020-01-31" "2020-02-03" "2020-02-04" "2020-02-05" "2020-02-06"
+ [26] "2020-02-07" "2020-02-10" "2020-02-11" "2020-02-12" "2020-02-13"
+ [31] "2020-02-14" "2020-02-18" "2020-02-19" "2020-02-20" "2020-02-21"
+ [36] "2020-02-24" "2020-02-25" "2020-02-26" "2020-02-27" "2020-02-28"
+ [41] "2020-03-02" "2020-03-03" "2020-03-04" "2020-03-05" "2020-03-06"
+ [46] "2020-03-09" "2020-03-10" "2020-03-11" "2020-03-12" "2020-03-13"
+ [51] "2020-03-16" "2020-03-17" "2020-03-18" "2020-03-19" "2020-03-20"
+ [56] "2020-03-23" "2020-03-24" "2020-03-25" "2020-03-26" "2020-03-27"
+ [61] "2020-03-30" "2020-03-31" "2020-04-01" "2020-04-02" "2020-04-03"
+ [66] "2020-04-06" "2020-04-07" "2020-04-08" "2020-04-09" "2020-04-13"
+ [71] "2020-04-14" "2020-04-15" "2020-04-16" "2020-04-17" "2020-04-20"
+ [76] "2020-04-21" "2020-04-22" "2020-04-23" "2020-04-24" "2020-04-27"
+ [81] "2020-04-28" "2020-04-29" "2020-04-30" "2020-05-01" "2020-05-04"
+ [86] "2020-05-05" "2020-05-06" "2020-05-07" "2020-05-08" "2020-05-11"
+ [91] "2020-05-12" "2020-05-13" "2020-05-14" "2020-05-15" "2020-05-18"
+ [96] "2020-05-19" "2020-05-20" "2020-05-21" "2020-05-22" "2020-05-26"
+[101] "2020-05-27" "2020-05-28" "2020-05-29" "2020-06-01" "2020-06-02"
+[106] "2020-06-03" "2020-06-04" "2020-06-05" "2020-06-08" "2020-06-09"
+[111] "2020-06-10" "2020-06-11" "2020-06-12" "2020-06-15" "2020-06-16"
+[116] "2020-06-17" "2020-06-18" "2020-06-19" "2020-06-22" "2020-06-23"
+[121] "2020-06-24" "2020-06-25" "2020-06-26" "2020-06-29" "2020-06-30"
+[126] "2020-07-01"
+> 
+> # Date Collapsers ---
+> FLOOR_DATE(AS_DATE("2020-01-15"), by = "month")
+[1] "2020-01-01"
+> CEILING_DATE(AS_DATE("2020-01-15"), by = "month")
+[1] "2020-02-01"
+> CEILING_DATE(AS_DATE("2020-01-15"), by = "month") - ddays(1) # EOMONTH using lubridate
+[1] "2020-01-31"
+> 
+> # --- Usage with tidyverse ---
+> 
+> # Calculate returns by symbol/year/quarter
+> FANG %>%
++     pivot_table(
++         .rows       = c(symbol, ~ QUARTER(date)),
++         .columns    = ~ YEAR(date),
++         .values     = ~ PCT_CHANGE_FIRSTLAST(adjusted)
++     )
+[90m# A tibble: 16 x 6[39m
+   symbol `QUARTER(date)`  `2013`   `2014`  `2015`    `2016`
+   [3m[90m<chr>[39m[23m            [3m[90m<int>[39m[23m   [3m[90m<dbl>[39m[23m    [3m[90m<dbl>[39m[23m   [3m[90m<dbl>[39m[23m     [3m[90m<dbl>[39m[23m
+[90m 1[39m AMZN                 1  0.035[4m7[24m -[31m0[39m[31m.[39m[31m155[39m    0.206  -[31m0[39m[31m.[39m[31m0[39m[31m68[4m1[24m[39m  
+[90m 2[39m AMZN                 2  0.061[4m5[24m -[31m0[39m[31m.[39m[31m0[39m[31m53[4m1[24m[39m   0.172   0.196   
+[90m 3[39m AMZN                 3  0.108  -[31m0[39m[31m.[39m[31m0[39m[31m29[4m9[24m[39m   0.170   0.154   
+[90m 4[39m AMZN                 4  0.243  -[31m0[39m[31m.[39m[31m0[39m[31m22[4m4[24m[39m   0.298  -[31m0[39m[31m.[39m[31m104[39m   
+[90m 5[39m FB                   1 -[31m0[39m[31m.[39m[31m0[39m[31m86[4m4[24m[39m  0.101    0.048[4m1[24m  0.116   
+[90m 6[39m FB                   2 -[31m0[39m[31m.[39m[31m0[39m[31m25[4m5[24m[39m  0.074[4m6[24m   0.050[4m2[24m -[31m0[39m[31m.[39m[31m0[39m[31m15[4m3[24m[39m  
+[90m 7[39m FB                   3  1.02    0.161    0.034[4m4[24m  0.123   
+[90m 8[39m FB                   4  0.083[4m9[24m  0.019[4m2[24m   0.151  -[31m0[39m[31m.[39m[31m107[39m   
+[90m 9[39m GOOG                 1  0.098[4m1[24m  0.001[4m7[24m[4m4[24m  0.044[4m2[24m  0.004[4m1[24m[4m9[24m 
+[90m10[39m GOOG                 2  0.098[4m8[24m  0.014[4m3[24m  -[31m0[39m[31m.[39m[31m0[39m[31m40[4m6[24m[39m -[31m0[39m[31m.[39m[31m0[39m[31m77[4m1[24m[39m  
+[90m11[39m GOOG                 3 -[31m0[39m[31m.[39m[31m0[39m[31m13[4m5[24m[39m -[31m0[39m[31m.[39m[31m00[39m[31m9[4m1[24m[4m1[24m[39m  0.166   0.112   
+[90m12[39m GOOG                 4  0.263  -[31m0[39m[31m.[39m[31m0[39m[31m73[4m7[24m[39m   0.241  -[31m0[39m[31m.[39m[31m000[39m[31m[4m9[24m[4m5[24m[4m8[24m[39m
+[90m13[39m NFLX                 1  1.06   -[31m0[39m[31m.[39m[31m0[39m[31m29[4m7[24m[39m   0.194  -[31m0[39m[31m.[39m[31m0[39m[31m70[4m3[24m[39m  
+[90m14[39m NFLX                 2  0.157   0.208    0.590  -[31m0[39m[31m.[39m[31m135[39m   
+[90m15[39m NFLX                 3  0.379  -[31m0[39m[31m.[39m[31m0[39m[31m46[4m3[24m[39m   0.103   0.019[4m4[24m  
+[90m16[39m NFLX                 4  0.134  -[31m0[39m[31m.[39m[31m221[39m    0.079[4m3[24m  0.206   
+> 
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:forcats’, ‘package:stringr’, ‘package:dplyr’,
+  ‘package:purrr’, ‘package:readr’, ‘package:tidyr’, ‘package:tibble’,
+  ‘package:ggplot2’, ‘package:tidyverse’
+
+> nameEx("excel_financial_math_functions")
+> ### * excel_financial_math_functions
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: excel_financial_math_functions
+> ### Title: Excel Financial Math Functions
+> ### Aliases: excel_financial_math_functions NPV IRR FV PV PMT RATE
+> 
+> ### ** Examples
+> 
+> # TODO
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("excel_if_functions")
+> ### * excel_if_functions
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: excel_if_functions
+> ### Title: Excel Summarising "If" Functions
+> ### Aliases: excel_if_functions SUM_IFS COUNT_IFS AVERAGE_IFS MEDIAN_IFS
+> ###   MIN_IFS MAX_IFS CREATE_IFS
+> 
+> ### ** Examples
+> 
+> library(tidyverse)
+── [1mAttaching packages[22m ─────────────────────────────────────── tidyverse 1.3.0 ──
+[32m✔[39m [34mggplot2[39m 3.3.0     [32m✔[39m [34mpurrr  [39m 0.3.4
+[32m✔[39m [34mtibble [39m 3.0.1     [32m✔[39m [34mdplyr  [39m 0.8.5
+[32m✔[39m [34mtidyr  [39m 1.1.0     [32m✔[39m [34mstringr[39m 1.4.0
+[32m✔[39m [34mreadr  [39m 1.3.1     [32m✔[39m [34mforcats[39m 0.5.0
+Warning: package ‘tibble’ was built under R version 3.6.2
+Warning: package ‘tidyr’ was built under R version 3.6.2
+Warning: package ‘purrr’ was built under R version 3.6.2
+── [1mConflicts[22m ────────────────────────────────────────── tidyverse_conflicts() ──
+[31m✖[39m [34mlubridate[39m::[32mas.difftime()[39m masks [34mbase[39m::as.difftime()
+[31m✖[39m [34mlubridate[39m::[32mdate()[39m        masks [34mbase[39m::date()
+[31m✖[39m [34mdplyr[39m::[32mfilter()[39m          masks [34mstats[39m::filter()
+[31m✖[39m [34mdplyr[39m::[32mfirst()[39m           masks [34mxts[39m::first()
+[31m✖[39m [34mlubridate[39m::[32mintersect()[39m   masks [34mbase[39m::intersect()
+[31m✖[39m [34mdplyr[39m::[32mlag()[39m             masks [34mstats[39m::lag()
+[31m✖[39m [34mdplyr[39m::[32mlast()[39m            masks [34mxts[39m::last()
+[31m✖[39m [34mlubridate[39m::[32msetdiff()[39m     masks [34mbase[39m::setdiff()
+[31m✖[39m [34mlubridate[39m::[32munion()[39m       masks [34mbase[39m::union()
+> library(tidyquant)
+> library(stringr)
+> library(lubridate)
+> 
+> # --- Basic Usage ---
+> 
+> SUM_IFS(x = 1:10, x > 5)
+[1] 40
+> 
+> COUNT_IFS(x = letters, str_detect(x, "a|b|c"))
+[1] 3
+> 
+> SUM_IFS(-10:10, x > 8 | x < -5)
+[1] -21
+> 
+> # Create your own IFS function (Mind blowingly simple)!
+> Q75_IFS <- CREATE_IFS(.f = quantile, probs = 0.75, na.rm = TRUE)
+> Q75_IFS(1:10, x > 5)
+75% 
+  9 
+> 
+> # --- Usage with tidyverse ---
+> 
+> # Using multiple cases IFS cases to count the frequency of days with
+> # high trade volume in a given year
+> FANG %>%
++     group_by(symbol) %>%
++     summarise(
++         high_volume_in_2015 = COUNT_IFS(volume,
++                                         year(date) == 2015,
++                                         volume > quantile(volume, 0.75))
++     )
+[90m# A tibble: 4 x 2[39m
+  symbol high_volume_in_2015
+  [3m[90m<chr>[39m[23m                [3m[90m<int>[39m[23m
+[90m1[39m AMZN                    62
+[90m2[39m FB                      15
+[90m3[39m GOOG                    19
+[90m4[39m NFLX                    54
+> 
+> # Count negative returns by month
+> FANG %>%
++     mutate(symbol = as_factor(symbol)) %>%
++     group_by(symbol) %>%
++ 
++     # Collapse from daily to FIRST value by month
++     summarise_by_time(
++         .date_var  = date,
++         .by        = "month",
++         adjusted   = FIRST(adjusted)
++     ) %>%
++ 
++     # Calculate monthly returns
++     group_by(symbol) %>%
++     mutate(
++         returns = PCT_CHANGE(adjusted, fill_na = 0)
++     ) %>%
++ 
++     # Find returns less than zero and count the frequency
++     summarise(
++         negative_monthly_returns = COUNT_IFS(returns, returns < 0)
++     )
+[90m# A tibble: 4 x 2[39m
+  symbol negative_monthly_returns
+  [3m[90m<fct>[39m[23m                     [3m[90m<int>[39m[23m
+[90m1[39m FB                           16
+[90m2[39m AMZN                         16
+[90m3[39m NFLX                         16
+[90m4[39m GOOG                         20
+> 
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:forcats’, ‘package:stringr’, ‘package:dplyr’,
+  ‘package:purrr’, ‘package:readr’, ‘package:tidyr’, ‘package:tibble’,
+  ‘package:ggplot2’, ‘package:tidyverse’
+
+> nameEx("excel_pivot_table")
+> ### * excel_pivot_table
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: excel_pivot_table
+> ### Title: Excel Pivot Table
+> ### Aliases: excel_pivot_table pivot_table
+> 
+> ### ** Examples
+> 
+> library(tidyquant)
+> library(tidyverse)
+── [1mAttaching packages[22m ─────────────────────────────────────── tidyverse 1.3.0 ──
+[32m✔[39m [34mggplot2[39m 3.3.0     [32m✔[39m [34mpurrr  [39m 0.3.4
+[32m✔[39m [34mtibble [39m 3.0.1     [32m✔[39m [34mdplyr  [39m 0.8.5
+[32m✔[39m [34mtidyr  [39m 1.1.0     [32m✔[39m [34mstringr[39m 1.4.0
+[32m✔[39m [34mreadr  [39m 1.3.1     [32m✔[39m [34mforcats[39m 0.5.0
+Warning: package ‘tibble’ was built under R version 3.6.2
+Warning: package ‘tidyr’ was built under R version 3.6.2
+Warning: package ‘purrr’ was built under R version 3.6.2
+── [1mConflicts[22m ────────────────────────────────────────── tidyverse_conflicts() ──
+[31m✖[39m [34mlubridate[39m::[32mas.difftime()[39m masks [34mbase[39m::as.difftime()
+[31m✖[39m [34mlubridate[39m::[32mdate()[39m        masks [34mbase[39m::date()
+[31m✖[39m [34mdplyr[39m::[32mfilter()[39m          masks [34mstats[39m::filter()
+[31m✖[39m [34mdplyr[39m::[32mfirst()[39m           masks [34mxts[39m::first()
+[31m✖[39m [34mlubridate[39m::[32mintersect()[39m   masks [34mbase[39m::intersect()
+[31m✖[39m [34mdplyr[39m::[32mlag()[39m             masks [34mstats[39m::lag()
+[31m✖[39m [34mdplyr[39m::[32mlast()[39m            masks [34mxts[39m::last()
+[31m✖[39m [34mlubridate[39m::[32msetdiff()[39m     masks [34mbase[39m::setdiff()
+[31m✖[39m [34mlubridate[39m::[32munion()[39m       masks [34mbase[39m::union()
+> 
+> # PIVOT TABLE ----
+> # Calculate returns by year/quarter
+> FANG %>%
++     pivot_table(
++         .rows       = c(symbol, ~ QUARTER(date)),
++         .columns    = ~ YEAR(date),
++         .values     = ~ PCT_CHANGE_FIRSTLAST(adjusted)
++     )
+[90m# A tibble: 16 x 6[39m
+   symbol `QUARTER(date)`  `2013`   `2014`  `2015`    `2016`
+   [3m[90m<chr>[39m[23m            [3m[90m<int>[39m[23m   [3m[90m<dbl>[39m[23m    [3m[90m<dbl>[39m[23m   [3m[90m<dbl>[39m[23m     [3m[90m<dbl>[39m[23m
+[90m 1[39m AMZN                 1  0.035[4m7[24m -[31m0[39m[31m.[39m[31m155[39m    0.206  -[31m0[39m[31m.[39m[31m0[39m[31m68[4m1[24m[39m  
+[90m 2[39m AMZN                 2  0.061[4m5[24m -[31m0[39m[31m.[39m[31m0[39m[31m53[4m1[24m[39m   0.172   0.196   
+[90m 3[39m AMZN                 3  0.108  -[31m0[39m[31m.[39m[31m0[39m[31m29[4m9[24m[39m   0.170   0.154   
+[90m 4[39m AMZN                 4  0.243  -[31m0[39m[31m.[39m[31m0[39m[31m22[4m4[24m[39m   0.298  -[31m0[39m[31m.[39m[31m104[39m   
+[90m 5[39m FB                   1 -[31m0[39m[31m.[39m[31m0[39m[31m86[4m4[24m[39m  0.101    0.048[4m1[24m  0.116   
+[90m 6[39m FB                   2 -[31m0[39m[31m.[39m[31m0[39m[31m25[4m5[24m[39m  0.074[4m6[24m   0.050[4m2[24m -[31m0[39m[31m.[39m[31m0[39m[31m15[4m3[24m[39m  
+[90m 7[39m FB                   3  1.02    0.161    0.034[4m4[24m  0.123   
+[90m 8[39m FB                   4  0.083[4m9[24m  0.019[4m2[24m   0.151  -[31m0[39m[31m.[39m[31m107[39m   
+[90m 9[39m GOOG                 1  0.098[4m1[24m  0.001[4m7[24m[4m4[24m  0.044[4m2[24m  0.004[4m1[24m[4m9[24m 
+[90m10[39m GOOG                 2  0.098[4m8[24m  0.014[4m3[24m  -[31m0[39m[31m.[39m[31m0[39m[31m40[4m6[24m[39m -[31m0[39m[31m.[39m[31m0[39m[31m77[4m1[24m[39m  
+[90m11[39m GOOG                 3 -[31m0[39m[31m.[39m[31m0[39m[31m13[4m5[24m[39m -[31m0[39m[31m.[39m[31m00[39m[31m9[4m1[24m[4m1[24m[39m  0.166   0.112   
+[90m12[39m GOOG                 4  0.263  -[31m0[39m[31m.[39m[31m0[39m[31m73[4m7[24m[39m   0.241  -[31m0[39m[31m.[39m[31m000[39m[31m[4m9[24m[4m5[24m[4m8[24m[39m
+[90m13[39m NFLX                 1  1.06   -[31m0[39m[31m.[39m[31m0[39m[31m29[4m7[24m[39m   0.194  -[31m0[39m[31m.[39m[31m0[39m[31m70[4m3[24m[39m  
+[90m14[39m NFLX                 2  0.157   0.208    0.590  -[31m0[39m[31m.[39m[31m135[39m   
+[90m15[39m NFLX                 3  0.379  -[31m0[39m[31m.[39m[31m0[39m[31m46[4m3[24m[39m   0.103   0.019[4m4[24m  
+[90m16[39m NFLX                 4  0.134  -[31m0[39m[31m.[39m[31m221[39m    0.079[4m3[24m  0.206   
+> 
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:forcats’, ‘package:stringr’, ‘package:dplyr’,
+  ‘package:purrr’, ‘package:readr’, ‘package:tidyr’, ‘package:tibble’,
+  ‘package:ggplot2’, ‘package:tidyverse’
+
+> nameEx("excel_ref_functions")
+> ### * excel_ref_functions
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: excel_ref_functions
+> ### Title: Excel Reference Functions
+> ### Aliases: excel_ref_functions VLOOKUP
+> 
+> ### ** Examples
+> 
+> library(tidyquant)
+> library(tidyverse)
+── [1mAttaching packages[22m ─────────────────────────────────────── tidyverse 1.3.0 ──
+[32m✔[39m [34mggplot2[39m 3.3.0     [32m✔[39m [34mpurrr  [39m 0.3.4
+[32m✔[39m [34mtibble [39m 3.0.1     [32m✔[39m [34mdplyr  [39m 0.8.5
+[32m✔[39m [34mtidyr  [39m 1.1.0     [32m✔[39m [34mstringr[39m 1.4.0
+[32m✔[39m [34mreadr  [39m 1.3.1     [32m✔[39m [34mforcats[39m 0.5.0
+Warning: package ‘tibble’ was built under R version 3.6.2
+Warning: package ‘tidyr’ was built under R version 3.6.2
+Warning: package ‘purrr’ was built under R version 3.6.2
+── [1mConflicts[22m ────────────────────────────────────────── tidyverse_conflicts() ──
+[31m✖[39m [34mlubridate[39m::[32mas.difftime()[39m masks [34mbase[39m::as.difftime()
+[31m✖[39m [34mlubridate[39m::[32mdate()[39m        masks [34mbase[39m::date()
+[31m✖[39m [34mdplyr[39m::[32mfilter()[39m          masks [34mstats[39m::filter()
+[31m✖[39m [34mdplyr[39m::[32mfirst()[39m           masks [34mxts[39m::first()
+[31m✖[39m [34mlubridate[39m::[32mintersect()[39m   masks [34mbase[39m::intersect()
+[31m✖[39m [34mdplyr[39m::[32mlag()[39m             masks [34mstats[39m::lag()
+[31m✖[39m [34mdplyr[39m::[32mlast()[39m            masks [34mxts[39m::last()
+[31m✖[39m [34mlubridate[39m::[32msetdiff()[39m     masks [34mbase[39m::setdiff()
+[31m✖[39m [34mlubridate[39m::[32munion()[39m       masks [34mbase[39m::union()
+> 
+> lookup_table <- tibble(
++     stock   = c("FB", "AMZN", "NFLX", "GOOG"),
++     company = c("Facebook", "Amazon", "Netflix", "Google")
++ )
+> 
+> # --- Basic Usage ---
+> 
+> VLOOKUP("NFLX",
++         .data = lookup_table,
++         .lookup_column = stock,
++         .return_column = company)
+[1] "Netflix"
+> 
+> # --- Usage with tidyverse ---
+> 
+> # Add company names to the stock data
+> FANG %>%
++     mutate(company = VLOOKUP(symbol, lookup_table, stock, company))
+[90m# A tibble: 4,032 x 9[39m
+   symbol date        open  high   low close    volume adjusted company 
+   [3m[90m<chr>[39m[23m  [3m[90m<date>[39m[23m     [3m[90m<dbl>[39m[23m [3m[90m<dbl>[39m[23m [3m[90m<dbl>[39m[23m [3m[90m<dbl>[39m[23m     [3m[90m<dbl>[39m[23m    [3m[90m<dbl>[39m[23m [3m[90m<chr>[39m[23m   
+[90m 1[39m FB     2013-01-02  27.4  28.2  27.4  28    69[4m8[24m[4m4[24m[4m6[24m400     28   Facebook
+[90m 2[39m FB     2013-01-03  27.9  28.5  27.6  27.8  63[4m1[24m[4m4[24m[4m0[24m600     27.8 Facebook
+[90m 3[39m FB     2013-01-04  28.0  28.9  27.8  28.8  72[4m7[24m[4m1[24m[4m5[24m400     28.8 Facebook
+[90m 4[39m FB     2013-01-07  28.7  29.8  28.6  29.4  83[4m7[24m[4m8[24m[4m1[24m800     29.4 Facebook
+[90m 5[39m FB     2013-01-08  29.5  29.6  28.9  29.1  45[4m8[24m[4m7[24m[4m1[24m300     29.1 Facebook
+[90m 6[39m FB     2013-01-09  29.7  30.6  29.5  30.6 104[4m7[24m[4m8[24m[4m7[24m700     30.6 Facebook
+[90m 7[39m FB     2013-01-10  30.6  31.5  30.3  31.3  95[4m3[24m[4m1[24m[4m6[24m400     31.3 Facebook
+[90m 8[39m FB     2013-01-11  31.3  32.0  31.1  31.7  89[4m5[24m[4m9[24m[4m8[24m000     31.7 Facebook
+[90m 9[39m FB     2013-01-14  32.1  32.2  30.6  31.0  98[4m8[24m[4m9[24m[4m2[24m800     31.0 Facebook
+[90m10[39m FB     2013-01-15  30.6  31.7  29.9  30.1 173[4m2[24m[4m4[24m[4m2[24m600     30.1 Facebook
+[90m# … with 4,022 more rows[39m
+> 
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:forcats’, ‘package:stringr’, ‘package:dplyr’,
+  ‘package:purrr’, ‘package:readr’, ‘package:tidyr’, ‘package:tibble’,
+  ‘package:ggplot2’, ‘package:tidyverse’
+
+> nameEx("excel_stat_mutation_functions")
+> ### * excel_stat_mutation_functions
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: excel_stat_mutation_functions
+> ### Title: Excel Statistical Mutation Functions
+> ### Aliases: excel_stat_mutation_functions ABS SQRT LOG EXP RETURN
+> ###   PCT_CHANGE CHANGE LAG LEAD CUMULATIVE_SUM CUMULATIVE_PRODUCT
+> ###   CUMULATIVE_MAX CUMULATIVE_MIN CUMULATIVE_MEAN CUMULATIVE_MEDIAN
+> 
+> ### ** Examples
+> 
+> # Libraries
+> library(tidyquant)
+> library(tidyverse)
+── [1mAttaching packages[22m ─────────────────────────────────────── tidyverse 1.3.0 ──
+[32m✔[39m [34mggplot2[39m 3.3.0     [32m✔[39m [34mpurrr  [39m 0.3.4
+[32m✔[39m [34mtibble [39m 3.0.1     [32m✔[39m [34mdplyr  [39m 0.8.5
+[32m✔[39m [34mtidyr  [39m 1.1.0     [32m✔[39m [34mstringr[39m 1.4.0
+[32m✔[39m [34mreadr  [39m 1.3.1     [32m✔[39m [34mforcats[39m 0.5.0
+Warning: package ‘tibble’ was built under R version 3.6.2
+Warning: package ‘tidyr’ was built under R version 3.6.2
+Warning: package ‘purrr’ was built under R version 3.6.2
+── [1mConflicts[22m ────────────────────────────────────────── tidyverse_conflicts() ──
+[31m✖[39m [34mlubridate[39m::[32mas.difftime()[39m masks [34mbase[39m::as.difftime()
+[31m✖[39m [34mlubridate[39m::[32mdate()[39m        masks [34mbase[39m::date()
+[31m✖[39m [34mdplyr[39m::[32mfilter()[39m          masks [34mstats[39m::filter()
+[31m✖[39m [34mdplyr[39m::[32mfirst()[39m           masks [34mxts[39m::first()
+[31m✖[39m [34mlubridate[39m::[32mintersect()[39m   masks [34mbase[39m::intersect()
+[31m✖[39m [34mdplyr[39m::[32mlag()[39m             masks [34mstats[39m::lag()
+[31m✖[39m [34mdplyr[39m::[32mlast()[39m            masks [34mxts[39m::last()
+[31m✖[39m [34mlubridate[39m::[32msetdiff()[39m     masks [34mbase[39m::setdiff()
+[31m✖[39m [34mlubridate[39m::[32munion()[39m       masks [34mbase[39m::union()
+> library(forcats)
+> 
+> # --- Basic Usage ----
+> 
+> CUMULATIVE_SUM(1:10)
+ [1]  1  3  6 10 15 21 28 36 45 55
+> 
+> PCT_CHANGE(c(21, 24, 22, 25), fill_na = 0)
+[1]  0.00000000  0.14285714 -0.08333333  0.13636364
+> 
+> # --- Usage with tidyverse ---
+> 
+> # Go from daily to monthly periodicity,
+> # then calculate returns and growth of $1 USD
+> FANG %>%
++     mutate(symbol = as_factor(symbol)) %>%
++     group_by(symbol) %>%
++ 
++     # Summarization - Collapse from daily to FIRST value by month
++     summarise_by_time(
++         .date_var  = date,
++         .time_unit = "month",
++         adjusted   = FIRST(adjusted)
++     ) %>%
++ 
++     # Mutation - Calculate monthly returns and cumulative growth of $1 USD
++     group_by(symbol) %>%
++     mutate(
++         returns = PCT_CHANGE(adjusted, fill_na = 0),
++         growth  = CUMULATIVE_SUM(returns) + 1
++     )
+[90m# A tibble: 836 x 6[39m
+[90m# Groups:   symbol [4][39m
+   symbol date       .time_unit adjusted  returns growth
+   [3m[90m<fct>[39m[23m  [3m[90m<date>[39m[23m     [3m[90m<chr>[39m[23m         [3m[90m<dbl>[39m[23m    [3m[90m<dbl>[39m[23m  [3m[90m<dbl>[39m[23m
+[90m 1[39m FB     2012-12-30 month          28    0        1    
+[90m 2[39m FB     2013-01-06 month          29.4  0.050[4m7[24m   1.05 
+[90m 3[39m FB     2013-01-13 month          31.0  0.052[4m0[24m   1.10 
+[90m 4[39m FB     2013-01-20 month          30.7 -[31m0[39m[31m.[39m[31m00[39m[31m7[4m1[24m[4m1[24m[39m  1.10 
+[90m 5[39m FB     2013-01-27 month          32.5  0.056[4m6[24m   1.15 
+[90m 6[39m FB     2013-02-03 month          28.1 -[31m0[39m[31m.[39m[31m134[39m    1.02 
+[90m 7[39m FB     2013-02-10 month          28.3  0.005[4m3[24m[4m4[24m  1.02 
+[90m 8[39m FB     2013-02-17 month          28.9  0.023[4m7[24m   1.05 
+[90m 9[39m FB     2013-02-24 month          27.3 -[31m0[39m[31m.[39m[31m0[39m[31m57[4m4[24m[39m   0.990
+[90m10[39m FB     2013-03-03 month          27.7  0.016[4m5[24m   1.01 
+[90m# … with 826 more rows[39m
+> 
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:forcats’, ‘package:stringr’, ‘package:dplyr’,
+  ‘package:purrr’, ‘package:readr’, ‘package:tidyr’, ‘package:tibble’,
+  ‘package:ggplot2’, ‘package:tidyverse’
+
+> nameEx("excel_stat_summary_functions")
+> ### * excel_stat_summary_functions
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: excel_stat_summary_functions
+> ### Title: Excel Statistical Summary Functions
+> ### Aliases: excel_stat_summary_functions SUM AVERAGE MEDIAN MIN MAX COUNT
+> ###   COUNT_UNIQUE STDEV VAR COR COV FIRST LAST NTH CHANGE_FIRSTLAST
+> ###   PCT_CHANGE_FIRSTLAST
+> 
+> ### ** Examples
+> 
+> # Libraries
+> library(tidyquant)
+> library(tidyverse)
+── [1mAttaching packages[22m ─────────────────────────────────────── tidyverse 1.3.0 ──
+[32m✔[39m [34mggplot2[39m 3.3.0     [32m✔[39m [34mpurrr  [39m 0.3.4
+[32m✔[39m [34mtibble [39m 3.0.1     [32m✔[39m [34mdplyr  [39m 0.8.5
+[32m✔[39m [34mtidyr  [39m 1.1.0     [32m✔[39m [34mstringr[39m 1.4.0
+[32m✔[39m [34mreadr  [39m 1.3.1     [32m✔[39m [34mforcats[39m 0.5.0
+Warning: package ‘tibble’ was built under R version 3.6.2
+Warning: package ‘tidyr’ was built under R version 3.6.2
+Warning: package ‘purrr’ was built under R version 3.6.2
+── [1mConflicts[22m ────────────────────────────────────────── tidyverse_conflicts() ──
+[31m✖[39m [34mlubridate[39m::[32mas.difftime()[39m masks [34mbase[39m::as.difftime()
+[31m✖[39m [34mlubridate[39m::[32mdate()[39m        masks [34mbase[39m::date()
+[31m✖[39m [34mdplyr[39m::[32mfilter()[39m          masks [34mstats[39m::filter()
+[31m✖[39m [34mdplyr[39m::[32mfirst()[39m           masks [34mxts[39m::first()
+[31m✖[39m [34mlubridate[39m::[32mintersect()[39m   masks [34mbase[39m::intersect()
+[31m✖[39m [34mdplyr[39m::[32mlag()[39m             masks [34mstats[39m::lag()
+[31m✖[39m [34mdplyr[39m::[32mlast()[39m            masks [34mxts[39m::last()
+[31m✖[39m [34mlubridate[39m::[32msetdiff()[39m     masks [34mbase[39m::setdiff()
+[31m✖[39m [34mlubridate[39m::[32munion()[39m       masks [34mbase[39m::union()
+> library(forcats)
+> 
+> # --- Basic Usage ----
+> 
+> SUM(1:10)
+[1] 55
+> 
+> PCT_CHANGE_FIRSTLAST(c(21, 24, 22, 25))
+[1] 0.1904762
+> 
+> # --- Usage with tidyverse ---
+> 
+> # Go from daily to monthly periodicity,
+> # then calculate returns and growth of $1 USD
+> FANG %>%
++     mutate(symbol = as_factor(symbol)) %>%
++     group_by(symbol) %>%
++ 
++     # Summarization - Collapse from daily to FIRST value by month
++     summarise_by_time(
++         .date_var  = date,
++         .time_unit = "month",
++         adjusted   = FIRST(adjusted)
++     )
+[90m# A tibble: 836 x 4[39m
+[90m# Groups:   symbol [4][39m
+   symbol date       .time_unit adjusted
+   [3m[90m<fct>[39m[23m  [3m[90m<date>[39m[23m     [3m[90m<chr>[39m[23m         [3m[90m<dbl>[39m[23m
+[90m 1[39m FB     2012-12-30 month          28  
+[90m 2[39m FB     2013-01-06 month          29.4
+[90m 3[39m FB     2013-01-13 month          31.0
+[90m 4[39m FB     2013-01-20 month          30.7
+[90m 5[39m FB     2013-01-27 month          32.5
+[90m 6[39m FB     2013-02-03 month          28.1
+[90m 7[39m FB     2013-02-10 month          28.3
+[90m 8[39m FB     2013-02-17 month          28.9
+[90m 9[39m FB     2013-02-24 month          27.3
+[90m10[39m FB     2013-03-03 month          27.7
+[90m# … with 826 more rows[39m
+> 
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:forcats’, ‘package:stringr’, ‘package:dplyr’,
+  ‘package:purrr’, ‘package:readr’, ‘package:tidyr’, ‘package:tibble’,
+  ‘package:ggplot2’, ‘package:tidyverse’
+
 > nameEx("geom_bbands")
 > ### * geom_bbands
 > 
@@ -143,15 +833,38 @@ Loading required package: tidyverse
 > 
 > # Load libraries
 > library(tidyquant)
+> library(dplyr)
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:xts’:
+
+    first, last
+
+The following objects are masked from ‘package:lubridate’:
+
+    intersect, setdiff, union
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+> library(ggplot2)
 > 
-> AAPL <- tq_get("AAPL")
+> 
+> AAPL <- tq_get("AAPL", from = "2013-01-01", to = "2016-12-31")
 > 
 > # SMA
 > AAPL %>%
 +     ggplot(aes(x = date, y = close)) +
 +     geom_line() +           # Plot stock price
 +     geom_bbands(aes(high = high, low = low, close = close), ma_fun = SMA, n = 50) +
-+     coord_x_date(xlim = c(today() - years(1), today()), ylim = c(80, 130))
++     coord_x_date(xlim = c(as_date("2016-12-31") - dyears(1), as_date("2016-12-31")),
++                  ylim = c(75, 125))
 > 
 > 
 > # EMA
@@ -160,7 +873,8 @@ Loading required package: tidyverse
 +    geom_line() +           # Plot stock price
 +    geom_bbands(aes(high = high, low = low, close = close),
 +                   ma_fun = EMA, wilder = TRUE, ratio = NULL, n = 50) +
-+    coord_x_date(xlim = c(today() - years(1), today()), ylim = c(80, 130))
++    coord_x_date(xlim = c(as_date("2016-12-31") - dyears(1), as_date("2016-12-31")),
++                 ylim = c(75, 125))
 > 
 > 
 > # VWMA
@@ -169,11 +883,15 @@ Loading required package: tidyverse
 +     geom_line() +           # Plot stock price
 +     geom_bbands(aes(high = high, low = low, close = close, volume = volume),
 +                    ma_fun = VWMA, n = 50) +
-+     coord_x_date(xlim = c(today() - years(1), today()), ylim = c(80, 130))
++     coord_x_date(xlim = c(as_date("2016-12-31") - dyears(1), as_date("2016-12-31")),
++                 ylim = c(75, 125))
 > 
 > 
 > 
 > cleanEx()
+
+detaching ‘package:ggplot2’, ‘package:dplyr’
+
 > nameEx("geom_chart")
 > ### * geom_chart
 > 
@@ -187,41 +905,52 @@ Loading required package: tidyverse
 > 
 > # Load libraries
 > library(tidyquant)
+> library(dplyr)
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:xts’:
+
+    first, last
+
+The following objects are masked from ‘package:lubridate’:
+
+    intersect, setdiff, union
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+> library(ggplot2)
 > 
-> AAPL <- tq_get("AAPL")
+> AAPL <- tq_get("AAPL", from = "2013-01-01", to = "2016-12-31")
 > 
 > # Bar Chart
 > AAPL %>%
 +     ggplot(aes(x = date, y = close)) +
 +     geom_barchart(aes(open = open, high = high, low = low, close = close)) +
 +     geom_ma(color = "darkgreen") +
-+     coord_x_date(xlim = c(today() - weeks(6), today()),
-+                  ylim = c(100, 130))
-Warning: Ignoring unknown parameters: colour_up, colour_down
-Warning: Ignoring unknown parameters: colour_up, colour_down
-Warning: Ignoring unknown parameters: colour_up, colour_down
-Warning: Computation failed in `stat_linerange_bc()`:
-argument "color_up" is missing, with no default
-Warning: Computation failed in `stat_segment_left_bc()`:
-argument "color_up" is missing, with no default
-Warning: Computation failed in `stat_segment_right_bc()`:
-argument "color_up" is missing, with no default
++     coord_x_date(xlim = c("2016-01-01", "2016-12-31"),
++                  ylim = c(75, 125))
 > 
 > # Candlestick Chart
 > AAPL %>%
 +     ggplot(aes(x = date, y = close)) +
 +     geom_candlestick(aes(open = open, high = high, low = low, close = close)) +
 +     geom_ma(color = "darkgreen") +
-+     coord_x_date(xlim = c(today() - weeks(6), today()),
-+                  ylim = c(100, 130))
-Warning: Ignoring unknown parameters: colour_up, colour_down
-Warning: Ignoring unknown parameters: colour_up, colour_down
-Warning: Computation failed in `stat_linerange_bc()`:
-argument "color_up" is missing, with no default
++     coord_x_date(xlim = c("2016-01-01", "2016-12-31"),
++                  ylim = c(75, 125))
 > 
 > 
 > 
 > cleanEx()
+
+detaching ‘package:ggplot2’, ‘package:dplyr’
+
 > nameEx("geom_ma")
 > ### * geom_ma
 > 
@@ -235,8 +964,29 @@ argument "color_up" is missing, with no default
 > 
 > # Load libraries
 > library(tidyquant)
+> library(dplyr)
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:xts’:
+
+    first, last
+
+The following objects are masked from ‘package:lubridate’:
+
+    intersect, setdiff, union
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+> library(ggplot2)
 > 
-> AAPL <- tq_get("AAPL")
+> AAPL <- tq_get("AAPL", from = "2013-01-01", to = "2016-12-31")
 > 
 > # SMA
 > AAPL %>%
@@ -244,20 +994,23 @@ argument "color_up" is missing, with no default
 +     geom_line() +                         # Plot stock price
 +     geom_ma(ma_fun = SMA, n = 50) +                 # Plot 50-day SMA
 +     geom_ma(ma_fun = SMA, n = 200, color = "red") + # Plot 200-day SMA
-+     coord_x_date(xlim = c(today() - weeks(12), today()),
-+                ylim = c(100, 130))                     # Zoom in
++     coord_x_date(xlim = c("2016-01-01", "2016-12-31"),
++                  ylim = c(75, 125))                     # Zoom in
 > 
 > # EVWMA
 > AAPL %>%
 +     ggplot(aes(x = date, y = adjusted)) +
 +     geom_line() +                                                   # Plot stock price
 +     geom_ma(aes(volume = volume), ma_fun = EVWMA, n = 50) +   # Plot 50-day EVWMA
-+     coord_x_date(xlim = c(today() - weeks(12), today()),
-+                ylim = c(100, 130))                                  # Zoom in
++     coord_x_date(xlim = c("2016-01-01", "2016-12-31"),
++                  ylim = c(75, 125))                                  # Zoom in
 > 
 > 
 > 
 > cleanEx()
+
+detaching ‘package:ggplot2’, ‘package:dplyr’
+
 > nameEx("palette_tq")
 > ### * palette_tq
 > 
@@ -270,17 +1023,7 @@ argument "color_up" is missing, with no default
 > ### ** Examples
 > 
 > library(scales)
-
-Attaching package: ‘scales’
-
-The following object is masked from ‘package:purrr’:
-
-    discard
-
-The following object is masked from ‘package:readr’:
-
-    col_factor
-
+Warning: package ‘scales’ was built under R version 3.6.2
 > scales::show_col(palette_light())
 > 
 > 
@@ -341,16 +1084,35 @@ detaching ‘package:scales’
 > 
 > # Load libraries
 > library(tidyquant)
+> library(dplyr)
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:xts’:
+
+    first, last
+
+The following objects are masked from ‘package:lubridate’:
+
+    intersect, setdiff, union
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+> library(ggplot2)
 > 
 > # Get stock prices
 > stocks <- c("AAPL", "FB", "NFLX") %>%
 +     tq_get(from = "2013-01-01",
 +            to   = "2017-01-01")
-Warning: `cols` is now required.
-Please use `cols = c(stock.prices)`
 > 
 > # Plot for stocks
-> a <- stocks %>%
+> g <- stocks %>%
 +     ggplot(aes(date, adjusted, color = symbol)) +
 +     geom_line() +
 +     labs(title = "Multi stock example",
@@ -358,7 +1120,7 @@ Please use `cols = c(stock.prices)`
 +          ylab = "Adjusted Close")
 > 
 > # Plot with tidyquant theme and colors
-> a +
+> g +
 +     theme_tq() +
 +     scale_color_tq()
 > 
@@ -367,6 +1129,127 @@ Please use `cols = c(stock.prices)`
 > 
 > 
 > cleanEx()
+
+detaching ‘package:ggplot2’, ‘package:dplyr’
+
+> nameEx("summarise_by_time")
+> ### * summarise_by_time
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: summarise_by_time
+> ### Title: Summarise each group by time
+> ### Aliases: summarise_by_time summarize_by_time
+> 
+> ### ** Examples
+> 
+> # Libraries
+> library(tidyquant)
+> library(dplyr)
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:xts’:
+
+    first, last
+
+The following objects are masked from ‘package:lubridate’:
+
+    intersect, setdiff, union
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+> 
+> # First adjusted price in each month
+> FANG %>%
++     group_by(symbol) %>%
++     summarise_by_time(
++         .date_var  = date,
++         .by         = "month",
++         adjusted   = FIRST(adjusted)
++     )
+[90m# A tibble: 192 x 3[39m
+[90m# Groups:   symbol [4][39m
+   symbol date       adjusted
+   [3m[90m<chr>[39m[23m  [3m[90m<date>[39m[23m        [3m[90m<dbl>[39m[23m
+[90m 1[39m AMZN   2013-01-01     257.
+[90m 2[39m AMZN   2013-02-01     265 
+[90m 3[39m AMZN   2013-03-01     266.
+[90m 4[39m AMZN   2013-04-01     262.
+[90m 5[39m AMZN   2013-05-01     248.
+[90m 6[39m AMZN   2013-06-01     267.
+[90m 7[39m AMZN   2013-07-01     282.
+[90m 8[39m AMZN   2013-08-01     306.
+[90m 9[39m AMZN   2013-09-01     289.
+[90m10[39m AMZN   2013-10-01     321.
+[90m# … with 182 more rows[39m
+> 
+> # Last adjused price in each month (day is last day of month with ceiling option)
+> FANG %>%
++     group_by(symbol) %>%
++     summarise_by_time(
++         .date_var  = date,
++         .by        = "month",
++         adjusted   = LAST(adjusted),
++         .type      = "ceiling")
+[90m# A tibble: 192 x 3[39m
+[90m# Groups:   symbol [4][39m
+   symbol date       adjusted
+   [3m[90m<chr>[39m[23m  [3m[90m<date>[39m[23m        [3m[90m<dbl>[39m[23m
+[90m 1[39m AMZN   2013-02-01     266.
+[90m 2[39m AMZN   2013-03-01     264.
+[90m 3[39m AMZN   2013-04-01     266.
+[90m 4[39m AMZN   2013-05-01     254.
+[90m 5[39m AMZN   2013-06-01     269.
+[90m 6[39m AMZN   2013-07-01     278.
+[90m 7[39m AMZN   2013-08-01     301.
+[90m 8[39m AMZN   2013-09-01     281.
+[90m 9[39m AMZN   2013-10-01     313.
+[90m10[39m AMZN   2013-11-01     364.
+[90m# … with 182 more rows[39m
+> 
+> # Total Volume each year (.by is set to "year" now)
+> FANG %>%
++     group_by(symbol) %>%
++     summarise_by_time(
++         .date_var  = date,
++         .by        = "year",
++         adjusted   = SUM(volume))
+[90m# A tibble: 16 x 3[39m
+[90m# Groups:   symbol [4][39m
+   symbol date          adjusted
+   [3m[90m<chr>[39m[23m  [3m[90m<date>[39m[23m           [3m[90m<dbl>[39m[23m
+[90m 1[39m AMZN   2013-01-01   747[4m9[24m[4m0[24m[4m5[24m700
+[90m 2[39m AMZN   2014-01-01  [4m1[24m029[4m0[24m[4m6[24m[4m6[24m700
+[90m 3[39m AMZN   2015-01-01   956[4m9[24m[4m3[24m[4m6[24m800
+[90m 4[39m AMZN   2016-01-01  [4m1[24m037[4m1[24m[4m0[24m[4m5[24m600
+[90m 5[39m FB     2013-01-01 [4m1[24m[4m5[24m143[4m1[24m[4m8[24m[4m2[24m600
+[90m 6[39m FB     2014-01-01 [4m1[24m[4m1[24m977[4m6[24m[4m9[24m[4m9[24m100
+[90m 7[39m FB     2015-01-01  [4m6[24m792[4m7[24m[4m0[24m[4m8[24m200
+[90m 8[39m FB     2016-01-01  [4m6[24m414[4m3[24m[4m5[24m[4m7[24m000
+[90m 9[39m GOOG   2013-01-01  [4m1[24m055[4m9[24m[4m6[24m[4m7[24m100
+[90m10[39m GOOG   2014-01-01   626[4m7[24m[4m3[24m[4m3[24m500
+[90m11[39m GOOG   2015-01-01   521[4m4[24m[4m4[24m[4m6[24m300
+[90m12[39m GOOG   2016-01-01   461[4m1[24m[4m2[24m[4m0[24m900
+[90m13[39m NFLX   2013-01-01  [4m6[24m915[4m7[24m[4m9[24m[4m0[24m700
+[90m14[39m NFLX   2014-01-01  [4m4[24m898[4m4[24m[4m1[24m[4m5[24m200
+[90m15[39m NFLX   2015-01-01  [4m4[24m679[4m8[24m[4m8[24m[4m1[24m700
+[90m16[39m NFLX   2016-01-01  [4m3[24m228[4m3[24m[4m4[24m[4m9[24m500
+> 
+> 
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:dplyr’
+
 > nameEx("theme_tq")
 > ### * theme_tq
 > 
@@ -380,9 +1263,30 @@ Please use `cols = c(stock.prices)`
 > 
 > # Load libraries
 > library(tidyquant)
+> library(dplyr)
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:xts’:
+
+    first, last
+
+The following objects are masked from ‘package:lubridate’:
+
+    intersect, setdiff, union
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+> library(ggplot2)
 > 
 > # Get stock prices
-> AAPL <- tq_get("AAPL")
+> AAPL <- tq_get("AAPL", from = "2013-01-01", to = "2016-12-31")
 > 
 > # Plot using ggplot with theme_tq
 > AAPL %>% ggplot(aes(x = date, y = close)) +
@@ -392,12 +1296,35 @@ Please use `cols = c(stock.prices)`
 +                    wilder = TRUE,
 +                    ratio = NULL,
 +                    n = 50) +
-+        coord_x_date(xlim = c(today() - years(1), today()),
-+                     ylim = c(80, 130)) +
++        coord_x_date(xlim = c("2016-01-01", "2016-12-31"),
++                  ylim = c(75, 125)) +
 +        labs(title = "Apple BBands",
 +             x = "Date",
 +             y = "Price") +
 +        theme_tq()
+> 
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:ggplot2’, ‘package:dplyr’
+
+> nameEx("tiingo_api_key")
+> ### * tiingo_api_key
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: tiingo_api_key
+> ### Title: Set Tiingo API Key
+> ### Aliases: tiingo_api_key
+> 
+> ### ** Examples
+> 
+> 
+> ## Not run: 
+> ##D tiingo_api_key(api_key = "foobar")
+> ## End(Not run)
 > 
 > 
 > 
@@ -410,20 +1337,38 @@ Please use `cols = c(stock.prices)`
 > 
 > ### Name: tq_get
 > ### Title: Get quantitative data in 'tibble' format
-> ### Aliases: tq_get tq_get_options tq_get_stock_index_options
+> ### Aliases: tq_get tq_get_options
 > 
 > ### ** Examples
 > 
 > # Load libraries
 > library(tidyquant)
+> library(tidyverse)
+── [1mAttaching packages[22m ─────────────────────────────────────── tidyverse 1.3.0 ──
+[32m✔[39m [34mggplot2[39m 3.3.0     [32m✔[39m [34mpurrr  [39m 0.3.4
+[32m✔[39m [34mtibble [39m 3.0.1     [32m✔[39m [34mdplyr  [39m 0.8.5
+[32m✔[39m [34mtidyr  [39m 1.1.0     [32m✔[39m [34mstringr[39m 1.4.0
+[32m✔[39m [34mreadr  [39m 1.3.1     [32m✔[39m [34mforcats[39m 0.5.0
+Warning: package ‘tibble’ was built under R version 3.6.2
+Warning: package ‘tidyr’ was built under R version 3.6.2
+Warning: package ‘purrr’ was built under R version 3.6.2
+── [1mConflicts[22m ────────────────────────────────────────── tidyverse_conflicts() ──
+[31m✖[39m [34mlubridate[39m::[32mas.difftime()[39m masks [34mbase[39m::as.difftime()
+[31m✖[39m [34mlubridate[39m::[32mdate()[39m        masks [34mbase[39m::date()
+[31m✖[39m [34mdplyr[39m::[32mfilter()[39m          masks [34mstats[39m::filter()
+[31m✖[39m [34mdplyr[39m::[32mfirst()[39m           masks [34mxts[39m::first()
+[31m✖[39m [34mlubridate[39m::[32mintersect()[39m   masks [34mbase[39m::intersect()
+[31m✖[39m [34mdplyr[39m::[32mlag()[39m             masks [34mstats[39m::lag()
+[31m✖[39m [34mdplyr[39m::[32mlast()[39m            masks [34mxts[39m::last()
+[31m✖[39m [34mlubridate[39m::[32msetdiff()[39m     masks [34mbase[39m::setdiff()
+[31m✖[39m [34mlubridate[39m::[32munion()[39m       masks [34mbase[39m::union()
 > 
 > # Get the list of `get` options
 > tq_get_options()
- [1] "stock.prices"        "stock.prices.google" "stock.prices.japan" 
- [4] "financials"          "key.ratios"          "dividends"          
- [7] "splits"              "economic.data"       "exchange.rates"     
-[10] "metal.prices"        "quandl"              "quandl.datatable"   
-[13] "alphavantager"       "rblpapi"            
+ [1] "stock.prices"       "stock.prices.japan" "economic.data"     
+ [4] "quandl"             "quandl.datatable"   "tiingo"            
+ [7] "tiingo.iex"         "tiingo.crypto"      "alphavantager"     
+[10] "alphavantage"       "rblpapi"           
 > 
 > # Get stock prices for a stock from Yahoo
 > aapl_stock_prices <- tq_get("AAPL")
@@ -433,14 +1378,106 @@ Please use `cols = c(stock.prices)`
 +                       get  = "stock.prices",
 +                       from = "2016-01-01",
 +                       to   = "2017-01-01")
-Warning: `cols` is now required.
-Please use `cols = c(stock.prices)`
 > 
-> # Multiple gets
-> mult_gets <- tq_get("AAPL",
-+                     get = c("stock.prices", "dividends"),
-+                     from = "2016-01-01",
-+                     to   = "2017-01-01")
+> 
+> ## Not run: 
+> ##D 
+> ##D # --- Quandl ---
+> ##D 
+> ##D quandl_api_key('<your_api_key>')
+> ##D 
+> ##D # Energy data from EIA
+> ##D tq_get("EIA/PET_MTTIMUS1_M", get = "quandl", from = "2010-01-01")
+> ##D 
+> ##D 
+> ##D # --- Tiingo ---
+> ##D 
+> ##D tiingo_api_key('<your_api_key>')
+> ##D 
+> ##D # Tiingo Prices (Free alternative to Yahoo Finance!)
+> ##D tq_get(c("AAPL", "GOOG"), get = "tiingo", from = "2010-01-01")
+> ##D 
+> ##D # Sub-daily prices from IEX ----
+> ##D tq_get(c("AAPL", "GOOG"),
+> ##D        get = "tiingo.iex",
+> ##D        from   = "2020-01-01",
+> ##D        to     = "2020-01-15",
+> ##D        resample_frequency = "5min")
+> ##D 
+> ##D # Tiingo Bitcoin Prices ----
+> ##D tq_get(c("btcusd", "btceur"),
+> ##D        get    = "tiingo.crypto",
+> ##D        from   = "2020-01-01",
+> ##D        to     = "2020-01-15",
+> ##D        resample_frequency = "5min")
+> ##D 
+> ##D 
+> ##D # --- Alpha Vantage ---
+> ##D 
+> ##D av_api_key('<your_api_key>')
+> ##D 
+> ##D # Daily Time Series
+> ##D tq_get("AAPL",
+> ##D        get        = "alphavantager",
+> ##D        av_fun     = "TIME_SERIES_DAILY_ADJUSTED",
+> ##D        outputsize = "full")
+> ##D 
+> ##D # Intraday 15 Min Interval
+> ##D tq_get("AAPL",
+> ##D        get        = "alphavantage",
+> ##D        av_fun     = "TIME_SERIES_INTRADAY",
+> ##D        interval   = "15min",
+> ##D        outputsize = "full")
+> ##D 
+> ##D # FX DAILY
+> ##D tq_get("USD/EUR", get = "alphavantage", av_fun = "FX_DAILY", outputsize = "full")
+> ##D 
+> ##D # FX REAL-TIME QUOTE
+> ##D tq_get("USD/EUR", get = "alphavantage", av_fun = "CURRENCY_EXCHANGE_RATE")
+> ##D 
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:forcats’, ‘package:stringr’, ‘package:dplyr’,
+  ‘package:purrr’, ‘package:readr’, ‘package:tidyr’, ‘package:tibble’,
+  ‘package:ggplot2’, ‘package:tidyverse’
+
+> nameEx("tq_index")
+> ### * tq_index
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: tq_index
+> ### Title: Get all stocks in a stock index or stock exchange in 'tibble'
+> ###   format
+> ### Aliases: tq_index tq_exchange tq_index_options tq_exchange_options
+> 
+> ### ** Examples
+> 
+> # Load libraries
+> library(tidyquant)
+> 
+> # Get the list of stock index options
+> tq_index_options()
+[1] "DOW"       "DOWGLOBAL" "SP400"     "SP500"     "SP600"    
+> 
+> # Get all stock symbols in a stock index
+> ## Not run: 
+> ##D tq_index("DOW")
+> ## End(Not run)
+> 
+> # Get the list of stock exchange options
+> tq_exchange_options()
+[1] "AMEX"   "NASDAQ" "NYSE"  
+> 
+> # Get all stocks in a stock exchange
+> ## Not run: 
+> ##D tq_exchange("NYSE")
+> ## End(Not run)
+> 
 > 
 > 
 > 
@@ -460,6 +1497,26 @@ Please use `cols = c(stock.prices)`
 > 
 > # Load libraries
 > library(tidyquant)
+> library(dplyr)
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:xts’:
+
+    first, last
+
+The following objects are masked from ‘package:lubridate’:
+
+    intersect, setdiff, union
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
 > 
 > ##### Basic Functionality
 > 
@@ -472,57 +1529,57 @@ Please use `cols = c(stock.prices)`
 > fb_stock_prices %>%
 +     tq_mutate(select = close, mutate_fun = periodReturn,
 +               period = "daily", type = "log")
-[90m# A tibble: 252 x 8[39m
-   date        open  high   low close   volume adjusted daily.returns
-   [3m[90m<date>[39m[23m     [3m[90m<dbl>[39m[23m [3m[90m<dbl>[39m[23m [3m[90m<dbl>[39m[23m [3m[90m<dbl>[39m[23m    [3m[90m<dbl>[39m[23m    [3m[90m<dbl>[39m[23m         [3m[90m<dbl>[39m[23m
-[90m 1[39m 2016-01-04 102.  102.   99.8 102.  37[4m9[24m[4m1[24m[4m2[24m400    102.        0      
-[90m 2[39m 2016-01-05 103.  104.  102.  103.  23[4m2[24m[4m5[24m[4m8[24m200    103.        0.004[4m9[24m[4m8[24m
-[90m 3[39m 2016-01-06 101.  104.  101.  103.  25[4m0[24m[4m9[24m[4m6[24m200    103.        0.002[4m3[24m[4m3[24m
-[90m 4[39m 2016-01-07 100.  101.   97.3  97.9 45[4m1[24m[4m7[24m[4m2[24m900     97.9      -[31m0[39m[31m.[39m[31m0[39m[31m50[4m3[24m[39m 
-[90m 5[39m 2016-01-08  99.9 100.   97.0  97.3 35[4m4[24m[4m0[24m[4m2[24m300     97.3      -[31m0[39m[31m.[39m[31m00[39m[31m6[4m0[24m[4m4[24m[39m
-[90m 6[39m 2016-01-11  97.9  98.6  95.4  97.5 29[4m9[24m[4m3[24m[4m2[24m400     97.5       0.001[4m8[24m[4m5[24m
-[90m 7[39m 2016-01-12  99   100.0  97.6  99.4 28[4m3[24m[4m9[24m[4m5[24m400     99.4       0.018[4m9[24m 
-[90m 8[39m 2016-01-13 101.  101.   95.2  95.4 33[4m4[24m[4m1[24m[4m0[24m600     95.4      -[31m0[39m[31m.[39m[31m0[39m[31m40[4m4[24m[39m 
-[90m 9[39m 2016-01-14  95.8  98.9  92.4  98.4 48[4m6[24m[4m5[24m[4m8[24m600     98.4       0.030[4m2[24m 
-[90m10[39m 2016-01-15  94.0  96.4  93.5  95.0 46[4m1[24m[4m3[24m[4m2[24m800     95.0      -[31m0[39m[31m.[39m[31m0[39m[31m35[4m2[24m[39m 
+[90m# A tibble: 252 x 9[39m
+   symbol date        open  high   low close   volume adjusted daily.returns
+   [3m[90m<chr>[39m[23m  [3m[90m<date>[39m[23m     [3m[90m<dbl>[39m[23m [3m[90m<dbl>[39m[23m [3m[90m<dbl>[39m[23m [3m[90m<dbl>[39m[23m    [3m[90m<dbl>[39m[23m    [3m[90m<dbl>[39m[23m         [3m[90m<dbl>[39m[23m
+[90m 1[39m FB     2016-01-04 102.  102.   99.8 102.  37[4m9[24m[4m1[24m[4m2[24m400    102.        0      
+[90m 2[39m FB     2016-01-05 103.  104.  102.  103.  23[4m2[24m[4m5[24m[4m8[24m200    103.        0.004[4m9[24m[4m8[24m
+[90m 3[39m FB     2016-01-06 101.  104.  101.  103.  25[4m0[24m[4m9[24m[4m6[24m200    103.        0.002[4m3[24m[4m3[24m
+[90m 4[39m FB     2016-01-07 100.  101.   97.3  97.9 45[4m1[24m[4m7[24m[4m2[24m900     97.9      -[31m0[39m[31m.[39m[31m0[39m[31m50[4m3[24m[39m 
+[90m 5[39m FB     2016-01-08  99.9 100.   97.0  97.3 35[4m4[24m[4m0[24m[4m2[24m300     97.3      -[31m0[39m[31m.[39m[31m00[39m[31m6[4m0[24m[4m4[24m[39m
+[90m 6[39m FB     2016-01-11  97.9  98.6  95.4  97.5 29[4m9[24m[4m3[24m[4m2[24m400     97.5       0.001[4m8[24m[4m5[24m
+[90m 7[39m FB     2016-01-12  99   100.   97.6  99.4 28[4m3[24m[4m9[24m[4m5[24m400     99.4       0.018[4m9[24m 
+[90m 8[39m FB     2016-01-13 101.  101.   95.2  95.4 33[4m4[24m[4m1[24m[4m0[24m600     95.4      -[31m0[39m[31m.[39m[31m0[39m[31m40[4m4[24m[39m 
+[90m 9[39m FB     2016-01-14  95.8  98.9  92.4  98.4 48[4m6[24m[4m5[24m[4m8[24m600     98.4       0.030[4m2[24m 
+[90m10[39m FB     2016-01-15  94.0  96.4  93.5  95.0 46[4m1[24m[4m3[24m[4m2[24m800     95.0      -[31m0[39m[31m.[39m[31m0[39m[31m35[4m2[24m[39m 
 [90m# … with 242 more rows[39m
 > 
 > # Example 2: Use tq_mutate_xy to use functions with two columns required
 > fb_stock_prices %>%
 +     tq_mutate_xy(x = close, y = volume, mutate_fun = EVWMA,
 +                  col_rename = "EVWMA")
-[90m# A tibble: 252 x 8[39m
-   date        open  high   low close   volume adjusted EVWMA
-   [3m[90m<date>[39m[23m     [3m[90m<dbl>[39m[23m [3m[90m<dbl>[39m[23m [3m[90m<dbl>[39m[23m [3m[90m<dbl>[39m[23m    [3m[90m<dbl>[39m[23m    [3m[90m<dbl>[39m[23m [3m[90m<dbl>[39m[23m
-[90m 1[39m 2016-01-04 102.  102.   99.8 102.  37[4m9[24m[4m1[24m[4m2[24m400    102.   [31mNA[39m  
-[90m 2[39m 2016-01-05 103.  104.  102.  103.  23[4m2[24m[4m5[24m[4m8[24m200    103.   [31mNA[39m  
-[90m 3[39m 2016-01-06 101.  104.  101.  103.  25[4m0[24m[4m9[24m[4m6[24m200    103.   [31mNA[39m  
-[90m 4[39m 2016-01-07 100.  101.   97.3  97.9 45[4m1[24m[4m7[24m[4m2[24m900     97.9  [31mNA[39m  
-[90m 5[39m 2016-01-08  99.9 100.   97.0  97.3 35[4m4[24m[4m0[24m[4m2[24m300     97.3  [31mNA[39m  
-[90m 6[39m 2016-01-11  97.9  98.6  95.4  97.5 29[4m9[24m[4m3[24m[4m2[24m400     97.5  [31mNA[39m  
-[90m 7[39m 2016-01-12  99   100.0  97.6  99.4 28[4m3[24m[4m9[24m[4m5[24m400     99.4  [31mNA[39m  
-[90m 8[39m 2016-01-13 101.  101.   95.2  95.4 33[4m4[24m[4m1[24m[4m0[24m600     95.4  [31mNA[39m  
-[90m 9[39m 2016-01-14  95.8  98.9  92.4  98.4 48[4m6[24m[4m5[24m[4m8[24m600     98.4  [31mNA[39m  
-[90m10[39m 2016-01-15  94.0  96.4  93.5  95.0 46[4m1[24m[4m3[24m[4m2[24m800     95.0  95.0
+[90m# A tibble: 252 x 9[39m
+   symbol date        open  high   low close   volume adjusted EVWMA
+   [3m[90m<chr>[39m[23m  [3m[90m<date>[39m[23m     [3m[90m<dbl>[39m[23m [3m[90m<dbl>[39m[23m [3m[90m<dbl>[39m[23m [3m[90m<dbl>[39m[23m    [3m[90m<dbl>[39m[23m    [3m[90m<dbl>[39m[23m [3m[90m<dbl>[39m[23m
+[90m 1[39m FB     2016-01-04 102.  102.   99.8 102.  37[4m9[24m[4m1[24m[4m2[24m400    102.   [31mNA[39m  
+[90m 2[39m FB     2016-01-05 103.  104.  102.  103.  23[4m2[24m[4m5[24m[4m8[24m200    103.   [31mNA[39m  
+[90m 3[39m FB     2016-01-06 101.  104.  101.  103.  25[4m0[24m[4m9[24m[4m6[24m200    103.   [31mNA[39m  
+[90m 4[39m FB     2016-01-07 100.  101.   97.3  97.9 45[4m1[24m[4m7[24m[4m2[24m900     97.9  [31mNA[39m  
+[90m 5[39m FB     2016-01-08  99.9 100.   97.0  97.3 35[4m4[24m[4m0[24m[4m2[24m300     97.3  [31mNA[39m  
+[90m 6[39m FB     2016-01-11  97.9  98.6  95.4  97.5 29[4m9[24m[4m3[24m[4m2[24m400     97.5  [31mNA[39m  
+[90m 7[39m FB     2016-01-12  99   100.   97.6  99.4 28[4m3[24m[4m9[24m[4m5[24m400     99.4  [31mNA[39m  
+[90m 8[39m FB     2016-01-13 101.  101.   95.2  95.4 33[4m4[24m[4m1[24m[4m0[24m600     95.4  [31mNA[39m  
+[90m 9[39m FB     2016-01-14  95.8  98.9  92.4  98.4 48[4m6[24m[4m5[24m[4m8[24m600     98.4  [31mNA[39m  
+[90m10[39m FB     2016-01-15  94.0  96.4  93.5  95.0 46[4m1[24m[4m3[24m[4m2[24m800     95.0  95.0
 [90m# … with 242 more rows[39m
 > 
 > # Example 3: Using tq_mutate to work with non-OHLC data
 > tq_get("DCOILWTICO", get = "economic.data") %>%
 +     tq_mutate(select = price, mutate_fun = lag.xts, k = 1, na.pad = TRUE)
-[90m# A tibble: 2,793 x 3[39m
-   date       price lag.xts
-   [3m[90m<date>[39m[23m     [3m[90m<dbl>[39m[23m   [3m[90m<dbl>[39m[23m
-[90m 1[39m 2009-01-01  [31mNA[39m      [31mNA[39m  
-[90m 2[39m 2009-01-02  46.2    [31mNA[39m  
-[90m 3[39m 2009-01-05  48.6    46.2
-[90m 4[39m 2009-01-06  48.6    48.6
-[90m 5[39m 2009-01-07  42.8    48.6
-[90m 6[39m 2009-01-08  41.7    42.8
-[90m 7[39m 2009-01-09  40.7    41.7
-[90m 8[39m 2009-01-12  37.6    40.7
-[90m 9[39m 2009-01-13  37.8    37.6
-[90m10[39m 2009-01-14  37.4    37.8
-[90m# … with 2,783 more rows[39m
+[90m# A tibble: 2,707 x 4[39m
+   symbol     date       price lag.xts
+   [3m[90m<chr>[39m[23m      [3m[90m<date>[39m[23m     [3m[90m<dbl>[39m[23m   [3m[90m<dbl>[39m[23m
+[90m 1[39m DCOILWTICO 2010-01-01  [31mNA[39m      [31mNA[39m  
+[90m 2[39m DCOILWTICO 2010-01-04  81.5    [31mNA[39m  
+[90m 3[39m DCOILWTICO 2010-01-05  81.7    81.5
+[90m 4[39m DCOILWTICO 2010-01-06  83.1    81.7
+[90m 5[39m DCOILWTICO 2010-01-07  82.6    83.1
+[90m 6[39m DCOILWTICO 2010-01-08  82.7    82.6
+[90m 7[39m DCOILWTICO 2010-01-11  82.5    82.7
+[90m 8[39m DCOILWTICO 2010-01-12  80.8    82.5
+[90m 9[39m DCOILWTICO 2010-01-13  79.7    80.8
+[90m10[39m DCOILWTICO 2010-01-14  79.4    79.7
+[90m# … with 2,697 more rows[39m
 > 
 > # Example 4: Using tq_mutate to apply a rolling regression
 > fb_returns <- fb_stock_prices %>%
@@ -531,7 +1588,7 @@ Please use `cols = c(stock.prices)`
 +     tq_transmute(adjusted, periodReturn, period = "monthly", col_rename = "xlk.returns")
 > returns_combined <- left_join(fb_returns, xlk_returns, by = "date")
 > regr_fun <- function(data) {
-+     coef(lm(fb.returns ~ xlk.returns, data = as_data_frame(data)))
++     coef(lm(fb.returns ~ xlk.returns, data = as_tibble(data)))
 + }
 > returns_combined %>%
 +     tq_mutate(mutate_fun = rollapply,
@@ -539,8 +1596,6 @@ Please use `cols = c(stock.prices)`
 +               FUN        = regr_fun,
 +               by.column  = FALSE,
 +               col_rename = c("coef.0", "coef.1"))
-Warning: `as_data_frame()` is deprecated, use `as_tibble()` (but mind the new semantics).
-[90mThis warning is displayed once per session.[39m
 [90m# A tibble: 12 x 5[39m
    date       fb.returns xlk.returns   coef.0 coef.1
    [3m[90m<date>[39m[23m          [3m[90m<dbl>[39m[23m       [3m[90m<dbl>[39m[23m    [3m[90m<dbl>[39m[23m  [3m[90m<dbl>[39m[23m
@@ -562,24 +1617,27 @@ Warning: `as_data_frame()` is deprecated, use `as_tibble()` (but mind the new se
 > col_name <- "adjusted"
 > mutate <- c("MACD", "SMA")
 > tq_mutate_xy_(fb_stock_prices, x = col_name, mutate_fun = mutate[[1]])
-[90m# A tibble: 252 x 9[39m
-   date        open  high   low close   volume adjusted  macd signal
-   [3m[90m<date>[39m[23m     [3m[90m<dbl>[39m[23m [3m[90m<dbl>[39m[23m [3m[90m<dbl>[39m[23m [3m[90m<dbl>[39m[23m    [3m[90m<dbl>[39m[23m    [3m[90m<dbl>[39m[23m [3m[90m<dbl>[39m[23m  [3m[90m<dbl>[39m[23m
-[90m 1[39m 2016-01-04 102.  102.   99.8 102.  37[4m9[24m[4m1[24m[4m2[24m400    102.     [31mNA[39m     [31mNA[39m
-[90m 2[39m 2016-01-05 103.  104.  102.  103.  23[4m2[24m[4m5[24m[4m8[24m200    103.     [31mNA[39m     [31mNA[39m
-[90m 3[39m 2016-01-06 101.  104.  101.  103.  25[4m0[24m[4m9[24m[4m6[24m200    103.     [31mNA[39m     [31mNA[39m
-[90m 4[39m 2016-01-07 100.  101.   97.3  97.9 45[4m1[24m[4m7[24m[4m2[24m900     97.9    [31mNA[39m     [31mNA[39m
-[90m 5[39m 2016-01-08  99.9 100.   97.0  97.3 35[4m4[24m[4m0[24m[4m2[24m300     97.3    [31mNA[39m     [31mNA[39m
-[90m 6[39m 2016-01-11  97.9  98.6  95.4  97.5 29[4m9[24m[4m3[24m[4m2[24m400     97.5    [31mNA[39m     [31mNA[39m
-[90m 7[39m 2016-01-12  99   100.0  97.6  99.4 28[4m3[24m[4m9[24m[4m5[24m400     99.4    [31mNA[39m     [31mNA[39m
-[90m 8[39m 2016-01-13 101.  101.   95.2  95.4 33[4m4[24m[4m1[24m[4m0[24m600     95.4    [31mNA[39m     [31mNA[39m
-[90m 9[39m 2016-01-14  95.8  98.9  92.4  98.4 48[4m6[24m[4m5[24m[4m8[24m600     98.4    [31mNA[39m     [31mNA[39m
-[90m10[39m 2016-01-15  94.0  96.4  93.5  95.0 46[4m1[24m[4m3[24m[4m2[24m800     95.0    [31mNA[39m     [31mNA[39m
+[90m# A tibble: 252 x 10[39m
+   symbol date        open  high   low close   volume adjusted  macd signal
+   [3m[90m<chr>[39m[23m  [3m[90m<date>[39m[23m     [3m[90m<dbl>[39m[23m [3m[90m<dbl>[39m[23m [3m[90m<dbl>[39m[23m [3m[90m<dbl>[39m[23m    [3m[90m<dbl>[39m[23m    [3m[90m<dbl>[39m[23m [3m[90m<dbl>[39m[23m  [3m[90m<dbl>[39m[23m
+[90m 1[39m FB     2016-01-04 102.  102.   99.8 102.  37[4m9[24m[4m1[24m[4m2[24m400    102.     [31mNA[39m     [31mNA[39m
+[90m 2[39m FB     2016-01-05 103.  104.  102.  103.  23[4m2[24m[4m5[24m[4m8[24m200    103.     [31mNA[39m     [31mNA[39m
+[90m 3[39m FB     2016-01-06 101.  104.  101.  103.  25[4m0[24m[4m9[24m[4m6[24m200    103.     [31mNA[39m     [31mNA[39m
+[90m 4[39m FB     2016-01-07 100.  101.   97.3  97.9 45[4m1[24m[4m7[24m[4m2[24m900     97.9    [31mNA[39m     [31mNA[39m
+[90m 5[39m FB     2016-01-08  99.9 100.   97.0  97.3 35[4m4[24m[4m0[24m[4m2[24m300     97.3    [31mNA[39m     [31mNA[39m
+[90m 6[39m FB     2016-01-11  97.9  98.6  95.4  97.5 29[4m9[24m[4m3[24m[4m2[24m400     97.5    [31mNA[39m     [31mNA[39m
+[90m 7[39m FB     2016-01-12  99   100.   97.6  99.4 28[4m3[24m[4m9[24m[4m5[24m400     99.4    [31mNA[39m     [31mNA[39m
+[90m 8[39m FB     2016-01-13 101.  101.   95.2  95.4 33[4m4[24m[4m1[24m[4m0[24m600     95.4    [31mNA[39m     [31mNA[39m
+[90m 9[39m FB     2016-01-14  95.8  98.9  92.4  98.4 48[4m6[24m[4m5[24m[4m8[24m600     98.4    [31mNA[39m     [31mNA[39m
+[90m10[39m FB     2016-01-15  94.0  96.4  93.5  95.0 46[4m1[24m[4m3[24m[4m2[24m800     95.0    [31mNA[39m     [31mNA[39m
 [90m# … with 242 more rows[39m
 > 
 > 
 > 
 > cleanEx()
+
+detaching ‘package:dplyr’
+
 > nameEx("tq_performance")
 > ### * tq_performance
 > 
@@ -594,6 +1652,26 @@ Warning: `as_data_frame()` is deprecated, use `as_tibble()` (but mind the new se
 > 
 > # Load libraries
 > library(tidyquant)
+> library(dplyr)
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:xts’:
+
+    first, last
+
+The following objects are masked from ‘package:lubridate’:
+
+    intersect, setdiff, union
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
 > 
 > # Use FANG data set
 > data(FANG)
@@ -602,8 +1680,6 @@ Warning: `as_data_frame()` is deprecated, use `as_tibble()` (but mind the new se
 > Ra <- FANG %>%
 +     group_by(symbol) %>%
 +     tq_transmute(adjusted, periodReturn, period = "monthly", col_rename = "Ra")
-Warning: `cols` is now required.
-Please use `cols = c(nested.col)`
 > 
 > # Get returns for SP500 as baseline
 > Rb <- "^GSPC" %>%
@@ -695,8 +1771,6 @@ $misc.funs
 > # Get performance metrics
 > RaRb %>%
 +     tq_performance(Ra = Ra, performance_fun = SharpeRatio, p = 0.95)
-Warning: `cols` is now required.
-Please use `cols = c(nested.col)`
 [90m# A tibble: 4 x 4[39m
 [90m# Groups:   symbol [4][39m
   symbol `ESSharpe(Rf=0%,p=95%… `StdDevSharpe(Rf=0%,p=95… `VaRSharpe(Rf=0%,p=95…
@@ -708,8 +1782,6 @@ Please use `cols = c(nested.col)`
 > 
 > RaRb %>%
 +     tq_performance(Ra = Ra, Rb = Rb, performance_fun = table.CAPM)
-Warning: `cols` is now required.
-Please use `cols = c(nested.col)`
 [90m# A tibble: 4 x 13[39m
 [90m# Groups:   symbol [4][39m
   symbol ActivePremium  Alpha AnnualizedAlpha  Beta `Beta+` `Beta-` Correlation
@@ -718,13 +1790,16 @@ Please use `cols = c(nested.col)`
 [90m2[39m AMZN           0.246 0.014[4m4[24m           0.187 1.46     2.04 -[31m0[39m[31m.[39m[31m0[39m[31m44[4m2[24m[39m       0.524
 [90m3[39m NFLX           1.02  0.063[4m2[24m           1.09  1.35     1.90 -[31m2[39m[31m.[39m[31m78[39m         0.234
 [90m4[39m GOOG           0.142 0.012[4m3[24m           0.158 0.901    1.56 -[31m0[39m[31m.[39m[31m247[39m        0.451
-[90m# … with 5 more variables: `Correlationp-value` [3m[90m<dbl>[90m[23m, InformationRatio [3m[90m<dbl>[90m[23m,
-#   `R-squared` [3m[90m<dbl>[90m[23m, TrackingError [3m[90m<dbl>[90m[23m, TreynorRatio [3m[90m<dbl>[90m[23m[39m
+[90m# … with 5 more variables: `Correlationp-value` [3m[90m<dbl>[90m[23m, InformationRatio [3m[90m<dbl>[90m[23m,[39m
+[90m#   `R-squared` [3m[90m<dbl>[90m[23m, TrackingError [3m[90m<dbl>[90m[23m, TreynorRatio [3m[90m<dbl>[90m[23m[39m
 > 
 > 
 > 
 > 
 > cleanEx()
+
+detaching ‘package:dplyr’
+
 > nameEx("tq_portfolio")
 > ### * tq_portfolio
 > 
@@ -738,6 +1813,26 @@ Please use `cols = c(nested.col)`
 > 
 > # Load libraries
 > library(tidyquant)
+> library(dplyr)
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:xts’:
+
+    first, last
+
+The following objects are masked from ‘package:lubridate’:
+
+    intersect, setdiff, union
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
 > 
 > # Use FANG data set
 > data(FANG)
@@ -746,8 +1841,6 @@ Please use `cols = c(nested.col)`
 > monthly_returns_stocks <- FANG %>%
 +     group_by(symbol) %>%
 +     tq_transmute(adjusted, periodReturn, period = "monthly")
-Warning: `cols` is now required.
-Please use `cols = c(nested.col)`
 > 
 > ##### Portfolio Aggregation Methods #####
 > 
@@ -826,8 +1919,6 @@ Ungrouping data frame groups: symbol
 +              weights = weights_table,
 +              col_rename = NULL,
 +              wealth.index = FALSE)
-Warning: `cols` is now required.
-Please use `cols = c(portfolio..)`
 [90m# A tibble: 192 x 3[39m
 [90m# Groups:   portfolio [4][39m
    portfolio date       portfolio.returns
@@ -846,49 +1937,15 @@ Please use `cols = c(portfolio..)`
 > 
 > 
 > 
-> cleanEx()
-> nameEx("tq_stock_list")
-> ### * tq_stock_list
-> 
-> flush(stderr()); flush(stdout())
-> 
-> ### Name: tq_index
-> ### Title: Get all stocks in a stock index or stock exchange in 'tibble'
-> ###   format
-> ### Aliases: tq_index tq_exchange tq_index_options tq_exchange_options
-> 
-> ### ** Examples
-> 
-> # Load libraries
-> library(tidyquant)
-> 
-> # Get the list of stock index options
-> tq_index_options()
-[1] "RUSSELL1000" "RUSSELL2000" "RUSSELL3000" "DOW"         "DOWGLOBAL"  
-[6] "SP400"       "SP500"       "SP600"       "SP1000"     
-> 
-> # Get all stock symbols in a stock index
-> ## Not run: 
-> ##D tq_index("DOW")
-> ## End(Not run)
-> 
-> # Get the list of stock exchange options
-> tq_exchange_options()
-[1] "AMEX"   "NASDAQ" "NYSE"  
-> 
-> # Get all stocks in a stock exchange
-> ## Not run: 
-> ##D tq_exchange("NYSE")
-> ## End(Not run)
-> 
-> 
-> 
 > ### * <FOOTER>
 > ###
 > cleanEx()
+
+detaching ‘package:dplyr’
+
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  4.239 0.19 8.395 0.001 0.001 
+Time elapsed:  6.683 0.27 12.631 0.002 0.003 
 > grDevices::dev.off()
 null device 
           1 
