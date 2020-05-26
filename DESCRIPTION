@@ -29,7 +29,7 @@ Imports:
     purrr (>= 0.2.3),
     Rcpp (>= 0.12.7),
     rlang (>= 0.1.6),
-    tibble (>= 1.4.1),
+    tibble (>= 3.0.0),
     tidyselect (>= 0.2.5),
     vctrs (>= 0.2.0),
     zoo (>= 1.8-0),

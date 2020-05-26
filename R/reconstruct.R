@@ -19,9 +19,9 @@ reconstruct.tbl_time <- function(new, old) {
 
   # Check subclass, if it was/is a grouped_df,
   # it should also be grouped_tbl_time
-  subclass <- NULL
+  class <- NULL
   if(inherits(new, "grouped_df")) {
-    subclass <- "grouped_tbl_time"
+    class <- "grouped_tbl_time"
   }
 
   # If we have an index
@@ -30,12 +30,12 @@ reconstruct.tbl_time <- function(new, old) {
       new,
       index_quo = get_index_quo(old),
       index_time_zone = get_index_time_zone(old),
-      subclass = subclass
+      subclass = class
     )
   }
 
   else {
-    tibble::new_tibble(new, nrow = nrow(new), subclass = subclass)
+    tibble::new_tibble(new, nrow = nrow(new), class = class)
   }
 
 }

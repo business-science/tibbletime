@@ -86,6 +86,6 @@ as_tibble.grouped_tbl_time <- function(x, ...) {
     attr(x, attrib) <- NULL
   }
 
-  tibble::new_tibble(x, ..., nrow = nrow(x), subclass = "grouped_df")
+  tibble::new_tibble(x, ..., nrow = nrow(x), class = "grouped_df")
 }
 
