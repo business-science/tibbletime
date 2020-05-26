@@ -1,11 +1,10 @@
 ## Release Summary
 
-This is a minor release of 'tibbletime'. It mainly updates the `tidyr::nest()` 
-and `tidyr::unnest()` methods for compatability with tidyr 1.0.0.
+This is a minor release to keep tibbletime compatible with tibble and dplyr.
 
 ## Test environments
-* local Mac install, R 3.6.0
-* ubuntu 14.04.5 (on travis-ci) (3.6.0, devel, release)
+* local Mac install, R 4.0.0
+* ubuntu 14.04.5 (on travis-ci) (4.0.0, devel, release)
 * win-builder (devel and release)
 
 ## R CMD check results
@@ -20,5 +19,4 @@ There were no ERRORs, WARNINGs or NOTEs.
 ## Revdep checks
 
 The 4 revdeps have been checked, and nothing has been broken by this release.
-This should free up anomalize to be fixed as well (tidyr 1.0.0 broke it).
 
