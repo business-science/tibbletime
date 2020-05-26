@@ -41,7 +41,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">tibbletime</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.3.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.4</span>
       </span>
     </div>
 
@@ -288,7 +288,7 @@
   <span class="fu"><a href="reference/collapse_by.html">collapse_by</a></span>(<span class="st">"year"</span>) <span class="kw">%&gt;%</span>
 
   <span class="co"># Additionally group by date (yearly)</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(<span class="no">date</span>, <span class="kw">add</span> <span class="kw">=</span> <span class="fl">TRUE</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(<span class="no">symbol</span>, <span class="no">date</span>) <span class="kw">%&gt;%</span>
 
   <span class="co"># Perform a yearly summary for each symbol</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span>(
@@ -296,10 +296,6 @@
     <span class="kw">adj_max</span>   <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span>(<span class="no">adjusted</span>),
     <span class="kw">adj_range</span> <span class="kw">=</span> <span class="no">adj_max</span> - <span class="no">adj_min</span>
   )
-<span class="co">#&gt; Warning: The `add` argument of `group_by()` is deprecated as of dplyr 1.0.0.</span>
-<span class="co">#&gt; Please use the `.add` argument instead.</span>
-<span class="co">#&gt; This warning is displayed once every 8 hours.</span>
-<span class="co">#&gt; Call `lifecycle::last_warnings()` to see where this warning was generated.</span>
 <span class="co">#&gt; `summarise()` regrouping output by 'symbol' (override with `.groups` argument)</span>
 <span class="co">#&gt; # A time tibble: 16 x 5</span>
 <span class="co">#&gt; # Index:  date</span>

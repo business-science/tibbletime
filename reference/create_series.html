@@ -83,7 +83,7 @@ a date column populated with a sequence of dates." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tibbletime</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.3.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.4</span>
       </span>
     </div>
 
@@ -150,8 +150,14 @@ a date column populated with a sequence of dates." />
 a <code>date</code> column populated with a sequence of dates.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>create_series</span>(<span class='no'>time_formula</span>, <span class='kw'>period</span> <span class='kw'>=</span> <span class='st'>"daily"</span>, <span class='kw'>class</span> <span class='kw'>=</span> <span class='st'>"POSIXct"</span>,
-  <span class='kw'>include_end</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>tz</span> <span class='kw'>=</span> <span class='st'>"UTC"</span>, <span class='kw'>as_vector</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>create_series</span>(
+  <span class='no'>time_formula</span>,
+  <span class='kw'>period</span> <span class='kw'>=</span> <span class='st'>"daily"</span>,
+  <span class='kw'>class</span> <span class='kw'>=</span> <span class='st'>"POSIXct"</span>,
+  <span class='kw'>include_end</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>tz</span> <span class='kw'>=</span> <span class='st'>"UTC"</span>,
+  <span class='kw'>as_vector</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
