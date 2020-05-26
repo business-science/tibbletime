@@ -20,9 +20,9 @@ Type 'q()' to quit R.
 > 
 > test_check("tsbox")
 "blabla"
-══ testthat results  ══════════════════════════════════════════════════════════════════════════════════════════════════════
+══ testthat results  ═══════════════════════════════════════════════════════════
 [ OK: 459 | SKIPPED: 13 | WARNINGS: 0 | FAILED: 0 ]
 > 
 > proc.time()
    user  system elapsed 
- 93.528   9.037  25.871 
+106.669   5.590  23.583 

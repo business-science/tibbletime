@@ -62,6 +62,35 @@ gesd(x, alpha = 0.05, max_anoms = 0.2, verbose = TRUE)
 
 
 cleanEx()
+nameEx("clean_anomalies")
+### * clean_anomalies
+
+flush(stderr()); flush(stdout())
+
+### Name: clean_anomalies
+### Title: Clean anomalies from anomalized data
+### Aliases: clean_anomalies
+
+### ** Examples
+
+
+library(dplyr)
+
+# Needed to pass CRAN check / This is loaded by default
+set_time_scale_template(time_scale_template())
+
+data(tidyverse_cran_downloads)
+
+tidyverse_cran_downloads %>%
+    time_decompose(count, method = "stl") %>%
+    anomalize(remainder, method = "iqr") %>%
+    clean_anomalies()
+
+
+
+
+
+cleanEx()
 nameEx("decompose_methods")
 ### * decompose_methods
 

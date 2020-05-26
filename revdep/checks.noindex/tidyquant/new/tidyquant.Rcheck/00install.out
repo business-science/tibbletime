@@ -6,12 +6,22 @@
 *** moving datasets to lazyload DB
 ** inst
 ** byte-compile and prepare package for lazy loading
+Warning messages:
+1: package ‘lubridate’ was built under R version 3.6.2 
+2: package ‘zoo’ was built under R version 3.6.2 
+3: package ‘quantmod’ was built under R version 3.6.2 
 ** help
 *** installing help indices
 *** copying figures
 ** building package indices
 ** installing vignettes
 ** testing if installed package can be loaded from temporary location
+Warning: package ‘lubridate’ was built under R version 3.6.2
+Warning: package ‘zoo’ was built under R version 3.6.2
+Warning: package ‘quantmod’ was built under R version 3.6.2
 ** testing if installed package can be loaded from final location
+Warning: package ‘lubridate’ was built under R version 3.6.2
+Warning: package ‘zoo’ was built under R version 3.6.2
+Warning: package ‘quantmod’ was built under R version 3.6.2
 ** testing if installed package keeps a record of temporary installation path
 * DONE (tidyquant)

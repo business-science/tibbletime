@@ -5,7 +5,7 @@
 * using options ‘--no-manual --no-build-vignettes’
 * checking for file ‘tidyquant/DESCRIPTION’ ... OK
 * checking extension type ... Package
-* this is package ‘tidyquant’ version ‘0.5.6’
+* this is package ‘tidyquant’ version ‘1.0.0’
 * package encoding: UTF-8
 * checking package namespace information ... OK
 * checking package dependencies ... OK
@@ -15,8 +15,16 @@
 * checking for hidden files and directories ... OK
 * checking for portable file names ... OK
 * checking for sufficient/correct file permissions ... OK
-* checking whether package ‘tidyquant’ can be installed ... OK
-* checking installed package size ... OK
+* checking whether package ‘tidyquant’ can be installed ... WARNING
+Found the following significant warnings:
+  Warning: package ‘lubridate’ was built under R version 3.6.2
+  Warning: package ‘zoo’ was built under R version 3.6.2
+  Warning: package ‘quantmod’ was built under R version 3.6.2
+See ‘/Users/davis/Desktop/r/packages/tibbletime/revdep/checks.noindex/tidyquant/old/tidyquant.Rcheck/00install.out’ for details.
+* checking installed package size ... NOTE
+  installed size is  5.3Mb
+  sub-directories of 1Mb or more:
+    doc   4.4Mb
 * checking package directory ... OK
 * checking ‘build’ directory ... OK
 * checking DESCRIPTION meta-information ... OK
@@ -52,30 +60,74 @@ Namespace in Imports field not imported from: ‘xml2’
 * checking R/sysdata.rda ... OK
 * checking installed files from ‘inst/doc’ ... OK
 * checking files in ‘vignettes’ ... OK
-* checking examples ... OK
+* checking examples ... ERROR
+Running examples in ‘tidyquant-Ex.R’ failed
+The error most likely occurred in:
+
+> ### Name: coord_x_date
+> ### Title: Zoom in on plot regions using date ranges or date-time ranges
+> ### Aliases: coord_x_date coord_x_datetime
+> 
+> ### ** Examples
+> 
+> # Load libraries
+> library(tidyquant)
+> library(dplyr)
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:xts’:
+
+    first, last
+
+The following objects are masked from ‘package:lubridate’:
+
+    intersect, setdiff, union
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+> library(ggplot2)
+> 
+> # coord_x_date
+> AAPL <- tq_get("AAPL", from = "2013-01-01", to = "2016-12-31")
+Warning: x = 'AAPL', get = 'stock.prices': Error in curl::curl_fetch_memory(cu, handle = h): Could not resolve host: finance.yahoo.com
+
+> AAPL %>%
++     ggplot(aes(x = date, y = adjusted)) +
++     geom_line() +                         # Plot stock price
++     geom_ma(n = 50) +                     # Plot 50-day Moving Average
++     geom_ma(n = 200, color = "red") +     # Plot 200-day Moving Average
++     # Zoom in
++     coord_x_date(xlim = c("2016-01-01", "2016-12-31"),
++                  ylim = c(75, 125))
+Error: `data` must be a data frame, or other object coercible by `fortify()`, not a logical vector
+Backtrace:
+[90m     [39m█
+[90m  1. [39m└─AAPL %>% ggplot(aes(x = date, y = adjusted))
+[90m  2. [39m  ├─base::withVisible(eval(quote(`_fseq`(`_lhs`)), env, env))
+[90m  3. [39m  └─base::eval(quote(`_fseq`(`_lhs`)), env, env)
+[90m  4. [39m    └─base::eval(quote(`_fseq`(`_lhs`)), env, env)
+[90m  5. [39m      └─`_fseq`(`_lhs`)
+[90m  6. [39m        └─magrittr::freduce(value, `_function_list`)
+[90m  7. [39m          ├─base::withVisible(function_list[[k]](value))
+[90m  8. [39m          └─function_list[[k]](value)
+[90m  9. [39m            ├─ggplot2::ggplot(., aes(x = date, y = adjusted))
+[90m 10. [39m            └─ggplot2:::ggplot.default(., aes(x = date, y = adjusted))
+[90m 11. [39m              ├─ggplot2::fortify(data, ...)
+[90m 12. [39m              └─ggplot2:::fortify.default(data, ...)
+Execution halted
 * checking for unstated dependencies in ‘tests’ ... OK
-* checking tests ... ERROR
+* checking tests ... OK
   Running ‘testthat.R’
-Running the tests in ‘tests/testthat.R’ failed.
-Last 13 lines of output:
-  [31m✖[39m [34mdplyr[39m::[32mmatches()[39m         masks [34mtidyr[39m::matches(), [34mtestthat[39m::matches()
-  [31m✖[39m [34mlubridate[39m::[32msetdiff()[39m     masks [34mbase[39m::setdiff()
-  [31m✖[39m [34mlubridate[39m::[32munion()[39m       masks [34mbase[39m::union()
-  > 
-  > test_check("tidyquant")
-  [31m──[39m [31m1. Failure: Test 1.2 grouped data frames are same with mutate and tq_mutate (@test_tq_mutate.R#93) [39m [31m────────────────────[39m
-  `test1.2a` not identical to `test1.2b`.
-  Objects equal but not identical
-  
-  ══ testthat results  ══════════════════════════════════════════════════════════════════════════════════════════════════════
-  [ OK: 125 | SKIPPED: 1 | WARNINGS: 26 | FAILED: 1 ]
-  1. Failure: Test 1.2 grouped data frames are same with mutate and tq_mutate (@test_tq_mutate.R#93) 
-  
-  Error: testthat unit tests failed
-  Execution halted
 * checking for unstated dependencies in vignettes ... OK
 * checking package vignettes in ‘inst/doc’ ... OK
 * checking running R code from vignettes ... NONE
 * checking re-building of vignette outputs ... SKIPPED
 * DONE
-Status: 1 ERROR, 1 NOTE
+Status: 1 ERROR, 1 WARNING, 2 NOTEs

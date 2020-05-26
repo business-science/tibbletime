@@ -12,7 +12,7 @@
 
 <meta name="author" content="Davis Vaughan" />
 
-<meta name="date" content="2019-02-11" />
+<meta name="date" content="2019-09-19" />
 
 <title>Rolling calculations in tibbletime</title>
 
@@ -291,6 +291,9 @@ code > span.al { color: #ff0000; font-weight: bold; }
 code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61717; background-color: #e3d2d2; } 
 </style>
 
+
+
+
 </head>
 
 <body>
@@ -299,8 +302,8 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 
 
 <h1 class="title toc-ignore">Rolling calculations in tibbletime</h1>
-<h4 class="author"><em>Davis Vaughan</em></h4>
-<h4 class="date"><em>2019-02-11</em></h4>
+<h4 class="author">Davis Vaughan</h4>
+<h4 class="date">2019-09-19</h4>
 
 
 <div id="TOC">
@@ -346,8 +349,8 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 ## {
 ##     roller(..., .f = .f, window = window, unlist = unlist, na_value = na_value)
 ## }
-## &lt;bytecode: 0x7fe02f2ef7b8&gt;
-## &lt;environment: 0x7fe02f2f40a8&gt;</code></pre>
+## &lt;bytecode: 0x7fc67ca52980&gt;
+## &lt;environment: 0x7fc67ca568b0&gt;</code></pre>
 <p>We now have a rolling version of the function, <code>mean()</code>. You use it in a similar way to how you might use <code>mean()</code>.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">mutate</span>(FB, <span class="dt">mean_5 =</span> <span class="kw">rolling_mean</span>(adjusted))</a></code></pre></div>
 <pre><code>## # A tibble: 1,008 x 6
@@ -482,23 +485,25 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <a class="sourceLine" id="cb15-13" data-line-number="13">FB_summarised &lt;-<span class="st"> </span><span class="kw">mutate</span>(FB, <span class="dt">summary_list_col =</span> <span class="kw">rolling_summary</span>(adjusted))</a>
 <a class="sourceLine" id="cb15-14" data-line-number="14">FB_summarised</a></code></pre></div>
 <pre><code>## # A tibble: 1,008 x 4
-##    symbol date       adjusted summary_list_col    
-##    &lt;chr&gt;  &lt;date&gt;        &lt;dbl&gt; &lt;list&gt;              
-##  1 FB     2013-01-02     28   &lt;lgl [1]&gt;           
-##  2 FB     2013-01-03     27.8 &lt;lgl [1]&gt;           
-##  3 FB     2013-01-04     28.8 &lt;lgl [1]&gt;           
-##  4 FB     2013-01-07     29.4 &lt;lgl [1]&gt;           
-##  5 FB     2013-01-08     29.1 &lt;data.frame [5 × 2]&gt;
-##  6 FB     2013-01-09     30.6 &lt;data.frame [5 × 2]&gt;
-##  7 FB     2013-01-10     31.3 &lt;data.frame [5 × 2]&gt;
-##  8 FB     2013-01-11     31.7 &lt;data.frame [5 × 2]&gt;
-##  9 FB     2013-01-14     31.0 &lt;data.frame [5 × 2]&gt;
-## 10 FB     2013-01-15     30.1 &lt;data.frame [5 × 2]&gt;
+##    symbol date       adjusted summary_list_col
+##    &lt;chr&gt;  &lt;date&gt;        &lt;dbl&gt; &lt;list&gt;          
+##  1 FB     2013-01-02     28   &lt;lgl [1]&gt;       
+##  2 FB     2013-01-03     27.8 &lt;lgl [1]&gt;       
+##  3 FB     2013-01-04     28.8 &lt;lgl [1]&gt;       
+##  4 FB     2013-01-07     29.4 &lt;lgl [1]&gt;       
+##  5 FB     2013-01-08     29.1 &lt;df[,2] [5 × 2]&gt;
+##  6 FB     2013-01-09     30.6 &lt;df[,2] [5 × 2]&gt;
+##  7 FB     2013-01-10     31.3 &lt;df[,2] [5 × 2]&gt;
+##  8 FB     2013-01-11     31.7 &lt;df[,2] [5 × 2]&gt;
+##  9 FB     2013-01-14     31.0 &lt;df[,2] [5 × 2]&gt;
+## 10 FB     2013-01-15     30.1 &lt;df[,2] [5 × 2]&gt;
 ## # … with 998 more rows</code></pre>
 <p>The neat thing is that after removing the <code>NA</code> values at the beginning, the list-column can be unnested using <code>tidyr::unnest()</code> giving us a nice tidy 5-period rolling summary.</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">FB_summarised <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb17-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(summary_list_col)) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb17-3" data-line-number="3"><span class="st">  </span><span class="kw">unnest</span>()</a></code></pre></div>
+<pre><code>## Warning: `cols` is now required.
+## Please use `cols = c(summary_list_col)`</code></pre>
 <pre><code>## # A tibble: 5,020 x 5
 ##    symbol date       adjusted rolled_summary_type rolled_summary_val
 ##    &lt;chr&gt;  &lt;date&gt;        &lt;dbl&gt; &lt;fct&gt;                            &lt;dbl&gt;
@@ -517,28 +522,30 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <div id="custom-missing-values" class="section level2">
 <h2>Custom missing values</h2>
 <p>The last example was a little clunky because to unnest we had to remove the first few missing rows manually. If those missing values were empty data frames then <code>unnest()</code> would have known how to handle them. Luckily, the <code>na_value</code> argument will allow us to specify a value to fill the <code>NA</code> spots at the beginning of the roll.</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">rolling_summary &lt;-<span class="st"> </span><span class="kw">rollify</span>(<span class="op">~</span><span class="kw">summary_df</span>(.x), <span class="dt">window =</span> <span class="dv">5</span>, </a>
-<a class="sourceLine" id="cb19-2" data-line-number="2">                           <span class="dt">unlist =</span> <span class="ot">FALSE</span>, <span class="dt">na_value =</span> <span class="kw">data.frame</span>())</a>
-<a class="sourceLine" id="cb19-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb19-4" data-line-number="4">FB_summarised &lt;-<span class="st"> </span><span class="kw">mutate</span>(FB, <span class="dt">summary_list_col =</span> <span class="kw">rolling_summary</span>(adjusted))</a>
-<a class="sourceLine" id="cb19-5" data-line-number="5">FB_summarised</a></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1">rolling_summary &lt;-<span class="st"> </span><span class="kw">rollify</span>(<span class="op">~</span><span class="kw">summary_df</span>(.x), <span class="dt">window =</span> <span class="dv">5</span>, </a>
+<a class="sourceLine" id="cb20-2" data-line-number="2">                           <span class="dt">unlist =</span> <span class="ot">FALSE</span>, <span class="dt">na_value =</span> <span class="kw">data.frame</span>())</a>
+<a class="sourceLine" id="cb20-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb20-4" data-line-number="4">FB_summarised &lt;-<span class="st"> </span><span class="kw">mutate</span>(FB, <span class="dt">summary_list_col =</span> <span class="kw">rolling_summary</span>(adjusted))</a>
+<a class="sourceLine" id="cb20-5" data-line-number="5">FB_summarised</a></code></pre></div>
 <pre><code>## # A tibble: 1,008 x 4
-##    symbol date       adjusted summary_list_col    
-##    &lt;chr&gt;  &lt;date&gt;        &lt;dbl&gt; &lt;list&gt;              
-##  1 FB     2013-01-02     28   &lt;data.frame [0 × 0]&gt;
-##  2 FB     2013-01-03     27.8 &lt;data.frame [0 × 0]&gt;
-##  3 FB     2013-01-04     28.8 &lt;data.frame [0 × 0]&gt;
-##  4 FB     2013-01-07     29.4 &lt;data.frame [0 × 0]&gt;
-##  5 FB     2013-01-08     29.1 &lt;data.frame [5 × 2]&gt;
-##  6 FB     2013-01-09     30.6 &lt;data.frame [5 × 2]&gt;
-##  7 FB     2013-01-10     31.3 &lt;data.frame [5 × 2]&gt;
-##  8 FB     2013-01-11     31.7 &lt;data.frame [5 × 2]&gt;
-##  9 FB     2013-01-14     31.0 &lt;data.frame [5 × 2]&gt;
-## 10 FB     2013-01-15     30.1 &lt;data.frame [5 × 2]&gt;
+##    symbol date       adjusted summary_list_col
+##    &lt;chr&gt;  &lt;date&gt;        &lt;dbl&gt; &lt;list&gt;          
+##  1 FB     2013-01-02     28   &lt;df[,0] [0 × 0]&gt;
+##  2 FB     2013-01-03     27.8 &lt;df[,0] [0 × 0]&gt;
+##  3 FB     2013-01-04     28.8 &lt;df[,0] [0 × 0]&gt;
+##  4 FB     2013-01-07     29.4 &lt;df[,0] [0 × 0]&gt;
+##  5 FB     2013-01-08     29.1 &lt;df[,2] [5 × 2]&gt;
+##  6 FB     2013-01-09     30.6 &lt;df[,2] [5 × 2]&gt;
+##  7 FB     2013-01-10     31.3 &lt;df[,2] [5 × 2]&gt;
+##  8 FB     2013-01-11     31.7 &lt;df[,2] [5 × 2]&gt;
+##  9 FB     2013-01-14     31.0 &lt;df[,2] [5 × 2]&gt;
+## 10 FB     2013-01-15     30.1 &lt;df[,2] [5 × 2]&gt;
 ## # … with 998 more rows</code></pre>
 <p>Now unnesting directly:</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">FB_summarised <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb21-2" data-line-number="2"><span class="st">  </span><span class="kw">unnest</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">FB_summarised <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb22-2" data-line-number="2"><span class="st">  </span><span class="kw">unnest</span>()</a></code></pre></div>
+<pre><code>## Warning: `cols` is now required.
+## Please use `cols = c(summary_list_col)`</code></pre>
 <pre><code>## # A tibble: 5,020 x 5
 ##    symbol date       adjusted rolled_summary_type rolled_summary_val
 ##    &lt;chr&gt;  &lt;date&gt;        &lt;dbl&gt; &lt;fct&gt;                            &lt;dbl&gt;
@@ -554,13 +561,15 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 ## 10 FB     2013-01-09     30.6 median                          29.1  
 ## # … with 5,010 more rows</code></pre>
 <p>Finally, if you want to actually keep those first few NA rows in the unnest, you can pass a data frame that is initialized with the same column names as the rest of the values.</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1">rolling_summary &lt;-<span class="st"> </span><span class="kw">rollify</span>(<span class="op">~</span><span class="kw">summary_df</span>(.x), <span class="dt">window =</span> <span class="dv">5</span>, </a>
-<a class="sourceLine" id="cb23-2" data-line-number="2">                           <span class="dt">unlist =</span> <span class="ot">FALSE</span>, </a>
-<a class="sourceLine" id="cb23-3" data-line-number="3">                           <span class="dt">na_value =</span> <span class="kw">data.frame</span>(<span class="dt">rolled_summary_type =</span> <span class="ot">NA</span>,</a>
-<a class="sourceLine" id="cb23-4" data-line-number="4">                                                 <span class="dt">rolled_summary_val  =</span> <span class="ot">NA</span>))</a>
-<a class="sourceLine" id="cb23-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb23-6" data-line-number="6">FB_summarised &lt;-<span class="st"> </span><span class="kw">mutate</span>(FB, <span class="dt">summary_list_col =</span> <span class="kw">rolling_summary</span>(adjusted))</a>
-<a class="sourceLine" id="cb23-7" data-line-number="7">FB_summarised <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">unnest</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1">rolling_summary &lt;-<span class="st"> </span><span class="kw">rollify</span>(<span class="op">~</span><span class="kw">summary_df</span>(.x), <span class="dt">window =</span> <span class="dv">5</span>, </a>
+<a class="sourceLine" id="cb25-2" data-line-number="2">                           <span class="dt">unlist =</span> <span class="ot">FALSE</span>, </a>
+<a class="sourceLine" id="cb25-3" data-line-number="3">                           <span class="dt">na_value =</span> <span class="kw">data.frame</span>(<span class="dt">rolled_summary_type =</span> <span class="ot">NA</span>,</a>
+<a class="sourceLine" id="cb25-4" data-line-number="4">                                                 <span class="dt">rolled_summary_val  =</span> <span class="ot">NA</span>))</a>
+<a class="sourceLine" id="cb25-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb25-6" data-line-number="6">FB_summarised &lt;-<span class="st"> </span><span class="kw">mutate</span>(FB, <span class="dt">summary_list_col =</span> <span class="kw">rolling_summary</span>(adjusted))</a>
+<a class="sourceLine" id="cb25-7" data-line-number="7">FB_summarised <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">unnest</span>()</a></code></pre></div>
+<pre><code>## Warning: `cols` is now required.
+## Please use `cols = c(summary_list_col)`</code></pre>
 <pre><code>## # A tibble: 5,024 x 5
 ##    symbol date       adjusted rolled_summary_type rolled_summary_val
 ##    &lt;chr&gt;  &lt;date&gt;        &lt;dbl&gt; &lt;fct&gt;                            &lt;dbl&gt;
@@ -581,17 +590,17 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <p>A final use of this flexible function is to calculate rolling regressions.</p>
 <p>A very ficticious example is to perform a rolling regression on the <code>FB</code> dataset of the form <code>close ~ high + low + volume</code>. Notice that we have 4 columns to pass here. This is more complicated than a <code>.x</code> and <code>.y</code> example, but have no fear. The arguments can be specified in order as <code>..1</code>, <code>..2</code>, … for as far as is required, or you can pass a freshly created anonymous function. The latter is what we will do so we can preserve the names of the variables in the regression.</p>
 <p>Again, since this returns a linear model object, we will specify <code>unlist = FALSE</code>. Unfortunately there is no easy default NA value to pass here.</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1"><span class="co"># Reset FB</span></a>
-<a class="sourceLine" id="cb25-2" data-line-number="2"><span class="kw">data</span>(FB)</a>
-<a class="sourceLine" id="cb25-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb25-4" data-line-number="4">rolling_lm &lt;-<span class="st"> </span><span class="kw">rollify</span>(<span class="dt">.f =</span> <span class="cf">function</span>(close, high, low, volume) {</a>
-<a class="sourceLine" id="cb25-5" data-line-number="5">                              <span class="kw">lm</span>(close <span class="op">~</span><span class="st"> </span>high <span class="op">+</span><span class="st"> </span>low <span class="op">+</span><span class="st"> </span>volume)</a>
-<a class="sourceLine" id="cb25-6" data-line-number="6">                           }, </a>
-<a class="sourceLine" id="cb25-7" data-line-number="7">                      <span class="dt">window =</span> <span class="dv">5</span>, </a>
-<a class="sourceLine" id="cb25-8" data-line-number="8">                      <span class="dt">unlist =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb25-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb25-10" data-line-number="10">FB_reg &lt;-<span class="st"> </span><span class="kw">mutate</span>(FB, <span class="dt">roll_lm =</span> <span class="kw">rolling_lm</span>(close, high, low, volume))</a>
-<a class="sourceLine" id="cb25-11" data-line-number="11">FB_reg</a></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1"><span class="co"># Reset FB</span></a>
+<a class="sourceLine" id="cb28-2" data-line-number="2"><span class="kw">data</span>(FB)</a>
+<a class="sourceLine" id="cb28-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb28-4" data-line-number="4">rolling_lm &lt;-<span class="st"> </span><span class="kw">rollify</span>(<span class="dt">.f =</span> <span class="cf">function</span>(close, high, low, volume) {</a>
+<a class="sourceLine" id="cb28-5" data-line-number="5">                              <span class="kw">lm</span>(close <span class="op">~</span><span class="st"> </span>high <span class="op">+</span><span class="st"> </span>low <span class="op">+</span><span class="st"> </span>volume)</a>
+<a class="sourceLine" id="cb28-6" data-line-number="6">                           }, </a>
+<a class="sourceLine" id="cb28-7" data-line-number="7">                      <span class="dt">window =</span> <span class="dv">5</span>, </a>
+<a class="sourceLine" id="cb28-8" data-line-number="8">                      <span class="dt">unlist =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb28-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb28-10" data-line-number="10">FB_reg &lt;-<span class="st"> </span><span class="kw">mutate</span>(FB, <span class="dt">roll_lm =</span> <span class="kw">rolling_lm</span>(close, high, low, volume))</a>
+<a class="sourceLine" id="cb28-11" data-line-number="11">FB_reg</a></code></pre></div>
 <pre><code>## # A tibble: 1,008 x 9
 ##    symbol date        open  high   low close    volume adjusted roll_lm  
 ##    &lt;chr&gt;  &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt; &lt;list&gt;   
@@ -599,19 +608,19 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 ##  2 FB     2013-01-03  27.9  28.5  27.6  27.8  63140600     27.8 &lt;lgl [1]&gt;
 ##  3 FB     2013-01-04  28.0  28.9  27.8  28.8  72715400     28.8 &lt;lgl [1]&gt;
 ##  4 FB     2013-01-07  28.7  29.8  28.6  29.4  83781800     29.4 &lt;lgl [1]&gt;
-##  5 FB     2013-01-08  29.5  29.6  28.9  29.1  45871300     29.1 &lt;S3: lm&gt; 
-##  6 FB     2013-01-09  29.7  30.6  29.5  30.6 104787700     30.6 &lt;S3: lm&gt; 
-##  7 FB     2013-01-10  30.6  31.5  30.3  31.3  95316400     31.3 &lt;S3: lm&gt; 
-##  8 FB     2013-01-11  31.3  32.0  31.1  31.7  89598000     31.7 &lt;S3: lm&gt; 
-##  9 FB     2013-01-14  32.1  32.2  30.6  31.0  98892800     31.0 &lt;S3: lm&gt; 
-## 10 FB     2013-01-15  30.6  31.7  29.9  30.1 173242600     30.1 &lt;S3: lm&gt; 
+##  5 FB     2013-01-08  29.5  29.6  28.9  29.1  45871300     29.1 &lt;lm&gt;     
+##  6 FB     2013-01-09  29.7  30.6  29.5  30.6 104787700     30.6 &lt;lm&gt;     
+##  7 FB     2013-01-10  30.6  31.5  30.3  31.3  95316400     31.3 &lt;lm&gt;     
+##  8 FB     2013-01-11  31.3  32.0  31.1  31.7  89598000     31.7 &lt;lm&gt;     
+##  9 FB     2013-01-14  32.1  32.2  30.6  31.0  98892800     31.0 &lt;lm&gt;     
+## 10 FB     2013-01-15  30.6  31.7  29.9  30.1 173242600     30.1 &lt;lm&gt;     
 ## # … with 998 more rows</code></pre>
 <p>To get some useful information about the regressions, we will use <code>broom::tidy()</code> and apply it to each regression using a <code>mutate() + map()</code> combination.</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1">FB_reg <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb27-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(roll_lm)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb27-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">tidied =</span> purrr<span class="op">::</span><span class="kw">map</span>(roll_lm, broom<span class="op">::</span>tidy)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb27-4" data-line-number="4"><span class="st">  </span><span class="kw">unnest</span>(tidied) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb27-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(symbol, date, term, estimate, std.error, statistic, p.value)</a></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1">FB_reg <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb30-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(roll_lm)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb30-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">tidied =</span> purrr<span class="op">::</span><span class="kw">map</span>(roll_lm, broom<span class="op">::</span>tidy)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb30-4" data-line-number="4"><span class="st">  </span><span class="kw">unnest</span>(tidied) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb30-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(symbol, date, term, estimate, std.error, statistic, p.value)</a></code></pre></div>
 <pre><code>## # A tibble: 4,016 x 7
 ##    symbol date       term         estimate     std.error statistic p.value
 ##    &lt;chr&gt;  &lt;date&gt;     &lt;chr&gt;           &lt;dbl&gt;         &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
