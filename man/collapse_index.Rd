@@ -5,8 +5,14 @@
 \title{Collapse an index vector so that all observations in an interval share the
 same date}
 \usage{
-collapse_index(index, period = "yearly", start_date = NULL,
-  side = "end", clean = FALSE, ...)
+collapse_index(
+  index,
+  period = "yearly",
+  start_date = NULL,
+  side = "end",
+  clean = FALSE,
+  ...
+)
 }
 \arguments{
 \item{index}{An index vector.}

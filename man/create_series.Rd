@@ -4,8 +4,14 @@
 \alias{create_series}
 \title{Create a \code{tbl_time} object with a sequence of regularly spaced dates}
 \usage{
-create_series(time_formula, period = "daily", class = "POSIXct",
-  include_end = FALSE, tz = "UTC", as_vector = FALSE)
+create_series(
+  time_formula,
+  period = "daily",
+  class = "POSIXct",
+  include_end = FALSE,
+  tz = "UTC",
+  as_vector = FALSE
+)
 }
 \arguments{
 \item{time_formula}{A period to create the series over.

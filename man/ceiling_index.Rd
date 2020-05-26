@@ -12,8 +12,8 @@ ceiling_index(x, unit = "seconds")
 \item{unit}{a character string specifying a time unit or a multiple of a unit
 to be rounded to. Valid base units are \code{second}, \code{minute}, \code{hour}, \code{day},
 \code{week}, \code{month}, \code{bimonth}, \code{quarter}, \code{season}, \code{halfyear} and
-\code{year}. Arbitrary unique English abbreviations as in the \code{\link[=period]{period()}}
-constructor are allowed. Rounding to multiple of units (except weeks) is
+\code{year}. Arbitrary unique English abbreviations as in the \code{\link[lubridate:period]{period()}}
+constructor are allowed. Rounding to multiples of units (except weeks) is
 supported.}
 }
 \description{
