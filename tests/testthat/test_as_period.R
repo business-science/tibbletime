@@ -13,8 +13,7 @@ test_tbl_time_g <- as_tbl_time(FANG, date) %>%
 # Tests
 
 test_that("Converting to more granular throws error", {
-  expect_error(as_period(test_tbl_time, "hourly"),
-               regexp = "Only year, quarter, month, week, and day periods are allowed for an index of class Date")
+  expect_error(as_period(test_tbl_time, "hourly"))
 })
 
 test_that("Can convert to monthly", {
