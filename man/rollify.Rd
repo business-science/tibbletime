@@ -161,5 +161,5 @@ FANG \%>\%
 
 }
 \seealso{
-\link[purrr:safely]{purrr::safely}, \link[purrr:possibly]{purrr::possibly}
+\link[purrr:safely]{purrr::safely}, \link[purrr:safely]{purrr::possibly}
 }

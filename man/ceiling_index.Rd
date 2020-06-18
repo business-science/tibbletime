@@ -2,7 +2,7 @@
 % Please edit documentation in R/round-index.R
 \name{ceiling_index}
 \alias{ceiling_index}
-\title{A simple wrapper of \code{\link[lubridate:ceiling_date]{lubridate::ceiling_date()}}}
+\title{A simple wrapper of \code{\link[lubridate:round_date]{lubridate::ceiling_date()}}}
 \usage{
 ceiling_index(x, unit = "seconds")
 }
@@ -17,7 +17,7 @@ constructor are allowed. Rounding to multiples of units (except weeks) is
 supported.}
 }
 \description{
-This is a thin wrapper around a \code{\link[lubridate:ceiling_date]{lubridate::ceiling_date()}} that works
+This is a thin wrapper around a \code{\link[lubridate:round_date]{lubridate::ceiling_date()}} that works
 for \code{hms}, \code{yearmon}, and \code{yearqtr} classes as well.
 }
 \examples{
@@ -32,5 +32,5 @@ dplyr::mutate(time_test, date2 = ceiling_index(date, "hour"))
 
 }
 \seealso{
-\code{\link[lubridate:ceiling_date]{lubridate::ceiling_date()}}
+\code{\link[lubridate:round_date]{lubridate::ceiling_date()}}
 }
