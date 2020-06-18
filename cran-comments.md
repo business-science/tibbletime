@@ -1,6 +1,6 @@
 ## Release Summary
 
-This is a minor release to keep tibbletime compatible with tibble and dplyr.
+This is a minor release to fix a bug with dplyr 1.0.0 and `ungroup()`.
 
 ## Test environments
 * local Mac install, R 4.0.0
