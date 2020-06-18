@@ -1,5 +1,7 @@
 # tibbletime (development version)
 
+* [Fix Ungroup Issue](https://github.com/business-science/tibbletime/issues/91)
+
 # tibbletime 0.1.4
 
 * Minor release to stay compatible with tibble 3.0.0 and the upcoming release

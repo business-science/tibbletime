@@ -13,6 +13,8 @@ test_time <- tibble::tibble(
 test_grouped_tbl_time <- as_tbl_time(test_time, date) %>%
   group_by(group)
 
+
+
 # Tests
 
 test_that("Ungroup works", {
