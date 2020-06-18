@@ -147,7 +147,8 @@
 <a href="#tibbletime-development-version" class="anchor"></a>tibbletime (development version)<small> Unreleased </small>
 </h1>
 <ul>
-<li><a href="https://github.com/business-science/tibbletime/issues/91">Fix Ungroup Issue</a></li>
+<li><p>Coercing a grouped tbl_time object to tibble with <code><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble()</a></code> now drops groups and returns a bare tibble. The previous behavior of returning a grouped tibble was incorrect and let to faulty behavior in other functions.</p></li>
+<li><p>Fixed an issue related to <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">dplyr::ungroup()</a></code> in dplyr 1.0.0 where ungrouping would not return an ungrouped tbl_time (<a href='https://github.com/business-science/tibbletime/issues/91'>#91</a>).</p></li>
 </ul>
 </div>
     <div id="tibbletime-014" class="section level1">
