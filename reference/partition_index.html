@@ -84,7 +84,7 @@ tibbletime functions." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tibbletime</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.5</span>
       </span>
     </div>
 
@@ -147,12 +147,12 @@ tibbletime functions." />
     </div>
 
     <div class="ref-description">
-    <p><code>partition_index()</code> takes an index vector and returns an integer vector that
+    <p><code><a href='https://rdrr.io/pkg/tibbletime/man/partition_index.html'>partition_index()</a></code> takes an index vector and returns an integer vector that
 can be used for grouping by periods. This is the workhorse for many other
 <code>tibbletime</code> functions.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>partition_index</span>(<span class='no'>index</span>, <span class='kw'>period</span> <span class='kw'>=</span> <span class='st'>"yearly"</span>, <span class='kw'>start_date</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/tibbletime/man/partition_index.html'>partition_index</a></span>(<span class='kw'>index</span>, period = <span class='st'>"yearly"</span>, start_date = <span class='kw'>NULL</span>, <span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -199,13 +199,13 @@ cannot be grouped by 5 seconds, and so on. If the user attempts this,
 an error will be thrown.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='as_period.html'>as_period()</a></code>, <code><a href='collapse_index.html'>collapse_index()</a></code></p></div>
+    <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/tibbletime/man/as_period.html'>as_period()</a></code>, <code><a href='https://rdrr.io/pkg/tibbletime/man/collapse_index.html'>collapse_index()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>FB</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>FB</span>)
 
-<span class='fu'>partition_index</span>(<span class='no'>FB</span>$<span class='no'>date</span>, <span class='st'>'2 year'</span>)</div><div class='output co'>#&gt;    [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+<span class='fu'><a href='https://rdrr.io/pkg/tibbletime/man/partition_index.html'>partition_index</a></span>(<span class='kw'>FB</span><span class='op'>$</span><span class='kw'>date</span>, <span class='st'>'2 year'</span>)</div><div class='output co'>#&gt;    [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
 #&gt;   [38] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
 #&gt;   [75] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
 #&gt;  [112] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
@@ -233,7 +233,7 @@ an error will be thrown.</p>
 #&gt;  [926] 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3
 #&gt;  [963] 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3
 #&gt; [1000] 3 3 3 3 3 3 3 3 3</div><div class='input'>
-<span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='no'>FB</span>, <span class='kw'>partition_index</span> <span class='kw'>=</span> <span class='fu'>partition_index</span>(<span class='no'>date</span>, <span class='st'>'2 day'</span>))</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 1,008 x 9</span><span>
+<span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>FB</span>, partition_index = <span class='fu'><a href='https://rdrr.io/pkg/tibbletime/man/partition_index.html'>partition_index</a></span>(<span class='kw'>date</span>, <span class='st'>'2 day'</span>))</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 1,008 x 9</span><span>
 #&gt;    symbol date        open  high   low close    volume adjusted partition_index
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
 #&gt; </span><span style='color: #555555;'> 1</span><span> FB     2013-01-02  27.4  28.2  27.4  28    69</span><span style='text-decoration: underline;'>846</span><span>400     28                 1
@@ -246,8 +246,7 @@ an error will be thrown.</p>
 #&gt; </span><span style='color: #555555;'> 8</span><span> FB     2013-01-11  31.3  32.0  31.1  31.7  89</span><span style='text-decoration: underline;'>598</span><span>000     31.7               6
 #&gt; </span><span style='color: #555555;'> 9</span><span> FB     2013-01-14  32.1  32.2  30.6  31.0  98</span><span style='text-decoration: underline;'>892</span><span>800     31.0               7
 #&gt; </span><span style='color: #555555;'>10</span><span> FB     2013-01-15  30.6  31.7  29.9  30.1 173</span><span style='text-decoration: underline;'>242</span><span>600     30.1               8
-#&gt; </span><span style='color: #555555;'># … with 998 more rows</span><span></div><div class='input'>
-</div></span></pre>
+#&gt; </span><span style='color: #555555;'># … with 998 more rows</span><span></div><div class='input'></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

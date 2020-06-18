@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tibbletime</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.5</span>
       </span>
     </div>
 
@@ -142,9 +142,18 @@
       <small>Source: <a href='https://github.com/business-science/tibbletime/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="tibbletime-015" class="section level1">
+<h1 class="page-header" data-toc-text="0.1.5">
+<a href="#tibbletime-015" class="anchor"></a>tibbletime 0.1.5<small> 2020-06-18 </small>
+</h1>
+<ul>
+<li><p>Coercing a grouped tbl_time object to tibble with <code><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble()</a></code> now drops groups and returns a bare tibble. The previous behavior of returning a grouped tibble was incorrect and let to faulty behavior in other functions.</p></li>
+<li><p>Fixed an issue related to <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">dplyr::ungroup()</a></code> in dplyr 1.0.0 where ungrouping would not return an ungrouped tbl_time (<a href='https://github.com/business-science/tibbletime/issues/91'>#91</a>).</p></li>
+</ul>
+</div>
     <div id="tibbletime-014" class="section level1">
 <h1 class="page-header" data-toc-text="0.1.4">
-<a href="#tibbletime-014" class="anchor"></a>tibbletime 0.1.4<small> Unreleased </small>
+<a href="#tibbletime-014" class="anchor"></a>tibbletime 0.1.4<small> 2020-05-26 </small>
 </h1>
 <ul>
 <li>Minor release to stay compatible with tibble 3.0.0 and the upcoming release of dplyr 1.0.0.</li>
@@ -165,7 +174,7 @@
 <p>Bug fixes</p>
 <ul>
 <li>
-<code><a href="../reference/collapse_by.html">collapse_by()</a></code> no longer errors when there is a column named <code>start_date</code> in the <code>tbl_time</code> object (<a href='https://github.com/business-science/tibbletime/issues/81'>#81</a>).</li>
+<code><a href="https://rdrr.io/pkg/tibbletime/man/collapse_by.html">collapse_by()</a></code> no longer errors when there is a column named <code>start_date</code> in the <code>tbl_time</code> object (<a href='https://github.com/business-science/tibbletime/issues/81'>#81</a>).</li>
 </ul>
 </li>
 </ul>
@@ -176,7 +185,7 @@
 <li>
 <p>Features</p>
 <ul>
-<li>Export a constructor for <code>tbl_time</code> object through <code><a href="../reference/new_tbl_time.html">new_tbl_time()</a></code>. Only to be used by package developers extending <code>tibbletime</code>.</li>
+<li>Export a constructor for <code>tbl_time</code> object through <code><a href="https://rdrr.io/pkg/tibbletime/man/new_tbl_time.html">new_tbl_time()</a></code>. Only to be used by package developers extending <code>tibbletime</code>.</li>
 </ul>
 </li>
 <li>
@@ -197,11 +206,11 @@
 <li>
 <p>General</p>
 <ul>
-<li><p><code><a href="../reference/collapse_index.html">collapse_index()</a></code> and <code><a href="../reference/collapse_by.html">collapse_by()</a></code> support a <code>clean</code> argument. This will round your index up/down to the next period boundary, allowing for prettier dates that can be used in summaries.</p></li>
-<li><p>A new helper function, <code><a href="../reference/collapse_by.html">collapse_by()</a></code>, wraps the common idiom of <code>.tbl_time %&gt;% mutate(date = collapse_index(date, "yearly"))</code> and is the easiest way to use <code>tibbletime</code> with the rest of the tidyverse.</p></li>
-<li><p>You can now pass an index vector (easily created with <code><a href="../reference/create_series.html">create_series()</a></code>) to the <code>period</code> argument of functions like <code><a href="../reference/as_period.html">as_period()</a></code> or <code><a href="../reference/collapse_by.html">collapse_by()</a></code> to specify custom periods to collapse at.</p></li>
-<li><p>Added support for <code>millisecond</code> and <code>microsecond</code> grouping. See <code><a href="../reference/create_series.html">?create_series</a></code> for examples and <code><a href="../reference/filter_time.html">?filter_time</a></code> Details for more information.</p></li>
-<li><p><code><a href="../reference/partition_index.html">partition_index()</a></code> (and therefore higher level functions like <code><a href="../reference/collapse_by.html">collapse_by()</a></code>) now round using the entire <code>period</code> argument to figure out the default start date. Meaning if <code>2 years</code> is passed, it will round down the start of the series to the lower <code>2 year</code> boundary, rather than just <code>year</code>. This is a small change, but is technically breaking.</p></li>
+<li><p><code><a href="https://rdrr.io/pkg/tibbletime/man/collapse_index.html">collapse_index()</a></code> and <code><a href="https://rdrr.io/pkg/tibbletime/man/collapse_by.html">collapse_by()</a></code> support a <code>clean</code> argument. This will round your index up/down to the next period boundary, allowing for prettier dates that can be used in summaries.</p></li>
+<li><p>A new helper function, <code><a href="https://rdrr.io/pkg/tibbletime/man/collapse_by.html">collapse_by()</a></code>, wraps the common idiom of <code>.tbl_time %&gt;% mutate(date = collapse_index(date, "yearly"))</code> and is the easiest way to use <code>tibbletime</code> with the rest of the tidyverse.</p></li>
+<li><p>You can now pass an index vector (easily created with <code><a href="https://rdrr.io/pkg/tibbletime/man/create_series.html">create_series()</a></code>) to the <code>period</code> argument of functions like <code><a href="https://rdrr.io/pkg/tibbletime/man/as_period.html">as_period()</a></code> or <code><a href="https://rdrr.io/pkg/tibbletime/man/collapse_by.html">collapse_by()</a></code> to specify custom periods to collapse at.</p></li>
+<li><p>Added support for <code>millisecond</code> and <code>microsecond</code> grouping. See <code><a href="https://rdrr.io/pkg/tibbletime/man/create_series.html">?create_series</a></code> for examples and <code><a href="https://rdrr.io/pkg/tibbletime/man/filter_time.html">?filter_time</a></code> Details for more information.</p></li>
+<li><p><code><a href="https://rdrr.io/pkg/tibbletime/man/partition_index.html">partition_index()</a></code> (and therefore higher level functions like <code><a href="https://rdrr.io/pkg/tibbletime/man/collapse_by.html">collapse_by()</a></code>) now round using the entire <code>period</code> argument to figure out the default start date. Meaning if <code>2 years</code> is passed, it will round down the start of the series to the lower <code>2 year</code> boundary, rather than just <code>year</code>. This is a small change, but is technically breaking.</p></li>
 <li><p>More efficient parsing of periods. Only noticably faster with a large number of groups.</p></li>
 </ul>
 </li>
@@ -223,19 +232,19 @@
 <li>
 <p>General</p>
 <ul>
-<li><p>The <code>period</code> argument no longer supports the ‘period formula’ (e.g. <code>1~year</code>). It added unnecessary complication with little benefit. Rather, a character should be used like <code>'1 year'</code>. See the documentation of <code><a href="../reference/partition_index.html">partition_index()</a></code> for full details.</p></li>
+<li><p>The <code>period</code> argument no longer supports the ‘period formula’ (e.g. <code>1~year</code>). It added unnecessary complication with little benefit. Rather, a character should be used like <code>'1 year'</code>. See the documentation of <code><a href="https://rdrr.io/pkg/tibbletime/man/partition_index.html">partition_index()</a></code> for full details.</p></li>
 <li><p><code>time_formula</code> arguments still support the <code>from ~ to</code> style syntax, but the left and right hand sides must now be characters, rather than bare date specifications. In English, rather than <code>2013 ~ 2014</code>, you must use <code>'2013' ~ '2014'</code>. This is easier to program with and also allows you to pass in variables to the time formula, which previously did not work well.</p></li>
-<li><p><code>time_filter()</code> has become <code><a href="../reference/filter_time.html">filter_time()</a></code>. This naming is easier to remember now that a suite of <code>time_*()</code> functions is not being developed and is easier to find with autocompletion.</p></li>
-<li><p><code>time_group()</code> and <code>time_collapse()</code> have become <code><a href="../reference/partition_index.html">partition_index()</a></code> and <code><a href="../reference/collapse_index.html">collapse_index()</a></code>. Both functions accept <code>index</code> vectors and are commonly used inside <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">dplyr::mutate()</a></code>.</p></li>
-<li><p><code><a href="../reference/partition_index.html">partition_index()</a></code> splits an index by period and returns an integer vector corresponding to the groups.</p></li>
-<li><p><code><a href="../reference/collapse_index.html">collapse_index()</a></code> collapses an index by period so that all observations falling in that interval share the same date. This is most useful when used to then group on the index column.</p></li>
+<li><p><code>time_filter()</code> has become <code><a href="https://rdrr.io/pkg/tibbletime/man/filter_time.html">filter_time()</a></code>. This naming is easier to remember now that a suite of <code>time_*()</code> functions is not being developed and is easier to find with autocompletion.</p></li>
+<li><p><code>time_group()</code> and <code>time_collapse()</code> have become <code><a href="https://rdrr.io/pkg/tibbletime/man/partition_index.html">partition_index()</a></code> and <code><a href="https://rdrr.io/pkg/tibbletime/man/collapse_index.html">collapse_index()</a></code>. Both functions accept <code>index</code> vectors and are commonly used inside <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">dplyr::mutate()</a></code>.</p></li>
+<li><p><code><a href="https://rdrr.io/pkg/tibbletime/man/partition_index.html">partition_index()</a></code> splits an index by period and returns an integer vector corresponding to the groups.</p></li>
+<li><p><code><a href="https://rdrr.io/pkg/tibbletime/man/collapse_index.html">collapse_index()</a></code> collapses an index by period so that all observations falling in that interval share the same date. This is most useful when used to then group on the index column.</p></li>
 <li><p>There is full support for <code>Date</code> and <code>POSIXct</code> classes as the index, and there is experimental support for <code>yearmon</code>, <code>yearqtr</code>, and <code>hms</code> classes.</p></li>
-<li><p><code><a href="../reference/ceiling_index.html">ceiling_index()</a></code> and <code><a href="../reference/floor_index.html">floor_index()</a></code> are thin wrappers around <code>lubridate</code> functions of similar names, but they also work for <code>yearmon</code>, <code>yearqtr</code> and <code>hms</code>.</p></li>
-<li><p><code><a href="../reference/create_series.html">create_series()</a></code> now has an explicit <code>class</code> argument.</p></li>
-<li><p><code><a href="../reference/as_period.html">as_period()</a></code> gains an <code>include_endpoints</code> argument for including the last data point if <code>side = "start"</code> is specified or the first data point if <code>side = "end"</code> is used.</p></li>
+<li><p><code><a href="https://rdrr.io/pkg/tibbletime/man/ceiling_index.html">ceiling_index()</a></code> and <code><a href="https://rdrr.io/pkg/tibbletime/man/floor_index.html">floor_index()</a></code> are thin wrappers around <code>lubridate</code> functions of similar names, but they also work for <code>yearmon</code>, <code>yearqtr</code> and <code>hms</code>.</p></li>
+<li><p><code><a href="https://rdrr.io/pkg/tibbletime/man/create_series.html">create_series()</a></code> now has an explicit <code>class</code> argument.</p></li>
+<li><p><code><a href="https://rdrr.io/pkg/tibbletime/man/as_period.html">as_period()</a></code> gains an <code>include_endpoints</code> argument for including the last data point if <code>side = "start"</code> is specified or the first data point if <code>side = "end"</code> is used.</p></li>
 <li><p>There are a number of new “getter” functions for accessing the index and time zone of <code>tbl_time</code> objects. These are useful for package development.</p></li>
-<li><p><code><a href="../reference/filter_time.html">filter_time()</a></code>, <code><a href="../reference/as_period.html">as_period()</a></code> and other “getter” functions now use <code>.tbl_time</code> as a consistent first argument rather than <code>x</code>. <code><a href="../reference/collapse_index.html">collapse_index()</a></code> and <code><a href="../reference/partition_index.html">partition_index()</a></code> use <code>index</code> as their first arguments.</p></li>
-<li><p>Exported <code><a href="../reference/parse_period.html">parse_period()</a></code> for general use in other related packages.</p></li>
+<li><p><code><a href="https://rdrr.io/pkg/tibbletime/man/filter_time.html">filter_time()</a></code>, <code><a href="https://rdrr.io/pkg/tibbletime/man/as_period.html">as_period()</a></code> and other “getter” functions now use <code>.tbl_time</code> as a consistent first argument rather than <code>x</code>. <code><a href="https://rdrr.io/pkg/tibbletime/man/collapse_index.html">collapse_index()</a></code> and <code><a href="https://rdrr.io/pkg/tibbletime/man/partition_index.html">partition_index()</a></code> use <code>index</code> as their first arguments.</p></li>
+<li><p>Exported <code><a href="https://rdrr.io/pkg/tibbletime/man/parse_period.html">parse_period()</a></code> for general use in other related packages.</p></li>
 <li><p>Warnings are now generated if the user is not using a sorted index.</p></li>
 </ul>
 </li>
@@ -258,20 +267,20 @@
 <ul>
 <li><p><code>time_floor()</code> and <code>time_ceiling()</code> are convenient wrappers to <code>lubridate</code> functions for altering dates to period boundaries.</p></li>
 <li><p><code>time_unnest()</code> is used to specifically unnest a <code>tibble</code> object with a list-column of <code>tbl_time</code> objects.</p></li>
-<li><p><code><a href="../reference/create_series.html">create_series()</a></code> allows the user to create a <code>tbl_time</code> object with a regularly spaced sequence of dates.</p></li>
+<li><p><code><a href="https://rdrr.io/pkg/tibbletime/man/create_series.html">create_series()</a></code> allows the user to create a <code>tbl_time</code> object with a regularly spaced sequence of dates.</p></li>
 <li><p><code>time_group()</code> has become the workhorse function for creating time based groups used in changing periodicity and other grouped time based calculations.</p></li>
 <li><p><code>time_summarise()</code> and <code>tmap()</code> now also accept a formula-based <code>period</code>.</p></li>
-<li><p><code><a href="../reference/as_period.html">as_period()</a></code> now accepts a formula-based <code>period</code> that provides an incredible amount of flexibility in creating groups. (<a href='https://github.com/business-science/tibbletime/issues/9'>#9</a>, <a href='https://github.com/business-science/tibbletime/issues/14'>#14</a>, <a href='https://github.com/business-science/tibbletime/issues/15'>#15</a>)</p></li>
-<li><p><code><a href="../reference/rollify.html">rollify()</a></code> creates a rolling version of any function for use in <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">dplyr::mutate()</a></code>. (<a href='https://github.com/business-science/tibbletime/issues/7'>#7</a>)</p></li>
+<li><p><code><a href="https://rdrr.io/pkg/tibbletime/man/as_period.html">as_period()</a></code> now accepts a formula-based <code>period</code> that provides an incredible amount of flexibility in creating groups. (<a href='https://github.com/business-science/tibbletime/issues/9'>#9</a>, <a href='https://github.com/business-science/tibbletime/issues/14'>#14</a>, <a href='https://github.com/business-science/tibbletime/issues/15'>#15</a>)</p></li>
+<li><p><code><a href="https://rdrr.io/pkg/tibbletime/man/rollify.html">rollify()</a></code> creates a rolling version of any function for use in <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">dplyr::mutate()</a></code>. (<a href='https://github.com/business-science/tibbletime/issues/7'>#7</a>)</p></li>
 </ul>
 </li>
 <li>
 <p>General</p>
 <ul>
 <li><p>You now have to explicitely load <code>dplyr</code> or <code>tidyr</code> to use any functions from those packages. Previously they were reexported, but this seems unnecessary.</p></li>
-<li><p>Added vignettes on intro, filtering, and <code><a href="../reference/as_period.html">as_period()</a></code>.</p></li>
+<li><p>Added vignettes on intro, filtering, and <code><a href="https://rdrr.io/pkg/tibbletime/man/as_period.html">as_period()</a></code>.</p></li>
 <li><p>Added more extensive <code>dplyr</code> support.</p></li>
-<li><p>Speed increases for <code><a href="../reference/as_period.html">as_period()</a></code> and <code><a href="../reference/create_series.html">create_series()</a></code>.</p></li>
+<li><p>Speed increases for <code><a href="https://rdrr.io/pkg/tibbletime/man/as_period.html">as_period()</a></code> and <code><a href="https://rdrr.io/pkg/tibbletime/man/create_series.html">create_series()</a></code>.</p></li>
 <li><p>Internal global utilities moved to <code>utils.R</code>.</p></li>
 <li><p>Added test coverage. (<a href='https://github.com/business-science/tibbletime/issues/2'>#2</a>)</p></li>
 <li><p>Added package documentation page. (<a href='https://github.com/business-science/tibbletime/issues/3'>#3</a>)</p></li>
@@ -284,7 +293,7 @@
 <li><p>Fixed an issue with <code><a href="https://rdrr.io/r/base/Extract.html">[</a></code> in combination with <code><a href="https://tibble.tidyverse.org/reference/add_column.html">tibble::add_column()</a></code>. Use <code>tibble (&gt;= 1.3.4.9001)</code> for correct behavior.</p></li>
 <li><p>Fixed a bug where using <code><a href="https://tidyr.tidyverse.org/reference/nest.html">tidyr::nest()</a></code> would cause the nested tibbles to lose their time attributes.</p></li>
 <li><p>Fix a bug where filter_time(data, ~yyyy-mm-dd) would be parsed as <code>yyyy-mm-dd 00:00:00 ~ yyyy-mm-dd 00:00:00</code> instead of <code>yyyy-mm-dd 00:00:00 ~ yyyy-mm-dd 23:59:59</code>.</p></li>
-<li><p>Fix a bug with as.Date / as.POSIXct operator collision in <code><a href="../reference/filter_time.html">filter_time()</a></code>.</p></li>
+<li><p>Fix a bug with as.Date / as.POSIXct operator collision in <code><a href="https://rdrr.io/pkg/tibbletime/man/filter_time.html">filter_time()</a></code>.</p></li>
 </ul>
 </li>
 </ul>
