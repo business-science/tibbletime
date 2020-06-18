@@ -68,24 +68,13 @@ as_tbl_time.tbl_df <- function(x, index = NULL, ...) {
 #' @export
 #' @importFrom tibble as_tibble
 as_tibble.tbl_time <- function(x, ...) {
-
-  # Remove index_* attributes
-  for(attrib in index_attributes()) {
-    attr(x, attrib) <- NULL
-  }
-
-  tibble::new_tibble(x, ..., nrow = nrow(x))
+  new_bare_tibble(x)
 }
 
-#' @export
-#' @importFrom tibble as_tibble
-as_tibble.grouped_tbl_time <- function(x, ...) {
-
-  # Remove index_* attributes
-  for(attrib in index_attributes()) {
-    attr(x, attrib) <- NULL
-  }
-
-  tibble::new_tibble(x, ..., nrow = nrow(x), class = "grouped_df")
+# new_tibble() currently doesn't strip attributes
+# https://github.com/tidyverse/tibble/pull/769
+new_bare_tibble <- function(x, ..., class = character()) {
+  x <- vctrs::new_data_frame(x)
+  tibble::new_tibble(x, nrow = nrow(x), ..., class = class)
 }
 

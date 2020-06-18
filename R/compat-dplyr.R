@@ -136,16 +136,10 @@ group_by.tbl_time <- function(.data, ...) {
 
 #' @export
 #' @importFrom dplyr ungroup
-#'
 ungroup.tbl_time <- function(x, ...) {
   #reconstruct(NextMethod(), x)
-  # copy_.data <- new_tbl_time(x, get_index_quo(x), get_index_time_zone(x))
-  # ret <- reconstruct(NextMethod(), copy_.data)
-  idx_quo <- get_index_quo(x)
-  idx_tz  <- get_index_time_zone(x)
-  tbl     <- dplyr::ungroup(tibble::as_tibble(x))
-  new_tbl_time(tbl, idx_quo, idx_tz)
-
+  copy_.data <- new_tbl_time(x, get_index_quo(x), get_index_time_zone(x))
+  reconstruct(NextMethod(), copy_.data)
 }
 
 

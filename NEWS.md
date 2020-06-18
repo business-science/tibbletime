@@ -1,6 +1,11 @@
 # tibbletime (development version)
 
-* [Fix Ungroup Issue](https://github.com/business-science/tibbletime/issues/91)
+* Coercing a grouped tbl_time object to tibble with `as_tibble()` now drops
+  groups and returns a bare tibble. The previous behavior of returning a
+  grouped tibble was incorrect and let to faulty behavior in other functions.
+
+* Fixed an issue related to `dplyr::ungroup()` in dplyr 1.0.0 where
+  ungrouping would not return an ungrouped tbl_time (#91).
 
 # tibbletime 0.1.4
 
