@@ -189,13 +189,6 @@
 <span class="co"># Filter for dates from March 2013 to December 2015</span>
 <span class="kw">FB</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="reference/filter_time.html">filter_time</a></span>(<span class="st">'2013-03'</span> <span class="op">~</span> <span class="st">'2015'</span>)
-<span class="co">#&gt; Warning: `...` is not empty.</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; We detected these problematic arguments:</span>
-<span class="co">#&gt; * `needs_dots`</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; These dots only exist to allow future extensions and should be empty.</span>
-<span class="co">#&gt; Did you misspecify an argument?</span>
 <span class="co">#&gt; # A time tibble: 716 x 8</span>
 <span class="co">#&gt; # Index: date</span>
 <span class="co">#&gt;    symbol date        open  high   low close   volume adjusted</span>
@@ -216,13 +209,6 @@
 <span class="co"># This just reduces the tibble to the last row in each month</span>
 <span class="kw">FB</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="reference/as_period.html">as_period</a></span>(<span class="st">"monthly"</span>, side = <span class="st">"end"</span>)
-<span class="co">#&gt; Warning: `...` is not empty.</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; We detected these problematic arguments:</span>
-<span class="co">#&gt; * `needs_dots`</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; These dots only exist to allow future extensions and should be empty.</span>
-<span class="co">#&gt; Did you misspecify an argument?</span>
 <span class="co">#&gt; # A time tibble: 48 x 8</span>
 <span class="co">#&gt; # Index: date</span>
 <span class="co">#&gt;    symbol date        open  high   low close    volume adjusted</span>
@@ -246,13 +232,6 @@
   <span class="fu"><a href="reference/collapse_by.html">collapse_by</a></span>(<span class="st">"monthly"</span>) <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(<span class="kw">date</span>) <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise_all.html">summarise_all</a></span>(<span class="kw">mean</span>)
-<span class="co">#&gt; Warning: `...` is not empty.</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; We detected these problematic arguments:</span>
-<span class="co">#&gt; * `needs_dots`</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; These dots only exist to allow future extensions and should be empty.</span>
-<span class="co">#&gt; Did you misspecify an argument?</span>
 <span class="co">#&gt; # A time tibble: 48 x 7</span>
 <span class="co">#&gt; # Index: date</span>
 <span class="co">#&gt;    date        open  high   low close    volume adjusted</span>
@@ -272,13 +251,6 @@
 <span class="co"># Perform a 5 period rolling average</span>
 <span class="kw">mean_5</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/rollify.html">rollify</a></span>(<span class="kw">mean</span>, window = <span class="fl">5</span>)
 <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="kw">FB</span>, roll_mean = <span class="fu">mean_5</span>(<span class="kw">adjusted</span>))
-<span class="co">#&gt; Warning: `...` is not empty.</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; We detected these problematic arguments:</span>
-<span class="co">#&gt; * `needs_dots`</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; These dots only exist to allow future extensions and should be empty.</span>
-<span class="co">#&gt; Did you misspecify an argument?</span>
 <span class="co">#&gt; # A time tibble: 1,008 x 9</span>
 <span class="co">#&gt; # Index: date</span>
 <span class="co">#&gt;    symbol date        open  high   low close    volume adjusted roll_mean</span>
@@ -298,13 +270,6 @@
 <span class="co"># Create a time series</span>
 <span class="co"># Every other day in 2013</span>
 <span class="fu"><a href="reference/create_series.html">create_series</a></span>(<span class="op">~</span><span class="st">'2013'</span>, <span class="st">'2 day'</span>)
-<span class="co">#&gt; Warning: `...` is not empty.</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; We detected these problematic arguments:</span>
-<span class="co">#&gt; * `needs_dots`</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; These dots only exist to allow future extensions and should be empty.</span>
-<span class="co">#&gt; Did you misspecify an argument?</span>
 <span class="co">#&gt; # A time tibble: 183 x 1</span>
 <span class="co">#&gt; # Index: date</span>
 <span class="co">#&gt;    date               </span>
@@ -347,14 +312,6 @@
     adj_max   = <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span>(<span class="kw">adjusted</span>),
     adj_range = <span class="kw">adj_max</span> <span class="op">-</span> <span class="kw">adj_min</span>
   )
-<span class="co">#&gt; `summarise()` regrouping output by 'symbol' (override with `.groups` argument)</span>
-<span class="co">#&gt; Warning: `...` is not empty.</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; We detected these problematic arguments:</span>
-<span class="co">#&gt; * `needs_dots`</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; These dots only exist to allow future extensions and should be empty.</span>
-<span class="co">#&gt; Did you misspecify an argument?</span>
 <span class="co">#&gt; # A time tibble: 16 x 5</span>
 <span class="co">#&gt; # Index:  date</span>
 <span class="co">#&gt; # Groups: symbol [4]</span>
