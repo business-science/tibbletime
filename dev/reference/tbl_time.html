@@ -152,9 +152,9 @@ which column should be used for time-based subsetting and other time-based
 manipulation. Otherwise, they function as normal tibbles.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>as_tbl_time</span>(<span class='no'>x</span>, <span class='kw'>index</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/tibbletime/man/tbl_time.html'>as_tbl_time</a></span>(<span class='kw'>x</span>, index = <span class='kw'>NULL</span>, <span class='kw'>...</span>)
 
-<span class='fu'>tbl_time</span>(<span class='no'>x</span>, <span class='kw'>index</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/pkg/tibbletime/man/tbl_time.html'>tbl_time</a></span>(<span class='kw'>x</span>, index = <span class='kw'>NULL</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -189,9 +189,9 @@ manipulate the index columns directly.</p>
     <pre class="examples"><div class='input'>
 <span class='co'># Converting a data.frame to a `tbl_time`</span>
 <span class='co'># Using Date index</span>
-<span class='no'>ex1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>date</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span>(), <span class='kw'>value</span> <span class='kw'>=</span> <span class='fl'>1</span>)
-<span class='no'>ex1_tbl_time</span> <span class='kw'>&lt;-</span> <span class='fu'>as_tbl_time</span>(<span class='no'>ex1</span>, <span class='no'>date</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='no'>ex1_tbl_time</span>)</div><div class='output co'>#&gt; [1] "tbl_time"   "tbl_df"     "tbl"        "data.frame"</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/attributes.html'>attributes</a></span>(<span class='no'>ex1_tbl_time</span>)</div><div class='output co'>#&gt; $names
+<span class='kw'>ex1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(date = <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span>(), value = <span class='fl'>1</span>)
+<span class='kw'>ex1_tbl_time</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/tibbletime/man/tbl_time.html'>as_tbl_time</a></span>(<span class='kw'>ex1</span>, <span class='kw'>date</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='kw'>ex1_tbl_time</span>)</div><div class='output co'>#&gt; [1] "tbl_time"   "tbl_df"     "tbl"        "data.frame"</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/attributes.html'>attributes</a></span>(<span class='kw'>ex1_tbl_time</span>)</div><div class='output co'>#&gt; $names
 #&gt; [1] "date"  "value"
 #&gt; 
 #&gt; $row.names
@@ -200,7 +200,7 @@ manipulate the index columns directly.</p>
 #&gt; $index_quo
 #&gt; <span style='font-weight: bold;'>&lt;quosure&gt;</span><span>
 #&gt; expr: </span><span style='color: #0000BB;'>^date</span><span>
-#&gt; env:  </span><span style='color: #0000BB;'>0x7f8492c3cb48</span><span>
+#&gt; env:  </span><span style='color: #0000BB;'>0x7fe7a5b40698</span><span>
 #&gt; 
 #&gt; $index_time_zone
 #&gt; [1] "UTC"
@@ -210,23 +210,16 @@ manipulate the index columns directly.</p>
 #&gt; </div><div class='input'>
 <span class='co'># Converting a tibble to a `tbl_time`</span>
 <span class='co'># Using POSIXct index</span>
-<span class='no'>ex2</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>tibble</span><span class='kw ns'>::</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span>(
-  <span class='kw'>time</span>  <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.POSIXlt.html'>as.POSIXct</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"2017-01-01 10:12:01"</span>, <span class='st'>"2017-01-02 12:12:01"</span>)),
-  <span class='kw'>value</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>)
+<span class='kw'>ex2</span> <span class='op'>&lt;-</span> <span class='kw'>tibble</span>::<span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span>(
+  time  = <span class='fu'><a href='https://rdrr.io/r/base/as.POSIXlt.html'>as.POSIXct</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"2017-01-01 10:12:01"</span>, <span class='st'>"2017-01-02 12:12:01"</span>)),
+  value = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>)
 )
-<span class='fu'>as_tbl_time</span>(<span class='no'>ex2</span>, <span class='no'>time</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: `...` is not empty.</span>
-#&gt; <span class='warning'></span>
-#&gt; <span class='warning'>We detected these problematic arguments:</span>
-#&gt; <span class='warning'>* `needs_dots`</span>
-#&gt; <span class='warning'></span>
-#&gt; <span class='warning'>These dots only exist to allow future extensions and should be empty.</span>
-#&gt; <span class='warning'>Did you misspecify an argument?</span></div><div class='output co'>#&gt; # A time tibble: 2 x 2
+<span class='fu'><a href='https://rdrr.io/pkg/tibbletime/man/tbl_time.html'>as_tbl_time</a></span>(<span class='kw'>ex2</span>, <span class='kw'>time</span>)</div><div class='output co'>#&gt; # A time tibble: 2 x 2
 #&gt; </span><span style='color: #555555;'># Index: time</span><span>
 #&gt;   time                value
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dttm&gt;</span><span>              </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
 #&gt; </span><span style='color: #555555;'>1</span><span> 2017-01-01 </span><span style='color: #555555;'>10:12:01</span><span>     1
-#&gt; </span><span style='color: #555555;'>2</span><span> 2017-01-02 </span><span style='color: #555555;'>12:12:01</span><span>     2</div><div class='input'>
-</div></span></pre>
+#&gt; </span><span style='color: #555555;'>2</span><span> 2017-01-02 </span><span style='color: #555555;'>12:12:01</span><span>     2</div><div class='input'></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -242,7 +235,7 @@ manipulate the index columns directly.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
 </div>
 
       </footer>

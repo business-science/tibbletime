@@ -150,18 +150,18 @@ same date</h1>
     </div>
 
     <div class="ref-description">
-    <p>When <code>collapse_index()</code> is used, the index vector is altered
+    <p>When <code><a href='https://rdrr.io/pkg/tibbletime/man/collapse_index.html'>collapse_index()</a></code> is used, the index vector is altered
 so that all dates that fall in a specified interval share a common date.
 The most common use case for this is to then group on the collapsed index.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>collapse_index</span>(
-  <span class='no'>index</span>,
-  <span class='kw'>period</span> <span class='kw'>=</span> <span class='st'>"yearly"</span>,
-  <span class='kw'>start_date</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>side</span> <span class='kw'>=</span> <span class='st'>"end"</span>,
-  <span class='kw'>clean</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>...</span>
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/tibbletime/man/collapse_index.html'>collapse_index</a></span>(
+  <span class='kw'>index</span>,
+  period = <span class='st'>"yearly"</span>,
+  start_date = <span class='kw'>NULL</span>,
+  side = <span class='st'>"end"</span>,
+  clean = <span class='fl'>FALSE</span>,
+  <span class='kw'>...</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -213,12 +213,12 @@ argument.</p></td>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The <code><a href='collapse_by.html'>collapse_by()</a></code> function provides a shortcut for the most common use
-of <code>collapse_index()</code>, calling the function inside a call to <code>mutate()</code> to
+    <p>The <code><a href='https://rdrr.io/pkg/tibbletime/man/collapse_by.html'>collapse_by()</a></code> function provides a shortcut for the most common use
+of <code><a href='https://rdrr.io/pkg/tibbletime/man/collapse_index.html'>collapse_index()</a></code>, calling the function inside a call to <code><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate()</a></code> to
 modify the index directly. For more flexibility, like the nesting example
-below, use <code>collapse_index()</code>.</p>
+below, use <code><a href='https://rdrr.io/pkg/tibbletime/man/collapse_index.html'>collapse_index()</a></code>.</p>
 <p>Because this is often used for end of period summaries, the default is to
-use <code>side = "end"</code>. Note that this is the opposite of <code><a href='as_period.html'>as_period()</a></code> where
+use <code>side = "end"</code>. Note that this is the opposite of <code><a href='https://rdrr.io/pkg/tibbletime/man/as_period.html'>as_period()</a></code> where
 the default is <code>side = "start"</code>.</p>
 <p>The <code>clean</code> argument is especially useful if you have an irregular series
 and want cleaner dates to report for summary values.</p>
@@ -228,17 +228,11 @@ and want cleaner dates to report for summary values.</p>
 <span class='co'># Basic functionality -------------------------------------------------------</span>
 
 <span class='co'># Facebook stock prices</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>FB</span>)
-<span class='no'>FB</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='tbl_time.html'>as_tbl_time</a></span>(<span class='no'>FB</span>, <span class='no'>date</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>FB</span>)
+<span class='kw'>FB</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/tibbletime/man/tbl_time.html'>as_tbl_time</a></span>(<span class='kw'>FB</span>, <span class='kw'>date</span>)
 
 <span class='co'># Collapse to weekly dates</span>
-<span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='no'>FB</span>, <span class='kw'>date</span> <span class='kw'>=</span> <span class='fu'>collapse_index</span>(<span class='no'>date</span>, <span class='st'>"weekly"</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: `...` is not empty.</span>
-#&gt; <span class='warning'></span>
-#&gt; <span class='warning'>We detected these problematic arguments:</span>
-#&gt; <span class='warning'>* `needs_dots`</span>
-#&gt; <span class='warning'></span>
-#&gt; <span class='warning'>These dots only exist to allow future extensions and should be empty.</span>
-#&gt; <span class='warning'>Did you misspecify an argument?</span></div><div class='output co'>#&gt; # A time tibble: 1,008 x 8
+<span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>FB</span>, date = <span class='fu'><a href='https://rdrr.io/pkg/tibbletime/man/collapse_index.html'>collapse_index</a></span>(<span class='kw'>date</span>, <span class='st'>"weekly"</span>))</div><div class='output co'>#&gt; # A time tibble: 1,008 x 8
 #&gt; <span style='color: #555555;'># Index: date</span><span>
 #&gt;    symbol date        open  high   low close    volume adjusted
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
@@ -255,16 +249,10 @@ and want cleaner dates to report for summary values.</p>
 #&gt; </span><span style='color: #555555;'># … with 998 more rows</span><span></div><div class='input'>
 <span class='co'># A common workflow is to group on the new date column</span>
 <span class='co'># to perform a time based summary</span>
-<span class='no'>FB</span> <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>date</span> <span class='kw'>=</span> <span class='fu'>collapse_index</span>(<span class='no'>date</span>, <span class='st'>"yearly"</span>)) <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>date</span>) <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise_all.html'>summarise_if</a></span>(<span class='no'>is.numeric</span>, <span class='no'>mean</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: `...` is not empty.</span>
-#&gt; <span class='warning'></span>
-#&gt; <span class='warning'>We detected these problematic arguments:</span>
-#&gt; <span class='warning'>* `needs_dots`</span>
-#&gt; <span class='warning'></span>
-#&gt; <span class='warning'>These dots only exist to allow future extensions and should be empty.</span>
-#&gt; <span class='warning'>Did you misspecify an argument?</span></div><div class='output co'>#&gt; # A time tibble: 4 x 7
+<span class='kw'>FB</span> <span class='op'>%&gt;%</span>
+  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(date = <span class='fu'><a href='https://rdrr.io/pkg/tibbletime/man/collapse_index.html'>collapse_index</a></span>(<span class='kw'>date</span>, <span class='st'>"yearly"</span>)) <span class='op'>%&gt;%</span>
+  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='kw'>date</span>) <span class='op'>%&gt;%</span>
+  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise_all.html'>summarise_if</a></span>(<span class='kw'>is.numeric</span>, <span class='kw'>mean</span>)</div><div class='output co'>#&gt; # A time tibble: 4 x 7
 #&gt; </span><span style='color: #555555;'># Index: date</span><span>
 #&gt;   date        open  high   low close    volume adjusted
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
@@ -275,39 +263,27 @@ and want cleaner dates to report for summary values.</p>
 <span class='co'># You can also assign the result to a separate column and use that</span>
 <span class='co'># to nest on, allowing for 'period nests' that keep the</span>
 <span class='co'># original dates in the nested tibbles.</span>
-<span class='no'>FB</span> <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>nest_date</span> <span class='kw'>=</span> <span class='fu'>collapse_index</span>(<span class='no'>date</span>, <span class='st'>"2 year"</span>)) <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>nest_date</span>) <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>tidyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://tidyr.tidyverse.org/reference/nest.html'>nest</a></span>()</div><div class='output co'>#&gt; <span class='warning'>Warning: `...` must not be empty for ungrouped data frames.</span>
-#&gt; <span class='warning'>Did you want `data = everything()`?</span></div><div class='output co'>#&gt; <span class='warning'>Warning: `...` is not empty.</span>
-#&gt; <span class='warning'></span>
-#&gt; <span class='warning'>We detected these problematic arguments:</span>
-#&gt; <span class='warning'>* `needs_dots`</span>
-#&gt; <span class='warning'></span>
-#&gt; <span class='warning'>These dots only exist to allow future extensions and should be empty.</span>
-#&gt; <span class='warning'>Did you misspecify an argument?</span></div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 1</span><span>
+<span class='kw'>FB</span> <span class='op'>%&gt;%</span>
+  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(nest_date = <span class='fu'><a href='https://rdrr.io/pkg/tibbletime/man/collapse_index.html'>collapse_index</a></span>(<span class='kw'>date</span>, <span class='st'>"2 year"</span>)) <span class='op'>%&gt;%</span>
+  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='kw'>nest_date</span>) <span class='op'>%&gt;%</span>
+  <span class='kw'>tidyr</span>::<span class='fu'><a href='https://tidyr.tidyverse.org/reference/nest.html'>nest</a></span>()</div><div class='output co'>#&gt; <span class='warning'>Warning: `...` must not be empty for ungrouped data frames.</span>
+#&gt; <span class='warning'>Did you want `data = everything()`?</span></div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 1</span><span>
 #&gt;                   data
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;list&lt;tbl_time[,9]&gt;&gt;</span><span>
 #&gt; </span><span style='color: #555555;'>1</span><span>          </span><span style='color: #555555;'>[1,008 × 9]</span><span></div><div class='input'>
 <span class='co'># Grouped functionality -----------------------------------------------------</span>
 
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>FANG</span>)
-<span class='no'>FANG</span> <span class='kw'>&lt;-</span> <span class='no'>FANG</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='tbl_time.html'>as_tbl_time</a></span>(<span class='no'>date</span>) <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>symbol</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>FANG</span>)
+<span class='kw'>FANG</span> <span class='op'>&lt;-</span> <span class='kw'>FANG</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/tibbletime/man/tbl_time.html'>as_tbl_time</a></span>(<span class='kw'>date</span>) <span class='op'>%&gt;%</span>
+  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='kw'>symbol</span>)
 
 <span class='co'># Collapse each group to monthly,</span>
 <span class='co'># calculate monthly standard deviation for each column</span>
-<span class='no'>FANG</span> <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>date</span> <span class='kw'>=</span> <span class='fu'>collapse_index</span>(<span class='no'>date</span>, <span class='st'>"monthly"</span>)) <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>symbol</span>, <span class='no'>date</span>) <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise_all.html'>summarise_all</a></span>(<span class='no'>sd</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: `...` is not empty.</span>
-#&gt; <span class='warning'></span>
-#&gt; <span class='warning'>We detected these problematic arguments:</span>
-#&gt; <span class='warning'>* `needs_dots`</span>
-#&gt; <span class='warning'></span>
-#&gt; <span class='warning'>These dots only exist to allow future extensions and should be empty.</span>
-#&gt; <span class='warning'>Did you misspecify an argument?</span></div><div class='output co'>#&gt; # A time tibble: 192 x 8
+<span class='kw'>FANG</span> <span class='op'>%&gt;%</span>
+  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(date = <span class='fu'><a href='https://rdrr.io/pkg/tibbletime/man/collapse_index.html'>collapse_index</a></span>(<span class='kw'>date</span>, <span class='st'>"monthly"</span>)) <span class='op'>%&gt;%</span>
+  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='kw'>symbol</span>, <span class='kw'>date</span>) <span class='op'>%&gt;%</span>
+  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise_all.html'>summarise_all</a></span>(<span class='kw'>sd</span>)</div><div class='output co'>#&gt; # A time tibble: 192 x 8
 #&gt; </span><span style='color: #555555;'># Index:  date</span><span>
 #&gt; </span><span style='color: #555555;'># Groups: symbol [4]</span><span>
 #&gt;    symbol date        open  high   low close   volume adjusted
@@ -323,7 +299,6 @@ and want cleaner dates to report for summary values.</p>
 #&gt; </span><span style='color: #555555;'> 9</span><span> AMZN   2013-09-30  9.67  9.37  9.37  9.18  </span><span style='text-decoration: underline;'>847</span><span>804.     9.18
 #&gt; </span><span style='color: #555555;'>10</span><span> AMZN   2013-10-31 20.6  21.4  20.7  21.4  2</span><span style='text-decoration: underline;'>209</span><span>026.    21.4 
 #&gt; </span><span style='color: #555555;'># … with 182 more rows</span><span></div><div class='input'>
-
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -340,7 +315,7 @@ and want cleaner dates to report for summary values.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
 </div>
 
       </footer>
