@@ -1,10 +1,10 @@
 template:
   params:
     bootswatch: flatly
-    ganalytics: UA-76139189-1
+    ganalytics: UA-76139189-2
 
 development:
-  mode: auto
+  mode: "auto"
 
 navbar:
   title: "tibbletime"
