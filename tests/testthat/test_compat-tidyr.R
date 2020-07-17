@@ -19,7 +19,7 @@ FANG_time <- FANG %>%
 
 test_that("nest() with index creates tbl_df", {
 
-  FANG_nested <- FANG_g_time %>% tidyr::nest()
+  FANG_nested <- FANG_g_time %>% tidyr::nest(data = everything())
 
   expect_is(FANG_nested, "tbl_df")
   expect_is(FANG_nested$data[[1]], "tbl_time")
@@ -44,7 +44,9 @@ test_that("nest() with .key is deprecated but works", {
 
 test_that("unnest() with index goes back to tbl_time", {
 
-  FANG_unnested <- FANG_g_time %>% tidyr::nest() %>% tidyr::unnest(cols = data)
+  FANG_unnested <- FANG_g_time %>%
+    tidyr::nest(data = everything()) %>%
+    tidyr::unnest(cols = data)
 
   expect_is(FANG_unnested, "tbl_time")
   expect_equal(get_index_col(FANG_g_time), get_index_col(FANG_unnested))

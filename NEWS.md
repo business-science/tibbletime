@@ -1,5 +1,7 @@
 # tibbletime (development version)
 
+* Fixed minor tidyr 1.0.0 warnings in tests using `nest()`.
+
 # tibbletime 0.1.5
 
 * Coercing a grouped tbl_time object to tibble with `as_tibble()` now drops
