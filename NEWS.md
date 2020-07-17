@@ -1,4 +1,4 @@
-# tibbletime (development version)
+# tibbletime 0.1.6
 
 * Fixed minor tidyr 1.0.0 warnings in tests using `nest()`.
 
