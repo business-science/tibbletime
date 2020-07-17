@@ -57,13 +57,13 @@ for hms, yearmon, and yearqtr classes as well." />
 
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-76139189-1"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-76139189-2"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
-  gtag('config', 'UA-76139189-1');
+  gtag('config', 'UA-76139189-2');
 </script>
 
 
@@ -150,7 +150,7 @@ for hms, yearmon, and yearqtr classes as well." />
 for <code>hms</code>, <code>yearmon</code>, and <code>yearqtr</code> classes as well.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/tibbletime/man/floor_index.html'>floor_index</a></span>(<span class='kw'>x</span>, unit = <span class='st'>"seconds"</span>)</pre>
+    <pre class="usage"><span class='fu'>floor_index</span>(<span class='no'>x</span>, <span class='kw'>unit</span> <span class='kw'>=</span> <span class='st'>"seconds"</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -176,8 +176,14 @@ supported.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>FB</span>)
-<span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>FB</span>, date2 = <span class='fu'><a href='https://rdrr.io/pkg/tibbletime/man/floor_index.html'>floor_index</a></span>(<span class='kw'>date</span>, <span class='st'>"year"</span>))</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 1,008 x 9</span><span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>FB</span>)
+<span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='no'>FB</span>, <span class='kw'>date2</span> <span class='kw'>=</span> <span class='fu'>floor_index</span>(<span class='no'>date</span>, <span class='st'>"year"</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: `...` is not empty.</span>
+#&gt; <span class='warning'></span>
+#&gt; <span class='warning'>We detected these problematic arguments:</span>
+#&gt; <span class='warning'>* `needs_dots`</span>
+#&gt; <span class='warning'></span>
+#&gt; <span class='warning'>These dots only exist to allow future extensions and should be empty.</span>
+#&gt; <span class='warning'>Did you misspecify an argument?</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 1,008 x 9</span><span>
 #&gt;    symbol date        open  high   low close    volume adjusted date2     
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>    
 #&gt; </span><span style='color: #555555;'> 1</span><span> FB     2013-01-02  27.4  28.2  27.4  28    69</span><span style='text-decoration: underline;'>846</span><span>400     28   2013-01-01
@@ -191,10 +197,16 @@ supported.</p></td>
 #&gt; </span><span style='color: #555555;'> 9</span><span> FB     2013-01-14  32.1  32.2  30.6  31.0  98</span><span style='text-decoration: underline;'>892</span><span>800     31.0 2013-01-01
 #&gt; </span><span style='color: #555555;'>10</span><span> FB     2013-01-15  30.6  31.7  29.9  30.1 173</span><span style='text-decoration: underline;'>242</span><span>600     30.1 2013-01-01
 #&gt; </span><span style='color: #555555;'># … with 998 more rows</span><span></div><div class='input'>
-<span class='kw'>time_test</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/tibbletime/man/create_series.html'>create_series</a></span>(<span class='st'>'00:00:00'</span><span class='op'>~</span><span class='st'>'12:00:00'</span>,
-                           <span class='st'>'1 minute'</span>, class = <span class='st'>"hms"</span>)
+<span class='no'>time_test</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='create_series.html'>create_series</a></span>(<span class='st'>'00:00:00'</span>~<span class='st'>'12:00:00'</span>,
+                           <span class='st'>'1 minute'</span>, <span class='kw'>class</span> <span class='kw'>=</span> <span class='st'>"hms"</span>)
 
-<span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>time_test</span>, date2 = <span class='fu'><a href='https://rdrr.io/pkg/tibbletime/man/floor_index.html'>floor_index</a></span>(<span class='kw'>date</span>, <span class='st'>"hour"</span>))</div><div class='output co'>#&gt; # A time tibble: 721 x 2
+<span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='no'>time_test</span>, <span class='kw'>date2</span> <span class='kw'>=</span> <span class='fu'>floor_index</span>(<span class='no'>date</span>, <span class='st'>"hour"</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: `...` is not empty.</span>
+#&gt; <span class='warning'></span>
+#&gt; <span class='warning'>We detected these problematic arguments:</span>
+#&gt; <span class='warning'>* `needs_dots`</span>
+#&gt; <span class='warning'></span>
+#&gt; <span class='warning'>These dots only exist to allow future extensions and should be empty.</span>
+#&gt; <span class='warning'>Did you misspecify an argument?</span></div><div class='output co'>#&gt; # A time tibble: 721 x 2
 #&gt; </span><span style='color: #555555;'># Index: date</span><span>
 #&gt;    date   date2 
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;time&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;time&gt;</span><span>
@@ -208,7 +220,8 @@ supported.</p></td>
 #&gt; </span><span style='color: #555555;'> 8</span><span> 07</span><span style='color: #555555;'>'</span><span>00</span><span style='color: #555555;'>"</span><span> 00</span><span style='color: #555555;'>'</span><span>00</span><span style='color: #555555;'>"</span><span>
 #&gt; </span><span style='color: #555555;'> 9</span><span> 08</span><span style='color: #555555;'>'</span><span>00</span><span style='color: #555555;'>"</span><span> 00</span><span style='color: #555555;'>'</span><span>00</span><span style='color: #555555;'>"</span><span>
 #&gt; </span><span style='color: #555555;'>10</span><span> 09</span><span style='color: #555555;'>'</span><span>00</span><span style='color: #555555;'>"</span><span> 00</span><span style='color: #555555;'>'</span><span>00</span><span style='color: #555555;'>"</span><span>
-#&gt; </span><span style='color: #555555;'># … with 711 more rows</span><span></div><div class='input'></div></span></pre>
+#&gt; </span><span style='color: #555555;'># … with 711 more rows</span><span></div><div class='input'>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -224,7 +237,7 @@ supported.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>
