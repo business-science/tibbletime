@@ -16,9 +16,14 @@ status](https://github.com/business-science/tibbletime/workflows/R-CMD-check/bad
 
 ## Package status
 
-`tibbletime` has been officially retired. Please use the great
-[`tsibble`](https://github.com/tidyverts/tsibble) package instead as
-that is where further development will be.
+`tibbletime` has been officially retired. We will continue to maintain
+but not be adding new functionality. Options to get new functionality:
+
+  - [**timetk**](https://business-science.github.io/timetk/index.html) -
+    Provides time series visualization, wrangling, and preprocessing
+    using `tibble` structure
+  - [**tsibble**](https://github.com/tidyverts/tsibble) - Provides
+    wrangling using `tsibble` structure
 
 ## A time aware tibble
 
@@ -141,6 +146,13 @@ To look at just a few:
 # Filter for dates from March 2013 to December 2015
 FB %>% 
   filter_time('2013-03' ~ '2015')
+#> Warning: `...` is not empty.
+#> 
+#> We detected these problematic arguments:
+#> * `needs_dots`
+#> 
+#> These dots only exist to allow future extensions and should be empty.
+#> Did you misspecify an argument?
 #> # A time tibble: 716 x 8
 #> # Index: date
 #>    symbol date        open  high   low close   volume adjusted
@@ -161,6 +173,13 @@ FB %>%
 # This just reduces the tibble to the last row in each month
 FB %>% 
   as_period("monthly", side = "end")
+#> Warning: `...` is not empty.
+#> 
+#> We detected these problematic arguments:
+#> * `needs_dots`
+#> 
+#> These dots only exist to allow future extensions and should be empty.
+#> Did you misspecify an argument?
 #> # A time tibble: 48 x 8
 #> # Index: date
 #>    symbol date        open  high   low close    volume adjusted
@@ -184,6 +203,13 @@ FB %>%
   collapse_by("monthly") %>%
   group_by(date) %>%
   summarise_all(mean)
+#> Warning: `...` is not empty.
+#> 
+#> We detected these problematic arguments:
+#> * `needs_dots`
+#> 
+#> These dots only exist to allow future extensions and should be empty.
+#> Did you misspecify an argument?
 #> # A time tibble: 48 x 7
 #> # Index: date
 #>    date        open  high   low close    volume adjusted
@@ -203,6 +229,13 @@ FB %>%
 # Perform a 5 period rolling average
 mean_5 <- rollify(mean, window = 5)
 mutate(FB, roll_mean = mean_5(adjusted))
+#> Warning: `...` is not empty.
+#> 
+#> We detected these problematic arguments:
+#> * `needs_dots`
+#> 
+#> These dots only exist to allow future extensions and should be empty.
+#> Did you misspecify an argument?
 #> # A time tibble: 1,008 x 9
 #> # Index: date
 #>    symbol date        open  high   low close    volume adjusted roll_mean
@@ -222,6 +255,13 @@ mutate(FB, roll_mean = mean_5(adjusted))
 # Create a time series
 # Every other day in 2013
 create_series(~'2013', '2 day')
+#> Warning: `...` is not empty.
+#> 
+#> We detected these problematic arguments:
+#> * `needs_dots`
+#> 
+#> These dots only exist to allow future extensions and should be empty.
+#> Did you misspecify an argument?
 #> # A time tibble: 183 x 1
 #> # Index: date
 #>    date               
@@ -267,6 +307,13 @@ FANG %>%
     adj_range = adj_max - adj_min
   )
 #> `summarise()` regrouping output by 'symbol' (override with `.groups` argument)
+#> Warning: `...` is not empty.
+#> 
+#> We detected these problematic arguments:
+#> * `needs_dots`
+#> 
+#> These dots only exist to allow future extensions and should be empty.
+#> Did you misspecify an argument?
 #> # A time tibble: 16 x 5
 #> # Index:  date
 #> # Groups: symbol [4]

@@ -23,9 +23,10 @@ devtools::load_all()
 
 ## Package status
 
-`tibbletime` has been officially retired. Please use the great 
-[`tsibble`](https://github.com/tidyverts/tsibble) package instead as that is
-where further development will be.
+`tibbletime` has been officially retired. We will continue to maintain but not be adding new functionality. Options to get new functionality:
+
+- [__timetk__](https://business-science.github.io/timetk/index.html) - Provides time series visualization, wrangling, and preprocessing using `tibble` structure
+- [__tsibble__](https://github.com/tidyverts/tsibble) - Provides wrangling using `tsibble` structure
 
 ## A time aware tibble
 
