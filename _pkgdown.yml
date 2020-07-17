@@ -4,7 +4,7 @@ template:
     ganalytics: UA-76139189-2
 
 development:
-  mode: auto
+  mode: release
 
 navbar:
   title: "tibbletime"
