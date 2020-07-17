@@ -125,16 +125,16 @@
 ## # Index: date
 ##    date          var
 ##    &lt;date&gt;      &lt;dbl&gt;
-##  1 2013-01-01 -1.33 
-##  2 2013-01-02  0.658
-##  3 2013-01-03  0.252
-##  4 2013-01-04  0.657
-##  5 2013-01-05 -1.13 
-##  6 2013-01-06  1.15 
-##  7 2013-01-07 -0.947
-##  8 2013-01-08 -0.518
-##  9 2013-01-09  1.59 
-## 10 2013-01-10 -1.02 
+##  1 2013-01-01 -0.910
+##  2 2013-01-02  0.265
+##  3 2013-01-03 -1.08 
+##  4 2013-01-04 -0.351
+##  5 2013-01-05  0.464
+##  6 2013-01-06 -0.947
+##  7 2013-01-07  0.731
+##  8 2013-01-08  1.58 
+##  9 2013-01-09  0.795
+## 10 2013-01-10 -0.414
 ## # … with 1,816 more rows</code></pre>
 <div class="sourceCode" id="cb3"><pre class="downlit">
 <span class="kw">series</span> <span class="op">%&gt;%</span>
@@ -145,16 +145,16 @@
 <pre><code>## # A tibble: 60 x 3
 ##     year month mean_var
 ##    &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;
-##  1  2013     1  0.00666
-##  2  2013     2  0.0243 
-##  3  2013     3  0.114  
-##  4  2013     4 -0.0765 
-##  5  2013     5 -0.0530 
-##  6  2013     6  0.0416 
-##  7  2013     7 -0.193  
-##  8  2013     8  0.0542 
-##  9  2013     9  0.00250
-## 10  2013    10 -0.329  
+##  1  2013     1   0.236 
+##  2  2013     2   0.0578
+##  3  2013     3   0.0648
+##  4  2013     4   0.214 
+##  5  2013     5   0.328 
+##  6  2013     6  -0.319 
+##  7  2013     7  -0.0329
+##  8  2013     8   0.0743
+##  9  2013     9  -0.201 
+## 10  2013    10   0.0303
 ## # … with 50 more rows</code></pre>
 <p>This gets more difficult the more granular you go. Getting 5-minute summaries from minute or second data requires grouping on year, month, day, hour and minute columns.</p>
 </div>
@@ -173,16 +173,16 @@
 ## # Index: date
 ##    date       mean_var
 ##    &lt;date&gt;        &lt;dbl&gt;
-##  1 2013-01-31  0.00666
-##  2 2013-02-28  0.0243 
-##  3 2013-03-31  0.114  
-##  4 2013-04-30 -0.0765 
-##  5 2013-05-31 -0.0530 
-##  6 2013-06-30  0.0416 
-##  7 2013-07-31 -0.193  
-##  8 2013-08-31  0.0542 
-##  9 2013-09-30  0.00250
-## 10 2013-10-31 -0.329  
+##  1 2013-01-31   0.236 
+##  2 2013-02-28   0.0578
+##  3 2013-03-31   0.0648
+##  4 2013-04-30   0.214 
+##  5 2013-05-31   0.328 
+##  6 2013-06-30  -0.319 
+##  7 2013-07-31  -0.0329
+##  8 2013-08-31   0.0743
+##  9 2013-09-30  -0.201 
+## 10 2013-10-31   0.0303
 ## # … with 50 more rows</code></pre>
 <p>While <code><a href="../reference/collapse_by.html">collapse_by()</a></code> directly manipulates the index column, the lower level <code><a href="../reference/collapse_index.html">collapse_index()</a></code> function can be used inside of a call to <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> to modify the index column and then save it as a new column. This can be useful if you don’t want to lose the original index column.</p>
 <p>This works for more granular series too. Below we aggregate 5 second level data up to hourly. This is working with a faily sizable ~19 million row data set.</p>
@@ -200,16 +200,16 @@
 ## # Index: date
 ##    date                mean_var
 ##    &lt;dttm&gt;                 &lt;dbl&gt;
-##  1 2013-01-01 00:59:55  0.0456 
-##  2 2013-01-01 01:59:55  0.0336 
-##  3 2013-01-01 02:59:55  0.0254 
-##  4 2013-01-01 03:59:55 -0.0208 
-##  5 2013-01-01 04:59:55 -0.0171 
-##  6 2013-01-01 05:59:55 -0.0442 
-##  7 2013-01-01 06:59:55  0.0289 
-##  8 2013-01-01 07:59:55  0.0748 
-##  9 2013-01-01 08:59:55  0.00644
-## 10 2013-01-01 09:59:55  0.00247
+##  1 2013-01-01 00:59:55  0.00508
+##  2 2013-01-01 01:59:55  0.0122 
+##  3 2013-01-01 02:59:55 -0.0227 
+##  4 2013-01-01 03:59:55  0.0172 
+##  5 2013-01-01 04:59:55  0.00123
+##  6 2013-01-01 05:59:55  0.0190 
+##  7 2013-01-01 06:59:55  0.0103 
+##  8 2013-01-01 07:59:55 -0.0289 
+##  9 2013-01-01 08:59:55 -0.0476 
+## 10 2013-01-01 09:59:55 -0.0222 
 ## # … with 26,270 more rows</code></pre>
 </div>
 <div id="multiple-series" class="section level2">
