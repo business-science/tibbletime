@@ -16,12 +16,12 @@
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]--><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=UA-76139189-1"></script><script>
+<![endif]--><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=UA-76139189-2"></script><script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
-  gtag('config', 'UA-76139189-1');
+  gtag('config', 'UA-76139189-2');
 </script>
 </head>
 <body data-spy="scroll" data-target="#toc">
@@ -37,7 +37,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tibbletime</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.5.9000</span>
       </span>
     </div>
 
@@ -97,7 +97,7 @@
       <h1 data-toc-skip>Use with dplyr</h1>
                         <h4 class="author">Davis Vaughan</h4>
             
-            <h4 class="date">2020-06-18</h4>
+            <h4 class="date">2020-07-17</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/business-science/tibbletime/blob/master/vignettes/TT-04-use-with-dplyr.Rmd"><code>vignettes/TT-04-use-with-dplyr.Rmd</code></a></small>
       <div class="hidden name"><code>TT-04-use-with-dplyr.Rmd</code></div>
@@ -124,16 +124,16 @@
 ## # Index: date
 ##    date           var
 ##    &lt;date&gt;       &lt;dbl&gt;
-##  1 2013-01-01 -0.293 
-##  2 2013-01-02  0.0607
-##  3 2013-01-03  0.0836
-##  4 2013-01-04 -0.668 
-##  5 2013-01-05  1.23  
-##  6 2013-01-06  0.384 
-##  7 2013-01-07 -2.70  
-##  8 2013-01-08 -1.76  
-##  9 2013-01-09 -1.52  
-## 10 2013-01-10  0.109 
+##  1 2013-01-01  0.108 
+##  2 2013-01-02 -1.92  
+##  3 2013-01-03 -0.955 
+##  4 2013-01-04  0.768 
+##  5 2013-01-05 -0.495 
+##  6 2013-01-06  2.07  
+##  7 2013-01-07 -1.07  
+##  8 2013-01-08  0.492 
+##  9 2013-01-09 -0.927 
+## 10 2013-01-10 -0.0637
 ## # … with 1,816 more rows</code></pre>
 <div class="sourceCode" id="cb3"><pre class="downlit">
 <span class="kw">series</span> <span class="op">%&gt;%</span>
@@ -144,16 +144,16 @@
 <pre><code>## # A tibble: 60 x 3
 ##     year month mean_var
 ##    &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;
-##  1  2013     1 -0.190  
-##  2  2013     2 -0.173  
-##  3  2013     3 -0.104  
-##  4  2013     4 -0.00229
-##  5  2013     5  0.0962 
-##  6  2013     6  0.00105
-##  7  2013     7  0.0963 
-##  8  2013     8  0.274  
-##  9  2013     9  0.122  
-## 10  2013    10  0.0574 
+##  1  2013     1  -0.178 
+##  2  2013     2   0.0985
+##  3  2013     3  -0.0853
+##  4  2013     4   0.359 
+##  5  2013     5   0.490 
+##  6  2013     6  -0.133 
+##  7  2013     7   0.185 
+##  8  2013     8   0.0508
+##  9  2013     9  -0.0714
+## 10  2013    10   0.242 
 ## # … with 50 more rows</code></pre>
 <p>This gets more difficult the more granular you go. Getting 5-minute summaries from minute or second data requires grouping on year, month, day, hour and minute columns.</p>
 </div>
@@ -172,16 +172,16 @@
 ## # Index: date
 ##    date       mean_var
 ##    &lt;date&gt;        &lt;dbl&gt;
-##  1 2013-01-31 -0.190  
-##  2 2013-02-28 -0.173  
-##  3 2013-03-31 -0.104  
-##  4 2013-04-30 -0.00229
-##  5 2013-05-31  0.0962 
-##  6 2013-06-30  0.00105
-##  7 2013-07-31  0.0963 
-##  8 2013-08-31  0.274  
-##  9 2013-09-30  0.122  
-## 10 2013-10-31  0.0574 
+##  1 2013-01-31  -0.178 
+##  2 2013-02-28   0.0985
+##  3 2013-03-31  -0.0853
+##  4 2013-04-30   0.359 
+##  5 2013-05-31   0.490 
+##  6 2013-06-30  -0.133 
+##  7 2013-07-31   0.185 
+##  8 2013-08-31   0.0508
+##  9 2013-09-30  -0.0714
+## 10 2013-10-31   0.242 
 ## # … with 50 more rows</code></pre>
 <p>While <code><a href="../reference/collapse_by.html">collapse_by()</a></code> directly manipulates the index column, the lower level <code><a href="../reference/collapse_index.html">collapse_index()</a></code> function can be used inside of a call to <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> to modify the index column and then save it as a new column. This can be useful if you don’t want to lose the original index column.</p>
 <p>This works for more granular series too. Below we aggregate 5 second level data up to hourly. This is working with a faily sizable ~19 million row data set.</p>
@@ -197,18 +197,18 @@
 <pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
 <pre><code>## # A time tibble: 26,280 x 2
 ## # Index: date
-##    date                 mean_var
-##    &lt;dttm&gt;                  &lt;dbl&gt;
-##  1 2013-01-01 00:59:55 -0.0263  
-##  2 2013-01-01 01:59:55  0.0107  
-##  3 2013-01-01 02:59:55 -0.00353 
-##  4 2013-01-01 03:59:55  0.0203  
-##  5 2013-01-01 04:59:55 -0.0231  
-##  6 2013-01-01 05:59:55  0.0289  
-##  7 2013-01-01 06:59:55 -0.00304 
-##  8 2013-01-01 07:59:55 -0.000489
-##  9 2013-01-01 08:59:55 -0.0341  
-## 10 2013-01-01 09:59:55  0.0443  
+##    date                mean_var
+##    &lt;dttm&gt;                 &lt;dbl&gt;
+##  1 2013-01-01 00:59:55  0.0316 
+##  2 2013-01-01 01:59:55 -0.0540 
+##  3 2013-01-01 02:59:55 -0.0322 
+##  4 2013-01-01 03:59:55  0.0432 
+##  5 2013-01-01 04:59:55  0.0356 
+##  6 2013-01-01 05:59:55 -0.0201 
+##  7 2013-01-01 06:59:55 -0.0402 
+##  8 2013-01-01 07:59:55  0.00894
+##  9 2013-01-01 08:59:55 -0.0477 
+## 10 2013-01-01 09:59:55 -0.0832 
 ## # … with 26,270 more rows</code></pre>
 </div>
 <div id="multiple-series" class="section level2">

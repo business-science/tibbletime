@@ -20,12 +20,12 @@
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]--><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=UA-76139189-1"></script><script>
+<![endif]--><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=UA-76139189-2"></script><script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
-  gtag('config', 'UA-76139189-1');
+  gtag('config', 'UA-76139189-2');
 </script>
 </head>
 <body data-spy="scroll" data-target="#toc">
@@ -41,7 +41,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">tibbletime</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.5.9000</span>
       </span>
     </div>
 
@@ -106,7 +106,13 @@
 <div id="package-status" class="section level2">
 <h2 class="hasAnchor">
 <a href="#package-status" class="anchor"></a>Package status</h2>
-<p><code>tibbletime</code> has been officially retired. Please use the great <a href="https://github.com/tidyverts/tsibble"><code>tsibble</code></a> package instead as that is where further development will be.</p>
+<p><code>tibbletime</code> has been officially retired. We will continue to maintain but not be adding new functionality. Options to get new functionality:</p>
+<ul>
+<li>
+<a href="https://business-science.github.io/timetk/index.html"><strong>timetk</strong></a> - Provides time series visualization, wrangling, and preprocessing using <code>tibble</code> structure</li>
+<li>
+<a href="https://github.com/tidyverts/tsibble"><strong>tsibble</strong></a> - Provides wrangling using <code>tsibble</code> structure</li>
+</ul>
 </div>
 <div id="a-time-aware-tibble" class="section level2">
 <h2 class="hasAnchor">
@@ -305,7 +311,6 @@
     adj_max   = <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span>(<span class="kw">adjusted</span>),
     adj_range = <span class="kw">adj_max</span> <span class="op">-</span> <span class="kw">adj_min</span>
   )
-<span class="co">#&gt; `summarise()` regrouping output by 'symbol' (override with `.groups` argument)</span>
 <span class="co">#&gt; # A time tibble: 16 x 5</span>
 <span class="co">#&gt; # Index:  date</span>
 <span class="co">#&gt; # Groups: symbol [4]</span>
