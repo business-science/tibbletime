@@ -39,6 +39,7 @@ Suggests:
     covr,
     gapminder,
     knitr,
+    rmarkdown,
     testthat,
     tidyr (>= 1.0.0)
 VignetteBuilder: knitr
