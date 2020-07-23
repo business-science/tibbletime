@@ -1,6 +1,6 @@
 ## Release Summary
 
-This is a minor release to fix a bug with dplyr 1.0.0 and `ungroup()`.
+This is an extremely minor release to fix warnings with tidyr 1.0.0 in tests.
 
 ## Test environments
 * local Mac install, R 4.0.0
