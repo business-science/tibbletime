@@ -12,7 +12,7 @@ bool is_ordered_numeric(NumericVector x) {
 
   // Loop over each element
   // (Nicely won't execute for vectors of length 1)
-  for(i = 0; i < (length_x - 1); i++) {
+  for(i = 0; i < length_x - 1; i++) {
 
     // Check if diff < 0
     // (< allows duplicates (<= would not))
