@@ -25,6 +25,8 @@
 </script>
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -37,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tibbletime</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.5.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.6.9000</span>
       </span>
     </div>
 
@@ -76,8 +78,8 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/business-science/tibbletime">
-    <span class="fa fa-github"></span>
+  <a href="https://github.com/business-science/tibbletime" class="external-link">
+    <span class="fas fa-github"></span>
      
   </a>
 </li>
@@ -95,11 +97,11 @@
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Changing periodicity</h1>
-                        <h4 class="author">Davis Vaughan</h4>
+                        <h4 data-toc-skip class="author">Davis Vaughan</h4>
             
-            <h4 class="date">2020-07-17</h4>
+            <h4 data-toc-skip class="date">2021-02-18</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/business-science/tibbletime/blob/master/vignettes/TT-02-changing-time-periods.Rmd"><code>vignettes/TT-02-changing-time-periods.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/business-science/tibbletime/blob/master/vignettes/TT-02-changing-time-periods.Rmd" class="external-link"><code>vignettes/TT-02-changing-time-periods.Rmd</code></a></small>
       <div class="hidden name"><code>TT-02-changing-time-periods.Rmd</code></div>
 
     </div>
@@ -114,31 +116,29 @@
 <div id="datasets-required" class="section level2">
 <h2 class="hasAnchor">
 <a href="#datasets-required" class="anchor"></a>Datasets required</h2>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://github.com/business-science/tibbletime">tibbletime</a></span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://dplyr.tidyverse.org">dplyr</a></span>)
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/business-science/tibbletime" class="external-link">tibbletime</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span>
 
 <span class="co"># Facebook stock prices.</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="kw">FB</span>)
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">FB</span><span class="op">)</span>
 
 <span class="co"># Convert FB to tbl_time</span>
-<span class="kw">FB</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as_tbl_time.html">as_tbl_time</a></span>(<span class="kw">FB</span>, index = <span class="kw">date</span>)
+<span class="va">FB</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as_tbl_time.html">as_tbl_time</a></span><span class="op">(</span><span class="va">FB</span>, index <span class="op">=</span> <span class="va">date</span><span class="op">)</span>
 
 <span class="co"># FANG stock prices</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="kw">FANG</span>)
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">FANG</span><span class="op">)</span>
 
 <span class="co"># Convert FANG to tbl_time and group</span>
-<span class="kw">FANG</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as_tbl_time.html">as_tbl_time</a></span>(<span class="kw">FANG</span>, index = <span class="kw">date</span>) <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(<span class="kw">symbol</span>)
-</pre></div>
+<span class="va">FANG</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as_tbl_time.html">as_tbl_time</a></span><span class="op">(</span><span class="va">FANG</span>, index <span class="op">=</span> <span class="va">date</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">symbol</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="daily-to-monthly" class="section level2">
 <h2 class="hasAnchor">
 <a href="#daily-to-monthly" class="anchor"></a>Daily to monthly</h2>
 <p>To see this in action, transform the daily <code>FB</code> data set to monthly data.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="fu"><a href="../reference/as_period.html">as_period</a></span>(<span class="kw">FB</span>, <span class="st">'1 month'</span>)
-</pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/as_period.html">as_period</a></span><span class="op">(</span><span class="va">FB</span>, <span class="st">'1 month'</span><span class="op">)</span></code></pre></div>
 <pre><code>## # A time tibble: 48 x 8
 ## # Index: date
 ##    symbol date        open  high   low close    volume adjusted
@@ -154,20 +154,18 @@
 ##  9 FB     2013-09-03  41.8  42.2  41.5  41.9  48774900     41.9
 ## 10 FB     2013-10-01  50.0  51.0  49.5  50.4  98114000     50.4
 ## # … with 38 more rows</code></pre>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="co"># Additionally, the following are equivalent</span>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Additionally, the following are equivalent</span>
 <span class="co"># as_period(FB, 'monthly')</span>
 <span class="co"># as_period(FB, 'm')</span>
-<span class="co"># as_period(FB, '1 m')</span>
-</pre></div>
+<span class="co"># as_period(FB, '1 m')</span></code></pre></div>
 </div>
 <div id="generic-periods" class="section level2">
 <h2 class="hasAnchor">
 <a href="#generic-periods" class="anchor"></a>Generic periods</h2>
 <p>You aren’t restricted to only 1 month periods. Maybe you wanted every 2 months?</p>
-<div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="fu"><a href="../reference/as_period.html">as_period</a></span>(<span class="kw">FB</span>, <span class="st">'2 m'</span>)
-</pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/as_period.html">as_period</a></span><span class="op">(</span><span class="va">FB</span>, <span class="st">'2 m'</span><span class="op">)</span></code></pre></div>
 <pre><code>## # A time tibble: 24 x 8
 ## # Index: date
 ##    symbol date        open  high   low close   volume adjusted
@@ -184,9 +182,8 @@
 ## 10 FB     2014-07-01  67.6  68.4  67.4  68.1 33243000     68.1
 ## # … with 14 more rows</code></pre>
 <p>Or maybe every 25 days? Note that the dates do not line up exactly with a difference of 25 days. This is due to the data set not being completely regular (there are gaps due to weekends and holidays). <code><a href="../reference/as_period.html">as_period()</a></code> chooses the first date it can find in the period specified.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit">
-<span class="fu"><a href="../reference/as_period.html">as_period</a></span>(<span class="kw">FB</span>, <span class="st">'25 d'</span>)
-</pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/as_period.html">as_period</a></span><span class="op">(</span><span class="va">FB</span>, <span class="st">'25 d'</span><span class="op">)</span></code></pre></div>
 <pre><code>## # A time tibble: 59 x 8
 ## # Index: date
 ##    symbol date        open  high   low close   volume adjusted
@@ -213,10 +210,9 @@
 </ol>
 <p>In the 1 month example above, <code>2013-01-02</code> is the first date in the series, and because “monthly” was chosen, the first group is defined as (2013-01-01 to 2013-01-31).</p>
 <p>Occasionally this is not what you want. Consider what would happen if you changed the period to “every 2 days”. The first date is <code>2013-01-02</code>, but because “daily” is chosen, this isn’t floored to <code>2013-01-01</code> so the groups are (2013-01-02, 2013-01-03), (2013-01-04, 2013-01-05) and so on. If you wanted the first group to be (2013-01-01, 2013-01-02), you can use the <code>start_date</code> argument.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit">
-<span class="co"># Without start_date</span>
-<span class="fu"><a href="../reference/as_period.html">as_period</a></span>(<span class="kw">FB</span>, <span class="st">'2 d'</span>)
-</pre></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Without start_date</span>
+<span class="fu"><a href="../reference/as_period.html">as_period</a></span><span class="op">(</span><span class="va">FB</span>, <span class="st">'2 d'</span><span class="op">)</span></code></pre></div>
 <pre><code>## # A time tibble: 619 x 8
 ## # Index: date
 ##    symbol date        open  high   low close    volume adjusted
@@ -232,10 +228,9 @@
 ##  9 FB     2013-01-22  29.8  30.9  29.7  30.7  55243300     30.7
 ## 10 FB     2013-01-23  31.1  31.5  30.8  30.8  48899800     30.8
 ## # … with 609 more rows</code></pre>
-<div class="sourceCode" id="cb11"><pre class="downlit">
-<span class="co"># With start_date</span>
-<span class="fu"><a href="../reference/as_period.html">as_period</a></span>(<span class="kw">FB</span>, <span class="st">'2 d'</span>, start_date = <span class="st">"2013-01-01"</span>)
-</pre></div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># With start_date</span>
+<span class="fu"><a href="../reference/as_period.html">as_period</a></span><span class="op">(</span><span class="va">FB</span>, <span class="st">'2 d'</span>, start_date <span class="op">=</span> <span class="st">"2013-01-01"</span><span class="op">)</span></code></pre></div>
 <pre><code>## # A time tibble: 619 x 8
 ## # Index: date
 ##    symbol date        open  high   low close    volume adjusted
@@ -256,9 +251,8 @@
 <h2 class="hasAnchor">
 <a href="#the-side-argument" class="anchor"></a>The <code>side</code> argument</h2>
 <p>By default, the first date per period is returned. If you want the end of each period instead, specify the <code>side = "end"</code> argument.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit">
-<span class="fu"><a href="../reference/as_period.html">as_period</a></span>(<span class="kw">FB</span>, <span class="st">'y'</span>, side = <span class="st">"end"</span>)
-</pre></div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/as_period.html">as_period</a></span><span class="op">(</span><span class="va">FB</span>, <span class="st">'y'</span>, side <span class="op">=</span> <span class="st">"end"</span><span class="op">)</span></code></pre></div>
 <pre><code>## # A time tibble: 4 x 8
 ## # Index: date
 ##   symbol date        open  high   low close   volume adjusted
@@ -272,10 +266,9 @@
 <h2 class="hasAnchor">
 <a href="#grouped-datasets" class="anchor"></a>Grouped datasets</h2>
 <p>One of the neat things about working in the <code>tidyverse</code> is that these functions can also work with grouped datasets. Here we transform the daily series of the 4 FANG stocks to a periodicity of every 2 years.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit">
-<span class="kw">FANG</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/as_period.html">as_period</a></span>(<span class="st">'2 y'</span>)
-</pre></div>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">FANG</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/as_period.html">as_period</a></span><span class="op">(</span><span class="st">'2 y'</span><span class="op">)</span></code></pre></div>
 <pre><code>## # A time tibble: 12 x 8
 ## # Index:  date
 ## # Groups: symbol [4]
@@ -312,7 +305,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>
@@ -320,6 +313,8 @@
 
   
 
+
+  
 
   </body>
 </html>

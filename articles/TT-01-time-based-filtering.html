@@ -25,6 +25,8 @@
 </script>
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -37,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tibbletime</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.5.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.6.9000</span>
       </span>
     </div>
 
@@ -76,8 +78,8 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/business-science/tibbletime">
-    <span class="fa fa-github"></span>
+  <a href="https://github.com/business-science/tibbletime" class="external-link">
+    <span class="fas fa-github"></span>
      
   </a>
 </li>
@@ -95,11 +97,11 @@
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Time-based filtering</h1>
-                        <h4 class="author">Davis Vaughan</h4>
+                        <h4 data-toc-skip class="author">Davis Vaughan</h4>
             
-            <h4 class="date">2020-07-17</h4>
+            <h4 data-toc-skip class="date">2021-02-18</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/business-science/tibbletime/blob/master/vignettes/TT-01-time-based-filtering.Rmd"><code>vignettes/TT-01-time-based-filtering.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/business-science/tibbletime/blob/master/vignettes/TT-01-time-based-filtering.Rmd" class="external-link"><code>vignettes/TT-01-time-based-filtering.Rmd</code></a></small>
       <div class="hidden name"><code>TT-01-time-based-filtering.Rmd</code></div>
 
     </div>
@@ -109,35 +111,33 @@
 <div id="introducing-filter_time" class="section level1">
 <h1 class="hasAnchor">
 <a href="#introducing-filter_time" class="anchor"></a>Introducing filter_time()</h1>
-<p><code><a href="../reference/filter_time.html">filter_time()</a></code> attempts to make filtering data frames by date much easier than <code><a href="https://dplyr.tidyverse.org/reference/filter.html">dplyr::filter()</a></code>. It includes a flexible shorthand notation that allows you to specify entire date ranges with very little typing. The general form of the <code>time_formula</code> that you will use to filter rows is <code>from ~ to</code>, where the left hand side (LHS) is the character start date, and the right hand side (RHS) is the character end date. Both endpoints are included in the result. Each side of the <code>time_formula</code> can be maximally specified as the character <code>'YYYY-MM-DD HH:MM:SS'</code>.</p>
+<p><code><a href="../reference/filter_time.html">filter_time()</a></code> attempts to make filtering data frames by date much easier than <code><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">dplyr::filter()</a></code>. It includes a flexible shorthand notation that allows you to specify entire date ranges with very little typing. The general form of the <code>time_formula</code> that you will use to filter rows is <code>from ~ to</code>, where the left hand side (LHS) is the character start date, and the right hand side (RHS) is the character end date. Both endpoints are included in the result. Each side of the <code>time_formula</code> can be maximally specified as the character <code>'YYYY-MM-DD HH:MM:SS'</code>.</p>
 <div id="datasets-required" class="section level2">
 <h2 class="hasAnchor">
 <a href="#datasets-required" class="anchor"></a>Datasets required</h2>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://github.com/business-science/tibbletime">tibbletime</a></span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://dplyr.tidyverse.org">dplyr</a></span>)
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/business-science/tibbletime" class="external-link">tibbletime</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span>
 
 <span class="co"># Facebook stock prices.</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="kw">FB</span>)
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">FB</span><span class="op">)</span>
 
 <span class="co"># Convert FB to tbl_time</span>
-<span class="kw">FB</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as_tbl_time.html">as_tbl_time</a></span>(<span class="kw">FB</span>, index = <span class="kw">date</span>)
+<span class="va">FB</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as_tbl_time.html">as_tbl_time</a></span><span class="op">(</span><span class="va">FB</span>, index <span class="op">=</span> <span class="va">date</span><span class="op">)</span>
 
 <span class="co"># FANG stock prices</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="kw">FANG</span>)
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">FANG</span><span class="op">)</span>
 
 <span class="co"># Convert FANG to tbl_time and group</span>
-<span class="kw">FANG</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as_tbl_time.html">as_tbl_time</a></span>(<span class="kw">FANG</span>, index = <span class="kw">date</span>) <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(<span class="kw">symbol</span>)
-</pre></div>
+<span class="va">FANG</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as_tbl_time.html">as_tbl_time</a></span><span class="op">(</span><span class="va">FANG</span>, index <span class="op">=</span> <span class="va">date</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">symbol</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="year-filtering-example" class="section level2">
 <h2 class="hasAnchor">
 <a href="#year-filtering-example" class="anchor"></a>Year filtering example</h2>
 <p>In <code>dplyr</code>, if you wanted to get the dates for <code>2013</code> in the <code>FB</code> dataset, you might do something like this:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="kw">FB</span>, <span class="kw">date</span> <span class="op">&gt;=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span>(<span class="st">"2013-01-01"</span>), <span class="kw">date</span> <span class="op">&lt;=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span>(<span class="st">"2013-12-31"</span>))
-</pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">FB</span>, <span class="va">date</span> <span class="op">&gt;=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2013-01-01"</span><span class="op">)</span>, <span class="va">date</span> <span class="op">&lt;=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2013-12-31"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## # A time tibble: 252 x 8
 ## # Index: date
 ##    symbol date        open  high   low close    volume adjusted
@@ -154,9 +154,8 @@
 ## 10 FB     2013-01-15  30.6  31.7  29.9  30.1 173242600     30.1
 ## # … with 242 more rows</code></pre>
 <p>That’s a lot of typing for one filter step. With <code>tibbletime</code>, because the <code>index</code> was specified at creation, we can do this:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="fu"><a href="../reference/filter_time.html">filter_time</a></span>(<span class="kw">FB</span>, time_formula = <span class="st">'2013-01-01'</span> <span class="op">~</span> <span class="st">'2013-12-31'</span>)
-</pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/filter_time.html">filter_time</a></span><span class="op">(</span><span class="va">FB</span>, time_formula <span class="op">=</span> <span class="st">'2013-01-01'</span> <span class="op">~</span> <span class="st">'2013-12-31'</span><span class="op">)</span></code></pre></div>
 <pre><code>## # A time tibble: 252 x 8
 ## # Index: date
 ##    symbol date        open  high   low close    volume adjusted
@@ -172,11 +171,10 @@
 ##  9 FB     2013-01-14  32.1  32.2  30.6  31.0  98892800     31.0
 ## 10 FB     2013-01-15  30.6  31.7  29.9  30.1 173242600     30.1
 ## # … with 242 more rows</code></pre>
-<p>At first glance, this might not look like less code, but this is before any shorthand is applied. Note how the filtering condition is specified as a <code>formula</code> separated by a <code><a href="https://rdrr.io/r/base/tilde.html">~</a></code>.</p>
+<p>At first glance, this might not look like less code, but this is before any shorthand is applied. Note how the filtering condition is specified as a <code>formula</code> separated by a <code><a href="https://rdrr.io/r/base/tilde.html" class="external-link">~</a></code>.</p>
 <p>Using <code>filter_time</code> shorthand, this can be written:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="fu"><a href="../reference/filter_time.html">filter_time</a></span>(<span class="kw">FB</span>, <span class="st">'2013'</span> <span class="op">~</span> <span class="st">'2013'</span>)
-</pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/filter_time.html">filter_time</a></span><span class="op">(</span><span class="va">FB</span>, <span class="st">'2013'</span> <span class="op">~</span> <span class="st">'2013'</span><span class="op">)</span></code></pre></div>
 <pre><code>## # A time tibble: 252 x 8
 ## # Index: date
 ##    symbol date        open  high   low close    volume adjusted
@@ -193,9 +191,8 @@
 ## 10 FB     2013-01-15  30.6  31.7  29.9  30.1 173242600     30.1
 ## # … with 242 more rows</code></pre>
 <p>Or even more succinctly as:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit">
-<span class="fu"><a href="../reference/filter_time.html">filter_time</a></span>(<span class="kw">FB</span>, <span class="op">~</span><span class="st">'2013'</span>)
-</pre></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/filter_time.html">filter_time</a></span><span class="op">(</span><span class="va">FB</span>, <span class="op">~</span><span class="st">'2013'</span><span class="op">)</span></code></pre></div>
 <pre><code>## # A time tibble: 252 x 8
 ## # Index: date
 ##    symbol date        open  high   low close    volume adjusted
@@ -217,9 +214,8 @@
 <h2 class="hasAnchor">
 <a href="#month-filtering-example" class="anchor"></a>Month filtering example</h2>
 <p>As another example of this shorthand, if you wanted to select every date in March, 2015:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit">
-<span class="fu"><a href="../reference/filter_time.html">filter_time</a></span>(<span class="kw">FB</span>, <span class="op">~</span><span class="st">'2015-03'</span>)
-</pre></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/filter_time.html">filter_time</a></span><span class="op">(</span><span class="va">FB</span>, <span class="op">~</span><span class="st">'2015-03'</span><span class="op">)</span></code></pre></div>
 <pre><code>## # A time tibble: 22 x 8
 ## # Index: date
 ##    symbol date        open  high   low close   volume adjusted
@@ -235,11 +231,10 @@
 ##  9 FB     2015-03-12  78.1  79.1  77.9  78.9 16093300     78.9
 ## 10 FB     2015-03-13  78.6  79.4  77.7  78.1 18557300     78.1
 ## # … with 12 more rows</code></pre>
-<div class="sourceCode" id="cb12"><pre class="downlit">
-<span class="co"># In dplyr it looks like this</span>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># In dplyr it looks like this</span>
 <span class="co"># (and you have to think, does March have 30 or 31 days?)</span>
-<span class="co"># filter(FB, date &gt;= as.Date("2015-03-01"), date &lt;= as.Date("2015-03-31"))</span>
-</pre></div>
+<span class="co"># filter(FB, date &gt;= as.Date("2015-03-01"), date &lt;= as.Date("2015-03-31"))</span></code></pre></div>
 </div>
 <div id="keywords" class="section level2">
 <h2 class="hasAnchor">
@@ -252,9 +247,8 @@
 <code>'end'</code> - The end of the series</li>
 </ul>
 <p>This filters from the start of the series to the end of 2015.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit">
-<span class="fu"><a href="../reference/filter_time.html">filter_time</a></span>(<span class="kw">FB</span>, <span class="st">'start'</span> <span class="op">~</span> <span class="st">'2015'</span>)
-</pre></div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/filter_time.html">filter_time</a></span><span class="op">(</span><span class="va">FB</span>, <span class="st">'start'</span> <span class="op">~</span> <span class="st">'2015'</span><span class="op">)</span></code></pre></div>
 <pre><code>## # A time tibble: 756 x 8
 ## # Index: date
 ##    symbol date        open  high   low close    volume adjusted
@@ -275,10 +269,9 @@
 <h2 class="hasAnchor">
 <a href="#grouped-example" class="anchor"></a>Grouped example</h2>
 <p>Working with grouped <code>tbl_time</code> objects is just as you might expect.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit">
-<span class="kw">FANG</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/filter_time.html">filter_time</a></span>(<span class="st">'2013-01-01'</span> <span class="op">~</span> <span class="st">'2013-01-04'</span>)
-</pre></div>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">FANG</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/filter_time.html">filter_time</a></span><span class="op">(</span><span class="st">'2013-01-01'</span> <span class="op">~</span> <span class="st">'2013-01-04'</span><span class="op">)</span></code></pre></div>
 <pre><code>## # A time tibble: 12 x 8
 ## # Index:  date
 ## # Groups: symbol [4]
@@ -301,14 +294,13 @@
 <h2 class="hasAnchor">
 <a href="#finer-periods" class="anchor"></a>Finer periods</h2>
 <p>Filtering can also be done by hour / minute / second. Note that the form of this is slightly different than the standard, <code>'YYYY-MM-DD HH:MM:SS'</code>.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit">
-<span class="co"># Dummy example. Every second in a day</span>
-<span class="kw">example</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_series.html">create_series</a></span>(<span class="op">~</span><span class="st">'2013-01-01'</span>, period = <span class="st">'s'</span>)
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Dummy example. Every second in a day</span>
+<span class="va">example</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_series.html">create_series</a></span><span class="op">(</span><span class="op">~</span><span class="st">'2013-01-01'</span>, period <span class="op">=</span> <span class="st">'s'</span><span class="op">)</span>
 
 <span class="co"># The first 2 minutes of the day</span>
-<span class="kw">example</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/filter_time.html">filter_time</a></span>(<span class="st">'2013-01-01'</span> <span class="op">~</span> <span class="st">'2013-01-01 00:02'</span>)
-</pre></div>
+<span class="va">example</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/filter_time.html">filter_time</a></span><span class="op">(</span><span class="st">'2013-01-01'</span> <span class="op">~</span> <span class="st">'2013-01-01 00:02'</span><span class="op">)</span></code></pre></div>
 <pre><code>## # A time tibble: 180 x 1
 ## # Index: date
 ##    date               
@@ -324,13 +316,12 @@
 ##  9 2013-01-01 00:00:08
 ## 10 2013-01-01 00:00:09
 ## # … with 170 more rows</code></pre>
-<div class="sourceCode" id="cb19"><pre class="downlit">
-<span class="co"># 3 specific hours of the day</span>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># 3 specific hours of the day</span>
 <span class="co"># Equivalent to:</span>
 <span class="co"># '2013-01-01 + 03:00:00' ~ '2013-01-01 + 06:59:59'</span>
-<span class="kw">example</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/filter_time.html">filter_time</a></span>(<span class="st">'2013-01-01 3'</span> <span class="op">~</span> <span class="st">'2013-01-01 6'</span>)
-</pre></div>
+<span class="va">example</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/filter_time.html">filter_time</a></span><span class="op">(</span><span class="st">'2013-01-01 3'</span> <span class="op">~</span> <span class="st">'2013-01-01 6'</span><span class="op">)</span></code></pre></div>
 <pre><code>## # A time tibble: 14,400 x 1
 ## # Index: date
 ##    date               
@@ -350,10 +341,9 @@
 <div id="syntax" class="section level2">
 <h2 class="hasAnchor">
 <a href="#syntax" class="anchor"></a><code>[</code> syntax</h2>
-<p>For interactive use, to get an even quicker look at a dataset you can use the traditional extraction operator <code><a href="https://rdrr.io/r/base/Extract.html">[</a></code> with the formula syntax.</p>
-<div class="sourceCode" id="cb21"><pre class="downlit">
-<span class="kw">FB</span>[<span class="op">~</span><span class="st">'2013'</span>]
-</pre></div>
+<p>For interactive use, to get an even quicker look at a dataset you can use the traditional extraction operator <code><a href="https://rdrr.io/r/base/Extract.html" class="external-link">[</a></code> with the formula syntax.</p>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">FB</span><span class="op">[</span><span class="op">~</span><span class="st">'2013'</span><span class="op">]</span></code></pre></div>
 <pre><code>## # A time tibble: 252 x 8
 ## # Index: date
 ##    symbol date        open  high   low close    volume adjusted
@@ -369,9 +359,8 @@
 ##  9 FB     2013-01-14  32.1  32.2  30.6  31.0  98892800     31.0
 ## 10 FB     2013-01-15  30.6  31.7  29.9  30.1 173242600     30.1
 ## # … with 242 more rows</code></pre>
-<div class="sourceCode" id="cb23"><pre class="downlit">
-<span class="kw">FB</span>[<span class="st">'2013'</span><span class="op">~</span><span class="st">'2014-02'</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">3</span>)]
-</pre></div>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">FB</span><span class="op">[</span><span class="st">'2013'</span><span class="op">~</span><span class="st">'2014-02'</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">3</span><span class="op">)</span><span class="op">]</span></code></pre></div>
 <pre><code>## # A time tibble: 292 x 3
 ## # Index: date
 ##    symbol date        open
@@ -392,10 +381,9 @@
 <h2 class="hasAnchor">
 <a href="#using-variables-in-the-filter" class="anchor"></a>Using variables in the filter</h2>
 <p>Each side of the time formula is unquoted and evaluated in the environment that is was created using <code>rlang</code>. This means that you can use variables inside the call the <code><a href="../reference/filter_time.html">filter_time()</a></code>.</p>
-<div class="sourceCode" id="cb25"><pre class="downlit">
-<span class="kw">date_var</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span>(<span class="st">"2014-01-01"</span>)
-<span class="fu"><a href="../reference/filter_time.html">filter_time</a></span>(<span class="kw">FB</span>, <span class="st">'start'</span> <span class="op">~</span> <span class="kw">date_var</span>)
-</pre></div>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">date_var</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2014-01-01"</span><span class="op">)</span>
+<span class="fu"><a href="../reference/filter_time.html">filter_time</a></span><span class="op">(</span><span class="va">FB</span>, <span class="st">'start'</span> <span class="op">~</span> <span class="va">date_var</span><span class="op">)</span></code></pre></div>
 <pre><code>## # A time tibble: 252 x 8
 ## # Index: date
 ##    symbol date        open  high   low close    volume adjusted
@@ -411,10 +399,9 @@
 ##  9 FB     2013-01-14  32.1  32.2  30.6  31.0  98892800     31.0
 ## 10 FB     2013-01-15  30.6  31.7  29.9  30.1 173242600     30.1
 ## # … with 242 more rows</code></pre>
-<div class="sourceCode" id="cb27"><pre class="downlit">
-<span class="kw">date_char</span> <span class="op">&lt;-</span> <span class="st">"2014-02"</span>
-<span class="fu"><a href="../reference/filter_time.html">filter_time</a></span>(<span class="kw">FB</span>, <span class="op">~</span> <span class="kw">date_char</span>)
-</pre></div>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">date_char</span> <span class="op">&lt;-</span> <span class="st">"2014-02"</span>
+<span class="fu"><a href="../reference/filter_time.html">filter_time</a></span><span class="op">(</span><span class="va">FB</span>, <span class="op">~</span> <span class="va">date_char</span><span class="op">)</span></code></pre></div>
 <pre><code>## # A time tibble: 19 x 8
 ## # Index: date
 ##    symbol date        open  high   low close    volume adjusted
@@ -457,7 +444,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>
@@ -465,6 +452,8 @@
 
   
 
+
+  
 
   </body>
 </html>

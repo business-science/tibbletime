@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Succinctly filter a <code>tbl_time</code> object by its index — filter_time • tibbletime</title>
+<title>Succinctly filter a tbl_time object by its index — filter_time • tibbletime</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,10 @@
 
 
 
-<meta property="og:title" content="Succinctly filter a <code>tbl_time</code> object by its index — filter_time" />
+<meta property="og:title" content="Succinctly filter a tbl_time object by its index — filter_time" />
 <meta property="og:description" content="Use a concise filtering method to filter a tbl_time object by its index." />
+
+
 
 
 
@@ -66,9 +68,15 @@
 </script>
 
 
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -82,7 +90,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tibbletime</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.5.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.6.9000</span>
       </span>
     </div>
 
@@ -122,7 +130,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/business-science/tibbletime">
-    <span class="fa fa-github"></span>
+    <span class="fas fa-github"></span>
      
   </a>
 </li>
@@ -240,12 +248,13 @@ but only expands to include whole seconds.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='co'># FANG contains Facebook, Amazon, Netflix and Google stock prices</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>FANG</span>)
-<span class='kw'>FANG</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/tibbletime/man/tbl_time.html'>as_tbl_time</a></span>(<span class='kw'>FANG</span>, <span class='kw'>date</span>) <span class='op'>%&gt;%</span>
-  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='kw'>symbol</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>FANG</span><span class='op'>)</span>
+<span class='va'>FANG</span> <span class='op'>&lt;-</span> <span class='fu'><a href='as_tbl_time.html'>as_tbl_time</a></span><span class='op'>(</span><span class='va'>FANG</span>, <span class='va'>date</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>symbol</span><span class='op'>)</span>
 
 <span class='co'># 2013-01-01 to 2014-12-31</span>
-<span class='fu'><a href='https://rdrr.io/pkg/tibbletime/man/filter_time.html'>filter_time</a></span>(<span class='kw'>FANG</span>, <span class='st'>'2013'</span> <span class='op'>~</span> <span class='st'>'2014'</span>)</div><div class='output co'>#&gt; # A time tibble: 2,016 x 8
+<span class='fu'>filter_time</span><span class='op'>(</span><span class='va'>FANG</span>, <span class='st'>'2013'</span> <span class='op'>~</span> <span class='st'>'2014'</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; # A time tibble: 2,016 x 8
 #&gt; <span style='color: #555555;'># Index:  date</span><span>
 #&gt; </span><span style='color: #555555;'># Groups: symbol [4]</span><span>
 #&gt;    symbol date        open  high   low close    volume adjusted
@@ -262,7 +271,8 @@ but only expands to include whole seconds.</p>
 #&gt; </span><span style='color: #555555;'>10</span><span> FB     2013-01-15  30.6  31.7  29.9  30.1 173</span><span style='text-decoration: underline;'>242</span><span>600     30.1
 #&gt; </span><span style='color: #555555;'># … with 2,006 more rows</span><span></div><div class='input'>
 <span class='co'># 2013-05-25 to 2014-06-04</span>
-<span class='fu'><a href='https://rdrr.io/pkg/tibbletime/man/filter_time.html'>filter_time</a></span>(<span class='kw'>FANG</span>, <span class='st'>'2013-05-25'</span> <span class='op'>~</span> <span class='st'>'2014-06-04'</span>)</div><div class='output co'>#&gt; # A time tibble: 1,032 x 8
+<span class='fu'>filter_time</span><span class='op'>(</span><span class='va'>FANG</span>, <span class='st'>'2013-05-25'</span> <span class='op'>~</span> <span class='st'>'2014-06-04'</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; # A time tibble: 1,032 x 8
 #&gt; </span><span style='color: #555555;'># Index:  date</span><span>
 #&gt; </span><span style='color: #555555;'># Groups: symbol [4]</span><span>
 #&gt;    symbol date        open  high   low close   volume adjusted
@@ -279,7 +289,8 @@ but only expands to include whole seconds.</p>
 #&gt; </span><span style='color: #555555;'>10</span><span> FB     2013-06-10  24.1  24.6  24.0  24.3 58</span><span style='text-decoration: underline;'>393</span><span>000     24.3
 #&gt; </span><span style='color: #555555;'># … with 1,022 more rows</span><span></div><div class='input'>
 <span class='co'># Using the `[` subset operator</span>
-<span class='kw'>FANG</span>[<span class='st'>'2014'</span><span class='op'>~</span><span class='st'>'2015'</span>]</div><div class='output co'>#&gt; # A time tibble: 2,016 x 8
+<span class='va'>FANG</span><span class='op'>[</span><span class='st'>'2014'</span><span class='op'>~</span><span class='st'>'2015'</span><span class='op'>]</span>
+</div><div class='output co'>#&gt; # A time tibble: 2,016 x 8
 #&gt; </span><span style='color: #555555;'># Index: date</span><span>
 #&gt;    symbol date        open  high   low close   volume adjusted
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
@@ -295,7 +306,8 @@ but only expands to include whole seconds.</p>
 #&gt; </span><span style='color: #555555;'>10</span><span> FB     2014-01-15  58.0  58.6  57.3  57.6 33</span><span style='text-decoration: underline;'>663</span><span>400     57.6
 #&gt; </span><span style='color: #555555;'># … with 2,006 more rows</span><span></div><div class='input'>
 <span class='co'># Using `[` and one sided formula for only dates in 2014</span>
-<span class='kw'>FANG</span>[<span class='op'>~</span><span class='st'>'2014'</span>]</div><div class='output co'>#&gt; # A time tibble: 1,008 x 8
+<span class='va'>FANG</span><span class='op'>[</span><span class='op'>~</span><span class='st'>'2014'</span><span class='op'>]</span>
+</div><div class='output co'>#&gt; # A time tibble: 1,008 x 8
 #&gt; </span><span style='color: #555555;'># Index: date</span><span>
 #&gt;    symbol date        open  high   low close   volume adjusted
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
@@ -311,7 +323,8 @@ but only expands to include whole seconds.</p>
 #&gt; </span><span style='color: #555555;'>10</span><span> FB     2014-01-15  58.0  58.6  57.3  57.6 33</span><span style='text-decoration: underline;'>663</span><span>400     57.6
 #&gt; </span><span style='color: #555555;'># … with 998 more rows</span><span></div><div class='input'>
 <span class='co'># Using `[` and column selection</span>
-<span class='kw'>FANG</span>[<span class='st'>'2013'</span><span class='op'>~</span><span class='st'>'2016'</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"date"</span>, <span class='st'>"adjusted"</span>)]</div><div class='output co'>#&gt; # A time tibble: 4,032 x 2
+<span class='va'>FANG</span><span class='op'>[</span><span class='st'>'2013'</span><span class='op'>~</span><span class='st'>'2016'</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"date"</span>, <span class='st'>"adjusted"</span><span class='op'>)</span><span class='op'>]</span>
+</div><div class='output co'>#&gt; # A time tibble: 4,032 x 2
 #&gt; </span><span style='color: #555555;'># Index: date</span><span>
 #&gt;    date       adjusted
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
@@ -327,9 +340,10 @@ but only expands to include whole seconds.</p>
 #&gt; </span><span style='color: #555555;'>10</span><span> 2013-01-15     30.1
 #&gt; </span><span style='color: #555555;'># … with 4,022 more rows</span><span></div><div class='input'>
 <span class='co'># Variables are unquoted using rlang</span>
-<span class='kw'>lhs_date</span> <span class='op'>&lt;-</span> <span class='st'>"2013"</span>
-<span class='kw'>rhs_date</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span>(<span class='st'>"2014-01-01"</span>)
-<span class='fu'><a href='https://rdrr.io/pkg/tibbletime/man/filter_time.html'>filter_time</a></span>(<span class='kw'>FANG</span>, <span class='kw'>lhs_date</span> <span class='op'>~</span> <span class='kw'>rhs_date</span>)</div><div class='output co'>#&gt; # A time tibble: 1,008 x 8
+<span class='va'>lhs_date</span> <span class='op'>&lt;-</span> <span class='st'>"2013"</span>
+<span class='va'>rhs_date</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span><span class='op'>(</span><span class='st'>"2014-01-01"</span><span class='op'>)</span>
+<span class='fu'>filter_time</span><span class='op'>(</span><span class='va'>FANG</span>, <span class='va'>lhs_date</span> <span class='op'>~</span> <span class='va'>rhs_date</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; # A time tibble: 1,008 x 8
 #&gt; </span><span style='color: #555555;'># Index:  date</span><span>
 #&gt; </span><span style='color: #555555;'># Groups: symbol [4]</span><span>
 #&gt;    symbol date        open  high   low close    volume adjusted
@@ -346,7 +360,8 @@ but only expands to include whole seconds.</p>
 #&gt; </span><span style='color: #555555;'>10</span><span> FB     2013-01-15  30.6  31.7  29.9  30.1 173</span><span style='text-decoration: underline;'>242</span><span>600     30.1
 #&gt; </span><span style='color: #555555;'># … with 998 more rows</span><span></div><div class='input'>
 <span class='co'># Use the keywords 'start' and 'end' to conveniently access ends</span>
-<span class='fu'><a href='https://rdrr.io/pkg/tibbletime/man/filter_time.html'>filter_time</a></span>(<span class='kw'>FANG</span>, <span class='st'>'start'</span> <span class='op'>~</span> <span class='st'>'2014'</span>)</div><div class='output co'>#&gt; # A time tibble: 2,016 x 8
+<span class='fu'>filter_time</span><span class='op'>(</span><span class='va'>FANG</span>, <span class='st'>'start'</span> <span class='op'>~</span> <span class='st'>'2014'</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; # A time tibble: 2,016 x 8
 #&gt; </span><span style='color: #555555;'># Index:  date</span><span>
 #&gt; </span><span style='color: #555555;'># Groups: symbol [4]</span><span>
 #&gt;    symbol date        open  high   low close    volume adjusted
@@ -363,8 +378,9 @@ but only expands to include whole seconds.</p>
 #&gt; </span><span style='color: #555555;'>10</span><span> FB     2013-01-15  30.6  31.7  29.9  30.1 173</span><span style='text-decoration: underline;'>242</span><span>600     30.1
 #&gt; </span><span style='color: #555555;'># … with 2,006 more rows</span><span></div><div class='input'>
 <span class='co'># hms (hour, minute, second) classes have special parsing</span>
-<span class='kw'>hms_example</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/tibbletime/man/create_series.html'>create_series</a></span>(<span class='op'>~</span><span class='st'>'12:01'</span>, <span class='st'>'second'</span>, class = <span class='st'>'hms'</span>)
-<span class='fu'><a href='https://rdrr.io/pkg/tibbletime/man/filter_time.html'>filter_time</a></span>(<span class='kw'>hms_example</span>, <span class='st'>'start'</span> <span class='op'>~</span> <span class='st'>'12:01:30'</span>)</div><div class='output co'>#&gt; # A time tibble: 31 x 1
+<span class='va'>hms_example</span> <span class='op'>&lt;-</span> <span class='fu'><a href='create_series.html'>create_series</a></span><span class='op'>(</span><span class='op'>~</span><span class='st'>'12:01'</span>, <span class='st'>'second'</span>, class <span class='op'>=</span> <span class='st'>'hms'</span><span class='op'>)</span>
+<span class='fu'>filter_time</span><span class='op'>(</span><span class='va'>hms_example</span>, <span class='st'>'start'</span> <span class='op'>~</span> <span class='st'>'12:01:30'</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; # A time tibble: 31 x 1
 #&gt; </span><span style='color: #555555;'># Index: date</span><span>
 #&gt;    date    
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;time&gt;</span><span>  
@@ -379,6 +395,7 @@ but only expands to include whole seconds.</p>
 #&gt; </span><span style='color: #555555;'> 9</span><span> 12</span><span style='color: #555555;'>:</span><span>01</span><span style='color: #555555;'>:</span><span>08
 #&gt; </span><span style='color: #555555;'>10</span><span> 12</span><span style='color: #555555;'>:</span><span>01</span><span style='color: #555555;'>:</span><span>09
 #&gt; </span><span style='color: #555555;'># … with 21 more rows</span><span></div><div class='input'>
+
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -395,7 +412,7 @@ but only expands to include whole seconds.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>
@@ -403,6 +420,8 @@ but only expands to include whole seconds.</p>
 
   
 
+
+  
 
   </body>
 </html>

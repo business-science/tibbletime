@@ -1,6 +1,10 @@
 pandoc: 2.7.3
-pkgdown: 1.5.1.9000
-pkgdown_sha: 03f5de17be2a562fb58ad2d7a915358a99f216a7
-articles: []
-last_built: 2020-07-17T14:09Z
+pkgdown: 1.6.1.9000
+pkgdown_sha: d49c3e8f3e9a244f25a22effa453b842640ef65c
+articles:
+  TT-01-time-based-filtering: TT-01-time-based-filtering.html
+  TT-02-changing-time-periods: TT-02-changing-time-periods.html
+  TT-03-rollify-for-rolling-analysis: TT-03-rollify-for-rolling-analysis.html
+  TT-04-use-with-dplyr: TT-04-use-with-dplyr.html
+last_built: 2021-02-18T19:45Z
 

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create a <code>tbl_time</code> object with a sequence of regularly spaced dates — create_series • tibbletime</title>
+<title>Create a tbl_time object with a sequence of regularly spaced dates — create_series • tibbletime</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,11 @@
 
 
 
-<meta property="og:title" content="Create a <code>tbl_time</code> object with a sequence of regularly spaced dates — create_series" />
+<meta property="og:title" content="Create a tbl_time object with a sequence of regularly spaced dates — create_series" />
 <meta property="og:description" content="create_series() allows the user to quickly create a tbl_time object with
 a date column populated with a sequence of dates." />
+
+
 
 
 
@@ -67,9 +69,15 @@ a date column populated with a sequence of dates." />
 </script>
 
 
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -83,7 +91,7 @@ a date column populated with a sequence of dates." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tibbletime</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.5.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.6.9000</span>
       </span>
     </div>
 
@@ -123,7 +131,7 @@ a date column populated with a sequence of dates." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/business-science/tibbletime">
-    <span class="fa fa-github"></span>
+    <span class="fas fa-github"></span>
      
   </a>
 </li>
@@ -146,18 +154,18 @@ a date column populated with a sequence of dates." />
     </div>
 
     <div class="ref-description">
-    <p><code><a href='https://rdrr.io/pkg/tibbletime/man/create_series.html'>create_series()</a></code> allows the user to quickly create a <code>tbl_time</code> object with
+    <p><code>create_series()</code> allows the user to quickly create a <code>tbl_time</code> object with
 a <code>date</code> column populated with a sequence of dates.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/tibbletime/man/create_series.html'>create_series</a></span>(
-  <span class='kw'>time_formula</span>,
-  period = <span class='st'>"daily"</span>,
-  class = <span class='st'>"POSIXct"</span>,
-  include_end = <span class='fl'>FALSE</span>,
-  tz = <span class='st'>"UTC"</span>,
-  as_vector = <span class='fl'>FALSE</span>
-)</pre>
+    <pre class="usage"><span class='fu'>create_series</span><span class='op'>(</span>
+  <span class='va'>time_formula</span>,
+  period <span class='op'>=</span> <span class='st'>"daily"</span>,
+  class <span class='op'>=</span> <span class='st'>"POSIXct"</span>,
+  include_end <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  tz <span class='op'>=</span> <span class='st'>"UTC"</span>,
+  as_vector <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -166,7 +174,7 @@ a <code>date</code> column populated with a sequence of dates.</p>
       <th>time_formula</th>
       <td><p>A period to create the series over.
 This is specified as a formula.
-See the <code>Details</code> section of <code><a href='https://rdrr.io/pkg/tibbletime/man/filter_time.html'>filter_time()</a></code> for more information.</p></td>
+See the <code>Details</code> section of <code><a href='filter_time.html'>filter_time()</a></code> for more information.</p></td>
     </tr>
     <tr>
       <th>period</th>
@@ -208,7 +216,8 @@ a tibble?</p></td>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='co'># Every day in 2013</span>
-<span class='fu'><a href='https://rdrr.io/pkg/tibbletime/man/create_series.html'>create_series</a></span>(<span class='op'>~</span><span class='st'>'2013'</span>, <span class='st'>'daily'</span>)</div><div class='output co'>#&gt; # A time tibble: 365 x 1
+<span class='fu'>create_series</span><span class='op'>(</span><span class='op'>~</span><span class='st'>'2013'</span>, <span class='st'>'daily'</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; # A time tibble: 365 x 1
 #&gt; <span style='color: #555555;'># Index: date</span><span>
 #&gt;    date               
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dttm&gt;</span><span>             
@@ -224,7 +233,8 @@ a tibble?</p></td>
 #&gt; </span><span style='color: #555555;'>10</span><span> 2013-01-10 </span><span style='color: #555555;'>00:00:00</span><span>
 #&gt; </span><span style='color: #555555;'># … with 355 more rows</span><span></div><div class='input'>
 <span class='co'># Every other day in 2013</span>
-<span class='fu'><a href='https://rdrr.io/pkg/tibbletime/man/create_series.html'>create_series</a></span>(<span class='op'>~</span><span class='st'>'2013'</span>, <span class='st'>'2 d'</span>)</div><div class='output co'>#&gt; # A time tibble: 183 x 1
+<span class='fu'>create_series</span><span class='op'>(</span><span class='op'>~</span><span class='st'>'2013'</span>, <span class='st'>'2 d'</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; # A time tibble: 183 x 1
 #&gt; </span><span style='color: #555555;'># Index: date</span><span>
 #&gt;    date               
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dttm&gt;</span><span>             
@@ -240,7 +250,8 @@ a tibble?</p></td>
 #&gt; </span><span style='color: #555555;'>10</span><span> 2013-01-19 </span><span style='color: #555555;'>00:00:00</span><span>
 #&gt; </span><span style='color: #555555;'># … with 173 more rows</span><span></div><div class='input'>
 <span class='co'># Every quarter in 2013</span>
-<span class='fu'><a href='https://rdrr.io/pkg/tibbletime/man/create_series.html'>create_series</a></span>(<span class='op'>~</span><span class='st'>'2013'</span>, <span class='st'>'1 q'</span>)</div><div class='output co'>#&gt; # A time tibble: 4 x 1
+<span class='fu'>create_series</span><span class='op'>(</span><span class='op'>~</span><span class='st'>'2013'</span>, <span class='st'>'1 q'</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; # A time tibble: 4 x 1
 #&gt; </span><span style='color: #555555;'># Index: date</span><span>
 #&gt;   date               
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dttm&gt;</span><span>             
@@ -249,7 +260,8 @@ a tibble?</p></td>
 #&gt; </span><span style='color: #555555;'>3</span><span> 2013-07-01 </span><span style='color: #555555;'>00:00:00</span><span>
 #&gt; </span><span style='color: #555555;'>4</span><span> 2013-10-01 </span><span style='color: #555555;'>00:00:00</span><span></div><div class='input'>
 <span class='co'># Daily series for 2013-2015</span>
-<span class='fu'><a href='https://rdrr.io/pkg/tibbletime/man/create_series.html'>create_series</a></span>(<span class='st'>'2013'</span> <span class='op'>~</span> <span class='st'>'2015'</span>, <span class='st'>'1 d'</span>)</div><div class='output co'>#&gt; # A time tibble: 1,095 x 1
+<span class='fu'>create_series</span><span class='op'>(</span><span class='st'>'2013'</span> <span class='op'>~</span> <span class='st'>'2015'</span>, <span class='st'>'1 d'</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; # A time tibble: 1,095 x 1
 #&gt; </span><span style='color: #555555;'># Index: date</span><span>
 #&gt;    date               
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dttm&gt;</span><span>             
@@ -265,7 +277,8 @@ a tibble?</p></td>
 #&gt; </span><span style='color: #555555;'>10</span><span> 2013-01-10 </span><span style='color: #555555;'>00:00:00</span><span>
 #&gt; </span><span style='color: #555555;'># … with 1,085 more rows</span><span></div><div class='input'>
 <span class='co'># Minute series for 2 months</span>
-<span class='fu'><a href='https://rdrr.io/pkg/tibbletime/man/create_series.html'>create_series</a></span>(<span class='st'>'2012-01'</span> <span class='op'>~</span> <span class='st'>'2012-02'</span>, <span class='st'>'M'</span>)</div><div class='output co'>#&gt; # A time tibble: 86,400 x 1
+<span class='fu'>create_series</span><span class='op'>(</span><span class='st'>'2012-01'</span> <span class='op'>~</span> <span class='st'>'2012-02'</span>, <span class='st'>'M'</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; # A time tibble: 86,400 x 1
 #&gt; </span><span style='color: #555555;'># Index: date</span><span>
 #&gt;    date               
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dttm&gt;</span><span>             
@@ -281,7 +294,8 @@ a tibble?</p></td>
 #&gt; </span><span style='color: #555555;'>10</span><span> 2012-01-01 </span><span style='color: #555555;'>00:09:00</span><span>
 #&gt; </span><span style='color: #555555;'># … with 86,390 more rows</span><span></div><div class='input'>
 <span class='co'># Second series for 2 minutes</span>
-<span class='fu'><a href='https://rdrr.io/pkg/tibbletime/man/create_series.html'>create_series</a></span>(<span class='st'>'2011-01-01 12:10:00'</span> <span class='op'>~</span> <span class='st'>'2011-01-01 12:12:00'</span>, <span class='st'>'s'</span>)</div><div class='output co'>#&gt; # A time tibble: 121 x 1
+<span class='fu'>create_series</span><span class='op'>(</span><span class='st'>'2011-01-01 12:10:00'</span> <span class='op'>~</span> <span class='st'>'2011-01-01 12:12:00'</span>, <span class='st'>'s'</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; # A time tibble: 121 x 1
 #&gt; </span><span style='color: #555555;'># Index: date</span><span>
 #&gt;    date               
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dttm&gt;</span><span>             
@@ -297,7 +311,8 @@ a tibble?</p></td>
 #&gt; </span><span style='color: #555555;'>10</span><span> 2011-01-01 </span><span style='color: #555555;'>12:10:09</span><span>
 #&gt; </span><span style='color: #555555;'># … with 111 more rows</span><span></div><div class='input'>
 <span class='co'># Date class</span>
-<span class='fu'><a href='https://rdrr.io/pkg/tibbletime/man/create_series.html'>create_series</a></span>(<span class='op'>~</span><span class='st'>'2013'</span>, <span class='st'>'day'</span>, class = <span class='st'>"Date"</span>)</div><div class='output co'>#&gt; # A time tibble: 365 x 1
+<span class='fu'>create_series</span><span class='op'>(</span><span class='op'>~</span><span class='st'>'2013'</span>, <span class='st'>'day'</span>, class <span class='op'>=</span> <span class='st'>"Date"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; # A time tibble: 365 x 1
 #&gt; </span><span style='color: #555555;'># Index: date</span><span>
 #&gt;    date      
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>    
@@ -313,7 +328,8 @@ a tibble?</p></td>
 #&gt; </span><span style='color: #555555;'>10</span><span> 2013-01-10
 #&gt; </span><span style='color: #555555;'># … with 355 more rows</span><span></div><div class='input'>
 <span class='co'># yearmon class</span>
-<span class='fu'><a href='https://rdrr.io/pkg/tibbletime/man/create_series.html'>create_series</a></span>(<span class='op'>~</span><span class='st'>'2013'</span>, <span class='st'>'month'</span>, class = <span class='st'>"yearmon"</span>)</div><div class='output co'>#&gt; # A time tibble: 12 x 1
+<span class='fu'>create_series</span><span class='op'>(</span><span class='op'>~</span><span class='st'>'2013'</span>, <span class='st'>'month'</span>, class <span class='op'>=</span> <span class='st'>"yearmon"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; # A time tibble: 12 x 1
 #&gt; </span><span style='color: #555555;'># Index: date</span><span>
 #&gt;    date     
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;yearmon&gt;</span><span>
@@ -330,7 +346,8 @@ a tibble?</p></td>
 #&gt; </span><span style='color: #555555;'>11</span><span> Nov 2013 
 #&gt; </span><span style='color: #555555;'>12</span><span> Dec 2013 </div><div class='input'>
 <span class='co'># hms class. time_formula specified as HH:MM:SS here</span>
-<span class='fu'><a href='https://rdrr.io/pkg/tibbletime/man/create_series.html'>create_series</a></span>(<span class='st'>'00:00:00'</span> <span class='op'>~</span> <span class='st'>'12:00:00'</span>, <span class='st'>'second'</span> , class = <span class='st'>"hms"</span>)</div><div class='output co'>#&gt; # A time tibble: 43,201 x 1
+<span class='fu'>create_series</span><span class='op'>(</span><span class='st'>'00:00:00'</span> <span class='op'>~</span> <span class='st'>'12:00:00'</span>, <span class='st'>'second'</span> , class <span class='op'>=</span> <span class='st'>"hms"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; # A time tibble: 43,201 x 1
 #&gt; </span><span style='color: #555555;'># Index: date</span><span>
 #&gt;    date  
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;time&gt;</span><span>
@@ -346,7 +363,8 @@ a tibble?</p></td>
 #&gt; </span><span style='color: #555555;'>10</span><span> 00</span><span style='color: #555555;'>'</span><span>09</span><span style='color: #555555;'>"</span><span>
 #&gt; </span><span style='color: #555555;'># … with 43,191 more rows</span><span></div><div class='input'>
 <span class='co'># Subsecond series</span>
-<span class='fu'><a href='https://rdrr.io/pkg/tibbletime/man/create_series.html'>create_series</a></span>(<span class='st'>'2013'</span> <span class='op'>~</span> <span class='st'>'2013-01-01 00:00:01'</span>, period = <span class='st'>"10 millisec"</span>)</div><div class='output co'>#&gt; # A time tibble: 101 x 1
+<span class='fu'>create_series</span><span class='op'>(</span><span class='st'>'2013'</span> <span class='op'>~</span> <span class='st'>'2013-01-01 00:00:01'</span>, period <span class='op'>=</span> <span class='st'>"10 millisec"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; # A time tibble: 101 x 1
 #&gt; </span><span style='color: #555555;'># Index: date</span><span>
 #&gt;    date               
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dttm&gt;</span><span>             
@@ -360,12 +378,13 @@ a tibble?</p></td>
 #&gt; </span><span style='color: #555555;'> 8</span><span> 2013-01-01 </span><span style='color: #555555;'>00:00:00</span><span>
 #&gt; </span><span style='color: #555555;'> 9</span><span> 2013-01-01 </span><span style='color: #555555;'>00:00:00</span><span>
 #&gt; </span><span style='color: #555555;'>10</span><span> 2013-01-01 </span><span style='color: #555555;'>00:00:00</span><span>
-#&gt; </span><span style='color: #555555;'># … with 91 more rows</span><span></div><div class='input'><span class='kw'>milli</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/tibbletime/man/create_series.html'>create_series</a></span>(<span class='st'>'2013'</span> <span class='op'>~</span> <span class='st'>'2013-01-01 00:00:01'</span>, period = <span class='st'>".1 sec"</span>)
+#&gt; </span><span style='color: #555555;'># … with 91 more rows</span><span></div><div class='input'><span class='va'>milli</span> <span class='op'>&lt;-</span> <span class='fu'>create_series</span><span class='op'>(</span><span class='st'>'2013'</span> <span class='op'>~</span> <span class='st'>'2013-01-01 00:00:01'</span>, period <span class='op'>=</span> <span class='st'>".1 sec"</span><span class='op'>)</span>
 <span class='co'># Check that 'milli' is correct by running:</span>
 <span class='co'># options("digits.secs" = 4)</span>
 <span class='co'># options("digits" = 18)</span>
 <span class='co'># milli$date</span>
 <span class='co'># as.numeric(milli$date)</span>
+
 
 </div></span></pre>
   </div>
@@ -383,7 +402,7 @@ a tibble?</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>
@@ -391,6 +410,8 @@ a tibble?</p></td>
 
   
 
+
+  
 
   </body>
 </html>

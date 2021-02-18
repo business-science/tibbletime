@@ -47,6 +47,8 @@ common date." />
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -68,9 +70,15 @@ common date." />
 </script>
 
 
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -84,7 +92,7 @@ common date." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tibbletime</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.5.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.6.9000</span>
       </span>
     </div>
 
@@ -124,7 +132,7 @@ common date." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/business-science/tibbletime">
-    <span class="fa fa-github"></span>
+    <span class="fas fa-github"></span>
      
   </a>
 </li>
@@ -152,14 +160,14 @@ is altered so that all dates that fall in a specified interval share a
 common date.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/tibbletime/man/collapse_by.html'>collapse_by</a></span>(
-  <span class='kw'>.tbl_time</span>,
-  period = <span class='st'>"yearly"</span>,
-  start_date = <span class='kw'>NULL</span>,
-  side = <span class='st'>"end"</span>,
-  clean = <span class='fl'>FALSE</span>,
-  <span class='kw'>...</span>
-)</pre>
+    <pre class="usage"><span class='fu'>collapse_by</span><span class='op'>(</span>
+  <span class='va'>.tbl_time</span>,
+  period <span class='op'>=</span> <span class='st'>"yearly"</span>,
+  start_date <span class='op'>=</span> <span class='cn'>NULL</span>,
+  side <span class='op'>=</span> <span class='st'>"end"</span>,
+  clean <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -210,19 +218,20 @@ argument.</p></td>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><code><a href='https://rdrr.io/pkg/tibbletime/man/collapse_by.html'>collapse_by()</a></code> is a simplification of a call to <code><a href='https://dplyr.tidyverse.org/reference/mutate.html'>dplyr::mutate()</a></code> to collapse an
-index column using <code><a href='https://rdrr.io/pkg/tibbletime/man/collapse_index.html'>collapse_index()</a></code>.</p>
+    <p><code>collapse_by()</code> is a simplification of a call to <code><a href='https://dplyr.tidyverse.org/reference/mutate.html'>dplyr::mutate()</a></code> to collapse an
+index column using <code><a href='collapse_index.html'>collapse_index()</a></code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='co'># Basic functionality -------------------------------------------------------</span>
 
 <span class='co'># Facebook stock prices</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>FB</span>)
-<span class='kw'>FB</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/tibbletime/man/tbl_time.html'>as_tbl_time</a></span>(<span class='kw'>FB</span>, <span class='kw'>date</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>FB</span><span class='op'>)</span>
+<span class='va'>FB</span> <span class='op'>&lt;-</span> <span class='fu'><a href='as_tbl_time.html'>as_tbl_time</a></span><span class='op'>(</span><span class='va'>FB</span>, <span class='va'>date</span><span class='op'>)</span>
 
 <span class='co'># Collapse to weekly dates</span>
-<span class='fu'><a href='https://rdrr.io/pkg/tibbletime/man/collapse_by.html'>collapse_by</a></span>(<span class='kw'>FB</span>, <span class='st'>"weekly"</span>)</div><div class='output co'>#&gt; # A time tibble: 1,008 x 8
+<span class='fu'>collapse_by</span><span class='op'>(</span><span class='va'>FB</span>, <span class='st'>"weekly"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; # A time tibble: 1,008 x 8
 #&gt; <span style='color: #555555;'># Index: date</span><span>
 #&gt;    symbol date        open  high   low close    volume adjusted
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
@@ -239,10 +248,11 @@ index column using <code><a href='https://rdrr.io/pkg/tibbletime/man/collapse_in
 #&gt; </span><span style='color: #555555;'># … with 998 more rows</span><span></div><div class='input'>
 <span class='co'># A common workflow is to group on the collapsed date column</span>
 <span class='co'># to perform a time based summary</span>
-<span class='kw'>FB</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/tibbletime/man/collapse_by.html'>collapse_by</a></span>(<span class='st'>"yearly"</span>) <span class='op'>%&gt;%</span>
-  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='kw'>date</span>) <span class='op'>%&gt;%</span>
-  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise_all.html'>summarise_if</a></span>(<span class='kw'>is.numeric</span>, <span class='kw'>mean</span>)</div><div class='output co'>#&gt; # A time tibble: 4 x 7
+<span class='va'>FB</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>collapse_by</span><span class='op'>(</span><span class='st'>"yearly"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>date</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise_all.html'>summarise_if</a></span><span class='op'>(</span><span class='va'>is.numeric</span>, <span class='va'>mean</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; # A time tibble: 4 x 7
 #&gt; </span><span style='color: #555555;'># Index: date</span><span>
 #&gt;   date        open  high   low close    volume adjusted
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
@@ -252,17 +262,18 @@ index column using <code><a href='https://rdrr.io/pkg/tibbletime/man/collapse_in
 #&gt; </span><span style='color: #555555;'>4</span><span> 2016-12-30 117.  118.  116.  117.  25</span><span style='text-decoration: underline;'>453</span><span>798.    117. </div><div class='input'>
 <span class='co'># Grouped functionality -----------------------------------------------------</span>
 
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>FANG</span>)
-<span class='kw'>FANG</span> <span class='op'>&lt;-</span> <span class='kw'>FANG</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/tibbletime/man/tbl_time.html'>as_tbl_time</a></span>(<span class='kw'>date</span>) <span class='op'>%&gt;%</span>
-  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='kw'>symbol</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>FANG</span><span class='op'>)</span>
+<span class='va'>FANG</span> <span class='op'>&lt;-</span> <span class='va'>FANG</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='as_tbl_time.html'>as_tbl_time</a></span><span class='op'>(</span><span class='va'>date</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>symbol</span><span class='op'>)</span>
 
 <span class='co'># Collapse each group to monthly,</span>
 <span class='co'># calculate monthly standard deviation for each column</span>
-<span class='kw'>FANG</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/tibbletime/man/collapse_by.html'>collapse_by</a></span>(<span class='st'>"monthly"</span>) <span class='op'>%&gt;%</span>
-  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='kw'>symbol</span>, <span class='kw'>date</span>) <span class='op'>%&gt;%</span>
-  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise_all.html'>summarise_all</a></span>(<span class='kw'>sd</span>)</div><div class='output co'>#&gt; # A time tibble: 192 x 8
+<span class='va'>FANG</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>collapse_by</span><span class='op'>(</span><span class='st'>"monthly"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>symbol</span>, <span class='va'>date</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise_all.html'>summarise_all</a></span><span class='op'>(</span><span class='va'>sd</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; # A time tibble: 192 x 8
 #&gt; </span><span style='color: #555555;'># Index:  date</span><span>
 #&gt; </span><span style='color: #555555;'># Groups: symbol [4]</span><span>
 #&gt;    symbol date        open  high   low close   volume adjusted
@@ -277,7 +288,8 @@ index column using <code><a href='https://rdrr.io/pkg/tibbletime/man/collapse_in
 #&gt; </span><span style='color: #555555;'> 8</span><span> AMZN   2013-08-30  7.67  7.08  6.98  7.65  </span><span style='text-decoration: underline;'>443</span><span>340.     7.65
 #&gt; </span><span style='color: #555555;'> 9</span><span> AMZN   2013-09-30  9.67  9.37  9.37  9.18  </span><span style='text-decoration: underline;'>847</span><span>804.     9.18
 #&gt; </span><span style='color: #555555;'>10</span><span> AMZN   2013-10-31 20.6  21.4  20.7  21.4  2</span><span style='text-decoration: underline;'>209</span><span>026.    21.4 
-#&gt; </span><span style='color: #555555;'># … with 182 more rows</span><span></div><div class='input'></div></span></pre>
+#&gt; </span><span style='color: #555555;'># … with 182 more rows</span><span></div><div class='input'>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -293,7 +305,7 @@ index column using <code><a href='https://rdrr.io/pkg/tibbletime/man/collapse_in
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>
@@ -301,6 +313,8 @@ index column using <code><a href='https://rdrr.io/pkg/tibbletime/man/collapse_in
 
   
 
+
+  
 
   </body>
 </html>
