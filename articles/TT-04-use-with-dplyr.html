@@ -125,16 +125,16 @@
 ## # Index: date
 ##    date           var
 ##    &lt;date&gt;       &lt;dbl&gt;
-##  1 2013-01-01 -0.775 
-##  2 2013-01-02  0.469 
-##  3 2013-01-03 -1.76  
-##  4 2013-01-04  0.0261
-##  5 2013-01-05  1.53  
-##  6 2013-01-06  0.649 
-##  7 2013-01-07 -0.884 
-##  8 2013-01-08 -1.27  
-##  9 2013-01-09 -0.662 
-## 10 2013-01-10  0.0531
+##  1 2013-01-01  0.336 
+##  2 2013-01-02  0.336 
+##  3 2013-01-03 -0.769 
+##  4 2013-01-04 -0.987 
+##  5 2013-01-05 -0.0173
+##  6 2013-01-06  0.0205
+##  7 2013-01-07 -0.716 
+##  8 2013-01-08 -1.16  
+##  9 2013-01-09  0.790 
+## 10 2013-01-10  0.790 
 ## # … with 1,816 more rows</code></pre>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">series</span> <span class="op">%&gt;%</span>
@@ -142,18 +142,18 @@
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">year</span>, <span class="va">month</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>mean_var <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">var</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## # A tibble: 60 x 3
-##     year month  mean_var
-##    &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;
-##  1  2013     1 -0.0330  
-##  2  2013     2 -0.124   
-##  3  2013     3  0.141   
-##  4  2013     4  0.0933  
-##  5  2013     5 -0.314   
-##  6  2013     6 -0.000124
-##  7  2013     7  0.169   
-##  8  2013     8  0.0427  
-##  9  2013     9 -0.161   
-## 10  2013    10 -0.0275  
+##     year month mean_var
+##    &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;
+##  1  2013     1  -0.0261
+##  2  2013     2  -0.0328
+##  3  2013     3   0.0919
+##  4  2013     4   0.101 
+##  5  2013     5   0.692 
+##  6  2013     6   0.0611
+##  7  2013     7  -0.0891
+##  8  2013     8  -0.248 
+##  9  2013     9   0.223 
+## 10  2013    10   0.130 
 ## # … with 50 more rows</code></pre>
 <p>This gets more difficult the more granular you go. Getting 5-minute summaries from minute or second data requires grouping on year, month, day, hour and minute columns.</p>
 </div>
@@ -168,18 +168,18 @@
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>mean_var <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">var</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## # A time tibble: 60 x 2
 ## # Index: date
-##    date        mean_var
-##    &lt;date&gt;         &lt;dbl&gt;
-##  1 2013-01-31 -0.0330  
-##  2 2013-02-28 -0.124   
-##  3 2013-03-31  0.141   
-##  4 2013-04-30  0.0933  
-##  5 2013-05-31 -0.314   
-##  6 2013-06-30 -0.000124
-##  7 2013-07-31  0.169   
-##  8 2013-08-31  0.0427  
-##  9 2013-09-30 -0.161   
-## 10 2013-10-31 -0.0275  
+##    date       mean_var
+##    &lt;date&gt;        &lt;dbl&gt;
+##  1 2013-01-31  -0.0261
+##  2 2013-02-28  -0.0328
+##  3 2013-03-31   0.0919
+##  4 2013-04-30   0.101 
+##  5 2013-05-31   0.692 
+##  6 2013-06-30   0.0611
+##  7 2013-07-31  -0.0891
+##  8 2013-08-31  -0.248 
+##  9 2013-09-30   0.223 
+## 10 2013-10-31   0.130 
 ## # … with 50 more rows</code></pre>
 <p>While <code><a href="../reference/collapse_by.html">collapse_by()</a></code> directly manipulates the index column, the lower level <code><a href="../reference/collapse_index.html">collapse_index()</a></code> function can be used inside of a call to <code><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate()</a></code> to modify the index column and then save it as a new column. This can be useful if you don’t want to lose the original index column.</p>
 <p>This works for more granular series too. Below we aggregate 5 second level data up to hourly. This is working with a faily sizable ~19 million row data set.</p>
@@ -195,16 +195,16 @@
 ## # Index: date
 ##    date                mean_var
 ##    &lt;dttm&gt;                 &lt;dbl&gt;
-##  1 2013-01-01 00:59:55  0.0152 
-##  2 2013-01-01 01:59:55 -0.0163 
-##  3 2013-01-01 02:59:55 -0.0121 
-##  4 2013-01-01 03:59:55 -0.00860
-##  5 2013-01-01 04:59:55  0.00581
-##  6 2013-01-01 05:59:55 -0.0220 
-##  7 2013-01-01 06:59:55  0.0354 
-##  8 2013-01-01 07:59:55 -0.0450 
-##  9 2013-01-01 08:59:55 -0.00310
-## 10 2013-01-01 09:59:55 -0.00473
+##  1 2013-01-01 00:59:55  0.0175 
+##  2 2013-01-01 01:59:55  0.00190
+##  3 2013-01-01 02:59:55 -0.0223 
+##  4 2013-01-01 03:59:55 -0.0532 
+##  5 2013-01-01 04:59:55 -0.0674 
+##  6 2013-01-01 05:59:55 -0.00914
+##  7 2013-01-01 06:59:55 -0.0126 
+##  8 2013-01-01 07:59:55 -0.0319 
+##  9 2013-01-01 08:59:55 -0.0317 
+## 10 2013-01-01 09:59:55  0.0443 
 ## # … with 26,270 more rows</code></pre>
 </div>
 <div id="multiple-series" class="section level2">
