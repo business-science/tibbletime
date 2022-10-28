@@ -26,7 +26,7 @@ manipulation. Otherwise, they function as normal tibbles.
 \details{
 The information stored about \code{tbl_time} objects are the \code{index_quo} and the
 \code{index_time_zone}. These are stored as attributes, with the \code{index_quo} as a
-\code{\link[rlang:quosure]{rlang::quosure()}} and the \code{time_zone} as a string.
+\code{\link[rlang:quosure-tools]{rlang::quosure()}} and the \code{time_zone} as a string.
 
 Currently, \code{Date} and \code{POSIXct} classes are fully supported. \code{yearmon},
 \code{yearqtr}, and \code{hms} have experimental support. Due to dplyr's
