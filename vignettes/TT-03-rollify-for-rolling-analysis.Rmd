@@ -166,7 +166,7 @@ list-column can be unnested using `tidyr::unnest()` giving us a nice tidy
 ```{r}
 FB_summarised %>% 
   filter(!is.na(summary_list_col)) %>%
-  unnest()
+  unnest(cols = summary_list_col)
 ```
 
 ## Custom missing values
@@ -189,7 +189,7 @@ Now unnesting directly:
 
 ```{r}
 FB_summarised %>% 
-  unnest()
+  unnest(cols = summary_list_col)
 ```
 
 Finally, if you want to actually keep those first few NA rows in the unnest, you 
@@ -203,7 +203,7 @@ rolling_summary <- rollify(~summary_df(.x), window = 5,
                                                  rolled_summary_val  = NA))
 
 FB_summarised <- mutate(FB, summary_list_col = rolling_summary(adjusted))
-FB_summarised %>% unnest()
+FB_summarised %>% unnest(cols = summary_list_col)
 ```
 
 ## Rolling regressions
