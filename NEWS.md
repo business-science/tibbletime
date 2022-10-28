@@ -5,12 +5,8 @@
 
 * Fix usage of `|` rather than `||` in the C++ code to satisfy a CRAN warning.
 
-* Fixed a tidyselection warning emitted by `unnest.tbl_time()` (#100).
-
-* Removed the `unnest.tbl_df()` method that attempted to recover the
-  `tbl_time` class when unnesting a list-col of `tbl_time` data frames. This
-  was a bad idea, because we don't own the `tbl_df` class and we were trying
-  to inject a method in front of `unnest.data.frame()` (#100).
+* Fixed a tidyselection warning emitted by the `tbl_time` method for `unnest()`
+  (#100).
 
 # tibbletime 0.1.6
 

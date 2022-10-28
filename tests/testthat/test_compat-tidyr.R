@@ -43,19 +43,16 @@ test_that("nest() with .key is deprecated but works", {
 })
 
 test_that("unnest() with index returns tbl_df", {
+  # This "works" because we added a special `unnest.tbl_df()` method that
+  # intercepted the unnesting. But that was a horrible idea because we don't
+  # own the tbl_df class. But we can't remove it because anomalize relies on it.
 
   FANG_unnested <- FANG_g_time %>%
     tidyr::nest(data = everything()) %>%
     tidyr::unnest(cols = data)
 
-  expect_s3_class(FANG_unnested, "tbl_df")
-  expect_true(!"tbl_time" %in% class(FANG_unnested))
-
-  # This used to return a `tbl_time` because we added a special
-  # `unnest.tbl_time()` method that intercepted the unnesting. But that
-  # was a horrible idea.
-  # expect_is(FANG_unnested, "tbl_time")
-  # expect_equal(get_index_col(FANG_g_time), get_index_col(FANG_unnested))
+  expect_is(FANG_unnested, "tbl_time")
+  expect_equal(get_index_col(FANG_g_time), get_index_col(FANG_unnested))
 })
 
 test_that("unnest() without index stays tbl_time", {

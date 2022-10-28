@@ -72,7 +72,7 @@ unnest.tbl_time <- function(data,
   # Have to recall `unnest()` because otherwise the `cols` tidyselection gets
   # evaluated too early.
 
-  bare_data <- as_tibble(data)
+  bare_data <- as.data.frame(data)
 
   out <- tidyr::unnest(
     data = bare_data,
@@ -86,6 +86,65 @@ unnest.tbl_time <- function(data,
 
   copy_.data <- new_tbl_time(data, get_index_quo(data), get_index_time_zone(data))
   reconstruct(out, copy_.data)
+}
+
+unnest.tbl_df <- function(data,
+                          cols,
+                          ...,
+                          keep_empty = FALSE,
+                          ptype = NULL,
+                          names_sep = NULL,
+                          names_repair = "check_unique",
+                          .drop = deprecated(),
+                          .id = deprecated(),
+                          .sep = deprecated(),
+                          .preserve = deprecated()) {
+  check_tidyr_version()
+
+  # Called after nesting a tbl_time, index is in the nest, then unnesting.
+  # Have to recall `unnest()` because otherwise the `cols` tidyselection gets
+  # evaluated too early.
+
+  bare_data <- as.data.frame(data)
+
+  out <- tidyr::unnest(
+    data = bare_data,
+    cols = {{ cols }},
+    ...,
+    keep_empty = keep_empty,
+    ptype = ptype,
+    names_sep = names_sep,
+    names_repair = names_repair
+  )
+
+  list_cols <- names(data)[purrr::map_lgl(data, rlang::is_list)]
+
+  # If any contain a tbl_time, special handling
+  list_col_is_tbl_time <- purrr::map_lgl(
+    .x = list_cols,
+    .f = ~inherits(data[[.x]][[1]], "tbl_time")
+  )
+
+  contains_inner_tbl_time <- any(list_col_is_tbl_time)
+  contains_outer_tbl_time <- inherits(data, "tbl_time")
+
+  # Inner is tbl_time, but the outer tbl is not one. Want to maintain
+  # tbl_time class
+  if(contains_inner_tbl_time & !contains_outer_tbl_time) {
+    # Grab nested columns
+    nested <- dplyr::transmute(dplyr::ungroup(data), !!! rlang::syms(list_cols))
+
+    # Which list columns contain tbl_time objects? Extract the first one
+    # to reconstruct with
+    which_tbl_time <- which(list_col_is_tbl_time)
+
+    which_tbl_time <- which_tbl_time[1]
+    nested_time <- nested[[which_tbl_time]][[1]]
+
+    out <- reconstruct(out, nested_time)
+  }
+
+  out
 }
 
 # ------------------------------------------------------------------------------
