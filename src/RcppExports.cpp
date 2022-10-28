@@ -5,6 +5,11 @@
 
 using namespace Rcpp;
 
+#ifdef RCPP_USE_GLOBAL_ROSTREAM
+Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
+Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
+#endif
+
 // is_ordered_numeric
 bool is_ordered_numeric(NumericVector x);
 RcppExport SEXP _tibbletime_is_ordered_numeric(SEXP xSEXP) {
