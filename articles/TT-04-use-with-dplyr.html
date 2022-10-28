@@ -52,7 +52,7 @@
   <a href="../reference/index.html">Function Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Vignettes
      
     <span class="caret"></span>
@@ -79,7 +79,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/business-science/tibbletime" class="external-link">
-    <span class="fas fa-github"></span>
+    <span class="fa fa-github"></span>
      
   </a>
 </li>
@@ -93,168 +93,196 @@
 
       
 
-      </header><script src="TT-04-use-with-dplyr_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Use with dplyr</h1>
-                        <h4 data-toc-skip class="author">Davis Vaughan</h4>
+                        <h4 data-toc-skip class="author">Davis
+Vaughan</h4>
             
-            <h4 data-toc-skip class="date">2021-02-18</h4>
+            <h4 data-toc-skip class="date">2022-10-28</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/business-science/tibbletime/blob/master/vignettes/TT-04-use-with-dplyr.Rmd" class="external-link"><code>vignettes/TT-04-use-with-dplyr.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/business-science/tibbletime/blob/HEAD/vignettes/TT-04-use-with-dplyr.Rmd" class="external-link"><code>vignettes/TT-04-use-with-dplyr.Rmd</code></a></small>
       <div class="hidden name"><code>TT-04-use-with-dplyr.Rmd</code></div>
 
     </div>
 
     
     
-<div id="package-motivation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#package-motivation" class="anchor"></a>Package motivation</h2>
-<p><code>tibbletime</code> on its own has useful functions for manipulating time-based tibbles, but one of its most useful features is how nicely it plays with <code>dplyr</code>. Traditionally, performing grouped analysis over a time period with <code>dplyr</code> (like quarterly / monthly summaries) is doable, but it could be easier and typically requires use of the <code>lubridate</code> package along with the creation of multiple columns to group on. Below is an example of a monthly summary from a daily dataset.</p>
+<div class="section level2">
+<h2 id="package-motivation">Package motivation<a class="anchor" aria-label="anchor" href="#package-motivation"></a>
+</h2>
+<p><code>tibbletime</code> on its own has useful functions for
+manipulating time-based tibbles, but one of its most useful features is
+how nicely it plays with <code>dplyr</code>. Traditionally, performing
+grouped analysis over a time period with <code>dplyr</code> (like
+quarterly / monthly summaries) is doable, but it could be easier and
+typically requires use of the <code>lubridate</code> package along with
+the creation of multiple columns to group on. Below is an example of a
+monthly summary from a daily dataset.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/business-science/tibbletime" class="external-link">tibbletime</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://lubridate.tidyverse.org" class="external-link">lubridate</a></span><span class="op">)</span>
-
-<span class="va">series</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_series.html">create_series</a></span><span class="op">(</span><span class="st">'2013'</span> <span class="op">~</span> <span class="st">'2017'</span>, <span class="st">'daily'</span>, class <span class="op">=</span> <span class="st">"Date"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>var <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html" class="external-link">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-
-<span class="va">series</span></code></pre></div>
-<pre><code>## # A time tibble: 1,826 x 2
-## # Index: date
-##    date           var
-##    &lt;date&gt;       &lt;dbl&gt;
-##  1 2013-01-01  0.336 
-##  2 2013-01-02  0.336 
-##  3 2013-01-03 -0.769 
-##  4 2013-01-04 -0.987 
-##  5 2013-01-05 -0.0173
-##  6 2013-01-06  0.0205
-##  7 2013-01-07 -0.716 
-##  8 2013-01-08 -1.16  
-##  9 2013-01-09  0.790 
-## 10 2013-01-10  0.790 
-## # … with 1,816 more rows</code></pre>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/business-science/tibbletime" class="external-link">tibbletime</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://lubridate.tidyverse.org" class="external-link">lubridate</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">series</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_series.html">create_series</a></span><span class="op">(</span><span class="st">'2013'</span> <span class="op">~</span> <span class="st">'2017'</span>, <span class="st">'daily'</span>, class <span class="op">=</span> <span class="st">"Date"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>var <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html" class="external-link">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">series</span></span></code></pre></div>
+<pre><code><span><span class="co">## # A time tibble: 1,826 × 2</span></span>
+<span><span class="co">## <span style="color: #949494;"># Index: date</span></span></span>
+<span><span class="co">##    date           var</span></span>
+<span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 1</span> 2013-01-01 -<span style="color: #BB0000;">0.401</span> </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 2</span> 2013-01-02 -<span style="color: #BB0000;">1.63</span>  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 3</span> 2013-01-03 -<span style="color: #BB0000;">0.098</span><span style="color: #BB0000; text-decoration: underline;">0</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 4</span> 2013-01-04 -<span style="color: #BB0000;">2.28</span>  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 5</span> 2013-01-05  0.628 </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 6</span> 2013-01-06  0.643 </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 7</span> 2013-01-07  1.05  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 8</span> 2013-01-08  0.468 </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 9</span> 2013-01-09  0.587 </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">10</span> 2013-01-10 -<span style="color: #BB0000;">1.37</span>  </span></span>
+<span><span class="co">## <span style="color: #949494;"># … with 1,816 more rows</span></span></span></code></pre>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">series</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fu"><a href="http://lubridate.tidyverse.org/reference/year.html" class="external-link">year</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span>, month <span class="op">=</span> <span class="fu"><a href="http://lubridate.tidyverse.org/reference/month.html" class="external-link">month</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">year</span>, <span class="va">month</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>mean_var <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">var</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code>## # A tibble: 60 x 3
-##     year month mean_var
-##    &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;
-##  1  2013     1  -0.0261
-##  2  2013     2  -0.0328
-##  3  2013     3   0.0919
-##  4  2013     4   0.101 
-##  5  2013     5   0.692 
-##  6  2013     6   0.0611
-##  7  2013     7  -0.0891
-##  8  2013     8  -0.248 
-##  9  2013     9   0.223 
-## 10  2013    10   0.130 
-## # … with 50 more rows</code></pre>
-<p>This gets more difficult the more granular you go. Getting 5-minute summaries from minute or second data requires grouping on year, month, day, hour and minute columns.</p>
+<code class="sourceCode R"><span><span class="va">series</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/year.html" class="external-link">year</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span>, month <span class="op">=</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/month.html" class="external-link">month</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">year</span>, <span class="va">month</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>mean_var <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">var</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 60 × 3</span></span></span>
+<span><span class="co">##     year month mean_var</span></span>
+<span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 1</span>  <span style="text-decoration: underline;">2</span>013     1  -<span style="color: #BB0000;">0.240</span> </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 2</span>  <span style="text-decoration: underline;">2</span>013     2   0.139 </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 3</span>  <span style="text-decoration: underline;">2</span>013     3  -<span style="color: #BB0000;">0.122</span> </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 4</span>  <span style="text-decoration: underline;">2</span>013     4  -<span style="color: #BB0000;">0.216</span> </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 5</span>  <span style="text-decoration: underline;">2</span>013     5   0.067<span style="text-decoration: underline;">9</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 6</span>  <span style="text-decoration: underline;">2</span>013     6  -<span style="color: #BB0000;">0.022</span><span style="color: #BB0000; text-decoration: underline;">4</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 7</span>  <span style="text-decoration: underline;">2</span>013     7   0.128 </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 8</span>  <span style="text-decoration: underline;">2</span>013     8   0.087<span style="text-decoration: underline;">8</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 9</span>  <span style="text-decoration: underline;">2</span>013     9   0.085<span style="text-decoration: underline;">4</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">10</span>  <span style="text-decoration: underline;">2</span>013    10  -<span style="color: #BB0000;">0.098</span><span style="color: #BB0000; text-decoration: underline;">7</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># … with 50 more rows</span></span></span></code></pre>
+<p>This gets more difficult the more granular you go. Getting 5-minute
+summaries from minute or second data requires grouping on year, month,
+day, hour and minute columns.</p>
 </div>
-<div id="index-manipulation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#index-manipulation" class="anchor"></a>Index manipulation</h2>
-<p>With <code>tibbletime</code>, rather than creating new columns to group on, you manipulate your original date column into something that corresponds to the period you are summarising at. The <code>tibbletime</code> way to do this is with <code><a href="../reference/collapse_by.html">collapse_by()</a></code>.</p>
+<div class="section level2">
+<h2 id="index-manipulation">Index manipulation<a class="anchor" aria-label="anchor" href="#index-manipulation"></a>
+</h2>
+<p>With <code>tibbletime</code>, rather than creating new columns to
+group on, you manipulate your original date column into something that
+corresponds to the period you are summarising at. The
+<code>tibbletime</code> way to do this is with
+<code><a href="../reference/collapse_by.html">collapse_by()</a></code>.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">series</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/collapse_by.html">collapse_by</a></span><span class="op">(</span><span class="st">"monthly"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>mean_var <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">var</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code>## # A time tibble: 60 x 2
-## # Index: date
-##    date       mean_var
-##    &lt;date&gt;        &lt;dbl&gt;
-##  1 2013-01-31  -0.0261
-##  2 2013-02-28  -0.0328
-##  3 2013-03-31   0.0919
-##  4 2013-04-30   0.101 
-##  5 2013-05-31   0.692 
-##  6 2013-06-30   0.0611
-##  7 2013-07-31  -0.0891
-##  8 2013-08-31  -0.248 
-##  9 2013-09-30   0.223 
-## 10 2013-10-31   0.130 
-## # … with 50 more rows</code></pre>
-<p>While <code><a href="../reference/collapse_by.html">collapse_by()</a></code> directly manipulates the index column, the lower level <code><a href="../reference/collapse_index.html">collapse_index()</a></code> function can be used inside of a call to <code><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate()</a></code> to modify the index column and then save it as a new column. This can be useful if you don’t want to lose the original index column.</p>
-<p>This works for more granular series too. Below we aggregate 5 second level data up to hourly. This is working with a faily sizable ~19 million row data set.</p>
+<code class="sourceCode R"><span><span class="va">series</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/collapse_by.html">collapse_by</a></span><span class="op">(</span><span class="st">"monthly"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>mean_var <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">var</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## # A time tibble: 60 × 2</span></span>
+<span><span class="co">## <span style="color: #949494;"># Index: date</span></span></span>
+<span><span class="co">##    date       mean_var</span></span>
+<span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 1</span> 2013-01-31  -<span style="color: #BB0000;">0.240</span> </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 2</span> 2013-02-28   0.139 </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 3</span> 2013-03-31  -<span style="color: #BB0000;">0.122</span> </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 4</span> 2013-04-30  -<span style="color: #BB0000;">0.216</span> </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 5</span> 2013-05-31   0.067<span style="text-decoration: underline;">9</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 6</span> 2013-06-30  -<span style="color: #BB0000;">0.022</span><span style="color: #BB0000; text-decoration: underline;">4</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 7</span> 2013-07-31   0.128 </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 8</span> 2013-08-31   0.087<span style="text-decoration: underline;">8</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 9</span> 2013-09-30   0.085<span style="text-decoration: underline;">4</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">10</span> 2013-10-31  -<span style="color: #BB0000;">0.098</span><span style="color: #BB0000; text-decoration: underline;">7</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># … with 50 more rows</span></span></span></code></pre>
+<p>While <code><a href="../reference/collapse_by.html">collapse_by()</a></code> directly manipulates the index
+column, the lower level <code><a href="../reference/collapse_index.html">collapse_index()</a></code> function can be
+used inside of a call to <code><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate()</a></code> to modify the index
+column and then save it as a new column. This can be useful if you don’t
+want to lose the original index column.</p>
+<p>This works for more granular series too. Below we aggregate 5 second
+level data up to hourly. This is working with a faily sizable ~19
+million row data set.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">second_series</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_series.html">create_series</a></span><span class="op">(</span><span class="st">'2013'</span> <span class="op">~</span> <span class="st">'2015'</span>, <span class="st">'5 second'</span><span class="op">)</span>
-
-<span class="va">second_series</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>var <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html" class="external-link">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/collapse_by.html">collapse_by</a></span><span class="op">(</span><span class="st">"hourly"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>mean_var <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">var</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code>## # A time tibble: 26,280 x 2
-## # Index: date
-##    date                mean_var
-##    &lt;dttm&gt;                 &lt;dbl&gt;
-##  1 2013-01-01 00:59:55  0.0175 
-##  2 2013-01-01 01:59:55  0.00190
-##  3 2013-01-01 02:59:55 -0.0223 
-##  4 2013-01-01 03:59:55 -0.0532 
-##  5 2013-01-01 04:59:55 -0.0674 
-##  6 2013-01-01 05:59:55 -0.00914
-##  7 2013-01-01 06:59:55 -0.0126 
-##  8 2013-01-01 07:59:55 -0.0319 
-##  9 2013-01-01 08:59:55 -0.0317 
-## 10 2013-01-01 09:59:55  0.0443 
-## # … with 26,270 more rows</code></pre>
+<code class="sourceCode R"><span><span class="va">second_series</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_series.html">create_series</a></span><span class="op">(</span><span class="st">'2013'</span> <span class="op">~</span> <span class="st">'2015'</span>, <span class="st">'5 second'</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">second_series</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>var <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html" class="external-link">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/collapse_by.html">collapse_by</a></span><span class="op">(</span><span class="st">"hourly"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>mean_var <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">var</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## # A time tibble: 26,280 × 2</span></span>
+<span><span class="co">## <span style="color: #949494;"># Index: date</span></span></span>
+<span><span class="co">##    date                mean_var</span></span>
+<span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 1</span> 2013-01-01 <span style="color: #949494;">00:59:55</span>  -<span style="color: #BB0000;">0.036</span><span style="color: #BB0000; text-decoration: underline;">4</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 2</span> 2013-01-01 <span style="color: #949494;">01:59:55</span>   0.071<span style="text-decoration: underline;">9</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 3</span> 2013-01-01 <span style="color: #949494;">02:59:55</span>   0.013<span style="text-decoration: underline;">5</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 4</span> 2013-01-01 <span style="color: #949494;">03:59:55</span>   0.022<span style="text-decoration: underline;">4</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 5</span> 2013-01-01 <span style="color: #949494;">04:59:55</span>   0.019<span style="text-decoration: underline;">6</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 6</span> 2013-01-01 <span style="color: #949494;">05:59:55</span>  -<span style="color: #BB0000;">0.012</span><span style="color: #BB0000; text-decoration: underline;">4</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 7</span> 2013-01-01 <span style="color: #949494;">06:59:55</span>  -<span style="color: #BB0000;">0.039</span><span style="color: #BB0000; text-decoration: underline;">3</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 8</span> 2013-01-01 <span style="color: #949494;">07:59:55</span>  -<span style="color: #BB0000;">0.072</span><span style="color: #BB0000; text-decoration: underline;">1</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 9</span> 2013-01-01 <span style="color: #949494;">08:59:55</span>  -<span style="color: #BB0000;">0.048</span><span style="color: #BB0000; text-decoration: underline;">4</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">10</span> 2013-01-01 <span style="color: #949494;">09:59:55</span>   0.061<span style="text-decoration: underline;">1</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># … with 26,270 more rows</span></span></span></code></pre>
 </div>
-<div id="multiple-series" class="section level2">
-<h2 class="hasAnchor">
-<a href="#multiple-series" class="anchor"></a>Multiple series</h2>
-<p>One really powerful benefit of working in the <code>tidyverse</code> is being able to manipulate multiple series at once. Essentially we can create multiple layers of groupings, one for the stocks we are working with (like Facebook and Apple), and one for the period you want to summarise your data at (daily, yearly, etc).</p>
-<p>Below we use <code><a href="../reference/create_series.html">create_series()</a></code> to create two dummy hourly price series, combine them, and calculate the OHLC (Open, High, Low, Close) prices per day by first collapsing to daily with <code><a href="../reference/collapse_by.html">collapse_by()</a></code> to have something to group on.</p>
+<div class="section level2">
+<h2 id="multiple-series">Multiple series<a class="anchor" aria-label="anchor" href="#multiple-series"></a>
+</h2>
+<p>One really powerful benefit of working in the <code>tidyverse</code>
+is being able to manipulate multiple series at once. Essentially we can
+create multiple layers of groupings, one for the stocks we are working
+with (like Facebook and Apple), and one for the period you want to
+summarise your data at (daily, yearly, etc).</p>
+<p>Below we use <code><a href="../reference/create_series.html">create_series()</a></code> to create two dummy hourly
+price series, combine them, and calculate the OHLC (Open, High, Low,
+Close) prices per day by first collapsing to daily with
+<code><a href="../reference/collapse_by.html">collapse_by()</a></code> to have something to group on.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span>
-
-<span class="co"># Create price series of hourly movements for apple and facebook stock.</span>
-<span class="va">apple</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_series.html">create_series</a></span><span class="op">(</span><span class="st">'2014'</span> <span class="op">~</span> <span class="st">'2016'</span>, period <span class="op">=</span> <span class="st">'1 hour'</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>price <span class="op">=</span> <span class="fl">100</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/cumsum.html" class="external-link">cumsum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html" class="external-link">n</a></span><span class="op">(</span><span class="op">)</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">.5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-
-<span class="va">facebook</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_series.html">create_series</a></span><span class="op">(</span><span class="st">'2014'</span> <span class="op">~</span> <span class="st">'2016'</span>, period <span class="op">=</span> <span class="st">'1 hour'</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>price <span class="op">=</span> <span class="fl">150</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/cumsum.html" class="external-link">cumsum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html" class="external-link">n</a></span><span class="op">(</span><span class="op">)</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">.5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-
-<span class="co"># Bind them together and create a symbol column to group on</span>
-<span class="va">price_series</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html" class="external-link">bind_rows</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>apple <span class="op">=</span> <span class="va">apple</span>, facebook <span class="op">=</span> <span class="va">facebook</span><span class="op">)</span>, .id <span class="op">=</span> <span class="st">"symbol"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/as_tbl_time.html">as_tbl_time</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">symbol</span><span class="op">)</span>
-
-<span class="co"># Collapse to daily and transform to OHLC (Open, High, Low, Close), a </span>
-<span class="co"># common financial transformation</span>
-<span class="va">price_series</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/collapse_by.html">collapse_by</a></span><span class="op">(</span><span class="st">"daily"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">symbol</span>, <span class="va">date</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>
-    open  <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/nth.html" class="external-link">first</a></span><span class="op">(</span><span class="va">price</span><span class="op">)</span>,
-    high  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">price</span><span class="op">)</span>,
-    low   <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">price</span><span class="op">)</span>,
-    close <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/nth.html" class="external-link">last</a></span><span class="op">(</span><span class="va">price</span><span class="op">)</span>
-  <span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span></code></pre></div>
-<pre><code>## `summarise()` has grouped output by 'symbol'. You can override using the `.groups` argument.</code></pre>
-<pre><code>## # A time tibble: 10 x 6
-## # Index:  date
-## # Groups: symbol [2]
-##    symbol   date                 open  high   low close
-##    &lt;chr&gt;    &lt;dttm&gt;              &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1 apple    2014-01-01 23:00:00  99.7  102.  99.6  99.9
-##  2 apple    2014-01-02 23:00:00  99.6  102.  98.7 101. 
-##  3 apple    2014-01-03 23:00:00 101.   103. 101.  101. 
-##  4 apple    2014-01-04 23:00:00 102.   104. 101.  103. 
-##  5 apple    2014-01-05 23:00:00 104.   105. 101.  101. 
-##  6 facebook 2014-01-01 23:00:00 150.   152. 149.  149. 
-##  7 facebook 2014-01-02 23:00:00 149.   151. 148.  149. 
-##  8 facebook 2014-01-03 23:00:00 150.   150. 147.  148. 
-##  9 facebook 2014-01-04 23:00:00 148.   150. 144.  145. 
-## 10 facebook 2014-01-05 23:00:00 145.   146. 144.  146.</code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Create price series of hourly movements for apple and facebook stock.</span></span>
+<span><span class="va">apple</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_series.html">create_series</a></span><span class="op">(</span><span class="st">'2014'</span> <span class="op">~</span> <span class="st">'2016'</span>, period <span class="op">=</span> <span class="st">'1 hour'</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>price <span class="op">=</span> <span class="fl">100</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/cumsum.html" class="external-link">cumsum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html" class="external-link">n</a></span><span class="op">(</span><span class="op">)</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">.5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">facebook</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_series.html">create_series</a></span><span class="op">(</span><span class="st">'2014'</span> <span class="op">~</span> <span class="st">'2016'</span>, period <span class="op">=</span> <span class="st">'1 hour'</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>price <span class="op">=</span> <span class="fl">150</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/cumsum.html" class="external-link">cumsum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html" class="external-link">n</a></span><span class="op">(</span><span class="op">)</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">.5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Bind them together and create a symbol column to group on</span></span>
+<span><span class="va">price_series</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html" class="external-link">bind_rows</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>apple <span class="op">=</span> <span class="va">apple</span>, facebook <span class="op">=</span> <span class="va">facebook</span><span class="op">)</span>, .id <span class="op">=</span> <span class="st">"symbol"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/tbl_time.html">as_tbl_time</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">symbol</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Collapse to daily and transform to OHLC (Open, High, Low, Close), a </span></span>
+<span><span class="co"># common financial transformation</span></span>
+<span><span class="va">price_series</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/collapse_by.html">collapse_by</a></span><span class="op">(</span><span class="st">"daily"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">symbol</span>, <span class="va">date</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span></span>
+<span>    open  <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/nth.html" class="external-link">first</a></span><span class="op">(</span><span class="va">price</span><span class="op">)</span>,</span>
+<span>    high  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">price</span><span class="op">)</span>,</span>
+<span>    low   <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">price</span><span class="op">)</span>,</span>
+<span>    close <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/nth.html" class="external-link">last</a></span><span class="op">(</span><span class="va">price</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## `summarise()` has grouped output by 'symbol'. You can override using the</span></span>
+<span><span class="co">## `.groups` argument.</span></span></code></pre>
+<pre><code><span><span class="co">## # A time tibble: 10 × 6</span></span>
+<span><span class="co">## <span style="color: #949494;"># Index:  date</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># Groups: symbol [2]</span></span></span>
+<span><span class="co">##    symbol   date                 open  high   low close</span></span>
+<span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 1</span> apple    2014-01-01 <span style="color: #949494;">23:00:00</span>  99.7  102.  99.6  99.9</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 2</span> apple    2014-01-02 <span style="color: #949494;">23:00:00</span>  99.6  102.  98.7 101. </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 3</span> apple    2014-01-03 <span style="color: #949494;">23:00:00</span> 101.   103. 101.  101. </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 4</span> apple    2014-01-04 <span style="color: #949494;">23:00:00</span> 102.   104. 101.  103. </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 5</span> apple    2014-01-05 <span style="color: #949494;">23:00:00</span> 104.   105. 101.  101. </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 6</span> facebook 2014-01-01 <span style="color: #949494;">23:00:00</span> 150.   152. 149.  149. </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 7</span> facebook 2014-01-02 <span style="color: #949494;">23:00:00</span> 149.   151. 148.  149. </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 8</span> facebook 2014-01-03 <span style="color: #949494;">23:00:00</span> 150.   150. 147.  148. </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 9</span> facebook 2014-01-04 <span style="color: #949494;">23:00:00</span> 148.   150. 144.  145. </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">10</span> facebook 2014-01-05 <span style="color: #949494;">23:00:00</span> 145.   146. 144.  146.</span></span></code></pre>
 </div>
   </div>
 
@@ -269,11 +297,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Davis Vaughan, Matt Dancho.</p>
+  <p></p>
+<p>Developed by Davis Vaughan, Matt Dancho.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9000.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>
