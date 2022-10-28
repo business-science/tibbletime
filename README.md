@@ -7,11 +7,10 @@
 
 [![Lifecycle
 Status](https://img.shields.io/badge/lifecycle-retired-orange.svg)](https://www.tidyverse.org/lifecycle/)
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/tibbletime)](https://cran.r-project.org/package=tibbletime)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/tibbletime)](https://cran.r-project.org/package=tibbletime)
 [![Codecov test
 coverage](https://codecov.io/gh/business-science/tibbletime/branch/master/graph/badge.svg)](https://codecov.io/gh/business-science/tibbletime?branch=master)
-[![R build
-status](https://github.com/business-science/tibbletime/workflows/R-CMD-check/badge.svg)](https://github.com/business-science/tibbletime/actions)
+[![R-CMD-check](https://github.com/business-science/tibbletime/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/business-science/tibbletime/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 ## Package status
@@ -19,11 +18,11 @@ status](https://github.com/business-science/tibbletime/workflows/R-CMD-check/bad
 `tibbletime` has been officially retired. We will continue to maintain
 but not be adding new functionality. Options to get new functionality:
 
-  - [**timetk**](https://business-science.github.io/timetk/index.html) -
-    Provides time series visualization, wrangling, and preprocessing
-    using `tibble` structure
-  - [**tsibble**](https://github.com/tidyverts/tsibble) - Provides
-    wrangling using `tsibble` structure
+- [**timetk**](https://business-science.github.io/timetk/index.html) -
+  Provides time series visualization, wrangling, and preprocessing using
+  `tibble` structure
+- [**tsibble**](https://github.com/tidyverts/tsibble) - Provides
+  wrangling using `tsibble` structure
 
 ## A time aware tibble
 
@@ -94,7 +93,7 @@ data(FB)
 FB <- as_tbl_time(FB, index = date)
 
 FB
-#> # A time tibble: 1,008 x 8
+#> # A time tibble: 1,008 × 8
 #> # Index: date
 #>    symbol date        open  high   low close    volume adjusted
 #>    <chr>  <date>     <dbl> <dbl> <dbl> <dbl>     <dbl>    <dbl>
@@ -114,9 +113,9 @@ FB
 There are a number of functions that were designed specifically for
 `tbl_time` objects. Some of them are:
 
-1)  `filter_time()` - Succinctly filter a tbl\_time object by date.
+1)  `filter_time()` - Succinctly filter a tbl_time object by date.
 
-2)  `as_period()` - Convert a tbl\_time object from daily to monthly,
+2)  `as_period()` - Convert a tbl_time object from daily to monthly,
     from minute data to hourly, and more. This allows the user to easily
     aggregate data to a less granular level.
 
@@ -146,7 +145,7 @@ To look at just a few:
 # Filter for dates from March 2013 to December 2015
 FB %>% 
   filter_time('2013-03' ~ '2015')
-#> # A time tibble: 716 x 8
+#> # A time tibble: 716 × 8
 #> # Index: date
 #>    symbol date        open  high   low close   volume adjusted
 #>    <chr>  <date>     <dbl> <dbl> <dbl> <dbl>    <dbl>    <dbl>
@@ -166,7 +165,7 @@ FB %>%
 # This just reduces the tibble to the last row in each month
 FB %>% 
   as_period("monthly", side = "end")
-#> # A time tibble: 48 x 8
+#> # A time tibble: 48 × 8
 #> # Index: date
 #>    symbol date        open  high   low close    volume adjusted
 #>    <chr>  <date>     <dbl> <dbl> <dbl> <dbl>     <dbl>    <dbl>
@@ -189,7 +188,7 @@ FB %>%
   collapse_by("monthly") %>%
   group_by(date) %>%
   summarise_all(mean)
-#> # A time tibble: 48 x 7
+#> # A time tibble: 48 × 7
 #> # Index: date
 #>    date        open  high   low close    volume adjusted
 #>    <date>     <dbl> <dbl> <dbl> <dbl>     <dbl>    <dbl>
@@ -208,7 +207,7 @@ FB %>%
 # Perform a 5 period rolling average
 mean_5 <- rollify(mean, window = 5)
 mutate(FB, roll_mean = mean_5(adjusted))
-#> # A time tibble: 1,008 x 9
+#> # A time tibble: 1,008 × 9
 #> # Index: date
 #>    symbol date        open  high   low close    volume adjusted roll_mean
 #>    <chr>  <date>     <dbl> <dbl> <dbl> <dbl>     <dbl>    <dbl>     <dbl>
@@ -227,7 +226,7 @@ mutate(FB, roll_mean = mean_5(adjusted))
 # Create a time series
 # Every other day in 2013
 create_series(~'2013', '2 day')
-#> # A time tibble: 183 x 1
+#> # A time tibble: 183 × 1
 #> # Index: date
 #>    date               
 #>    <dttm>             
@@ -271,7 +270,9 @@ FANG %>%
     adj_max   = max(adjusted),
     adj_range = adj_max - adj_min
   )
-#> # A time tibble: 16 x 5
+#> `summarise()` has grouped output by 'symbol'. You can override using the
+#> `.groups` argument.
+#> # A time tibble: 16 × 5
 #> # Index:  date
 #> # Groups: symbol [4]
 #>    symbol date       adj_min adj_max adj_range
