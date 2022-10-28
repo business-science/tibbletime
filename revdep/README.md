@@ -1,22 +1,8 @@
-# Platform
-
-|field    |value                        |
-|:--------|:----------------------------|
-|version  |R version 3.6.0 (2019-04-26) |
-|os       |macOS Mojave 10.14.5         |
-|system   |x86_64, darwin15.6.0         |
-|ui       |RStudio                      |
-|language |(EN)                         |
-|collate  |en_US.UTF-8                  |
-|ctype    |en_US.UTF-8                  |
-|tz       |America/New_York             |
-|date     |2020-05-26                   |
-
-# Dependencies
-
-|package    |old   |new   |Δ  |
-|:----------|:-----|:-----|:--|
-|tibbletime |0.1.3 |0.1.4 |*  |
-
 # Revdeps
+
+## New problems (1)
+
+|package   |version |error  |warning |note |
+|:---------|:-------|:------|:-------|:----|
+|[anomalize](problems.md#anomalize)|0.2.2   |__+2__ |__+1__  |     |
 
