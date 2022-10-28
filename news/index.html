@@ -79,8 +79,7 @@
 <h2 class="page-header" data-toc-text="development version" id="tibbletime-development-version">tibbletime (development version)<a class="anchor" aria-label="anchor" href="#tibbletime-development-version"></a></h2>
 <ul><li><p>Removed usage of deprecated <code><a href="https://tibble.tidyverse.org/reference/trunc_mat.html" class="external-link">tibble::trunc_mat()</a></code> in favor of <code><a href="https://pillar.r-lib.org/reference/tbl_sum.html" class="external-link">pillar::tbl_sum()</a></code>.</p></li>
 <li><p>Fix usage of <code>|</code> rather than <code>||</code> in the C++ code to satisfy a CRAN warning.</p></li>
-<li><p>Fixed a tidyselection warning emitted by <code>unnest.tbl_time()</code> (<a href="https://github.com/business-science/tibbletime/issues/100" class="external-link">#100</a>).</p></li>
-<li><p>Removed the <code>unnest.tbl_df()</code> method that attempted to recover the <code>tbl_time</code> class when unnesting a list-col of <code>tbl_time</code> data frames. This was a bad idea, because we don’t own the <code>tbl_df</code> class and we were trying to inject a method in front of <code>unnest.data.frame()</code> (<a href="https://github.com/business-science/tibbletime/issues/100" class="external-link">#100</a>).</p></li>
+<li><p>Fixed a tidyselection warning emitted by the <code>tbl_time</code> method for <code><a href="https://tidyr.tidyverse.org/reference/nest.html" class="external-link">unnest()</a></code> (<a href="https://github.com/business-science/tibbletime/issues/100" class="external-link">#100</a>).</p></li>
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.1.6" id="tibbletime-016">tibbletime 0.1.6<small>2020-07-21</small><a class="anchor" aria-label="anchor" href="#tibbletime-016"></a></h2>
