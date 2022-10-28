@@ -133,16 +133,16 @@ monthly summary from a daily dataset.</p>
 <span><span class="co">## <span style="color: #949494;"># Index:         date</span></span></span>
 <span><span class="co">##    date          var</span></span>
 <span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 1</span> 2013-01-01  0.385</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 2</span> 2013-01-02 -<span style="color: #BB0000;">1.15</span> </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 3</span> 2013-01-03  0.440</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 4</span> 2013-01-04 -<span style="color: #BB0000;">0.714</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 5</span> 2013-01-05 -<span style="color: #BB0000;">1.89</span> </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 6</span> 2013-01-06  0.595</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 7</span> 2013-01-07  1.43 </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 8</span> 2013-01-08 -<span style="color: #BB0000;">0.354</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 9</span> 2013-01-09 -<span style="color: #BB0000;">1.92</span> </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">10</span> 2013-01-10 -<span style="color: #BB0000;">1.29</span> </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 1</span> 2013-01-01  1.18 </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 2</span> 2013-01-02 -<span style="color: #BB0000;">1.42</span> </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 3</span> 2013-01-03 -<span style="color: #BB0000;">0.435</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 4</span> 2013-01-04  1.33 </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 5</span> 2013-01-05  1.52 </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 6</span> 2013-01-06  0.231</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 7</span> 2013-01-07 -<span style="color: #BB0000;">0.269</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 8</span> 2013-01-08 -<span style="color: #BB0000;">0.805</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 9</span> 2013-01-09 -<span style="color: #BB0000;">1.82</span> </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">10</span> 2013-01-10  0.252</span></span>
 <span><span class="co">## <span style="color: #949494;"># … with 1,816 more rows</span></span></span></code></pre>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">series</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -152,16 +152,16 @@ monthly summary from a daily dataset.</p>
 <pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 60 × 3</span></span></span>
 <span><span class="co">##     year month mean_var</span></span>
 <span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 1</span>  <span style="text-decoration: underline;">2</span>013     1  -<span style="color: #BB0000;">0.218</span> </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 2</span>  <span style="text-decoration: underline;">2</span>013     2  -<span style="color: #BB0000;">0.158</span> </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 3</span>  <span style="text-decoration: underline;">2</span>013     3   0.070<span style="text-decoration: underline;">9</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 4</span>  <span style="text-decoration: underline;">2</span>013     4   0.315 </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 5</span>  <span style="text-decoration: underline;">2</span>013     5  -<span style="color: #BB0000;">0.064</span><span style="color: #BB0000; text-decoration: underline;">7</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 6</span>  <span style="text-decoration: underline;">2</span>013     6   0.174 </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 7</span>  <span style="text-decoration: underline;">2</span>013     7   0.110 </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 8</span>  <span style="text-decoration: underline;">2</span>013     8   0.017<span style="text-decoration: underline;">7</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 9</span>  <span style="text-decoration: underline;">2</span>013     9  -<span style="color: #BB0000;">0.322</span> </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">10</span>  <span style="text-decoration: underline;">2</span>013    10  -<span style="color: #BB0000;">0.079</span><span style="color: #BB0000; text-decoration: underline;">8</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 1</span>  <span style="text-decoration: underline;">2</span>013     1 -<span style="color: #BB0000;">0.003</span><span style="color: #BB0000; text-decoration: underline;">36</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 2</span>  <span style="text-decoration: underline;">2</span>013     2 -<span style="color: #BB0000;">0.216</span>  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 3</span>  <span style="text-decoration: underline;">2</span>013     3  0.272  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 4</span>  <span style="text-decoration: underline;">2</span>013     4 -<span style="color: #BB0000;">0.150</span>  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 5</span>  <span style="text-decoration: underline;">2</span>013     5 -<span style="color: #BB0000;">0.197</span>  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 6</span>  <span style="text-decoration: underline;">2</span>013     6 -<span style="color: #BB0000;">0.092</span><span style="color: #BB0000; text-decoration: underline;">4</span> </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 7</span>  <span style="text-decoration: underline;">2</span>013     7  0.097<span style="text-decoration: underline;">7</span> </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 8</span>  <span style="text-decoration: underline;">2</span>013     8  0.139  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 9</span>  <span style="text-decoration: underline;">2</span>013     9 -<span style="color: #BB0000;">0.208</span>  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">10</span>  <span style="text-decoration: underline;">2</span>013    10 -<span style="color: #BB0000;">0.233</span>  </span></span>
 <span><span class="co">## <span style="color: #949494;"># … with 50 more rows</span></span></span></code></pre>
 <p>This gets more difficult the more granular you go. Getting 5-minute
 summaries from minute or second data requires grouping on year, month,
@@ -184,16 +184,16 @@ corresponds to the period you are summarising at. The
 <span><span class="co">## <span style="color: #949494;"># Index:         date</span></span></span>
 <span><span class="co">##    date       mean_var</span></span>
 <span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 1</span> 2013-01-31  -<span style="color: #BB0000;">0.218</span> </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 2</span> 2013-02-28  -<span style="color: #BB0000;">0.158</span> </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 3</span> 2013-03-31   0.070<span style="text-decoration: underline;">9</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 4</span> 2013-04-30   0.315 </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 5</span> 2013-05-31  -<span style="color: #BB0000;">0.064</span><span style="color: #BB0000; text-decoration: underline;">7</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 6</span> 2013-06-30   0.174 </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 7</span> 2013-07-31   0.110 </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 8</span> 2013-08-31   0.017<span style="text-decoration: underline;">7</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 9</span> 2013-09-30  -<span style="color: #BB0000;">0.322</span> </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">10</span> 2013-10-31  -<span style="color: #BB0000;">0.079</span><span style="color: #BB0000; text-decoration: underline;">8</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 1</span> 2013-01-31 -<span style="color: #BB0000;">0.003</span><span style="color: #BB0000; text-decoration: underline;">36</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 2</span> 2013-02-28 -<span style="color: #BB0000;">0.216</span>  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 3</span> 2013-03-31  0.272  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 4</span> 2013-04-30 -<span style="color: #BB0000;">0.150</span>  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 5</span> 2013-05-31 -<span style="color: #BB0000;">0.197</span>  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 6</span> 2013-06-30 -<span style="color: #BB0000;">0.092</span><span style="color: #BB0000; text-decoration: underline;">4</span> </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 7</span> 2013-07-31  0.097<span style="text-decoration: underline;">7</span> </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 8</span> 2013-08-31  0.139  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 9</span> 2013-09-30 -<span style="color: #BB0000;">0.208</span>  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">10</span> 2013-10-31 -<span style="color: #BB0000;">0.233</span>  </span></span>
 <span><span class="co">## <span style="color: #949494;"># … with 50 more rows</span></span></span></code></pre>
 <p>While <code><a href="../reference/collapse_by.html">collapse_by()</a></code> directly manipulates the index
 column, the lower level <code><a href="../reference/collapse_index.html">collapse_index()</a></code> function can be
@@ -215,16 +215,16 @@ million row data set.</p>
 <span><span class="co">## <span style="color: #949494;"># Index:         date</span></span></span>
 <span><span class="co">##    date                mean_var</span></span>
 <span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 1</span> 2013-01-01 <span style="color: #949494;">00:59:55</span> -<span style="color: #BB0000;">0.018</span><span style="color: #BB0000; text-decoration: underline;">4</span> </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 2</span> 2013-01-01 <span style="color: #949494;">01:59:55</span> -<span style="color: #BB0000;">0.083</span><span style="color: #BB0000; text-decoration: underline;">7</span> </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 3</span> 2013-01-01 <span style="color: #949494;">02:59:55</span> -<span style="color: #BB0000;">0.041</span><span style="color: #BB0000; text-decoration: underline;">1</span> </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 4</span> 2013-01-01 <span style="color: #949494;">03:59:55</span> -<span style="color: #BB0000;">0.037</span><span style="color: #BB0000; text-decoration: underline;">7</span> </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 5</span> 2013-01-01 <span style="color: #949494;">04:59:55</span> -<span style="color: #BB0000;">0.013</span><span style="color: #BB0000; text-decoration: underline;">1</span> </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 6</span> 2013-01-01 <span style="color: #949494;">05:59:55</span>  0.077<span style="text-decoration: underline;">9</span> </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 7</span> 2013-01-01 <span style="color: #949494;">06:59:55</span> -<span style="color: #BB0000;">0.043</span><span style="color: #BB0000; text-decoration: underline;">6</span> </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 8</span> 2013-01-01 <span style="color: #949494;">07:59:55</span> -<span style="color: #BB0000;">0.003</span><span style="color: #BB0000; text-decoration: underline;">79</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 9</span> 2013-01-01 <span style="color: #949494;">08:59:55</span>  0.006<span style="text-decoration: underline;">67</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">10</span> 2013-01-01 <span style="color: #949494;">09:59:55</span>  0.001<span style="text-decoration: underline;">27</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 1</span> 2013-01-01 <span style="color: #949494;">00:59:55</span>  0.011<span style="text-decoration: underline;">3</span> </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 2</span> 2013-01-01 <span style="color: #949494;">01:59:55</span>  0.012<span style="text-decoration: underline;">4</span> </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 3</span> 2013-01-01 <span style="color: #949494;">02:59:55</span> -<span style="color: #BB0000;">0.065</span><span style="color: #BB0000; text-decoration: underline;">9</span> </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 4</span> 2013-01-01 <span style="color: #949494;">03:59:55</span> -<span style="color: #BB0000;">0.028</span><span style="color: #BB0000; text-decoration: underline;">7</span> </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 5</span> 2013-01-01 <span style="color: #949494;">04:59:55</span>  0.062<span style="text-decoration: underline;">4</span> </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 6</span> 2013-01-01 <span style="color: #949494;">05:59:55</span> -<span style="color: #BB0000;">0.029</span><span style="color: #BB0000; text-decoration: underline;">7</span> </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 7</span> 2013-01-01 <span style="color: #949494;">06:59:55</span>  0.002<span style="text-decoration: underline;">45</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 8</span> 2013-01-01 <span style="color: #949494;">07:59:55</span>  0.029<span style="text-decoration: underline;">8</span> </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 9</span> 2013-01-01 <span style="color: #949494;">08:59:55</span> -<span style="color: #BB0000;">0.001</span><span style="color: #BB0000; text-decoration: underline;">26</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">10</span> 2013-01-01 <span style="color: #949494;">09:59:55</span>  0.016<span style="text-decoration: underline;">8</span> </span></span>
 <span><span class="co">## <span style="color: #949494;"># … with 26,270 more rows</span></span></span></code></pre>
 </div>
 <div class="section level2">
