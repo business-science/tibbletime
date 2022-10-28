@@ -15,9 +15,9 @@ devtools::load_all()
 # tibbletime <img src="man/figures/tibbletime-logo.png" width="147" height="170" align="right" />
 
 <!-- badges: start -->
-[![Lifecycle Status](https://img.shields.io/badge/lifecycle-retired-orange.svg)](https://www.tidyverse.org/lifecycle/)
+[![Lifecycle Status](https://img.shields.io/badge/lifecycle-retired-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/tibbletime)](https://cran.r-project.org/package=tibbletime)
-[![Codecov test coverage](https://codecov.io/gh/business-science/tibbletime/branch/master/graph/badge.svg)](https://codecov.io/gh/business-science/tibbletime?branch=master)
+[![Codecov test coverage](https://codecov.io/gh/business-science/tibbletime/branch/master/graph/badge.svg)](https://app.codecov.io/gh/business-science/tibbletime?branch=master)
 [![R-CMD-check](https://github.com/business-science/tibbletime/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/business-science/tibbletime/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 

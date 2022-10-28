@@ -18,7 +18,7 @@ A tibble with 1,008 rows and 8 variables:
 }
 }
 \source{
-\url{http://www.investopedia.com/terms/f/fang-stocks-fb-amzn.asp}
+\url{https://www.investopedia.com/terms/f/fang-stocks-fb-amzn.asp}
 }
 \usage{
 FB

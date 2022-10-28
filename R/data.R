@@ -14,7 +14,7 @@
 #'   \item{volume}{number of shares traded}
 #'   \item{adjusted}{stock price at the close of trading adjusted for stock splits, in USD}
 #' }
-#' @source \url{http://www.investopedia.com/terms/f/fang-stocks-fb-amzn.asp}
+#' @source \url{https://www.investopedia.com/terms/f/fang-stocks-fb-amzn.asp}
 "FANG"
 
 #' Stock prices for Facebook from 2013-2016
@@ -33,5 +33,5 @@
 #'   \item{volume}{number of shares traded}
 #'   \item{adjusted}{stock price at the close of trading adjusted for stock splits, in USD}
 #' }
-#' @source \url{http://www.investopedia.com/terms/f/fang-stocks-fb-amzn.asp}
+#' @source \url{https://www.investopedia.com/terms/f/fang-stocks-fb-amzn.asp}
 "FB"
