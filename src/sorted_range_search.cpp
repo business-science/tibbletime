@@ -31,7 +31,7 @@ LogicalVector sorted_range_search(NumericVector x, double lower, double upper) {
   // Two cases to return NULL
   // 1) When the upper pos is below the minimum of the series and lower is below that
   // 2) When the lower pos is above the max of the series and upper is above that
-  if( (loc[1] == 0) | (loc[0] > x.size() - 1) ) {
+  if( (loc[1] == 0) || (loc[0] > x.size() - 1) ) {
     return filter_criteria;
   }
 

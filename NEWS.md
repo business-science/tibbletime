@@ -1,5 +1,7 @@
 # tibbletime (development version)
 
+* Fix usage of `|` rather than `||` in the C++ code to satisfy a CRAN warning.
+
 * Fixed a tidyselection warning emitted by `unnest.tbl_time()` (#100).
 
 * Removed the `unnest.tbl_df()` method that attempted to recover the
