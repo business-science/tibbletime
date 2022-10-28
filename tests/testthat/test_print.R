@@ -16,10 +16,16 @@ test_tbl_time_g <- as_tbl_time(test_time, date) %>%
 # Tests
 
 test_that("Index is part of the tibble output", {
-  expect_output(print.tbl_time(test_tbl_time), "Index: date")
+  expect_identical(
+    pillar::tbl_sum(test_tbl_time),
+    c("A time tibble" = pillar::dim_desc(test_tbl_time), "Index" = "date")
+  )
 })
 
 test_that("Groups are still printed", {
-  expect_output(print.tbl_time(test_tbl_time_g), "Groups: group1")
+  expect_identical(
+    pillar::tbl_sum(test_tbl_time_g),
+    c("A time tibble" = pillar::dim_desc(test_tbl_time_g), "Index" = "date", "Groups" = "group1 [2]")
+  )
 })
 

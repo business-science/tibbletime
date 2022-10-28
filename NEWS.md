@@ -1,5 +1,8 @@
 # tibbletime (development version)
 
+* Removed usage of deprecated `tibble::trunc_mat()` in favor of
+  `pillar::tbl_sum()`.
+
 * Fix usage of `|` rather than `||` in the C++ code to satisfy a CRAN warning.
 
 * Fixed a tidyselection warning emitted by `unnest.tbl_time()` (#100).

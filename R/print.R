@@ -1,20 +1,34 @@
 #' @export
-#' @importFrom tibble trunc_mat
-#'
-print.tbl_time <- function(x, ...) {
+#' @importFrom pillar tbl_sum
+tbl_sum.tbl_time <- function(x) {
+  out <- c(
+    "A time tibble" = pillar::dim_desc(x),
+    "Index" = get_index_char(x)
+  )
 
-  # Original trunc_mat
-  print_tbl <- tibble::trunc_mat(x, ...)
+  if (dplyr::is_grouped_df(x)) {
+    out <- c(out, "Groups" = group_sum(x))
+  }
 
-  # Save summary[[1]] containing "A tibble" and dims
-  summary <- print_tbl$summary[[1]]
-  names(summary) <- "A time tibble"
+  out
+}
 
-  # Overwrite "A tibble" and dims with the index
-  print_tbl$summary[[1]] <- get_index_char(x)
-  names(print_tbl$summary)[[1]] <- "Index"
+# `dplyr:::group_sum()`
+group_sum <- function(x) {
+  grps <- dplyr::n_groups(x)
 
-  # Print
-  cat("# ", names(summary), ": ", summary, "\n", sep = "")
-  print(print_tbl)
+  vars <- dplyr::group_vars(x)
+  vars <- paste0(vars, collapse = ", ")
+
+  paste0(vars, " [", big_mark(grps), "]")
+}
+
+# `dplyr:::big_mark()`
+big_mark <- function(x, ...) {
+  mark <- if (identical(getOption("OutDec"), ",")) {
+    "."
+  } else {
+    ","
+  }
+  formatC(x, big.mark = mark, ...)
 }
