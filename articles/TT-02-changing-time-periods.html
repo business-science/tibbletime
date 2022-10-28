@@ -148,8 +148,8 @@ like 1 or 2, and period is an interval like <code>weekly</code> or
 to monthly data.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/as_period.html">as_period</a></span><span class="op">(</span><span class="va">FB</span>, <span class="st">'1 month'</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## # A time tibble: 48 × 8</span></span>
-<span><span class="co">## <span style="color: #949494;"># Index: date</span></span></span>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A time tibble: 48 × 8</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># Index:         date</span></span></span>
 <span><span class="co">##    symbol date        open  high   low close    volume adjusted</span></span>
 <span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
 <span><span class="co">## <span style="color: #BCBCBC;"> 1</span> FB     2013-01-02  27.4  28.2  27.4  28    69<span style="text-decoration: underline;">846</span>400     28  </span></span>
@@ -176,8 +176,8 @@ to monthly data.</p>
 2 months?</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/as_period.html">as_period</a></span><span class="op">(</span><span class="va">FB</span>, <span class="st">'2 m'</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## # A time tibble: 24 × 8</span></span>
-<span><span class="co">## <span style="color: #949494;"># Index: date</span></span></span>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A time tibble: 24 × 8</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># Index:         date</span></span></span>
 <span><span class="co">##    symbol date        open  high   low close   volume adjusted</span></span>
 <span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
 <span><span class="co">## <span style="color: #BCBCBC;"> 1</span> FB     2013-01-02  27.4  28.2  27.4  28   69<span style="text-decoration: underline;">846</span>400     28  </span></span>
@@ -198,8 +198,8 @@ completely regular (there are gaps due to weekends and holidays).
 period specified.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/as_period.html">as_period</a></span><span class="op">(</span><span class="va">FB</span>, <span class="st">'25 d'</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## # A time tibble: 59 × 8</span></span>
-<span><span class="co">## <span style="color: #949494;"># Index: date</span></span></span>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A time tibble: 59 × 8</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># Index:         date</span></span></span>
 <span><span class="co">##    symbol date        open  high   low close   volume adjusted</span></span>
 <span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
 <span><span class="co">## <span style="color: #BCBCBC;"> 1</span> FB     2013-01-02  27.4  28.2  27.4  28   69<span style="text-decoration: underline;">846</span>400     28  </span></span>
@@ -236,8 +236,8 @@ group to be (2013-01-01, 2013-01-02), you can use the
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Without start_date</span></span>
 <span><span class="fu"><a href="../reference/as_period.html">as_period</a></span><span class="op">(</span><span class="va">FB</span>, <span class="st">'2 d'</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## # A time tibble: 619 × 8</span></span>
-<span><span class="co">## <span style="color: #949494;"># Index: date</span></span></span>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A time tibble: 619 × 8</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># Index:         date</span></span></span>
 <span><span class="co">##    symbol date        open  high   low close    volume adjusted</span></span>
 <span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
 <span><span class="co">## <span style="color: #BCBCBC;"> 1</span> FB     2013-01-02  27.4  28.2  27.4  28    69<span style="text-decoration: underline;">846</span>400     28  </span></span>
@@ -254,8 +254,8 @@ group to be (2013-01-01, 2013-01-02), you can use the
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># With start_date</span></span>
 <span><span class="fu"><a href="../reference/as_period.html">as_period</a></span><span class="op">(</span><span class="va">FB</span>, <span class="st">'2 d'</span>, start_date <span class="op">=</span> <span class="st">"2013-01-01"</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## # A time tibble: 619 × 8</span></span>
-<span><span class="co">## <span style="color: #949494;"># Index: date</span></span></span>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A time tibble: 619 × 8</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># Index:         date</span></span></span>
 <span><span class="co">##    symbol date        open  high   low close    volume adjusted</span></span>
 <span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
 <span><span class="co">## <span style="color: #BCBCBC;"> 1</span> FB     2013-01-02  27.4  28.2  27.4  28    69<span style="text-decoration: underline;">846</span>400     28  </span></span>
@@ -278,8 +278,8 @@ end of each period instead, specify the <code>side = "end"</code>
 argument.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/as_period.html">as_period</a></span><span class="op">(</span><span class="va">FB</span>, <span class="st">'y'</span>, side <span class="op">=</span> <span class="st">"end"</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## # A time tibble: 4 × 8</span></span>
-<span><span class="co">## <span style="color: #949494;"># Index: date</span></span></span>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A time tibble: 4 × 8</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># Index:         date</span></span></span>
 <span><span class="co">##   symbol date        open  high   low close   volume adjusted</span></span>
 <span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
 <span><span class="co">## <span style="color: #BCBCBC;">1</span> FB     2013-12-31  54.1  54.9  53.9  54.7 43<span style="text-decoration: underline;">076</span>200     54.7</span></span>
@@ -297,9 +297,9 @@ every 2 years.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">FANG</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/as_period.html">as_period</a></span><span class="op">(</span><span class="st">'2 y'</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## # A time tibble: 12 × 8</span></span>
-<span><span class="co">## <span style="color: #949494;"># Index:  date</span></span></span>
-<span><span class="co">## <span style="color: #949494;"># Groups: symbol [4]</span></span></span>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A time tibble: 12 × 8</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># Index:         date</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># Groups:        symbol [4]</span></span></span>
 <span><span class="co">##    symbol date         open   high    low  close   volume adjusted</span></span>
 <span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
 <span><span class="co">## <span style="color: #BCBCBC;"> 1</span> FB     2013-01-02   27.4   28.2   27.4   28   69<span style="text-decoration: underline;">846</span>400     28  </span></span>

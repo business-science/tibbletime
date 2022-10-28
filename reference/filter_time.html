@@ -161,9 +161,9 @@ but only expands to include whole seconds.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># 2013-01-01 to 2014-12-31</span></span></span>
 <span class="r-in"><span><span class="fu">filter_time</span><span class="op">(</span><span class="va">FANG</span>, <span class="st">'2013'</span> <span class="op">~</span> <span class="st">'2014'</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # A time tibble: 2,016 × 8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Index:  date</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Groups: symbol [4]</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A time tibble: 2,016 × 8</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Index:         date</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Groups:        symbol [4]</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    symbol date        open  high   low close    volume adjusted</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> FB     2013-01-02  27.4  28.2  27.4  28    69<span style="text-decoration: underline;">846</span>400     28  </span>
@@ -180,9 +180,9 @@ but only expands to include whole seconds.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># 2013-05-25 to 2014-06-04</span></span></span>
 <span class="r-in"><span><span class="fu">filter_time</span><span class="op">(</span><span class="va">FANG</span>, <span class="st">'2013-05-25'</span> <span class="op">~</span> <span class="st">'2014-06-04'</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # A time tibble: 1,032 × 8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Index:  date</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Groups: symbol [4]</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A time tibble: 1,032 × 8</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Index:         date</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Groups:        symbol [4]</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    symbol date        open  high   low close   volume adjusted</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> FB     2013-05-28  24.5  24.5  23.9  24.1 50<span style="text-decoration: underline;">079</span>700     24.1</span>
@@ -199,8 +199,8 @@ but only expands to include whole seconds.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Using the `[` subset operator</span></span></span>
 <span class="r-in"><span><span class="va">FANG</span><span class="op">[</span><span class="st">'2014'</span><span class="op">~</span><span class="st">'2015'</span><span class="op">]</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # A time tibble: 2,016 × 8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Index: date</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A time tibble: 2,016 × 8</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Index:         date</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    symbol date        open  high   low close   volume adjusted</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> FB     2014-01-02  54.8  55.2  54.2  54.7 43<span style="text-decoration: underline;">195</span>500     54.7</span>
@@ -217,8 +217,8 @@ but only expands to include whole seconds.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Using `[` and one sided formula for only dates in 2014</span></span></span>
 <span class="r-in"><span><span class="va">FANG</span><span class="op">[</span><span class="op">~</span><span class="st">'2014'</span><span class="op">]</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # A time tibble: 1,008 × 8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Index: date</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A time tibble: 1,008 × 8</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Index:         date</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    symbol date        open  high   low close   volume adjusted</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> FB     2014-01-02  54.8  55.2  54.2  54.7 43<span style="text-decoration: underline;">195</span>500     54.7</span>
@@ -235,8 +235,8 @@ but only expands to include whole seconds.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Using `[` and column selection</span></span></span>
 <span class="r-in"><span><span class="va">FANG</span><span class="op">[</span><span class="st">'2013'</span><span class="op">~</span><span class="st">'2016'</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"date"</span>, <span class="st">"adjusted"</span><span class="op">)</span><span class="op">]</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # A time tibble: 4,032 × 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Index: date</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A time tibble: 4,032 × 2</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Index:         date</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    date       adjusted</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2013-01-02     28  </span>
@@ -255,9 +255,9 @@ but only expands to include whole seconds.</p>
 <span class="r-in"><span><span class="va">lhs_date</span> <span class="op">&lt;-</span> <span class="st">"2013"</span></span></span>
 <span class="r-in"><span><span class="va">rhs_date</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2014-01-01"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">filter_time</span><span class="op">(</span><span class="va">FANG</span>, <span class="va">lhs_date</span> <span class="op">~</span> <span class="va">rhs_date</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # A time tibble: 1,008 × 8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Index:  date</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Groups: symbol [4]</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A time tibble: 1,008 × 8</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Index:         date</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Groups:        symbol [4]</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    symbol date        open  high   low close    volume adjusted</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> FB     2013-01-02  27.4  28.2  27.4  28    69<span style="text-decoration: underline;">846</span>400     28  </span>
@@ -274,9 +274,9 @@ but only expands to include whole seconds.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Use the keywords 'start' and 'end' to conveniently access ends</span></span></span>
 <span class="r-in"><span><span class="fu">filter_time</span><span class="op">(</span><span class="va">FANG</span>, <span class="st">'start'</span> <span class="op">~</span> <span class="st">'2014'</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # A time tibble: 2,016 × 8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Index:  date</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Groups: symbol [4]</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A time tibble: 2,016 × 8</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Index:         date</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Groups:        symbol [4]</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    symbol date        open  high   low close    volume adjusted</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> FB     2013-01-02  27.4  28.2  27.4  28    69<span style="text-decoration: underline;">846</span>400     28  </span>
@@ -294,8 +294,8 @@ but only expands to include whole seconds.</p>
 <span class="r-in"><span><span class="co"># hms (hour, minute, second) classes have special parsing</span></span></span>
 <span class="r-in"><span><span class="va">hms_example</span> <span class="op">&lt;-</span> <span class="fu"><a href="create_series.html">create_series</a></span><span class="op">(</span><span class="op">~</span><span class="st">'12:01'</span>, <span class="st">'second'</span>, class <span class="op">=</span> <span class="st">'hms'</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">filter_time</span><span class="op">(</span><span class="va">hms_example</span>, <span class="st">'start'</span> <span class="op">~</span> <span class="st">'12:01:30'</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # A time tibble: 31 × 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Index: date</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A time tibble: 31 × 1</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Index:         date</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    date    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;time&gt;</span>  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 12<span style="color: #949494;">:</span>01<span style="color: #949494;">:</span>00</span>

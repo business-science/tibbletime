@@ -150,8 +150,8 @@ Both endpoints are included in the result. Each side of the
 like this:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">FB</span>, <span class="va">date</span> <span class="op">&gt;=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2013-01-01"</span><span class="op">)</span>, <span class="va">date</span> <span class="op">&lt;=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2013-12-31"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## # A time tibble: 252 × 8</span></span>
-<span><span class="co">## <span style="color: #949494;"># Index: date</span></span></span>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A time tibble: 252 × 8</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># Index:         date</span></span></span>
 <span><span class="co">##    symbol date        open  high   low close    volume adjusted</span></span>
 <span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
 <span><span class="co">## <span style="color: #BCBCBC;"> 1</span> FB     2013-01-02  27.4  28.2  27.4  28    69<span style="text-decoration: underline;">846</span>400     28  </span></span>
@@ -170,8 +170,8 @@ like this:</p>
 creation, we can do this:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/filter_time.html">filter_time</a></span><span class="op">(</span><span class="va">FB</span>, time_formula <span class="op">=</span> <span class="st">'2013-01-01'</span> <span class="op">~</span> <span class="st">'2013-12-31'</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## # A time tibble: 252 × 8</span></span>
-<span><span class="co">## <span style="color: #949494;"># Index: date</span></span></span>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A time tibble: 252 × 8</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># Index:         date</span></span></span>
 <span><span class="co">##    symbol date        open  high   low close    volume adjusted</span></span>
 <span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
 <span><span class="co">## <span style="color: #BCBCBC;"> 1</span> FB     2013-01-02  27.4  28.2  27.4  28    69<span style="text-decoration: underline;">846</span>400     28  </span></span>
@@ -191,8 +191,8 @@ specified as a <code>formula</code> separated by a <code>~</code>.</p>
 <p>Using <code>filter_time</code> shorthand, this can be written:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/filter_time.html">filter_time</a></span><span class="op">(</span><span class="va">FB</span>, <span class="st">'2013'</span> <span class="op">~</span> <span class="st">'2013'</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## # A time tibble: 252 × 8</span></span>
-<span><span class="co">## <span style="color: #949494;"># Index: date</span></span></span>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A time tibble: 252 × 8</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># Index:         date</span></span></span>
 <span><span class="co">##    symbol date        open  high   low close    volume adjusted</span></span>
 <span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
 <span><span class="co">## <span style="color: #BCBCBC;"> 1</span> FB     2013-01-02  27.4  28.2  27.4  28    69<span style="text-decoration: underline;">846</span>400     28  </span></span>
@@ -209,8 +209,8 @@ specified as a <code>formula</code> separated by a <code>~</code>.</p>
 <p>Or even more succinctly as:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/filter_time.html">filter_time</a></span><span class="op">(</span><span class="va">FB</span>, <span class="op">~</span><span class="st">'2013'</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## # A time tibble: 252 × 8</span></span>
-<span><span class="co">## <span style="color: #949494;"># Index: date</span></span></span>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A time tibble: 252 × 8</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># Index:         date</span></span></span>
 <span><span class="co">##    symbol date        open  high   low close    volume adjusted</span></span>
 <span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
 <span><span class="co">## <span style="color: #BCBCBC;"> 1</span> FB     2013-01-02  27.4  28.2  27.4  28    69<span style="text-decoration: underline;">846</span>400     28  </span></span>
@@ -239,8 +239,8 @@ want to select every date inside a period.</p>
 date in March, 2015:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/filter_time.html">filter_time</a></span><span class="op">(</span><span class="va">FB</span>, <span class="op">~</span><span class="st">'2015-03'</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## # A time tibble: 22 × 8</span></span>
-<span><span class="co">## <span style="color: #949494;"># Index: date</span></span></span>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A time tibble: 22 × 8</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># Index:         date</span></span></span>
 <span><span class="co">##    symbol date        open  high   low close   volume adjusted</span></span>
 <span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
 <span><span class="co">## <span style="color: #BCBCBC;"> 1</span> FB     2015-03-02  79    79.9  78.5  79.8 21<span style="text-decoration: underline;">662</span>500     79.8</span></span>
@@ -272,8 +272,8 @@ date in March, 2015:</p>
 <p>This filters from the start of the series to the end of 2015.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/filter_time.html">filter_time</a></span><span class="op">(</span><span class="va">FB</span>, <span class="st">'start'</span> <span class="op">~</span> <span class="st">'2015'</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## # A time tibble: 756 × 8</span></span>
-<span><span class="co">## <span style="color: #949494;"># Index: date</span></span></span>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A time tibble: 756 × 8</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># Index:         date</span></span></span>
 <span><span class="co">##    symbol date        open  high   low close    volume adjusted</span></span>
 <span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
 <span><span class="co">## <span style="color: #BCBCBC;"> 1</span> FB     2013-01-02  27.4  28.2  27.4  28    69<span style="text-decoration: underline;">846</span>400     28  </span></span>
@@ -296,9 +296,9 @@ might expect.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">FANG</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/filter_time.html">filter_time</a></span><span class="op">(</span><span class="st">'2013-01-01'</span> <span class="op">~</span> <span class="st">'2013-01-04'</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## # A time tibble: 12 × 8</span></span>
-<span><span class="co">## <span style="color: #949494;"># Index:  date</span></span></span>
-<span><span class="co">## <span style="color: #949494;"># Groups: symbol [4]</span></span></span>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A time tibble: 12 × 8</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># Index:         date</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># Groups:        symbol [4]</span></span></span>
 <span><span class="co">##    symbol date        open  high   low close   volume adjusted</span></span>
 <span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
 <span><span class="co">## <span style="color: #BCBCBC;"> 1</span> FB     2013-01-02  27.4  28.2  27.4  28   69<span style="text-decoration: underline;">846</span>400     28  </span></span>
@@ -327,8 +327,8 @@ form of this is slightly different than the standard,
 <span><span class="co"># The first 2 minutes of the day</span></span>
 <span><span class="va">example</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/filter_time.html">filter_time</a></span><span class="op">(</span><span class="st">'2013-01-01'</span> <span class="op">~</span> <span class="st">'2013-01-01 00:02'</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## # A time tibble: 180 × 1</span></span>
-<span><span class="co">## <span style="color: #949494;"># Index: date</span></span></span>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A time tibble: 180 × 1</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># Index:         date</span></span></span>
 <span><span class="co">##    date               </span></span>
 <span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>             </span></span>
 <span><span class="co">## <span style="color: #BCBCBC;"> 1</span> 2013-01-01 <span style="color: #949494;">00:00:00</span></span></span>
@@ -348,8 +348,8 @@ form of this is slightly different than the standard,
 <span><span class="co"># '2013-01-01 + 03:00:00' ~ '2013-01-01 + 06:59:59'</span></span>
 <span><span class="va">example</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/filter_time.html">filter_time</a></span><span class="op">(</span><span class="st">'2013-01-01 3'</span> <span class="op">~</span> <span class="st">'2013-01-01 6'</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## # A time tibble: 14,400 × 1</span></span>
-<span><span class="co">## <span style="color: #949494;"># Index: date</span></span></span>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A time tibble: 14,400 × 1</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># Index:         date</span></span></span>
 <span><span class="co">##    date               </span></span>
 <span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>             </span></span>
 <span><span class="co">## <span style="color: #BCBCBC;"> 1</span> 2013-01-01 <span style="color: #949494;">03:00:00</span></span></span>
@@ -373,8 +373,8 @@ use the traditional extraction operator <code>[</code> with the formula
 syntax.</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">FB</span><span class="op">[</span><span class="op">~</span><span class="st">'2013'</span><span class="op">]</span></span></code></pre></div>
-<pre><code><span><span class="co">## # A time tibble: 252 × 8</span></span>
-<span><span class="co">## <span style="color: #949494;"># Index: date</span></span></span>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A time tibble: 252 × 8</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># Index:         date</span></span></span>
 <span><span class="co">##    symbol date        open  high   low close    volume adjusted</span></span>
 <span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
 <span><span class="co">## <span style="color: #BCBCBC;"> 1</span> FB     2013-01-02  27.4  28.2  27.4  28    69<span style="text-decoration: underline;">846</span>400     28  </span></span>
@@ -390,8 +390,8 @@ syntax.</p>
 <span><span class="co">## <span style="color: #949494;"># … with 242 more rows</span></span></span></code></pre>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">FB</span><span class="op">[</span><span class="st">'2013'</span><span class="op">~</span><span class="st">'2014-02'</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">3</span><span class="op">)</span><span class="op">]</span></span></code></pre></div>
-<pre><code><span><span class="co">## # A time tibble: 292 × 3</span></span>
-<span><span class="co">## <span style="color: #949494;"># Index: date</span></span></span>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A time tibble: 292 × 3</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># Index:         date</span></span></span>
 <span><span class="co">##    symbol date        open</span></span>
 <span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
 <span><span class="co">## <span style="color: #BCBCBC;"> 1</span> FB     2013-01-02  27.4</span></span>
@@ -416,8 +416,8 @@ that you can use variables inside the call the
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">date_var</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2014-01-01"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/filter_time.html">filter_time</a></span><span class="op">(</span><span class="va">FB</span>, <span class="st">'start'</span> <span class="op">~</span> <span class="va">date_var</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## # A time tibble: 252 × 8</span></span>
-<span><span class="co">## <span style="color: #949494;"># Index: date</span></span></span>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A time tibble: 252 × 8</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># Index:         date</span></span></span>
 <span><span class="co">##    symbol date        open  high   low close    volume adjusted</span></span>
 <span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
 <span><span class="co">## <span style="color: #BCBCBC;"> 1</span> FB     2013-01-02  27.4  28.2  27.4  28    69<span style="text-decoration: underline;">846</span>400     28  </span></span>
@@ -434,8 +434,8 @@ that you can use variables inside the call the
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">date_char</span> <span class="op">&lt;-</span> <span class="st">"2014-02"</span></span>
 <span><span class="fu"><a href="../reference/filter_time.html">filter_time</a></span><span class="op">(</span><span class="va">FB</span>, <span class="op">~</span> <span class="va">date_char</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## # A time tibble: 19 × 8</span></span>
-<span><span class="co">## <span style="color: #949494;"># Index: date</span></span></span>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A time tibble: 19 × 8</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># Index:         date</span></span></span>
 <span><span class="co">##    symbol date        open  high   low close    volume adjusted</span></span>
 <span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
 <span><span class="co">## <span style="color: #BCBCBC;"> 1</span> FB     2014-02-03  63.0  63.8  60.7  61.5  74<span style="text-decoration: underline;">866</span>600     61.5</span></span>

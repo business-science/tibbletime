@@ -138,8 +138,8 @@ a tibble?</p></dd>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Every day in 2013</span></span></span>
 <span class="r-in"><span><span class="fu">create_series</span><span class="op">(</span><span class="op">~</span><span class="st">'2013'</span>, <span class="st">'daily'</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # A time tibble: 365 × 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Index: date</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A time tibble: 365 × 1</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Index:         date</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    date               </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>             </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2013-01-01 <span style="color: #949494;">00:00:00</span></span>
@@ -156,8 +156,8 @@ a tibble?</p></dd>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Every other day in 2013</span></span></span>
 <span class="r-in"><span><span class="fu">create_series</span><span class="op">(</span><span class="op">~</span><span class="st">'2013'</span>, <span class="st">'2 d'</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # A time tibble: 183 × 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Index: date</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A time tibble: 183 × 1</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Index:         date</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    date               </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>             </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2013-01-01 <span style="color: #949494;">00:00:00</span></span>
@@ -174,8 +174,8 @@ a tibble?</p></dd>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Every quarter in 2013</span></span></span>
 <span class="r-in"><span><span class="fu">create_series</span><span class="op">(</span><span class="op">~</span><span class="st">'2013'</span>, <span class="st">'1 q'</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # A time tibble: 4 × 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Index: date</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A time tibble: 4 × 1</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Index:         date</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   date               </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>             </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 2013-01-01 <span style="color: #949494;">00:00:00</span></span>
@@ -185,8 +185,8 @@ a tibble?</p></dd>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Daily series for 2013-2015</span></span></span>
 <span class="r-in"><span><span class="fu">create_series</span><span class="op">(</span><span class="st">'2013'</span> <span class="op">~</span> <span class="st">'2015'</span>, <span class="st">'1 d'</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # A time tibble: 1,095 × 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Index: date</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A time tibble: 1,095 × 1</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Index:         date</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    date               </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>             </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2013-01-01 <span style="color: #949494;">00:00:00</span></span>
@@ -203,8 +203,8 @@ a tibble?</p></dd>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Minute series for 2 months</span></span></span>
 <span class="r-in"><span><span class="fu">create_series</span><span class="op">(</span><span class="st">'2012-01'</span> <span class="op">~</span> <span class="st">'2012-02'</span>, <span class="st">'M'</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # A time tibble: 86,400 × 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Index: date</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A time tibble: 86,400 × 1</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Index:         date</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    date               </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>             </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2012-01-01 <span style="color: #949494;">00:00:00</span></span>
@@ -221,8 +221,8 @@ a tibble?</p></dd>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Second series for 2 minutes</span></span></span>
 <span class="r-in"><span><span class="fu">create_series</span><span class="op">(</span><span class="st">'2011-01-01 12:10:00'</span> <span class="op">~</span> <span class="st">'2011-01-01 12:12:00'</span>, <span class="st">'s'</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # A time tibble: 121 × 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Index: date</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A time tibble: 121 × 1</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Index:         date</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    date               </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>             </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2011-01-01 <span style="color: #949494;">12:10:00</span></span>
@@ -239,8 +239,8 @@ a tibble?</p></dd>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Date class</span></span></span>
 <span class="r-in"><span><span class="fu">create_series</span><span class="op">(</span><span class="op">~</span><span class="st">'2013'</span>, <span class="st">'day'</span>, class <span class="op">=</span> <span class="st">"Date"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # A time tibble: 365 × 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Index: date</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A time tibble: 365 × 1</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Index:         date</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    date      </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2013-01-01</span>
@@ -257,8 +257,8 @@ a tibble?</p></dd>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># yearmon class</span></span></span>
 <span class="r-in"><span><span class="fu">create_series</span><span class="op">(</span><span class="op">~</span><span class="st">'2013'</span>, <span class="st">'month'</span>, class <span class="op">=</span> <span class="st">"yearmon"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # A time tibble: 12 × 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Index: date</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A time tibble: 12 × 1</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Index:         date</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    date     </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;yearmon&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> Jan 2013 </span>
@@ -276,8 +276,8 @@ a tibble?</p></dd>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># hms class. time_formula specified as HH:MM:SS here</span></span></span>
 <span class="r-in"><span><span class="fu">create_series</span><span class="op">(</span><span class="st">'00:00:00'</span> <span class="op">~</span> <span class="st">'12:00:00'</span>, <span class="st">'second'</span> , class <span class="op">=</span> <span class="st">"hms"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # A time tibble: 43,201 × 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Index: date</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A time tibble: 43,201 × 1</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Index:         date</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    date  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;time&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 00<span style="color: #949494;">'</span>00<span style="color: #949494;">"</span></span>
@@ -294,8 +294,8 @@ a tibble?</p></dd>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Subsecond series</span></span></span>
 <span class="r-in"><span><span class="fu">create_series</span><span class="op">(</span><span class="st">'2013'</span> <span class="op">~</span> <span class="st">'2013-01-01 00:00:01'</span>, period <span class="op">=</span> <span class="st">"10 millisec"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # A time tibble: 101 × 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Index: date</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A time tibble: 101 × 1</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Index:         date</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    date               </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>             </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2013-01-01 <span style="color: #949494;">00:00:00</span></span>
