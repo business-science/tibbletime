@@ -1,4 +1,4 @@
-# tibbletime (development version)
+# tibbletime 0.1.8
 
 * Adapted to stricter parsing in lubridate and timechange (#103).
 
