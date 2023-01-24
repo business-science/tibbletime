@@ -43,5 +43,5 @@ Suggests:
     testthat,
     tidyr (>= 1.0.0)
 VignetteBuilder: knitr
-LinkingTo: Rcpp (>= 1.0.9)
+LinkingTo: Rcpp (>= 1.0.10)
 LazyData: true
