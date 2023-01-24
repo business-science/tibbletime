@@ -4,7 +4,7 @@
 \alias{partition_index}
 \title{Partition an index vector into an integer vector representing groups}
 \usage{
-partition_index(index, period = "yearly", start_date = NULL, ...)
+partition_index(index, period = "year", start_date = NULL, ...)
 }
 \arguments{
 \item{index}{A vector of date indices to create groups for.}
@@ -16,7 +16,7 @@ a space between the two.
 
 Note that you can pass the specification in a flexible way:
 \itemize{
-\item 1 Year: \code{'1 year'} / \code{'1 Y'} / \code{'1 yearly'} / \code{'yearly'}
+\item 1 Year: \code{'1 year'} / \code{'1 Y'}
 }
 
 This shorthand is available for year, quarter, month, day, hour, minute,

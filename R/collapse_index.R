@@ -43,7 +43,7 @@
 #' # A common workflow is to group on the new date column
 #' # to perform a time based summary
 #' FB %>%
-#'   dplyr::mutate(date = collapse_index(date, "yearly")) %>%
+#'   dplyr::mutate(date = collapse_index(date, "year")) %>%
 #'   dplyr::group_by(date) %>%
 #'   dplyr::summarise_if(is.numeric, mean)
 #'
@@ -65,14 +65,14 @@
 #' # Collapse each group to monthly,
 #' # calculate monthly standard deviation for each column
 #' FANG %>%
-#'   dplyr::mutate(date = collapse_index(date, "monthly")) %>%
+#'   dplyr::mutate(date = collapse_index(date, "month")) %>%
 #'   dplyr::group_by(symbol, date) %>%
 #'   dplyr::summarise_all(sd)
 #'
 #'
 #' @export
 #'
-collapse_index <- function(index, period = "yearly",
+collapse_index <- function(index, period = "year",
                            start_date = NULL, side = "end", clean = FALSE, ...) {
 
   # Side either start or end
@@ -163,7 +163,7 @@ collapse_index <- function(index, period = "yearly",
 #' # A common workflow is to group on the collapsed date column
 #' # to perform a time based summary
 #' FB %>%
-#'   collapse_by("yearly") %>%
+#'   collapse_by("year") %>%
 #'   dplyr::group_by(date) %>%
 #'   dplyr::summarise_if(is.numeric, mean)
 #'
@@ -177,12 +177,12 @@ collapse_index <- function(index, period = "yearly",
 #' # Collapse each group to monthly,
 #' # calculate monthly standard deviation for each column
 #' FANG %>%
-#'   collapse_by("monthly") %>%
+#'   collapse_by("month") %>%
 #'   dplyr::group_by(symbol, date) %>%
 #'   dplyr::summarise_all(sd)
 #'
 #' @export
-collapse_by <- function(.tbl_time, period = "yearly", start_date = NULL, side = "end", clean = FALSE, ...) {
+collapse_by <- function(.tbl_time, period = "year", start_date = NULL, side = "end", clean = FALSE, ...) {
 
   index_quo  <- get_index_quo(.tbl_time)
   index_char <- get_index_char(.tbl_time)

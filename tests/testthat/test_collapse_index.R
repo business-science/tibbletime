@@ -12,13 +12,13 @@ test_time <- tibble::tibble(
 # Tests
 
 test_that("Yearly collapse returns correct dates", {
-  test <- collapse_index(test_time$date, "yearly")
+  test <- collapse_index(test_time$date, "year")
   expect_equal(unique(test),
                as.Date("2017-12-03"))
 })
 
 test_that("side = 'start' returns start of period", {
-  test <- collapse_index(test_time$date, "yearly", side = "start")
+  test <- collapse_index(test_time$date, "year", side = "start")
   expect_equal(unique(test),
                as.Date("2017-12-01"))
 })
@@ -31,16 +31,16 @@ test_that("Index vectors can be passed to the period argument", {
 })
 
 test_that("Collapsing works on yearmon", {
-  ex <- create_series(~'2017', "monthly", "yearmon")
+  ex <- create_series(~'2017', "month", "yearmon")
 
-  expect_equal(collapse_index(ex$date, "yearly"),
+  expect_equal(collapse_index(ex$date, "year"),
                zoo::as.yearmon(rep(2017.917, 12)))
 })
 
 test_that("Collapsing works on yearqtr", {
   ex <- create_series(~'2017', "quarter", "yearqtr")
 
-  expect_equal(collapse_index(ex$date, "yearly"),
+  expect_equal(collapse_index(ex$date, "year"),
                zoo::as.yearqtr(rep(2017.75, 4)))
 })
 

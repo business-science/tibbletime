@@ -12,7 +12,7 @@
 #'
 #'   Note that you can pass the specification in a flexible way:
 #'
-#'   * 1 Year: `'1 year'` / `'1 Y'` / `'1 yearly'` / `'yearly'`
+#'   * 1 Year: `'1 year'` / `'1 Y'`
 #'
 #'   This shorthand is available for year, quarter, month, day, hour, minute,
 #'   second, millisecond and microsecond periodicities.
@@ -49,7 +49,7 @@
 #' @export
 #' @rdname partition_index
 #'
-partition_index <- function(index, period = "yearly", start_date = NULL, ...) {
+partition_index <- function(index, period = "year", start_date = NULL, ...) {
 
   .index <- to_posixct_numeric(index)
 

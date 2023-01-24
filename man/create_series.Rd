@@ -6,7 +6,7 @@
 \usage{
 create_series(
   time_formula,
-  period = "daily",
+  period = "day",
   class = "POSIXct",
   include_end = FALSE,
   tz = "UTC",
@@ -25,7 +25,7 @@ a space between the two.
 
 Note that you can pass the specification in a flexible way:
 \itemize{
-\item 1 Year: \code{'1 year'} / \code{'1 Y'} / \code{'1 yearly'} / \code{'yearly'}
+\item 1 Year: \code{'1 year'} / \code{'1 Y'}
 }
 
 This shorthand is available for year, quarter, month, day, hour, minute,
@@ -52,7 +52,7 @@ a \code{date} column populated with a sequence of dates.
 \examples{
 
 # Every day in 2013
-create_series(~'2013', 'daily')
+create_series(~'2013', 'day')
 
 # Every other day in 2013
 create_series(~'2013', '2 d')

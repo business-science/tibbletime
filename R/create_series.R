@@ -18,7 +18,7 @@
 #' @examples
 #'
 #' # Every day in 2013
-#' create_series(~'2013', 'daily')
+#' create_series(~'2013', 'day')
 #'
 #' # Every other day in 2013
 #' create_series(~'2013', '2 d')
@@ -55,7 +55,7 @@
 #'
 #'
 #' @export
-create_series <- function(time_formula, period = "daily",
+create_series <- function(time_formula, period = "day",
                           class = "POSIXct", include_end = FALSE,
                           tz = "UTC", as_vector = FALSE) {
 

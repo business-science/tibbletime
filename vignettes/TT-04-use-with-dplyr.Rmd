@@ -27,7 +27,7 @@ library(tibbletime)
 library(dplyr)
 library(lubridate)
 
-series <- create_series('2013' ~ '2017', 'daily', class = "Date") %>%
+series <- create_series('2013' ~ '2017', 'day', class = "Date") %>%
   mutate(var = rnorm(n()))
 
 series
@@ -51,7 +51,7 @@ the period you are summarising at. The `tibbletime` way to do this is with
 
 ```{r}
 series %>%
-  collapse_by("monthly") %>%
+  collapse_by("month") %>%
   group_by(date) %>%
   summarise(mean_var = mean(var))
 ```
@@ -69,7 +69,7 @@ second_series <- create_series('2013' ~ '2015', '5 second')
 
 second_series %>%
   mutate(var = rnorm(n())) %>%
-  collapse_by("hourly") %>%
+  collapse_by("hour") %>%
   group_by(date) %>%
   summarise(mean_var = mean(var))
 ```
@@ -103,7 +103,7 @@ price_series <- bind_rows(list(apple = apple, facebook = facebook), .id = "symbo
 # Collapse to daily and transform to OHLC (Open, High, Low, Close), a 
 # common financial transformation
 price_series %>%
-  collapse_by("daily") %>%
+  collapse_by("day") %>%
   group_by(symbol, date) %>%
   summarise(
     open  = first(price),
