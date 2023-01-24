@@ -1,6 +1,6 @@
 # # both must be tbl_time
 #
-# time_left_join <- function(x, y, by = NULL, period = "yearly", copy = FALSE, suffix = c(".x", ".y"), ...) {
+# time_left_join <- function(x, y, by = NULL, period = "year", copy = FALSE, suffix = c(".x", ".y"), ...) {
 #
 #   if(get_index_char(x) %in% by || get_index_char(y) %in% by) {
 #     stop("Do not specify the time index in `by`. Use `period` instead.")
@@ -15,7 +15,7 @@
 #     select(-.time_group)
 # }
 #
-# time_right_join <- function(x, y, by = NULL, period = "yearly", copy = FALSE, suffix = c(".x", ".y"), ...) {
+# time_right_join <- function(x, y, by = NULL, period = "year", copy = FALSE, suffix = c(".x", ".y"), ...) {
 #
 #   x <- mutate(x, .time_group = partition_index(!! get_index_quo(x), period = period))
 #   y <- mutate(y, .time_group = partition_index(!! get_index_quo(y), period = period))

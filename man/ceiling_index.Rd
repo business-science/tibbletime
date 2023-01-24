@@ -9,12 +9,19 @@ ceiling_index(x, unit = "seconds")
 \arguments{
 \item{x}{a vector of date-time objects}
 
-\item{unit}{a character string specifying a time unit or a multiple of a unit
-to be rounded to. Valid base units are \code{second}, \code{minute}, \code{hour}, \code{day},
-\code{week}, \code{month}, \code{bimonth}, \code{quarter}, \code{season}, \code{halfyear} and
-\code{year}. Arbitrary unique English abbreviations as in the \code{\link[lubridate:period]{period()}}
-constructor are allowed. Rounding to multiples of units (except weeks) is
-supported.}
+\item{unit}{a string, \code{Period} object or a date-time object. When a singleton string,
+it specifies a time unit or a multiple of a unit to be rounded to. Valid base units
+are \code{second}, \code{minute}, \code{hour}, \code{day}, \code{week}, \code{month}, \code{bimonth}, \code{quarter},
+\code{season}, \code{halfyear} and \code{year}. Arbitrary unique English abbreviations as in the
+\code{\link[lubridate:period]{period()}} constructor are allowed. Rounding to multiples of units (except weeks)
+is supported. When \code{unit} is a \code{Period} object, units of the period objects are
+used. This is equivalent to converting the period object to its string
+representation and passing as \code{unit} argument.
+
+When \code{unit} is a date-time object rounding is done to the nearest of the
+elements in \code{unit}. If range of \code{unit} vector does not cover the range of
+\code{x} \code{ceiling_date()} and \code{floor_date()} round to the \code{max(x)} and \code{min(x)}
+for elements that fall outside of \code{range(unit)}.}
 }
 \description{
 This is a thin wrapper around a \code{\link[lubridate:round_date]{lubridate::ceiling_date()}} that works

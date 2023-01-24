@@ -34,26 +34,23 @@
 #' FB <- as_tbl_time(FB, date)
 #'
 #' # Aggregate FB to yearly data
-#' as_period(FB, "yearly")
+#' as_period(FB, "year")
 #'
 #' # Aggregate FB to every 2 years
 #' as_period(FB, "2 years")
 #'
 #' # Aggregate FB to yearly data, but use the last data point available
 #' # in that period
-#' as_period(FB, "yearly", side = "end")
+#' as_period(FB, "year", side = "end")
 #'
 #' # Aggregate FB to yearly data, end of period, and include the first
 #' # endpoint
-#' as_period(FB, "yearly", side = "end", include_endpoints = TRUE)
+#' as_period(FB, "year", side = "end", include_endpoints = TRUE)
 #'
 #' # Aggregate to weekly. Notice that it only uses the earliest day available
 #' # in the data set at that periodicity. It will not set the date of the first
 #' # row to 2013-01-01 because that date did not exist in the original data set.
 #' as_period(FB, "weekly")
-#'
-#' # Aggregate to every other week
-#' as_period(FB, "2 weeks")
 #'
 #' # FB is daily data, aggregate to minute?
 #' # Not allowed for Date class indices, an error is thrown
@@ -68,7 +65,7 @@
 #' FANG <- dplyr::group_by(FANG, symbol)
 #'
 #' # Respects groups
-#' as_period(FANG, "yearly")
+#' as_period(FANG, "year")
 #'
 #' # Every 6 months, respecting groups
 #' as_period(FANG, "6 months")
@@ -121,21 +118,21 @@
 #'
 #' @export
 #'
-as_period <- function(.tbl_time, period = "yearly",
+as_period <- function(.tbl_time, period = "year",
                       start_date = NULL, side = "start",
                       include_endpoints = FALSE, ...) {
   UseMethod("as_period")
 }
 
 #' @export
-as_period.default <- function(.tbl_time, period = "yearly",
+as_period.default <- function(.tbl_time, period = "year",
                               start_date = NULL, side = "start",
                               include_endpoints = FALSE, ...) {
   stop("Object is not of class `tbl_time`.", call. = FALSE)
 }
 
 #' @export
-as_period.tbl_time <- function(.tbl_time, period = "yearly",
+as_period.tbl_time <- function(.tbl_time, period = "year",
                                start_date = NULL, side = "start",
                                include_endpoints = FALSE, ...) {
 

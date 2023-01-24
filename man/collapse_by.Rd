@@ -6,7 +6,7 @@
 \usage{
 collapse_by(
   .tbl_time,
-  period = "yearly",
+  period = "year",
   start_date = NULL,
   side = "end",
   clean = FALSE,
@@ -23,7 +23,7 @@ a space between the two.
 
 Note that you can pass the specification in a flexible way:
 \itemize{
-\item 1 Year: \code{'1 year'} / \code{'1 Y'} / \code{'1 yearly'} / \code{'yearly'}
+\item 1 Year: \code{'1 year'} / \code{'1 Y'}
 }
 
 This shorthand is available for year, quarter, month, day, hour, minute,
@@ -70,7 +70,7 @@ collapse_by(FB, "weekly")
 # A common workflow is to group on the collapsed date column
 # to perform a time based summary
 FB \%>\%
-  collapse_by("yearly") \%>\%
+  collapse_by("year") \%>\%
   dplyr::group_by(date) \%>\%
   dplyr::summarise_if(is.numeric, mean)
 
@@ -84,7 +84,7 @@ FANG <- FANG \%>\%
 # Collapse each group to monthly,
 # calculate monthly standard deviation for each column
 FANG \%>\%
-  collapse_by("monthly") \%>\%
+  collapse_by("month") \%>\%
   dplyr::group_by(symbol, date) \%>\%
   dplyr::summarise_all(sd)
 

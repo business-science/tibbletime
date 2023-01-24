@@ -17,14 +17,14 @@ test_tbl_time <- test_tbl_time %>%
 # Tests
 
 test_that("Floor all Date/Datetime to yearly results in the same answer", {
-  test <- purrr::map_dfc(test_tbl_time, ~floor_index(.x, "yearly") %>% to_posixct_numeric)
+  test <- purrr::map_dfc(test_tbl_time, ~floor_index(.x, "year") %>% to_posixct_numeric)
   expect_equal(test$date, test$date_posix)
   expect_equal(test$date, test$date_yearmon)
   expect_equal(test$date, test$date_yearqtr)
 })
 
 test_that("Floor works with hms", {
-  hms_test <- create_series('01'~'12', period = "hourly", class = "hms")
+  hms_test <- create_series('01'~'12', period = "hour", class = "hms")
   expect_equal(
     floor_index(hms_test$date, "12 hour"),
     c(rep(0, 11), 43200) %>% hms::as_hms()

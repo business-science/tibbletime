@@ -14,7 +14,7 @@ a space between the two.
 
 Note that you can pass the specification in a flexible way:
 \itemize{
-\item 1 Year: \code{'1 year'} / \code{'1 Y'} / \code{'1 yearly'} / \code{'yearly'}
+\item 1 Year: \code{'1 year'} / \code{'1 Y'}
 }
 
 This shorthand is available for year, quarter, month, day, hour, minute,

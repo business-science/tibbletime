@@ -53,7 +53,7 @@ To see this in action, transform the daily `FB` data set to monthly data.
 as_period(FB, '1 month')
 
 # Additionally, the following are equivalent
-# as_period(FB, 'monthly')
+# as_period(FB, 'month')
 # as_period(FB, 'm')
 # as_period(FB, '1 m')
 ```
@@ -85,12 +85,12 @@ By default, the date that starts the first group is calculated as:
 2) Floor that date to the period that you specified. 
 
 In the 1 month example above, `2013-01-02` is the first date in the series, 
-and because "monthly" was chosen, the first group is defined as 
+and because "month" was chosen, the first group is defined as 
 (2013-01-01 to 2013-01-31).
 
 Occasionally this is not what you want. Consider what would happen if you 
 changed the period to "every 2 days". The first date is `2013-01-02`, but 
-because "daily" is chosen, this isn't floored to `2013-01-01` so the groups are
+because "day" is chosen, this isn't floored to `2013-01-01` so the groups are
 (2013-01-02, 2013-01-03), (2013-01-04, 2013-01-05) and so on. 
 If you wanted the first group to be (2013-01-01, 2013-01-02), you can use
 the `start_date` argument.
