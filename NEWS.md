@@ -1,5 +1,7 @@
 # tibbletime (development version)
 
+* Adapted to stricter parsing in lubridate and timechange (#103).
+
 # tibbletime 0.1.7
 
 * Fixed usage of `|` rather than `||` in the C++ code to satisfy a CRAN warning.
