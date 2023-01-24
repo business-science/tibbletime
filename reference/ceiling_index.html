@@ -93,12 +93,18 @@ for <code>hms</code>, <code>yearmon</code>, and <code>yearqtr</code> classes as 
 
 
 <dt>unit</dt>
-<dd><p>a character string specifying a time unit or a multiple of a unit
-to be rounded to. Valid base units are <code>second</code>, <code>minute</code>, <code>hour</code>, <code>day</code>,
-<code>week</code>, <code>month</code>, <code>bimonth</code>, <code>quarter</code>, <code>season</code>, <code>halfyear</code> and
-<code>year</code>. Arbitrary unique English abbreviations as in the <code><a href="https://lubridate.tidyverse.org/reference/period.html" class="external-link">period()</a></code>
-constructor are allowed. Rounding to multiples of units (except weeks) is
-supported.</p></dd>
+<dd><p>a string, <code>Period</code> object or a date-time object. When a singleton string,
+it specifies a time unit or a multiple of a unit to be rounded to. Valid base units
+are <code>second</code>, <code>minute</code>, <code>hour</code>, <code>day</code>, <code>week</code>, <code>month</code>, <code>bimonth</code>, <code>quarter</code>,
+<code>season</code>, <code>halfyear</code> and <code>year</code>. Arbitrary unique English abbreviations as in the
+<code><a href="https://lubridate.tidyverse.org/reference/period.html" class="external-link">period()</a></code> constructor are allowed. Rounding to multiples of units (except weeks)
+is supported. When <code>unit</code> is a <code>Period</code> object, units of the period objects are
+used. This is equivalent to converting the period object to its string
+representation and passing as <code>unit</code> argument.</p>
+<p>When <code>unit</code> is a date-time object rounding is done to the nearest of the
+elements in <code>unit</code>. If range of <code>unit</code> vector does not cover the range of
+<code>x</code> <code>ceiling_date()</code> and <code>floor_date()</code> round to the <code>max(x)</code> and <code>min(x)</code>
+for elements that fall outside of <code>range(unit)</code>.</p></dd>
 
 </dl></div>
     <div id="see-also">
@@ -160,7 +166,7 @@ supported.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

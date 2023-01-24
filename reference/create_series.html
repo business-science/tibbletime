@@ -85,7 +85,7 @@ a <code>date</code> column populated with a sequence of dates.</p>
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">create_series</span><span class="op">(</span></span>
 <span>  <span class="va">time_formula</span>,</span>
-<span>  period <span class="op">=</span> <span class="st">"daily"</span>,</span>
+<span>  period <span class="op">=</span> <span class="st">"day"</span>,</span>
 <span>  class <span class="op">=</span> <span class="st">"POSIXct"</span>,</span>
 <span>  include_end <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  tz <span class="op">=</span> <span class="st">"UTC"</span>,</span>
@@ -106,7 +106,7 @@ See the <code>Details</code> section of <code><a href="filter_time.html">filter_
 general format to use is <code>"frequency period"</code> where frequency is a number
 like 1 or 2, and period is an interval like weekly or yearly. There must be
 a space between the two.</p>
-<p>Note that you can pass the specification in a flexible way:</p><ul><li><p>1 Year: <code>'1 year'</code> / <code>'1 Y'</code> / <code>'1 yearly'</code> / <code>'yearly'</code></p></li>
+<p>Note that you can pass the specification in a flexible way:</p><ul><li><p>1 Year: <code>'1 year'</code> / <code>'1 Y'</code></p></li>
 </ul><p>This shorthand is available for year, quarter, month, day, hour, minute,
 second, millisecond and microsecond periodicities.</p>
 <p>Additionally, you have the option of passing in a vector of dates to
@@ -137,7 +137,7 @@ a tibble?</p></dd>
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Every day in 2013</span></span></span>
-<span class="r-in"><span><span class="fu">create_series</span><span class="op">(</span><span class="op">~</span><span class="st">'2013'</span>, <span class="st">'daily'</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">create_series</span><span class="op">(</span><span class="op">~</span><span class="st">'2013'</span>, <span class="st">'day'</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A time tibble: 365 × 1</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Index:         date</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    date               </span>
@@ -331,7 +331,7 @@ a tibble?</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

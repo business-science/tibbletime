@@ -89,7 +89,7 @@ the beginning or end of the period.</p>
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">as_period</span><span class="op">(</span></span>
 <span>  <span class="va">.tbl_time</span>,</span>
-<span>  period <span class="op">=</span> <span class="st">"yearly"</span>,</span>
+<span>  period <span class="op">=</span> <span class="st">"year"</span>,</span>
 <span>  start_date <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  side <span class="op">=</span> <span class="st">"start"</span>,</span>
 <span>  include_endpoints <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -108,7 +108,7 @@ the beginning or end of the period.</p>
 general format to use is <code>"frequency period"</code> where frequency is a number
 like 1 or 2, and period is an interval like weekly or yearly. There must be
 a space between the two.</p>
-<p>Note that you can pass the specification in a flexible way:</p><ul><li><p>1 Year: <code>'1 year'</code> / <code>'1 Y'</code> / <code>'1 yearly'</code> / <code>'yearly'</code></p></li>
+<p>Note that you can pass the specification in a flexible way:</p><ul><li><p>1 Year: <code>'1 year'</code> / <code>'1 Y'</code></p></li>
 </ul><p>This shorthand is available for year, quarter, month, day, hour, minute,
 second, millisecond and microsecond periodicities.</p>
 <p>Additionally, you have the option of passing in a vector of dates to
@@ -157,7 +157,7 @@ as a baseline for the first calculation.</p>
 <span class="r-in"><span><span class="va">FB</span> <span class="op">&lt;-</span> <span class="fu"><a href="tbl_time.html">as_tbl_time</a></span><span class="op">(</span><span class="va">FB</span>, <span class="va">date</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Aggregate FB to yearly data</span></span></span>
-<span class="r-in"><span><span class="fu">as_period</span><span class="op">(</span><span class="va">FB</span>, <span class="st">"yearly"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">as_period</span><span class="op">(</span><span class="va">FB</span>, <span class="st">"year"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A time tibble: 4 × 8</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Index:         date</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   symbol date        open  high   low close   volume adjusted</span>
@@ -179,7 +179,7 @@ as a baseline for the first calculation.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Aggregate FB to yearly data, but use the last data point available</span></span></span>
 <span class="r-in"><span><span class="co"># in that period</span></span></span>
-<span class="r-in"><span><span class="fu">as_period</span><span class="op">(</span><span class="va">FB</span>, <span class="st">"yearly"</span>, side <span class="op">=</span> <span class="st">"end"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">as_period</span><span class="op">(</span><span class="va">FB</span>, <span class="st">"year"</span>, side <span class="op">=</span> <span class="st">"end"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A time tibble: 4 × 8</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Index:         date</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   symbol date        open  high   low close   volume adjusted</span>
@@ -191,7 +191,7 @@ as a baseline for the first calculation.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Aggregate FB to yearly data, end of period, and include the first</span></span></span>
 <span class="r-in"><span><span class="co"># endpoint</span></span></span>
-<span class="r-in"><span><span class="fu">as_period</span><span class="op">(</span><span class="va">FB</span>, <span class="st">"yearly"</span>, side <span class="op">=</span> <span class="st">"end"</span>, include_endpoints <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">as_period</span><span class="op">(</span><span class="va">FB</span>, <span class="st">"year"</span>, side <span class="op">=</span> <span class="st">"end"</span>, include_endpoints <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A time tibble: 5 × 8</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Index:         date</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   symbol date        open  high   low close   volume adjusted</span>
@@ -222,26 +222,6 @@ as a baseline for the first calculation.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> FB     2013-03-04  27.8  28.1  27.4  27.7 32<span style="text-decoration: underline;">400</span>700     27.7</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 199 more rows</span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Aggregate to every other week</span></span></span>
-<span class="r-in"><span><span class="fu">as_period</span><span class="op">(</span><span class="va">FB</span>, <span class="st">"2 weeks"</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Multi-unit not supported for weeks. Ignoring.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Multi-unit not supported for weeks. Ignoring.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A time tibble: 105 × 8</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Index:         date</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    symbol date        open  high   low close   volume adjusted</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> FB     2013-01-02  27.4  28.2  27.4  28   69<span style="text-decoration: underline;">846</span>400     28  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> FB     2013-01-14  32.1  32.2  30.6  31.0 98<span style="text-decoration: underline;">892</span>800     31.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> FB     2013-01-28  31.9  32.5  31.8  32.5 59<span style="text-decoration: underline;">682</span>500     32.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> FB     2013-02-11  28.6  28.7  28.0  28.3 37<span style="text-decoration: underline;">361</span>800     28.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> FB     2013-02-25  27.2  27.6  27.2  27.3 34<span style="text-decoration: underline;">652</span>000     27.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> FB     2013-03-11  28.0  28.6  27.8  28.1 35<span style="text-decoration: underline;">642</span>100     28.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> FB     2013-03-25  25.8  25.8  25.1  25.1 39<span style="text-decoration: underline;">199</span>000     25.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> FB     2013-04-08  27.2  27.2  26.6  26.8 27<span style="text-decoration: underline;">256</span>000     26.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> FB     2013-04-22  25.8  26.4  25.7  26.0 25<span style="text-decoration: underline;">687</span>600     26.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> FB     2013-05-06  28.3  28.5  27.5  27.6 43<span style="text-decoration: underline;">939</span>400     27.6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 95 more rows</span></span>
-<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># FB is daily data, aggregate to minute?</span></span></span>
 <span class="r-in"><span><span class="co"># Not allowed for Date class indices, an error is thrown</span></span></span>
 <span class="r-in"><span><span class="co"># as_period(FB, "minute")</span></span></span>
@@ -255,7 +235,7 @@ as a baseline for the first calculation.</p>
 <span class="r-in"><span><span class="va">FANG</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">FANG</span>, <span class="va">symbol</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Respects groups</span></span></span>
-<span class="r-in"><span><span class="fu">as_period</span><span class="op">(</span><span class="va">FANG</span>, <span class="st">"yearly"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">as_period</span><span class="op">(</span><span class="va">FANG</span>, <span class="st">"year"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A time tibble: 16 × 8</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Index:         date</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Groups:        symbol [4]</span></span>
@@ -411,7 +391,7 @@ as a baseline for the first calculation.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>
