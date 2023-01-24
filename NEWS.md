@@ -1,5 +1,9 @@
 # tibbletime 0.1.8
 
+* Multi-week periods are no longer allowed. These previously threw a warning
+  from lubridate and were already partially broken. Now lubridate throws an
+  error if multi-week periods are supplied (#103).
+
 * Adapted to stricter parsing in lubridate and timechange (#103).
 
 # tibbletime 0.1.7
