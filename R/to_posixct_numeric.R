@@ -4,19 +4,23 @@ to_posixct_numeric <- function(index) {
   UseMethod("to_posixct_numeric")
 }
 
+#' @export
 to_posixct_numeric.default <- function(index) {
   as.numeric(index)
 }
 
+#' @export
 to_posixct_numeric.Date <- function(index) {
   secs_in_day <- 86400
   as.numeric(.POSIXct(unclass(index) * secs_in_day, tz = get_default_time_zone()))
 }
 
+#' @export
 to_posixct_numeric.POSIXct <- function(index) {
   as.numeric(index)
 }
 
+#' @export
 to_posixct_numeric.yearmon <- function(index) {
   to_posixct_numeric(
     yearmon_to_POSIXct(index)
@@ -24,8 +28,10 @@ to_posixct_numeric.yearmon <- function(index) {
 }
 
 # Same as yearmon, represented as a numeric internally, same as yearmon
+#' @export
 to_posixct_numeric.yearqtr <- to_posixct_numeric.yearmon
 
+#' @export
 to_posixct_numeric.hms <- function(index) {
   # No need to convert to POSIXct then numeric, this is just number of
   # seconds since epoch
@@ -66,24 +72,29 @@ dispatch_to_datetime <- function(dummy, x, ...) {
   UseMethod("dispatch_to_datetime")
 }
 
+#' @export
 dispatch_to_datetime.default <- function(dummy, x, ..., tz = NULL) {
   tz <- tz %||% get_default_time_zone()
   as.POSIXct(x, tz = tz, origin = "1970-01-01", ...)
 }
 
+#' @export
 dispatch_to_datetime.Date <- function(dummy, x, ..., tz = NULL) {
   tz <- tz %||% get_default_time_zone()
   as.Date(dispatch_to_datetime.default(dummy, x, tz = tz), tz = tz)
 }
 
+#' @export
 dispatch_to_datetime.yearmon <- function(dummy, x, ..., tz = NULL) {
   zoo::as.yearmon(dispatch_to_datetime.default(dummy, x, tz = tz))
 }
 
+#' @export
 dispatch_to_datetime.yearqtr <- function(dummy, x, ..., tz = NULL) {
   zoo::as.yearqtr(dispatch_to_datetime.default(dummy, x, tz = tz))
 }
 
+#' @export
 dispatch_to_datetime.hms <- function(dummy, x, ..., tz = NULL) {
   datetime <- dispatch_to_datetime.default(dummy, x, tz = tz)
   hms::as_hms(datetime)

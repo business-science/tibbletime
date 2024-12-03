@@ -2,6 +2,7 @@
 # unique Dates -> yearmon are created. E.g., from/to will only end up being 1st of
 # the month and `by` will be year + month / year + quarter
 
+#' @export
 seq.yearmon <- function(from, to, by, ...) {
   .seq <- seq.Date(
     zoo::as.Date(from, tz = get_default_time_zone()),
@@ -11,6 +12,7 @@ seq.yearmon <- function(from, to, by, ...) {
   zoo::as.yearmon(.seq)
 }
 
+#' @export
 seq.yearqtr <- function(from, to, by, ...) {
   .seq <- seq.Date(
     zoo::as.Date(from, tz = get_default_time_zone()),
@@ -20,6 +22,7 @@ seq.yearqtr <- function(from, to, by, ...) {
   zoo::as.yearqtr(.seq)
 }
 
+#' @export
 seq.hms <- function(from, to, by, ...) {
   .seq <- seq.POSIXt(
     as.POSIXct(from),
