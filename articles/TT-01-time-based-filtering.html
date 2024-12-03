@@ -6,13 +6,12 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Time-based filtering • tibbletime</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="Time-based filtering">
-<meta property="og:description" content="tibbletime">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -25,7 +24,7 @@
 </script>
 </head>
 <body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -54,7 +53,7 @@
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Vignettes
-     
+
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
@@ -80,7 +79,7 @@
 <li>
   <a href="https://github.com/business-science/tibbletime" class="external-link">
     <span class="fa fa-github"></span>
-     
+
   </a>
 </li>
       </ul>
@@ -91,7 +90,7 @@
 </div>
 <!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="col-md-9 contents">
@@ -100,9 +99,9 @@
                         <h4 data-toc-skip class="author">Davis
 Vaughan</h4>
             
-            <h4 data-toc-skip class="date">2023-01-24</h4>
+            <h4 data-toc-skip class="date">2024-12-03</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/business-science/tibbletime/blob/HEAD/vignettes/TT-01-time-based-filtering.Rmd" class="external-link"><code>vignettes/TT-01-time-based-filtering.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/business-science/tibbletime/blob/master/vignettes/TT-01-time-based-filtering.Rmd" class="external-link"><code>vignettes/TT-01-time-based-filtering.Rmd</code></a></small>
       <div class="hidden name"><code>TT-01-time-based-filtering.Rmd</code></div>
 
     </div>
@@ -164,7 +163,7 @@ like this:</p>
 <span><span class="co">## <span style="color: #BCBCBC;"> 8</span> FB     2013-01-11  31.3  32.0  31.1  31.7  89<span style="text-decoration: underline;">598</span>000     31.7</span></span>
 <span><span class="co">## <span style="color: #BCBCBC;"> 9</span> FB     2013-01-14  32.1  32.2  30.6  31.0  98<span style="text-decoration: underline;">892</span>800     31.0</span></span>
 <span><span class="co">## <span style="color: #BCBCBC;">10</span> FB     2013-01-15  30.6  31.7  29.9  30.1 173<span style="text-decoration: underline;">242</span>600     30.1</span></span>
-<span><span class="co">## <span style="color: #949494;"># … with 242 more rows</span></span></span></code></pre>
+<span><span class="co">## <span style="color: #949494;"># ℹ 242 more rows</span></span></span></code></pre>
 <p>That’s a lot of typing for one filter step. With
 <code>tibbletime</code>, because the <code>index</code> was specified at
 creation, we can do this:</p>
@@ -184,7 +183,7 @@ creation, we can do this:</p>
 <span><span class="co">## <span style="color: #BCBCBC;"> 8</span> FB     2013-01-11  31.3  32.0  31.1  31.7  89<span style="text-decoration: underline;">598</span>000     31.7</span></span>
 <span><span class="co">## <span style="color: #BCBCBC;"> 9</span> FB     2013-01-14  32.1  32.2  30.6  31.0  98<span style="text-decoration: underline;">892</span>800     31.0</span></span>
 <span><span class="co">## <span style="color: #BCBCBC;">10</span> FB     2013-01-15  30.6  31.7  29.9  30.1 173<span style="text-decoration: underline;">242</span>600     30.1</span></span>
-<span><span class="co">## <span style="color: #949494;"># … with 242 more rows</span></span></span></code></pre>
+<span><span class="co">## <span style="color: #949494;"># ℹ 242 more rows</span></span></span></code></pre>
 <p>At first glance, this might not look like less code, but this is
 before any shorthand is applied. Note how the filtering condition is
 specified as a <code>formula</code> separated by a <code>~</code>.</p>
@@ -205,7 +204,7 @@ specified as a <code>formula</code> separated by a <code>~</code>.</p>
 <span><span class="co">## <span style="color: #BCBCBC;"> 8</span> FB     2013-01-11  31.3  32.0  31.1  31.7  89<span style="text-decoration: underline;">598</span>000     31.7</span></span>
 <span><span class="co">## <span style="color: #BCBCBC;"> 9</span> FB     2013-01-14  32.1  32.2  30.6  31.0  98<span style="text-decoration: underline;">892</span>800     31.0</span></span>
 <span><span class="co">## <span style="color: #BCBCBC;">10</span> FB     2013-01-15  30.6  31.7  29.9  30.1 173<span style="text-decoration: underline;">242</span>600     30.1</span></span>
-<span><span class="co">## <span style="color: #949494;"># … with 242 more rows</span></span></span></code></pre>
+<span><span class="co">## <span style="color: #949494;"># ℹ 242 more rows</span></span></span></code></pre>
 <p>Or even more succinctly as:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/filter_time.html">filter_time</a></span><span class="op">(</span><span class="va">FB</span>, <span class="op">~</span><span class="st">'2013'</span><span class="op">)</span></span></code></pre></div>
@@ -223,7 +222,7 @@ specified as a <code>formula</code> separated by a <code>~</code>.</p>
 <span><span class="co">## <span style="color: #BCBCBC;"> 8</span> FB     2013-01-11  31.3  32.0  31.1  31.7  89<span style="text-decoration: underline;">598</span>000     31.7</span></span>
 <span><span class="co">## <span style="color: #BCBCBC;"> 9</span> FB     2013-01-14  32.1  32.2  30.6  31.0  98<span style="text-decoration: underline;">892</span>800     31.0</span></span>
 <span><span class="co">## <span style="color: #BCBCBC;">10</span> FB     2013-01-15  30.6  31.7  29.9  30.1 173<span style="text-decoration: underline;">242</span>600     30.1</span></span>
-<span><span class="co">## <span style="color: #949494;"># … with 242 more rows</span></span></span></code></pre>
+<span><span class="co">## <span style="color: #949494;"># ℹ 242 more rows</span></span></span></code></pre>
 <p>The shorthand notation works as follows. In the first example,
 <code>'2013' ~ '2013'</code> is expanded to
 <code>'2013-01-01 + 00:00:00' ~ '2013-12-31 + 23:59:59'</code>. It works
@@ -253,7 +252,7 @@ date in March, 2015:</p>
 <span><span class="co">## <span style="color: #BCBCBC;"> 8</span> FB     2015-03-11  77.8  78.4  77.3  77.6 20<span style="text-decoration: underline;">215</span>700     77.6</span></span>
 <span><span class="co">## <span style="color: #BCBCBC;"> 9</span> FB     2015-03-12  78.1  79.1  77.9  78.9 16<span style="text-decoration: underline;">093</span>300     78.9</span></span>
 <span><span class="co">## <span style="color: #BCBCBC;">10</span> FB     2015-03-13  78.6  79.4  77.7  78.1 18<span style="text-decoration: underline;">557</span>300     78.1</span></span>
-<span><span class="co">## <span style="color: #949494;"># … with 12 more rows</span></span></span></code></pre>
+<span><span class="co">## <span style="color: #949494;"># ℹ 12 more rows</span></span></span></code></pre>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># In dplyr it looks like this</span></span>
 <span><span class="co"># (and you have to think, does March have 30 or 31 days?)</span></span>
@@ -286,7 +285,7 @@ date in March, 2015:</p>
 <span><span class="co">## <span style="color: #BCBCBC;"> 8</span> FB     2013-01-11  31.3  32.0  31.1  31.7  89<span style="text-decoration: underline;">598</span>000     31.7</span></span>
 <span><span class="co">## <span style="color: #BCBCBC;"> 9</span> FB     2013-01-14  32.1  32.2  30.6  31.0  98<span style="text-decoration: underline;">892</span>800     31.0</span></span>
 <span><span class="co">## <span style="color: #BCBCBC;">10</span> FB     2013-01-15  30.6  31.7  29.9  30.1 173<span style="text-decoration: underline;">242</span>600     30.1</span></span>
-<span><span class="co">## <span style="color: #949494;"># … with 746 more rows</span></span></span></code></pre>
+<span><span class="co">## <span style="color: #949494;"># ℹ 746 more rows</span></span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="grouped-example">Grouped example<a class="anchor" aria-label="anchor" href="#grouped-example"></a>
@@ -341,7 +340,7 @@ form of this is slightly different than the standard,
 <span><span class="co">## <span style="color: #BCBCBC;"> 8</span> 2013-01-01 <span style="color: #949494;">00:00:07</span></span></span>
 <span><span class="co">## <span style="color: #BCBCBC;"> 9</span> 2013-01-01 <span style="color: #949494;">00:00:08</span></span></span>
 <span><span class="co">## <span style="color: #BCBCBC;">10</span> 2013-01-01 <span style="color: #949494;">00:00:09</span></span></span>
-<span><span class="co">## <span style="color: #949494;"># … with 170 more rows</span></span></span></code></pre>
+<span><span class="co">## <span style="color: #949494;"># ℹ 170 more rows</span></span></span></code></pre>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># 3 specific hours of the day</span></span>
 <span><span class="co"># Equivalent to:</span></span>
@@ -362,7 +361,7 @@ form of this is slightly different than the standard,
 <span><span class="co">## <span style="color: #BCBCBC;"> 8</span> 2013-01-01 <span style="color: #949494;">03:00:07</span></span></span>
 <span><span class="co">## <span style="color: #BCBCBC;"> 9</span> 2013-01-01 <span style="color: #949494;">03:00:08</span></span></span>
 <span><span class="co">## <span style="color: #BCBCBC;">10</span> 2013-01-01 <span style="color: #949494;">03:00:09</span></span></span>
-<span><span class="co">## <span style="color: #949494;"># … with 14,390 more rows</span></span></span></code></pre>
+<span><span class="co">## <span style="color: #949494;"># ℹ 14,390 more rows</span></span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="syntax">
@@ -387,7 +386,7 @@ syntax.</p>
 <span><span class="co">## <span style="color: #BCBCBC;"> 8</span> FB     2013-01-11  31.3  32.0  31.1  31.7  89<span style="text-decoration: underline;">598</span>000     31.7</span></span>
 <span><span class="co">## <span style="color: #BCBCBC;"> 9</span> FB     2013-01-14  32.1  32.2  30.6  31.0  98<span style="text-decoration: underline;">892</span>800     31.0</span></span>
 <span><span class="co">## <span style="color: #BCBCBC;">10</span> FB     2013-01-15  30.6  31.7  29.9  30.1 173<span style="text-decoration: underline;">242</span>600     30.1</span></span>
-<span><span class="co">## <span style="color: #949494;"># … with 242 more rows</span></span></span></code></pre>
+<span><span class="co">## <span style="color: #949494;"># ℹ 242 more rows</span></span></span></code></pre>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">FB</span><span class="op">[</span><span class="st">'2013'</span><span class="op">~</span><span class="st">'2014-02'</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">3</span><span class="op">)</span><span class="op">]</span></span></code></pre></div>
 <pre><code><span><span class="co">## <span style="color: #949494;"># A time tibble: 292 × 3</span></span></span>
@@ -404,7 +403,7 @@ syntax.</p>
 <span><span class="co">## <span style="color: #BCBCBC;"> 8</span> FB     2013-01-11  31.3</span></span>
 <span><span class="co">## <span style="color: #BCBCBC;"> 9</span> FB     2013-01-14  32.1</span></span>
 <span><span class="co">## <span style="color: #BCBCBC;">10</span> FB     2013-01-15  30.6</span></span>
-<span><span class="co">## <span style="color: #949494;"># … with 282 more rows</span></span></span></code></pre>
+<span><span class="co">## <span style="color: #949494;"># ℹ 282 more rows</span></span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="using-variables-in-the-filter">Using variables in the filter<a class="anchor" aria-label="anchor" href="#using-variables-in-the-filter"></a>
@@ -430,7 +429,7 @@ that you can use variables inside the call the
 <span><span class="co">## <span style="color: #BCBCBC;"> 8</span> FB     2013-01-11  31.3  32.0  31.1  31.7  89<span style="text-decoration: underline;">598</span>000     31.7</span></span>
 <span><span class="co">## <span style="color: #BCBCBC;"> 9</span> FB     2013-01-14  32.1  32.2  30.6  31.0  98<span style="text-decoration: underline;">892</span>800     31.0</span></span>
 <span><span class="co">## <span style="color: #BCBCBC;">10</span> FB     2013-01-15  30.6  31.7  29.9  30.1 173<span style="text-decoration: underline;">242</span>600     30.1</span></span>
-<span><span class="co">## <span style="color: #949494;"># … with 242 more rows</span></span></span></code></pre>
+<span><span class="co">## <span style="color: #949494;"># ℹ 242 more rows</span></span></span></code></pre>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">date_char</span> <span class="op">&lt;-</span> <span class="st">"2014-02"</span></span>
 <span><span class="fu"><a href="../reference/filter_time.html">filter_time</a></span><span class="op">(</span><span class="va">FB</span>, <span class="op">~</span> <span class="va">date_char</span><span class="op">)</span></span></code></pre></div>
@@ -463,9 +462,7 @@ that you can use variables inside the call the
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
 
-        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
-    </nav>
-</div>
+      </div>
 
 </div>
 
@@ -478,16 +475,16 @@ that you can use variables inside the call the
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
       </footer>
 </div>
 
-  
 
 
-  
+
+
 
   </body>
 </html>
