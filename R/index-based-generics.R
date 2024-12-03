@@ -18,6 +18,7 @@ lookup_seq_fun <- function(x) {
   UseMethod("lookup_seq_fun")
 }
 
+#' @export
 lookup_seq_fun.POSIXct <- function(x) {
 
   # For POSIXct object, DST can cause problems with
@@ -31,18 +32,22 @@ lookup_seq_fun.POSIXct <- function(x) {
   }
 }
 
+#' @export
 lookup_seq_fun.Date <- function(x) {
   seq.Date
 }
 
+#' @export
 lookup_seq_fun.yearmon <- function(x) {
   seq.yearmon
 }
 
+#' @export
 lookup_seq_fun.yearqtr <- function(x) {
   seq.yearqtr
 }
 
+#' @export
 lookup_seq_fun.hms <- function(x) {
   seq.hms
 }
@@ -55,6 +60,7 @@ push_datetime <- function(x, push) {
   UseMethod("push_datetime")
 }
 
+#' @export
 push_datetime.default <- function(x, push) {
 
   x_num    <- to_posixct_numeric(x)
@@ -69,6 +75,7 @@ push_datetime.default <- function(x, push) {
   )
 }
 
+#' @export
 push_datetime.hms <- function(x, push) {
   hms::as_hms(push_datetime.default(x, push))
 }
@@ -84,14 +91,17 @@ assert_period_matches_index_class <- function(x, period) {
   UseMethod("assert_period_matches_index_class")
 }
 
+#' @export
 assert_period_matches_index_class.default <- function(x, period) {
   glue_stop("Class '{class(x)}' is not a known index class.")
 }
 
+#' @export
 assert_period_matches_index_class.POSIXct <- function(x, period) {
   return()
 }
 
+#' @export
 assert_period_matches_index_class.Date <- function(x, period) {
   assertthat::assert_that(
     period %in% c("year", "quarter", "month", "week", "day"),
@@ -99,6 +109,7 @@ assert_period_matches_index_class.Date <- function(x, period) {
   )
 }
 
+#' @export
 assert_period_matches_index_class.yearmon <- function(x, period) {
   assertthat::assert_that(
     period %in% c("year", "quarter", "month"),
@@ -106,6 +117,7 @@ assert_period_matches_index_class.yearmon <- function(x, period) {
   )
 }
 
+#' @export
 assert_period_matches_index_class.yearqtr <- function(x, period) {
   assertthat::assert_that(
     period %in% c("year", "quarter"),
@@ -113,6 +125,7 @@ assert_period_matches_index_class.yearqtr <- function(x, period) {
   )
 }
 
+#' @export
 assert_period_matches_index_class.hms <- function(x, period) {
   assertthat::assert_that(
     period %in% c("hour", "min", "sec"),
@@ -203,30 +216,35 @@ lookup_defaults <- function(index, side = "lhs") {
   UseMethod("lookup_defaults")
 }
 
+#' @export
 lookup_defaults.POSIXct <- function(index, side = "lhs") {
   switch(side,
          "lhs" = list(y = 1970, m = 01, d = 01, h = 00, M = 00, s = 00),
          "rhs" = list(y = 1970, m = 12, d = 00, h = 23, M = 59, s = 59))
 }
 
+#' @export
 lookup_defaults.Date <- function(index, side = "lhs") {
   switch(side,
          "lhs" = list(y = 1970, m = 01, d = 01),
          "rhs" = list(y = 1970, m = 12, d = 00))
 }
 
+#' @export
 lookup_defaults.yearmon <- function(index, side = "lhs") {
   switch(side,
          "lhs" = list(y = 1970, m = 01),
          "rhs" = list(y = 1970, m = 12))
 }
 
+#' @export
 lookup_defaults.yearqtr <- function(index, side = "lhs") {
   switch(side,
          "lhs" = list(y = 1970, q = 01),
          "rhs" = list(y = 1970, q = 04))
 }
 
+#' @export
 lookup_defaults.hms <- function(index, side = "lhs") {
   switch(side,
          "lhs" = list(h = 00, M = 00, s = 00),
@@ -241,25 +259,30 @@ list_to_datetime <- function(index, tf_side, ...) {
   UseMethod("list_to_datetime")
 }
 
+#' @export
 list_to_datetime.POSIXct <- function(index, tf_side, tz, ...) {
   lubridate::make_datetime(tf_side$y, tf_side$m, tf_side$d,
                            tf_side$h, tf_side$M, tf_side$s, tz = tz)
 }
 
+#' @export
 list_to_datetime.Date <- function(index, tf_side, ...) {
   lubridate::make_date(tf_side$y, tf_side$m, tf_side$d)
 }
 
+#' @export
 list_to_datetime.yearmon <- function(index, tf_side, ...) {
   tf_side$d <- 1
   zoo::as.yearmon(list_to_datetime.Date(index, tf_side))
 }
 
+#' @export
 list_to_datetime.yearqtr <- function(index, tf_side, ...) {
   yearqtr_string <- paste0(tf_side$y, "-", tf_side$q)
   zoo::as.yearqtr(yearqtr_string)
 }
 
+#' @export
 list_to_datetime.hms <- function(index, tf_side, ...) {
   hms::hms(seconds = tf_side$s, minutes = tf_side$M, hours = tf_side$h)
 }
@@ -274,23 +297,28 @@ coerce_start_date <- function(x, start_date) {
   UseMethod("coerce_start_date")
 }
 
+#' @export
 coerce_start_date.POSIXct <- function(x, start_date) {
   tz <- get_index_col_time_zone(x)
   as.POSIXct(start_date, tz = tz)
 }
 
+#' @export
 coerce_start_date.Date <- function(x, start_date) {
   as.Date(start_date)
 }
 
+#' @export
 coerce_start_date.yearmon <- function(x, start_date) {
   zoo::as.yearmon(start_date)
 }
 
+#' @export
 coerce_start_date.yearqtr <- function(x, start_date) {
   zoo::as.yearqtr(start_date)
 }
 
+#' @export
 coerce_start_date.hms <- function(x, start_date) {
   hms::as_hms(start_date)
 }
