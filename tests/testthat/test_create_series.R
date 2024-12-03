@@ -50,8 +50,8 @@ test_that("Can create vector series", {
 })
 
 test_that("Can alter time zone", {
-  series <- create_series(~'2013-01-01', '1 day', as_vector = TRUE, tz = "EST")
-  check  <- as.POSIXct("2013-01-01", tz = "EST")
+  series <- create_series(~'2013-01-01', '1 day', as_vector = TRUE, tz = "America/New_York")
+  check  <- as.POSIXct("2013-01-01", tz = "America/New_York")
 
   expect_equal(series, check)
 })

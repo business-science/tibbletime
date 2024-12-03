@@ -1,5 +1,7 @@
 # tibbletime (development version)
 
+* Removed usage of the non-standard `EST` time zone from tests.
+
 # tibbletime 0.1.8
 
 * Multi-week periods are no longer allowed. These previously threw a warning
