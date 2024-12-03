@@ -1,4 +1,4 @@
-# tibbletime (development version)
+# tibbletime 0.1.9
 
 * Removed usage of the non-standard `EST` time zone from tests.
 
